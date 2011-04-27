@@ -212,9 +212,9 @@ currentPicture = currentPicture + 1;
 	public static void main(String args[]) {
 
 
-		PubXMLReader blah = new PubXMLReader();
-		blah.parseDocument();
-		//new TwoDSlideShow();
+		//PubXMLReader blah = new PubXMLReader();
+		//blah.parseDocument();
+		new TwoDSlideShow();
 
 	}
 }
