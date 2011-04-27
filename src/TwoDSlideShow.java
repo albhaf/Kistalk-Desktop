@@ -2,32 +2,17 @@ import java.awt.*;
 
 import javax.swing.*;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 
 import javax.imageio.ImageIO;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import java.awt.Image;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.List;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipFile;
-import java.util.zip.ZipInputStream;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-import java.net.MalformedURLException;
 import java.net.URL;
 
 @SuppressWarnings("serial")
@@ -212,8 +197,13 @@ currentPicture = currentPicture + 1;
 	public static void main(String args[]) {
 
 
+<<<<<<< HEAD
 		//PubXMLReader blah = new PubXMLReader();
 		//blah.parseDocument();
+=======
+//		PubXMLReader blah = new PubXMLReader();
+//		blah.parseDocument();
+>>>>>>> 14288ab2f2696de7fe86ee9f65594d07c73cb3d5
 		new TwoDSlideShow();
 
 	}

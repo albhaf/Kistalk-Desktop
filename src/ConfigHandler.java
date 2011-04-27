@@ -1,17 +1,5 @@
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Scanner;
+import java.io.*;
+import java.util.*;
 
 public class ConfigHandler {
 	public int i = 0, j = 0;
@@ -88,7 +76,7 @@ public class ConfigHandler {
 		Scanner scanner = new Scanner(new FileReader(fFile));
 		List<String> hans = new ArrayList<String>();
 		
-		if(type == 5){ //	Hämta allt
+		if(type == 5){ //	Hï¿½mta allt
 			hans.add(scanner.nextLine());
 		}else{
 			while(scanner.hasNextLine()){
