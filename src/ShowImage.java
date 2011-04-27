@@ -31,7 +31,7 @@ public class ShowImage extends JPanel{
 	float tp1=0;
 	//private int space;
     
-    //Variabler som sätts i konstruktorn
+    //Variabler som sï¿½tts i konstruktorn
 	private Rectangle monitorSize;
 	private Dimension textStartPosition =new Dimension(); // width == Ypos, height == Xpos.
 	private int correction;
@@ -153,7 +153,7 @@ public class ShowImage extends JPanel{
         imageUserTxtDsp.addX(textStartPosition.width);
         imageUserTxtDsp.addY(0);
         
-        //Nollställning av variabler
+        //Nollstï¿½llning av variabler
         outgoing=false;
 		timeStill.height=timeStill.width;
 	}
