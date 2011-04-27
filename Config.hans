@@ -1,0 +1,10 @@
+***Hans configfil***
+Number_of_Images %1
+Number_of_Hans %-
+Timer_interval %10
+supported_image_formats %.jpg .png .gif .bnp
+Number_of_Jimmys %-
+Screen_index %0
+XMLURL %http://www.kistalk.com/desktop_images.xml
+Number_of_comments %1
+Hejdå!
