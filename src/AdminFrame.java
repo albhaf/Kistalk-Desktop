@@ -32,7 +32,7 @@ import javax.swing.JRadioButton;
 import javax.swing.*;
 
 public class AdminFrame {
-	final int nrOfConfigValues = 9; // Includes regular textlines
+	final int nrOfConfigValues = 9; // Doesn't include regular textlines. If change, then change configHandler too
 	int nrOfPubSlides;
 	int slideNr = 0;
 	String value;
@@ -41,8 +41,7 @@ public class AdminFrame {
 	
 	JFrame adminFrame;
 	JFrame popFrame;
-//	JPanel bgPanel;
-	JPanel fgPanel;
+	JPanel thePanel;
 	JLabel headerLbl;
 	
 	JButton saveSetBtn;
@@ -94,20 +93,13 @@ public class AdminFrame {
 
 	//	Setting up the settings frame
 	private void setupFrame(){
+		// Background pic
 		ImageIcon icon = new ImageIcon("C:\\Users\\Andeers\\Pictures\\bgIcon.png");
 		bgImage = icon.getImage();
 		
-		//	Create new objects
+		//	Create all objects
 		adminFrame = new JFrame();
 		headerLbl = new JLabel();
-		fgPanel = new JPanel(){
-			public void paint(Graphics g) {
-	            g.drawImage(bgImage, 0,0, this);
-	    		setOpaque(false);
-	    		paintComponent(g);
-	    		setOpaque(true);
-			}
-		};
 		
 		saveSetBtn = new JButton();
 		resetBtn = new JButton();
@@ -141,7 +133,22 @@ public class AdminFrame {
 		pubSlidesDDLst = new JComboBox();
 		screenDDLst = new JComboBox();
 		
-		groupLayout = new GroupLayout(fgPanel);
+		// Create and Paint thePanel background
+		thePanel = new JPanel() //Observera att detta är en create!
+		{public void paint(Graphics g){
+				g.drawImage(bgImage, 0,0, this);
+	    		setOpaque(false); // Opaque sätts två ggr för att... thePanel inte skulle påverkas av något konstigt (?)
+	    		paintComponent(g);
+	    		setOpaque(true);
+	    		
+	    		System.out.println("paint"); //Visar mig när bg ritas upp
+	    		headerLbl.paint(headerLbl.getGraphics()); //Behövs tydligen för att rita ut loggan
+	    		
+			}
+		}
+		;
+		
+		groupLayout = new GroupLayout(thePanel);
 		
 		//	Frame settings
 		adminFrame.setSize(900,600);
@@ -150,13 +157,12 @@ public class AdminFrame {
 		adminFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		adminFrame.setTitle("KisTalk Slideshow Settings");
 		
-		adminFrame.setVisible(true);
-		
 		//	Panel settings
-		fgPanel.setLayout(groupLayout);
+		thePanel.setLayout(groupLayout);
+		thePanel.setBackground(Color.decode("#ae0808"));
 		
 		//	Label settings
-		headerLbl.setText("Welcome to KisTalk Administration Center!");
+		headerLbl.setIcon(new ImageIcon("C:\\Users\\Andeers\\Pictures\\kistalk_admin_logo.png"));
 		headerLbl.setFont(new Font("Cambria", Font.BOLD, 32));
 		headerLbl.setForeground(Color.WHITE);
 		
@@ -208,19 +214,16 @@ public class AdminFrame {
 		//	Button settings
 		saveSetBtn.setText("Save settings");
 		saveSetBtn.setForeground(Color.WHITE);
-		saveSetBtn.setBackground(Color.BLACK);
 		saveSetBtn.addActionListener(listener);
 		saveSetBtn.setOpaque(false);
 		
 		resetBtn.setText("Reset settings");
 		resetBtn.setForeground(Color.WHITE);
-		resetBtn.setBackground(Color.BLACK);
 		resetBtn.addActionListener(listener);
 		resetBtn.setOpaque(false);
 		
 		startBtn.setText("Start slideshow");
 		startBtn.setForeground(Color.WHITE);
-		startBtn.setBackground(Color.BLACK);
 		startBtn.addActionListener(listener);
 		startBtn.setOpaque(false);
 		
@@ -229,30 +232,26 @@ public class AdminFrame {
 		
 		//	Radiobuttons settings
 		yFoodRbtn.setText("True");
-		yFoodRbtn.setBackground(Color.BLACK);
 		yFoodRbtn.setForeground(Color.WHITE);
-		yFoodRbtn.setOpaque(false);
 		yFoodRbtn.addActionListener(listener);
+		yFoodRbtn.setOpaque(false);
 		
 		nFoodRbtn.setSelected(true);
 		nFoodRbtn.setText("False");
-		nFoodRbtn.setBackground(Color.BLACK);
 		nFoodRbtn.setForeground(Color.WHITE);
-		nFoodRbtn.setOpaque(false);
 		nFoodRbtn.addActionListener(listener);
+		nFoodRbtn.setOpaque(false);
 		
 		yPubRbtn.setText("True");
-		yPubRbtn.setBackground(Color.BLACK);
 		yPubRbtn.setForeground(Color.WHITE);
-		yPubRbtn.setOpaque(false);
 		yPubRbtn.addActionListener(listener);
+		yPubRbtn.setOpaque(false);
 		
 		nPubRbtn.setSelected(true);
 		nPubRbtn.setText("False");
-		nPubRbtn.setBackground(Color.BLACK);
 		nPubRbtn.setForeground(Color.WHITE);
-		nPubRbtn.setOpaque(false);
 		nPubRbtn.addActionListener(listener);
+		nPubRbtn.setOpaque(false);
 		
 		foodRbgr.add(yFoodRbtn);
 		foodRbgr.add(nFoodRbtn);
@@ -260,25 +259,33 @@ public class AdminFrame {
 		pubRbgr.add(yPubRbtn);
 		pubRbgr.add(nPubRbtn);
 		
-		//	ComboBox settings
+		//	DropDownList settings, with ItemListeners
 		pubSlidesDDLst.addItem("[Other Slideshow]");
 		pubSlidesDDLst.addItem("TMEIT");
 		pubSlidesDDLst.addItem("Qmisk");
 		pubSlidesDDLst.addItem("ITK");
-		pubSlidesDDLst.setOpaque(false);
 		pubSlidesDDLst.setFont(new Font("Algerian", Font.ITALIC, 12));
 		pubSlidesDDLst.addItemListener(
 				new ItemListener(){
 					public void itemStateChanged(ItemEvent e){
-						if (e.getStateChange() == ItemEvent.SELECTED)
-							statusLbl.setText(e.getItem().toString() + "s Slideshow is choosed");
+						if (e.getStateChange() == ItemEvent.SELECTED){
+							
+							if (e.getItem().toString() == "[Other Slideshow]"){
+								xmlPubPathTxt.enable();
+								statusLbl.setText("Choose a Slideshow");
+								
+							}else{
+								xmlPubPathTxt.disable();
+								statusLbl.setText(e.getItem().toString() + "s Slideshow is choosed");
+								
+							}
+						}
 					}
 				}
 		);
 		
 		screenDDLst.addItem("External");
 		screenDDLst.addItem("This");
-		screenDDLst.setOpaque(false);
 		screenDDLst.setFont(new Font("Algerian", Font.ITALIC, 12));
 		screenDDLst.addItemListener(
 				new ItemListener(){
@@ -293,11 +300,12 @@ public class AdminFrame {
 		groupLayout.setAutoCreateGaps(true);
 		groupLayout.setAutoCreateContainerGaps(true);
 		
+		//	Layout
 			//	Horisontal
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(GroupLayout.Alignment.CENTER)
 			.addComponent(headerLbl)
-			.addGap(100)
+			.addGap(70)
 			.addGroup(groupLayout.createSequentialGroup()
 				
 			   	.addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
@@ -421,8 +429,7 @@ public class AdminFrame {
 			);
 		
 		//	Add panel
-		adminFrame.add(fgPanel);
-		
+		adminFrame.add(thePanel);
 		adminFrame.setVisible(true);
 	}
 	
@@ -439,7 +446,7 @@ public class AdminFrame {
 		
 	}
 
-	//	Saves current settings to Config
+	//	Saves current settings to Config (except Default Turtle, he only lives in config when config is defaultahrized)
 	public void saveSettings() {
 		String[] lines = new String[45];
 		Date today = new Date();
@@ -512,13 +519,19 @@ public class AdminFrame {
 	}
 
 	//	Set the path
-	public void setPubSlidesPath(){
+	public void setPubSlidesPath(String name){
+		if (name == "TMEIT"){
+			xmlPubPathTxt.setText("C://TMEIT");
+		}else if (name == "Qmisk"){
+			xmlPubPathTxt.setText("C://Qmisk");
+		}else if (name == "ITK"){
+			xmlPubPathTxt.setText("C://ITK");
+		}
 		
-		xmlPubPathTxt.setText("C://TMEIT");
 	}
 	
-	public void disabelButtons(){
-		//	Disable buttons
+	//	Disable buttons
+	public void disabelButtons(){ // Inte färdig, men användbar (bla pop-up)
 		
 		saveSetBtn.setEnabled(false);
 		saveSetBtn.setVisible(false);
@@ -526,8 +539,8 @@ public class AdminFrame {
 		resetBtn.setVisible(false);
 	}
 	
-	public void enableButtons(){
-		//	Enable buttons
+	//	Enable buttons
+	public void enableButtons(){ // Inte färdig, men användbar (bla pop-up)
 		
 		saveSetBtn.setEnabled(true);
 		saveSetBtn.setVisible(true);
@@ -535,7 +548,8 @@ public class AdminFrame {
 		resetBtn.setVisible(true);
 	}
 	
-	public void popup(String message){
+	//	Creates a pop-up
+	public void popup(String message){ // Inte färdig, men användbar (Specificering av mat m.m.)
 		popFrame = new JFrame();
 		JPanel popPanel = new JPanel();
 		JLabel popLabel = new JLabel();
@@ -562,7 +576,8 @@ public class AdminFrame {
 		
 	}
 	
-	public void yFood() {
+	//	Dinner is served, send HTTP-post to server
+	public void yFood() {//Dålig kod, Per fixar
 		URL url;
 		try {
 			url = new URL("http://hostname:80/cgi");
@@ -581,7 +596,8 @@ public class AdminFrame {
 	    
 	}
 	
-	public void nFood(){
+	//	Dinner isn't served, send HTTP-post to server
+	public void nFood(){//Dålig kod, Per fixar
 		URL url;
 		try {
 			url = new URL("http://hostname:80/cgi");
@@ -599,7 +615,8 @@ public class AdminFrame {
 		}
 	}
 	
-	public void yPub(){
+	//	Pub is open, send HTTP-post to server
+	public void yPub(){ //Dålig kod, Per fixar
 		URL url;
 		try {
 			url = new URL("http://hostname:80/cgi");
@@ -617,7 +634,8 @@ public class AdminFrame {
 		}
 	}
 	
-	public void nPub(){
+	//	Pub is closed, send HTTP-post to server
+	public void nPub(){//Dålig kod, Per fixar
 		URL url;
 		try {
 			url = new URL("http://hostname:80/cgi");
@@ -650,40 +668,34 @@ public class AdminFrame {
 		new AdminFrame();
 	}
 
-	//	Listeners
+	//	Listener
 	public class ButtonListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			if (e.getSource() == saveSetBtn){
+			if (e.getSource() == saveSetBtn){ //Save settings
 				saveSettings();
 				statusLbl.setText("Status: Settings saved to Config");
-			}else if (e.getSource() == resetBtn){
+			}else if (e.getSource() == resetBtn){ //Reset config
 				resetConfig();
 				statusLbl.setText("Status: Config is back to normal");
-			}else if (e.getSource() == startBtn){
+			}else if (e.getSource() == startBtn){ //Start slideshow
 				System.out.println("Startar bildspel..."); //startSlideshow();
 				statusLbl.setText("Status: Starting Slideshow...");
-			}else if(e.getSource() == yFoodRbtn){
+			}else if(e.getSource() == yFoodRbtn){ //Dinner served
 				yFood();
 				statusLbl.setText("Dinner is served!");
-			}else if(e.getSource() == nFoodRbtn){
+			}else if(e.getSource() == nFoodRbtn){ //No dinner
 				nFood();
 				statusLbl.setText("Food is no more");
-			}else if(e.getSource() == yPubRbtn){
+			}else if(e.getSource() == yPubRbtn){ //Pub open
 				yPub();
 				statusLbl.setText("The pub is open!");
-			}else if(e.getSource() == nPubRbtn){
+			}else if(e.getSource() == nPubRbtn){ //Pub closed
 				nPub();
 				statusLbl.setText("The pub is closed");
-			}else if(e.getSource() == pubSlidesDDLst){
-				
-			}else if(e.getSource() == screenDDLst){
-				statusLbl.setText("lol");
-			}else if(e.getSource().toString() == "hej"){
-				
-			}else if(e.getSource() == popButton){
+			}else if(e.getSource() == popButton){ // För att testa pop-upen
 				value = popText.getText();
 				popFrame.dispose();
-			}else if(e.getSource() == lolButton){
+			}else if(e.getSource() == lolButton){ // För att testa pop-upen
 				popup("hejhejhallå!");
 				statusLbl.setText("popup! Kom igen!");
 			}else if(e.getSource() == null){

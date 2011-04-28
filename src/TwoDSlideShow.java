@@ -112,7 +112,8 @@ public class TwoDSlideShow extends Panel implements ActionListener {
 	private void firstPicture() {
 		xmlreader = new XMLreader(xmlPath);
 		imgXMLList = xmlreader.getImagesInfo();
-		for (int i = 0; i < 3; i++) { //nrOfPicsServer
+		nrOfPicsServer = imgXMLList.size(); //tillfälligt!
+		for (int i = 0; i < nrOfPicsServer && i < urlArray.length ; i++) { //nrOfPicsServer
 			urlArray[i] = imgXMLList.get(i).getLink();
 		}
 		try {
