@@ -5,10 +5,14 @@ import java.util.List;
 public class PubTextXML {
 	private float xPos;
 	private float yPos;
+	private String fontSize;
 	private String font;
 	private List<String> text;
+	private String alignment;
 	
 	public PubTextXML(){
+		alignment = "center";
+		font = "false";
 		text = (new ArrayList<String>());
 	}
 
@@ -49,5 +53,34 @@ public class PubTextXML {
 		return yPos;
 	}
 
+	public void setFontSize(String fontSize) {
+		this.fontSize = fontSize;
+	}
+
+	public String getFontSize() {
+		return fontSize;
+	}
+
+	public String toString(){
+		String tmp;
+		StringBuffer tmpsb = new StringBuffer();
+		tmpsb.append("Xpos: " + this.getxPos());
+		tmpsb.append("Ypos: " + this.getyPos());
+		tmpsb.append("Font: " + this.getFont());
+		tmpsb.append("FontSize: " + this.getFontSize());
+		tmpsb.append("text: "+ this.getText());
+		
+		tmp=tmpsb.toString();
+		return tmp;
+		
+	}
+
+	public void setAlignment(String alignment) {
+		this.alignment = alignment;
+	}
+
+	public String getAlignment() {
+		return alignment;
+	}
 	
 }

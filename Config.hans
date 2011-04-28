@@ -1,5 +1,5 @@
 ***Hans configfil***
-Number_of_Images %1
+Number_of_Images %10
 Number_of_Hans %-
 Timer_interval %10
 supported_image_formats %.jpg .png .gif .bnp

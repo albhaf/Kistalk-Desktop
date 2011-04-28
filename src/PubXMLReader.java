@@ -23,7 +23,8 @@ public class PubXMLReader extends DefaultHandler{
 
 	private List<PubTextXML> slides;
 	private String XMLURL ="C:\\Users\\Ludvig\\workspace\\JavaDekstopAppny\\content.xml";
-	
+	private int counter=0;
+	private String currentType;
 	
 	private String tempVal;
 	
@@ -81,11 +82,30 @@ public class PubXMLReader extends DefaultHandler{
 	public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
 		//reset
 		tempVal = "";
-		if(qName.equalsIgnoreCase("text")) {
-			//create a new instance of employee
+		//try{
+ 		if(qName.equalsIgnoreCase("style:style")) {
+ 			currentType=attributes.getValue("style:family");
+			if(attributes.getValue("style:family").equalsIgnoreCase("paragraph")/*&& counter >2*/){
+				tempPubText = new PubTextXML();
+				System.out.println(attributes.getValue("style:name"));
+				counter=counter+1;
+			}
+
+		}
+		
+		if(qName.equalsIgnoreCase("style:text-properties")){
+			//try{
+			tempPubText.setFontSize(attributes.getValue("fo:font-size"));
+			tempPubText.setFont(attributes.getValue("fo:font=family"));
+			//tempPubText.setxPos(attributes.getValues(""))
+		//}catch(NullPointerException e){
+
+		//}
+		}
+		try{
+		System.out.println(slides.toString());
+		}catch(NullPointerException e){
 			
-			tempPubText = new PubTextXML();
-			//tempEmp.setType(attributes.getValue("type"));
 		}
 	}
 	
@@ -94,9 +114,16 @@ public class PubXMLReader extends DefaultHandler{
 	}
 	
 	public void endElement(String uri, String localName, String qName) throws SAXException {
-
 		if(qName.equalsIgnoreCase("style:style")) {
-		//	slides.add(tempPubText);
+			try{
+			//if(tempPubText!=null)
+				if(tempPubText.getFont().equals(null)==false){
+					
+				slides.add(tempPubText);
+			
+				}}catch(NullPointerException e){
+				
+			}
 		}else if(qName.equalsIgnoreCase("Comment")){
 		//	comments.add(tempComment);
 /*		}else if(qName.equalsIgnoreCase("comment-user")){
