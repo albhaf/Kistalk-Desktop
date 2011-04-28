@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -28,6 +29,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.*;
 
 public class AdminFrame {
 	final int nrOfConfigValues = 9; // Includes regular textlines
@@ -39,7 +41,7 @@ public class AdminFrame {
 	
 	JFrame adminFrame;
 	JFrame popFrame;
-	JPanel bgPanel;
+//	JPanel bgPanel;
 	JPanel fgPanel;
 	JLabel headerLbl;
 	
@@ -80,22 +82,32 @@ public class AdminFrame {
 	
 	ButtonListener listener = new ButtonListener();
 	ConfigHandler handler;
+	GroupLayout groupLayout;
+	Graphics g;
 
 	//	Constructor
 	public AdminFrame() {
 		readConfig();
-		setupPanel();
+		setupFrame();
 
 	}
 
 	//	Setting up the settings frame
-	private void setupPanel(){
+	private void setupFrame(){
+		ImageIcon icon = new ImageIcon("C:\\Users\\Andeers\\Pictures\\bgIcon.png");
+		bgImage = icon.getImage();
 		
 		//	Create new objects
 		adminFrame = new JFrame();
-		fgPanel = new JPanel();
-		bgPanel = new JPanel();
 		headerLbl = new JLabel();
+		fgPanel = new JPanel(){
+			public void paint(Graphics g) {
+	            g.drawImage(bgImage, 0,0, this);
+	    		setOpaque(false);
+	    		paintComponent(g);
+	    		setOpaque(true);
+			}
+		};
 		
 		saveSetBtn = new JButton();
 		resetBtn = new JButton();
@@ -129,9 +141,7 @@ public class AdminFrame {
 		pubSlidesDDLst = new JComboBox();
 		screenDDLst = new JComboBox();
 		
-		
-		GroupLayout groupLayout = new GroupLayout(fgPanel);
-		
+		groupLayout = new GroupLayout(fgPanel);
 		
 		//	Frame settings
 		adminFrame.setSize(900,600);
@@ -140,17 +150,9 @@ public class AdminFrame {
 		adminFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		adminFrame.setTitle("KisTalk Slideshow Settings");
 		
+		adminFrame.setVisible(true);
+		
 		//	Panel settings
-		ImageIcon icon;
-		icon = new ImageIcon("C:\\Users\\Andeers\\Pictures\\bgIcon.png");
-		bgLbl.setIcon(icon);
-		bgPanel.add(bgLbl);
-		
-//		paintComponent(g);
-
-		
-		fgPanel.setBackground(Color.BLACK);
-		fgPanel.setOpaque(false);
 		fgPanel.setLayout(groupLayout);
 		
 		//	Label settings
@@ -419,39 +421,10 @@ public class AdminFrame {
 			);
 		
 		//	Add panel
-		adminFrame.add(bgPanel);
 		adminFrame.add(fgPanel);
 		
 		adminFrame.setVisible(true);
 	}
-	
-//	@Override
-//	protected void paintComponent(Graphics g){
-//		bgImage = ImageIO.read(new URL("C:\\Users\\Andeers\\Pictures\\bgIcon.png"));
-//	    super.paintComponent(g); 
-//	    if (bgImage != null)
-//	      g.drawImage(bgImage, 0,0, bgPanel);
-	    
-	    
-//		Image image = null;
-//		Graphics g = null;
-//		imgRect Rect = new imgRect(0, 0, 200, 200);
-//	    try {
-//			image = ImageIO.read(new File("C:\\Users\\Andeers\\Desktop\\tapetoverlay1.png"));
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		
-//		TexturePaint tp = new TexturePaint(slideImage,Rect);
-//        g2d.setPaint(tp);
-//        g2d.fill(Rect);
-//		
-//		g.setPaint(image);
-//		g.drawImage(image, 0, 0, null);
-//		panel.paint(g);
-//	    
-//	  }
 	
 	//	Reads Config and saves values in 'confValues'
 	private void readConfig() {

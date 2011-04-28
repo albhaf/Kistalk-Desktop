@@ -36,7 +36,7 @@ Number_of_Jimmys %-
  
 supported_image_formats %.jpg .png .gif .bnp
  
-Screen_index %1
+Screen_index %0
  
 XMLURL %C:\\Users\\Andeers\\Documents\\Mina mottagna filer\\bild.xml
  
