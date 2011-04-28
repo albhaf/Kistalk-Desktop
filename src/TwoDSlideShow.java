@@ -46,7 +46,7 @@ public class TwoDSlideShow extends Panel implements ActionListener {
 
 	Rectangle monitor = new Rectangle();
 
-	public TwoDSlideShow() {
+	public TwoDSlideShow() throws FileNotFoundException {
 		readConfig();
 		getScreenResolution();
 		firstPicture();
@@ -85,27 +85,27 @@ public class TwoDSlideShow extends Panel implements ActionListener {
 
 	}
 
-	private void readConfig() {
-		List<String> values = new ArrayList<String>();
-		ConfigHandler reader = new ConfigHandler("Config.hans");
+	private void readConfig() throws FileNotFoundException {
 
+		ConfigHandler reader = new ConfigHandler();
+		String[] values = reader.getAllLines();
 		try {
-			values = reader.processLineByLine(1);
+			values = reader.processLineByLine();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 		// Hantera inkommande data
-		nrOfPicsServer = Integer.valueOf(values.get(0));
+		nrOfPicsServer = Integer.valueOf(values[0]);
 		serverImgs = new Image[nrOfPicsServer];
 		iconArrayServer = new ImageIcon[nrOfPicsServer];
 		urlArray = new URL[nrOfPicsServer];
-		t = new Timer(Integer.valueOf(values.get(1)), this);
-		fileFormats = values.get(2).split(" ");
-		screenIndex = Byte.valueOf(values.get(3));
-		xmlPath = values.get(4);
-		nrOfComments = Integer.valueOf(values.get(5));
+		t = new Timer(Integer.valueOf(values[1]), this);
+		fileFormats = values[2].split(" ");
+		screenIndex = Byte.valueOf(values[3]);
+		xmlPath = values[4];
+		nrOfComments = Integer.valueOf(values[5]);
 
 	}
 
@@ -167,32 +167,7 @@ public class TwoDSlideShow extends Panel implements ActionListener {
 
 	}
 
-	/*
-	 * public static void copyPptPics() throws IOException{
-	 * 
-	 * ZipFile zf = new ZipFile("C:\\Users\\Ludvig\\Documents\\asd.odp");
-	 * Enumeration<? extends ZipEntry> files = zf.entries();
-	 * 
-	 * while (files.hasMoreElements()) { ZipEntry ze = files.nextElement();
-	 * 
-	 * System.out.println("Decompressing " + ze.getName());
-	 * System.out.println("  Compressed Size: " + ze.getCompressedSize() +
-	 * "  Expanded Size: " + ze.getSize() + "\n"); if(ze.isDirectory()==false){
-	 * BufferedInputStream fin = new BufferedInputStream(zf.getInputStream(ze));
-	 * BufferedOutputStream fout = new BufferedOutputStream(
-	 * 
-	 * new FileOutputStream(ze.getName()));
-	 * 
-	 * int i; do { i = fin.read(); if (i != -1) fout.write(i); } while (i !=
-	 * -1);
-	 * 
-	 * fout.close(); fin.close(); } } zf.close(); }
-	 */
-
-	public static void main(String args[]) {
-		// PubXMLReader blah = new PubXMLReader();
-		// blah.parseDocument();
-
+	public static void main(String args[]) throws FileNotFoundException {
 		new TwoDSlideShow();
 
 	}

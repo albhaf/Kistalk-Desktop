@@ -56,7 +56,7 @@ public class ConfigHandler {
 
 		//	Write to file
 		try {
-			out = new BufferedWriter(new FileWriter(fFile));
+			out = new BufferedWri			values = reader.processLineByLine();ter(new FileWriter(fFile));
 			out.write(sb.toString());
 			out.close();
 		} catch (IOException e) {
@@ -83,11 +83,7 @@ public class ConfigHandler {
 
 	//Get all lines in an array ??
 	public String[] getAllLines() throws FileNotFoundException{
-		Scanner scanner = new Scanner(new FileReader(fFile));
-		String[] lines = new String[nrOfValues];
-		
-		
-		
+		String[] lines = new String[nrOfValues];	
 		return lines;
 	}
 	
@@ -104,7 +100,6 @@ public class ConfigHandler {
 				i++;
 			}
 		}
-		
 		
 		return lines;
 	}
