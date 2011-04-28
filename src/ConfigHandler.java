@@ -33,12 +33,12 @@ public class ConfigHandler {
 
 	}
 
-	//	Gives Config new value/s
+	//	Gives config new value/s
 	public void setConfig(String[] tmp) {
 		BufferedWriter out;
 		StringBuffer sb = new StringBuffer();
 		
-		//	Append all incomming strings
+		//	Append all incoming strings
 		for (int i = 0; i < tmp.length; i++) {
 			sb.append(tmp[i]);
 			sb.append("\n");
@@ -76,7 +76,7 @@ public class ConfigHandler {
 		Scanner scanner = new Scanner(new FileReader(fFile));
 		List<String> hans = new ArrayList<String>();
 		
-		if(type == 5){ //	H�mta allt
+		if(type == 5){ //	Hämta allt
 			hans.add(scanner.nextLine());
 		}else{
 			while(scanner.hasNextLine()){

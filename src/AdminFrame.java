@@ -198,7 +198,7 @@ public class AdminFrame {
 		timeTxt.setFont(new Font("Algerian", Font.ITALIC, 12));
 		
 		//	Button settings
-		newImgBtn.setText("Lägg till ny slide");
+		newImgBtn.setText("Lï¿½gg till ny slide");
 		newImgBtn.setForeground(Color.WHITE);
 		newImgBtn.setBackground(Color.BLACK);
 		newImgBtn.addActionListener(listener);
@@ -464,10 +464,10 @@ public class AdminFrame {
 		
 		//	Standard text
 		valueslcl[0] = "**Hans_config-fil**";
-		valueslcl[1] = "//	Specifiera exakt hur många bilder som har hämtats";
+		valueslcl[1] = "//	Specifiera exakt hur mï¿½nga bilder som har hï¿½mtats";
 		valueslcl[3] = "Number_of_Hans %-";
 		valueslcl[5] = "Number_of_Jimmys %-";
-		valueslcl[10] = "Hejdå!";
+		valueslcl[10] = "Hejdï¿½!";
 		
 		//	Defined values
 		valueslcl[2] = "Max_number_of_Images %" + nrOfImgsTxt.getText();
@@ -573,7 +573,7 @@ public class AdminFrame {
 		
 		disabelButtons();
 		
-		// Välj vilken slide som ska editeras, slideNr
+		// VÃ¤lj vilken slide som ska editeras, slideNr
 		//Popup("Vilken bild ska editeras?");
 		
 		try {
@@ -639,7 +639,7 @@ public class AdminFrame {
 		if (uploadTxt.getText().equals("") == false){
 			System.out.println("Du har valt att ladda upp en bild! Grattis!");
 			
-			// Skicka med länken till textfilen!
+			// Skicka med lï¿½nken till textfilen!
 			imgLink = uploadTxt.getText();
 			
 			nrOfConLtrs = 50;
@@ -732,10 +732,10 @@ public class AdminFrame {
 		
 		int slideNr = 0;
 		
-		// Välj vilken slide som ska tas bort, slideNr
+		// Vï¿½lj vilken slide som ska tas bort, slideNr
 		
 		if (slideNr >= nrOfPubSlides){
-			System.out.println("Du måste välja en slide som faktiskt finns! :(");
+			System.out.println("Du mï¿½ste vï¿½lja en slide som faktiskt finns! :(");
 		}
 		
 		try {

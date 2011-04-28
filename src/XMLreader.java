@@ -10,124 +10,112 @@ import javax.xml.parsers.SAXParserFactory;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
-
 import org.xml.sax.helpers.DefaultHandler;
 
-public class XMLreader extends DefaultHandler{
+public class XMLreader extends DefaultHandler {
 
 	private List<ImageXML> images;
 	private List<CommentXML> comments;
 	private String XMLURL;
-	
-	
+
 	private String tempVal;
-	
-	//to maintain context
+
+	// to maintain context
 	private ImageXML tempImg;
 	private CommentXML tempComment;
-	
-	public XMLreader(String URL){
+
+	public XMLreader(String URL) {
 		images = new ArrayList<ImageXML>();
 		XMLURL = URL;
-	
 	}
-	
-	public List<ImageXML> getImagesInfo(){
+
+	public List<ImageXML> getImagesInfo() {
 		this.parseDocument();
 		return images;
 	}
 
 	private void parseDocument() {
-		
-		//get a factory
+		// get a factory
 		SAXParserFactory spf = SAXParserFactory.newInstance();
 		try {
-		
-			//get a new instance of parser
+			// get a new instance of parser
 			SAXParser sp = spf.newSAXParser();
-			
-			//parse the file and also register this class for call backs
+			// parse the file and also register this class for call backs
 			sp.parse(XMLURL, this);
-			
-		}catch(SAXException se) {
+		} catch (SAXException se) {
 			se.printStackTrace();
-		}catch(ParserConfigurationException pce) {
+		} catch (ParserConfigurationException pce) {
 			pce.printStackTrace();
-		}catch (IOException ie) {
+		} catch (IOException ie) {
 			ie.printStackTrace();
 		}
 	}
-
-	/**
-	 * Iterate through the list and print
-	 * the contents
-	 */
-/*	private void printData(){
-		
-		System.out.println("No of Images '" + images.size() + "'.");
-		
-		Iterator<ImageXML> it = images.iterator();
-		while(it.hasNext()) {
-			System.out.println(it.next().toString());
-		}
-	}*/
 	
+	/**
+	 * Iterate through the list and print the contents
+	 */
+	/*
+	 * private void printData(){
+	 * 
+	 * System.out.println("No of Images '" + images.size() + "'.");
+	 * 
+	 * Iterator<ImageXML> it = images.iterator(); while(it.hasNext()) {
+	 * System.out.println(it.next().toString()); } }
+	 */
 
-	//Event Handlers
-	public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
-		//reset
+	// Event Handlers
+	public void startElement(String uri, String localName, String qName,
+			Attributes attributes) throws SAXException {
+		// reset
 		tempVal = "";
-		if(qName.equalsIgnoreCase("Image")) {
-			//create a new instance of employee
+		if (qName.equalsIgnoreCase("Image")) {
+			// create a new instance of employee
 			tempImg = new ImageXML();
 			comments = new ArrayList<CommentXML>();
-			//tempEmp.setType(attributes.getValue("type"));
-		}else if(qName.equalsIgnoreCase("comment")){
+			// tempEmp.setType(attributes.getValue("type"));
+		} else if (qName.equalsIgnoreCase("comment")) {
 			tempComment = new CommentXML();
 		}
 	}
-	
-	public void characters(char[] ch, int start, int length) throws SAXException {
-		tempVal = new String(ch,start,length);
-	}
-	
-	public void endElement(String uri, String localName, String qName) throws SAXException {
 
-		if(qName.equalsIgnoreCase("Image")) {
+	public void characters(char[] ch, int start, int length)
+			throws SAXException {
+		tempVal = new String(ch, start, length);
+	}
+
+	public void endElement(String uri, String localName, String qName)
+			throws SAXException {
+		if (qName.equalsIgnoreCase("image")) {
 			tempImg.setComments(comments);
 			images.add(tempImg);
-		}else if(qName.equalsIgnoreCase("Comment")){
+		} else if (qName.equalsIgnoreCase("comment")) {
 			comments.add(tempComment);
-		}else if(qName.equalsIgnoreCase("comment-user")){
+		} else if (qName.equalsIgnoreCase("comment-user")) {
 			tempComment.setUser(tempVal);
-		}else if(qName.equalsIgnoreCase("comment-content")){
+		} else if (qName.equalsIgnoreCase("comment-content")) {
 			tempComment.setContent(tempVal);
-		}else if(qName.equalsIgnoreCase("comment-created_at")){
+		} else if (qName.equalsIgnoreCase("comment-created_at")) {
 			tempComment.setCreated(tempVal);
-		}else if (qName.equalsIgnoreCase("URL-big")) {
+		} else if (qName.equalsIgnoreCase("URL-big")) {
 			URL urli = null;
-
-			
 			try {
 				urli = new URL(tempVal.replace(" ", "+"));
 			} catch (MalformedURLException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 
-				tempImg.setLink(urli);
+			tempImg.setLink(urli);
 
-
-		}else if (qName.equalsIgnoreCase("image-created_at")) {
+		} else if (qName.equalsIgnoreCase("image-created_at")) {
 			tempImg.setDate((tempVal));
-		}else if (qName.equalsIgnoreCase("Image-User")) {
+		} else if (qName.equalsIgnoreCase("Image-User")) {
 			tempImg.setUser((tempVal));
-		}else if (qName.equalsIgnoreCase("text")){
+		} else if (qName.equalsIgnoreCase("text")) {
 			tempImg.setImageText(tempVal);
-		}else if (qName.equalsIgnoreCase("image-description")){
+		} else if (qName.equalsIgnoreCase("image-description")) {
 			tempImg.setImageText(tempVal);
 		}
-		
+
 	}
-	
+
 }

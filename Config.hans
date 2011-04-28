@@ -5,6 +5,6 @@ Timer_interval %5
 supported_image_formats %.jpg .png .gif .bnp
 Number_of_Jimmys %-
 Screen_index %0
-XMLURL %http://www.kistalk.com/desktop_images.xml
+XMLURL %http://dev.kistalk.com/desktop_images.xml
 Number_of_comments %1
 Hejd�

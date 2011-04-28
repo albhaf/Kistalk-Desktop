@@ -33,7 +33,7 @@ public class TwoDSlideShow extends Panel implements ActionListener {
 	int currentPicture = 0;
 	int currentPubPicture = 0;
 	int nrOfComments = 0;
-	int timeStill =200;
+	int timeStill = 200;
 
 	Graphics2D g2d;
 	JPanel panel;
@@ -57,9 +57,10 @@ public class TwoDSlideShow extends Panel implements ActionListener {
 	// Build the frame (Slideshow)
 	public void createFrame() {
 
-
 		JFrame frame = new JFrame("ShowImage.java");
-		slideShowHandler = new ShowImage((BufferedImage) serverImgs[0],imgXMLList.get(0).getUser(),imgXMLList.get(0).getImageText(), monitor, timeStill, imgXMLList.get(0).getComments());
+		slideShowHandler = new ShowImage((BufferedImage) serverImgs[0],
+				imgXMLList.get(0).getUser(), imgXMLList.get(0).getImageText(),
+				monitor, timeStill, imgXMLList.get(0).getComments());
 		panel = slideShowHandler;
 		frame.getContentPane().add(panel);
 
@@ -126,14 +127,15 @@ public class TwoDSlideShow extends Panel implements ActionListener {
 
 	private void updatePicture() {
 
-		if(currentPicture>=nrOfPicsServer){
-			currentPicture=0;
+		if (currentPicture >= nrOfPicsServer) {
+			currentPicture = 0;
 		}
 		if (currentPicture == nrOfPicsServer - 1) {
 			imgXMLList = xmlreader.getImagesInfo();
 
 		}
-		if (urlArray[currentPicture].equals(imgXMLList.get(currentPicture).getLink()) == false || serverImgs[currentPicture]==null) {
+		if (urlArray[currentPicture].equals(imgXMLList.get(currentPicture)
+				.getLink()) == false || serverImgs[currentPicture] == null) {
 			urlArray[currentPicture] = imgXMLList.get(currentPicture).getLink();
 			try {
 				serverImgs[currentPicture] = ImageIO
@@ -142,10 +144,14 @@ public class TwoDSlideShow extends Panel implements ActionListener {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
+
 		}
-		slideShowHandler.UpdatePicture((BufferedImage) serverImgs[currentPicture],imgXMLList.get(currentPicture).getUser(),imgXMLList.get(currentPicture).getImageText(), imgXMLList.get(currentPicture).getComments());
-currentPicture = currentPicture + 1;
+		slideShowHandler.UpdatePicture(
+				(BufferedImage) serverImgs[currentPicture],
+				imgXMLList.get(currentPicture).getUser(),
+				imgXMLList.get(currentPicture).getImageText(),
+				imgXMLList.get(currentPicture).getComments());
+		currentPicture = currentPicture + 1;
 
 	}
 
@@ -153,57 +159,40 @@ currentPicture = currentPicture + 1;
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == t) {
 
-
-				slideShowHandler.MoveObjects();
-				if (slideShowHandler.getSlideImageX() > monitor.width) {
-					updatePicture();
-				}
+			slideShowHandler.MoveObjects();
+			if (slideShowHandler.getSlideImageX() > monitor.width) {
+				updatePicture();
 			}
-
 		}
 
-	/*public static void copyPptPics() throws IOException{
-	        
-	                ZipFile zf = new ZipFile("C:\\Users\\Ludvig\\Documents\\asd.odp");
-	                Enumeration<? extends ZipEntry> files = zf.entries();
+	}
 
-	                while (files.hasMoreElements()) {
-	                  ZipEntry ze = files.nextElement();
+	/*
+	 * public static void copyPptPics() throws IOException{
+	 * 
+	 * ZipFile zf = new ZipFile("C:\\Users\\Ludvig\\Documents\\asd.odp");
+	 * Enumeration<? extends ZipEntry> files = zf.entries();
+	 * 
+	 * while (files.hasMoreElements()) { ZipEntry ze = files.nextElement();
+	 * 
+	 * System.out.println("Decompressing " + ze.getName());
+	 * System.out.println("  Compressed Size: " + ze.getCompressedSize() +
+	 * "  Expanded Size: " + ze.getSize() + "\n"); if(ze.isDirectory()==false){
+	 * BufferedInputStream fin = new BufferedInputStream(zf.getInputStream(ze));
+	 * BufferedOutputStream fout = new BufferedOutputStream(
+	 * 
+	 * new FileOutputStream(ze.getName()));
+	 * 
+	 * int i; do { i = fin.read(); if (i != -1) fout.write(i); } while (i !=
+	 * -1);
+	 * 
+	 * fout.close(); fin.close(); } } zf.close(); }
+	 */
 
-	                  System.out.println("Decompressing " + ze.getName());
-	                  System.out.println("  Compressed Size: " + ze.getCompressedSize()
-	                      + "  Expanded Size: " + ze.getSize() + "\n");
-	                     if(ze.isDirectory()==false){
-	                  BufferedInputStream fin = new BufferedInputStream(zf.getInputStream(ze));
-	                  BufferedOutputStream fout = new BufferedOutputStream(
-
-	                		  new FileOutputStream(ze.getName()));
-
-	                  int i;
-	                  do {
-	                    i = fin.read();
-	                    if (i != -1)
-	                      fout.write(i);
-	                  } while (i != -1);
-
-	                  fout.close();
-	                  fin.close();
-	                     }
-	                }
-	                zf.close();
-	              }*/
-		 
-	
 	public static void main(String args[]) {
+		// PubXMLReader blah = new PubXMLReader();
+		// blah.parseDocument();
 
-
-<<<<<<< HEAD
-		//PubXMLReader blah = new PubXMLReader();
-		//blah.parseDocument();
-=======
-//		PubXMLReader blah = new PubXMLReader();
-//		blah.parseDocument();
->>>>>>> 14288ab2f2696de7fe86ee9f65594d07c73cb3d5
 		new TwoDSlideShow();
 
 	}
