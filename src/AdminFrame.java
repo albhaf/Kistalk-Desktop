@@ -492,8 +492,8 @@ public class AdminFrame {
 		lines[32] = "Timer_interval %" + timeTxt.getText();
 		lines[34] = "Number_of_Jimmys %-";
 		lines[36] = "supported_image_formats %.jpg .png .gif .bnp";
-		lines[38] = "Screen_index %1";
-		lines[40] = "XMLURL %C:\\\\Users\\\\Andeers\\\\Documents\\\\Mina mottagna filer\\\\bild.xml";
+		lines[38] = "Screen_index %0";
+		lines[40] = "XMLURL %http://www.kistalk.com/desktop_images.xml";
 		lines[42] = "Number_of_comments %2";
 		lines[44] = "Path_to_Pubslides %" + xmlPubPathTxt.getText();
 		
@@ -662,7 +662,12 @@ public class AdminFrame {
 		readConfig();
 		
 		// Starta bildspelet
-		//new TwoDSlideShow();
+		try {
+			new TwoDSlideShow();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 	
@@ -681,7 +686,7 @@ public class AdminFrame {
 				resetConfig();
 				statusLbl.setText("Status: Config is back to normal");
 			}else if (e.getSource() == startBtn){ //Start slideshow
-				//startSlideshow();
+				startSlideshow();
 				statusLbl.setText("Status: Starting Slideshow...");
 			}else if(e.getSource() == yFoodRbtn){ //Dinner served
 				yFood();
