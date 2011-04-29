@@ -26,6 +26,7 @@ public class TwoDSlideShowInfo{
 	int currentPubPicture = 0;
 	int nrOfComments = 0;
 	int nrOfPicsServer;
+	int timeStill;
 	
 	
 	public TwoDSlideShowInfo() {
@@ -44,10 +45,10 @@ public class TwoDSlideShowInfo{
 		return gc[0].getBounds();
 	}
 	
-	protected int readConfig(int screenIndex) throws FileNotFoundException {
+	protected void readConfig(int screenIndex) throws FileNotFoundException {
 
 		ConfigHandler reader = new ConfigHandler();
-		String[] values = reader.getAllLines();
+		String[] values = new String[9];
 
 		try {
 			values = reader.processLineByLine();
@@ -65,7 +66,7 @@ public class TwoDSlideShowInfo{
 		screenIndex = Byte.valueOf(values[5]);
 		xmlPath = values[6];
 		nrOfComments = Integer.valueOf(values[7]);
-		return Integer.valueOf(values[2]);
+		timeStill = Integer.valueOf(values[2]);
 	}
 
 	protected void setLinks() {
@@ -91,10 +92,10 @@ public class TwoDSlideShowInfo{
 		currentPicture++;
 	}
 	
-	protected ShowImage createShowImage(Rectangle monitor, int timeStill){
+	protected ShowImage createShowImage(Rectangle monitor){
 		return new ShowImage((BufferedImage) serverImgs[0],
 				imgXMLList.get(0).getUser(),imgXMLList.get(0).getImageText(),
-				monitor, timeStill,imgXMLList.get(0).getComments());	
+				monitor, timeStill, imgXMLList.get(0).getComments());	
 	}
 	
 	protected void updatePicture(ShowImage slideShowHandler){
