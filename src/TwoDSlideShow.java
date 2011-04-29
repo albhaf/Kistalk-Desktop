@@ -2,8 +2,10 @@ import java.awt.*;
 
 import javax.swing.*;
 
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
+
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -33,7 +35,7 @@ public class TwoDSlideShow extends Panel implements ActionListener {
 	int currentPicture = 0;
 	int currentPubPicture = 0;
 	int nrOfComments = 0;
-	int timeStill =200;
+	int timeStill = 200;
 
 	Graphics2D g2d;
 	JPanel panel;
@@ -57,9 +59,10 @@ public class TwoDSlideShow extends Panel implements ActionListener {
 	// Build the frame (Slideshow)
 	public void createFrame() {
 
-
 		JFrame frame = new JFrame("ShowImage.java");
-		slideShowHandler = new ShowImage((BufferedImage) serverImgs[0],imgXMLList.get(0).getUser(),imgXMLList.get(0).getImageText(), monitor, timeStill, imgXMLList.get(0).getComments());
+		slideShowHandler = new ShowImage((BufferedImage) serverImgs[0],
+				imgXMLList.get(0).getUser(), imgXMLList.get(0).getImageText(),
+				monitor, timeStill, imgXMLList.get(0).getComments());
 		panel = slideShowHandler;
 		frame.getContentPane().add(panel);
 
@@ -85,26 +88,26 @@ public class TwoDSlideShow extends Panel implements ActionListener {
 	}
 
 	private void readConfig() {
-		List<String> values = new ArrayList<String>();
-		ConfigHandler reader = new ConfigHandler("Config.hans");
+		String[] values = new String[10];
+		ConfigHandler reader = new ConfigHandler();
 
 		try {
-			values = reader.processLineByLine(1);
+			values = reader.processLineByLine();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 		// Hantera inkommande data
-		nrOfPicsServer = Integer.valueOf(values.get(0));
+		nrOfPicsServer = Integer.valueOf(values[0]);
 		serverImgs = new Image[nrOfPicsServer];
 		iconArrayServer = new ImageIcon[nrOfPicsServer];
 		urlArray = new URL[nrOfPicsServer];
-		t = new Timer(Integer.valueOf(values.get(1)), this);
-		fileFormats = values.get(2).split(" ");
-		screenIndex = Byte.valueOf(values.get(3));
-		xmlPath = values.get(4);
-		nrOfComments = Integer.valueOf(values.get(5));
+		t = new Timer(Integer.valueOf(values[2]), this);
+		fileFormats = values[4].split(" ");
+		screenIndex = Byte.valueOf(values[5]);
+		xmlPath = values[6];
+		nrOfComments = Integer.valueOf(values[7]);
 
 	}
 
@@ -112,7 +115,7 @@ public class TwoDSlideShow extends Panel implements ActionListener {
 		xmlreader = new XMLreader(xmlPath);
 		imgXMLList = xmlreader.getImagesInfo();
 		nrOfPicsServer = imgXMLList.size();
-		for (int i = 0; i < nrOfPicsServer; i++) {
+		for (int i = 0; i < nrOfPicsServer && i < urlArray.length; i++) {
 			urlArray[i] = imgXMLList.get(i).getLink();
 		}
 		try {
@@ -127,14 +130,15 @@ public class TwoDSlideShow extends Panel implements ActionListener {
 
 	private void updatePicture() {
 
-		if(currentPicture>=nrOfPicsServer){
-			currentPicture=0;
+		if (currentPicture >= nrOfPicsServer) {
+			currentPicture = 0;
 		}
 		if (currentPicture == nrOfPicsServer - 1) {
 			imgXMLList = xmlreader.getImagesInfo();
 
 		}
-		if (urlArray[currentPicture].equals(imgXMLList.get(currentPicture).getLink()) == false || serverImgs[currentPicture]==null) {
+		if (urlArray[currentPicture].equals(imgXMLList.get(currentPicture)
+				.getLink()) == false || serverImgs[currentPicture] == null) {
 			urlArray[currentPicture] = imgXMLList.get(currentPicture).getLink();
 			try {
 				serverImgs[currentPicture] = ImageIO
@@ -143,10 +147,14 @@ public class TwoDSlideShow extends Panel implements ActionListener {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
+
 		}
-		slideShowHandler.UpdatePicture((BufferedImage) serverImgs[currentPicture],imgXMLList.get(currentPicture).getUser(),imgXMLList.get(currentPicture).getImageText(), imgXMLList.get(currentPicture).getComments());
-currentPicture = currentPicture + 1;
+		slideShowHandler.UpdatePicture(
+				(BufferedImage) serverImgs[currentPicture],
+				imgXMLList.get(currentPicture).getUser(),
+				imgXMLList.get(currentPicture).getImageText(),
+				imgXMLList.get(currentPicture).getComments());
+		currentPicture = currentPicture + 1;
 
 	}
 
@@ -154,15 +162,12 @@ currentPicture = currentPicture + 1;
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == t) {
 
-
-				slideShowHandler.MoveObjects();
-				if (slideShowHandler.getSlideImageX() > monitor.width) {
-					updatePicture();
-				}
+			slideShowHandler.MoveObjects();
+			if (slideShowHandler.getSlideImageX() > monitor.width) {
+				updatePicture();
 			}
-
 		}
-
+	}
 	/*public static void copyPptPics() throws IOException{
 	        
 	                ZipFile zf = new ZipFile("C:\\Users\\Ludvig\\Documents\\asd.odp");
@@ -194,6 +199,8 @@ currentPicture = currentPicture + 1;
 	                zf.close();
 	              }*/
 		 
+
+
 
 	public static void main(String args[]) {
 

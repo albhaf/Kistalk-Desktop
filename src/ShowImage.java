@@ -10,6 +10,7 @@ import java.awt.TexturePaint;
 import java.awt.image.BufferedImage;
 import java.util.List;
 
+
 import javax.swing.JPanel;
 
 public class ShowImage extends JPanel {
@@ -20,7 +21,7 @@ public class ShowImage extends JPanel {
 
 	// Variables
 	/**
-	 * The rectangle which the image is in
+	 * The Rectangle containing the image
 	 */
 	private ImgRect ImgRect; //
 	/**
@@ -65,6 +66,7 @@ public class ShowImage extends JPanel {
 	 * Image shown on screen
 	 */
 	private BufferedImage image;
+
 	/**
 	 * height == time to stand still, width == time for current image
 	 */
@@ -93,6 +95,7 @@ public class ShowImage extends JPanel {
 	 */
 	Font commentfont = new Font("Serif", Font.BOLD, 30);
 
+	
 	/**
 	 * 
 	 * @param tmpImg The new picture which should be display.
@@ -107,7 +110,10 @@ public class ShowImage extends JPanel {
 
 		monitorSize = tmpmonitor;
 
-		float factor = (float) (tmpImage.getWidth()) / (float) (tmpImage.getHeight());
+		float factor = (float) (tmpImage.getWidth()) / (float) (tmpImage.getHeight());;
+
+	// FontMetrics fontmetrics;
+	
 
 		image = new BufferedImage(100, /* (int)(100*factor) */100,
 				BufferedImage.TYPE_INT_RGB);
@@ -121,11 +127,13 @@ public class ShowImage extends JPanel {
 		// imageComments = new TextDisplay[ImageComments.size()];
 		// for(int i =0;i<imageComments.length;i++){
 		if (ImageComments.size() > 0) {
+
 			imageComments = new TextToDisplay[ImageComments.size()];
 			for (int i = 0; i < imageComments.length; i++) {
 				imageComments[i] = new TextToDisplay(10, 10, 1000, 100);
 				imageComments[i].setString(ImageComments.get(i).getContent());
 				transperacy = 0;
+
 				imageComments[i].addX(1000);
 				imageComments[i].addY(200 + (i * 100));
 			}
@@ -136,15 +144,18 @@ public class ShowImage extends JPanel {
 		imageCommentTxtDsp = new TextToDisplay(100, 1000, 2, 1);
 		imageCommentTxtDsp.setString(tmpImageText);
 
+
 		// ImageUser setup
 		textStartPosition.width = (monitorSize.width / 2)
 				- (correction * (ImageUserFontSize / 2));
+
 		imageUserTxtDsp = new TextToDisplay(textStartPosition.width, 0, 2, 1);
 		imageUserTxtDsp.setString(tmpImageUserString + " posted: ");
 
 		scalePositionImageAndText();
 
 		slideImage = tmpImage;
+
 
 		imageStopPosition = (monitorSize.width / 2) - (2 * imageSize.width / 3);
 		imageStopPosition = imageStopPosition - (imageStopPosition % 5);
@@ -225,7 +236,7 @@ public class ShowImage extends JPanel {
 		imageUserTxtDsp.addX(textStartPosition.width);
 		imageUserTxtDsp.addY(0);
 
-		// Nollställning av variabler
+		// NollstÃ¤llning av variabler
 		outgoing = false;
 		timeStill.height = timeStill.width;
 	}
@@ -247,6 +258,7 @@ public class ShowImage extends JPanel {
 		} else {
 
 		 	ImgRect.addX(5);
+
 		}
 
 		if (outgoing == false) {
@@ -270,6 +282,7 @@ public class ShowImage extends JPanel {
 		}
 
 		//changes outgoing to true if the picture is supposed to move again after standstill
+
 		if (timeStill.height == 0) {
 			outgoing = true;
 		}
@@ -288,10 +301,12 @@ public class ShowImage extends JPanel {
 		repaint();
 	}
 
+
 	/**
 	 * Gets the text x-coordinate
 	 * @return returns a double with the x-coordinate
 	 */
+
 	public double getTextX() {
 		return imageUserTxtDsp.getX();
 	}
@@ -362,6 +377,5 @@ public class ShowImage extends JPanel {
 		g2d.setPaint(tp);
 		g2d.fill(ImgRect);
 		// g2d.setColor(Color.WHITE);
-
 	}
-}
+	}

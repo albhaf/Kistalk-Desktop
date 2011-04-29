@@ -1,10 +1,62 @@
-***Hans configfil***
-Number_of_Images %10
+ 
+_|    _|  _|           _|_|_|_|_|          _|  _|
+_|  _|          _|_|_|     _|      _|_|_|  _|  _|  _|
+_|_|      _|  _|_|         _|    _|    _|  _|  _|_|
+_|  _|    _|      _|_|     _|    _|    _|  _|  _|  _|
+_|    _|  _|  _|_|_|       _|      _|_|_|  _|  _|    _|
+ 
+ 
+    _      _      _      _      _
+ __(')> __(')> __(')> __(')> __(^)<
+ \___)  \___)  \___)  \___)  \___)
+*'*'*'*'*'*'*Config.hans*'*'*'*'*'*'*
+*'*'* The official config file  *'*'*
+*'*'* of KisTalk. Please support*'*'*
+*'*'* our provider, Hans, by    *'*'*
+*'*'* sending a dollar to:      *'*'*
+*'*'*     Hans                  *'*'*
+*'*'*     17 Corey Dr Franklin  *'*'*
+*'*'*     TN 37067, USA         *'*'*
+*'*'* Mark your letter with     *'*'*
+*'*'* 'KisTalk-Hans'            *'*'*
+*'*'*                    //Hans *'*'*
+*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*
+*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*
+ 
+//	Filen senast ändrad 15:3 den 26/3
+ 
+ 
+Max_number_of_Images %7
+ 
 Number_of_Hans %-
+ 
 Timer_interval %10
-supported_image_formats %.jpg .png .gif .bnp
+ 
 Number_of_Jimmys %-
+ 
+supported_image_formats %.jpg .png .gif .bnp
+ 
 Screen_index %0
+ 
 XMLURL %http://www.kistalk.com/desktop_images.xml
-Number_of_comments %1
-Hejdå!
+ 
+Number_of_comments %2
+ 
+Path_to_Pubslides %C:\\myAss\\Lol
+ 
+ 
+                             ___-------___
+                         _-~~             ~~-_
+                      _-~                    /~-_
+   /^\__/^\         /~  \                   /    \
+ /|  0|| 0|        /      \_______________/        \
+| |___||__|      /       /                \          \
+|          \    /      /                    \          \
+|   (_______) /______/     Default Turtle    \_________ \
+|         / /         \                      /            \
+ \         \^\\         \                  /               \     /
+   \         ||           \______________/      _-_       //\__//
+     \       ||------_-~~-_ ------------- \ --/~   ~\    || __/
+       ~-----||====/~     |==================|       |/~~~~~
+        (_(__/  ./     /                    \_\      \.
+               (_(___/                         \_____)_)
