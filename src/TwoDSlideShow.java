@@ -13,7 +13,7 @@ public class TwoDSlideShow extends Panel implements ActionListener {
 	final int nrOfConfigLines = 10;
 
 
-	int timeStill = 20;
+	int timeStill = 200;
 	
 	ShowImage slideShowHandler;
 
@@ -33,7 +33,7 @@ public class TwoDSlideShow extends Panel implements ActionListener {
 
 	// Build the frame (Slideshow)
 	public void createFrame() {
-		slideShowHandler = info.createShowImage(this); 
+		slideShowHandler = info.createShowImage(monitor);
 		view.createFrame(slideShowHandler, monitor);
 	}
 
@@ -43,20 +43,19 @@ public class TwoDSlideShow extends Panel implements ActionListener {
 	}
 
 	private void readConfig() throws FileNotFoundException {
-		int timeStill = info.readConfig(this);
-		t = new Timer(timeStill, this);
+		info.readConfig(screenIndex);
+		t = new Timer(10, this);
 	}
 
 	private void firstPicture() {
 		info.setLinks();
 		info.setPicture();
-		info.createShowImage(this);
+		
 	}
 
 	private void updatePicture() {
 		info.setPicture();
-		info.updatePicture(this);
-		info.updatePicture(this);
+		info.updatePicture(slideShowHandler);
 	}
 
 	@Override
