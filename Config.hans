@@ -1,4 +1,4 @@
- 
+  
 _|    _|  _|           _|_|_|_|_|          _|  _|
 _|  _|          _|_|_|     _|      _|_|_|  _|  _|  _|
 _|_|      _|  _|_|         _|    _|    _|  _|  _|_|
@@ -23,14 +23,12 @@ _|    _|  _|  _|_|_|       _|      _|_|_|  _|  _|    _|
 *'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*
 *'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*
  
-//	Filen senast ändrad 15:3 den 26/3
  
- 
-Max_number_of_Images %7
+Max_number_of_Images %3
  
 Number_of_Hans %-
  
-Timer_interval %10
+Timer_interval %2
  
 Number_of_Jimmys %-
  
