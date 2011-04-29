@@ -3,18 +3,34 @@ import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.Image;
 import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
-public class TwoDSlideShowInfo {
+public class TwoDSlideShowInfo{
+	XMLreader xmlreader;
+	String xmlPath;
+	List<ImageXML> imgXMLList;
+	String[] fileFormats = new String[4];
+	ImageIcon[] iconArrayServer;
+	ImageIcon[] iconArrayPub;
+	Image[] serverImgs;
+	URL[] urlArray;
 	
-	public TwoDSlideShowInfo(){
-		
+	int currentPicture = 0;
+	int currentPubPicture = 0;
+	int nrOfComments = 0;
+	int nrOfPicsServer;
+	
+	
+	public TwoDSlideShowInfo() {
 	}
+
 	protected Rectangle getScreenSize(int screenIndex) {
 		GraphicsEnvironment gfxEnviro = GraphicsEnvironment
 				.getLocalGraphicsEnvironment();
@@ -41,31 +57,52 @@ public class TwoDSlideShowInfo {
 		}
 
 		// Hantera inkommande data
-		show.nrOfPicsServer = Integer.valueOf(values[0]);
-		show.serverImgs = new Image[show.nrOfPicsServer];
-		show.iconArrayServer = new ImageIcon[show.nrOfPicsServer];
-		show.urlArray = new URL[show.nrOfPicsServer];
-		show.fileFormats = values[4].split(" ");
+		nrOfPicsServer = Integer.valueOf(values[0]);
+		serverImgs = new Image[nrOfPicsServer];
+		iconArrayServer = new ImageIcon[nrOfPicsServer];
+		urlArray = new URL[nrOfPicsServer];
+		fileFormats = values[4].split(" ");
 		show.screenIndex = Byte.valueOf(values[5]);
-		show.xmlPath = values[6];
-		show.nrOfComments = Integer.valueOf(values[7]);
+		xmlPath = values[6];
+		nrOfComments = Integer.valueOf(values[7]);
 		return Integer.valueOf(values[2]);
 	}
 
-	protected void setLinks(TwoDSlideShow show) {
-		show.imgXMLList = show.xmlreader.getImagesInfo();
-		for (int i = 0; i < show.nrOfPicsServer; i++) {
-			show.urlArray[i] = show.imgXMLList.get(i).getLink();
-		}
+	protected void setLinks() {
+		xmlreader = new XMLreader(xmlPath);
+		imgXMLList = xmlreader.getImagesInfo();
+		for (int i = 0; i < nrOfPicsServer; i++) {
+			urlArray[i] = imgXMLList.get(i).getLink();
+		}		
 	}
 	
-	protected void setPicture(TwoDSlideShow show) {
+	protected void setPicture() {
+		if (currentPicture >= nrOfPicsServer) {			
+			setLinks();
+			
+			currentPicture = 0;			
+		}
 		try {
-			show.serverImgs[show.currentPicture] = ImageIO.read(show.urlArray[show.currentPicture]);
+			serverImgs[currentPicture] = ImageIO.read(urlArray[currentPicture]);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		show.currentPicture++;
+		currentPicture++;
+	}
+	
+	protected ShowImage createShowImage(TwoDSlideShow show){
+		return new ShowImage((BufferedImage) serverImgs[0],
+				imgXMLList.get(0).getUser(),imgXMLList.get(0).getImageText(),
+				show.monitor, show.timeStill,imgXMLList.get(0).getComments());	
+	}
+	
+	protected void updatePicture(TwoDSlideShow show){
+		show.slideShowHandler.UpdatePicture(
+				(BufferedImage) serverImgs[currentPicture - 1],imgXMLList
+						.get(currentPicture - 1).getUser(),imgXMLList.get(
+						currentPicture - 1).getImageText(),imgXMLList.get(
+						currentPicture - 1).getComments());
+
 	}
 }
