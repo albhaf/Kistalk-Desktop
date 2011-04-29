@@ -144,7 +144,7 @@ public class AdminFrame {
 	    		repaint();
 	    		setOpaque(true);
 	    		
-	    		System.out.println("paint"); //Visar mig när bg ritas upp
+//	    		System.out.println("paint"); //Visar mig när bg ritas upp
 //	    		headerLbl.paint(headerLbl.getGraphics()); //Behövs tydligen för att rita ut loggan
 //	    		startBtn.paint(getGraphics());
 	    		
