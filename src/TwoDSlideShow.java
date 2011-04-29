@@ -16,7 +16,7 @@ import java.awt.image.BufferedImage;
 import java.net.URL;
 
 @SuppressWarnings("serial")
-public class ZNOTUSEDFrameBackground extends Panel implements ActionListener {
+public class TwoDSlideShow extends Panel implements ActionListener {
 
 	Timer t;
 
@@ -46,7 +46,7 @@ public class ZNOTUSEDFrameBackground extends Panel implements ActionListener {
 
 	Rectangle monitor = new Rectangle();
 
-	public ZNOTUSEDFrameBackground() {
+	public TwoDSlideShow() {
 		readConfig();
 		getScreenResolution();
 		firstPicture();
@@ -199,7 +199,7 @@ currentPicture = currentPicture + 1;
 
 //		PubXMLReader blah = new PubXMLReader();
 //		blah.parseDocument();
-		new ZNOTUSEDFrameBackground();
+		new TwoDSlideShow();
 
 	}
 }
