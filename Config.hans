@@ -23,14 +23,14 @@ _|    _|  _|  _|_|_|       _|      _|_|_|  _|  _|    _|
 *'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*
 *'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*
  
-//	Config återställd
+//	Config is back to normal
  
  
 Max_number_of_Images %7
  
 Number_of_Hans %-
  
-Timer_interval %5000
+Timer_interval %10
  
 Number_of_Jimmys %-
  
