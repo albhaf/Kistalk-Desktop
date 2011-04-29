@@ -1,5 +1,4 @@
  
- 
 _|    _|  _|           _|_|_|_|_|          _|  _|
 _|  _|          _|_|_|     _|      _|_|_|  _|  _|  _|
 _|_|      _|  _|_|         _|    _|    _|  _|  _|_|
@@ -24,14 +23,18 @@ _|    _|  _|  _|_|_|       _|      _|_|_|  _|  _|    _|
 *'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*
 *'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*
  
+//	Config återställd
  
-Max_number_of_Images %3
+ 
+Max_number_of_Images %7
  
 Number_of_Hans %-
  
-Timer_interval %2
+Timer_interval %5000
  
 Number_of_Jimmys %-
+ 
+Timer_interval %10
  
 supported_image_formats %.jpg .png .gif .bnp
  
@@ -41,7 +44,7 @@ XMLURL %http://www.kistalk.com/desktop_images.xml
  
 Number_of_comments %2
  
-Path_to_Pubslides %C:\\myAss\\Lol
+Path_to_Pubslides %C:\\Default mapp\\Default pubslides
  
  
                              ___-------___
