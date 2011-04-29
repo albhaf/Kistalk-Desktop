@@ -100,11 +100,11 @@ public class TwoDSlideShow extends Panel implements ActionListener {
 		serverImgs = new Image[nrOfPicsServer];
 		iconArrayServer = new ImageIcon[nrOfPicsServer];
 		urlArray = new URL[nrOfPicsServer];
-		t = new Timer(Integer.valueOf(values[1]), this);
-		fileFormats = values[2].split(" ");
-		screenIndex = Byte.valueOf(values[3]);
-		xmlPath = values[4];
-		nrOfComments = Integer.valueOf(values[5]);
+		t = new Timer(Integer.valueOf(values[2]), this);
+		fileFormats = values[4].split(" ");
+		screenIndex = Byte.valueOf(values[5]);
+		xmlPath = values[6];
+		nrOfComments = Integer.valueOf(values[7]);
 
 	}
 
