@@ -668,6 +668,7 @@ public class AdminFrame {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		startBtn.disable();
 		
 	}
 	
