@@ -8,7 +8,6 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import java.awt.Image;
-import java.util.ArrayList;
 import java.util.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -33,7 +32,7 @@ public class TwoDSlideShow extends Panel implements ActionListener {
 	int currentPicture = 0;
 	int currentPubPicture = 0;
 	int nrOfComments = 0;
-	int timeStill = 200;
+	int timeStill =200;
 
 	Graphics2D g2d;
 	JPanel panel;
@@ -46,7 +45,7 @@ public class TwoDSlideShow extends Panel implements ActionListener {
 
 	Rectangle monitor = new Rectangle();
 
-	public TwoDSlideShow() throws FileNotFoundException {
+	public TwoDSlideShow() {
 		readConfig();
 		getScreenResolution();
 		firstPicture();
@@ -57,10 +56,9 @@ public class TwoDSlideShow extends Panel implements ActionListener {
 	// Build the frame (Slideshow)
 	public void createFrame() {
 
+
 		JFrame frame = new JFrame("ShowImage.java");
-		slideShowHandler = new ShowImage((BufferedImage) serverImgs[0],
-				imgXMLList.get(0).getUser(), imgXMLList.get(0).getImageText(),
-				monitor, timeStill, imgXMLList.get(0).getComments());
+		slideShowHandler = new ShowImage((BufferedImage) serverImgs[0],imgXMLList.get(0).getUser(),imgXMLList.get(0).getImageText(), monitor, timeStill, imgXMLList.get(0).getComments());
 		panel = slideShowHandler;
 		frame.getContentPane().add(panel);
 
@@ -85,10 +83,10 @@ public class TwoDSlideShow extends Panel implements ActionListener {
 
 	}
 
-	private void readConfig() throws FileNotFoundException {
-
+	private void readConfig() {
+		String[] values = new String[6];
 		ConfigHandler reader = new ConfigHandler();
-		String[] values = reader.getAllLines();
+
 		try {
 			values = reader.processLineByLine();
 		} catch (FileNotFoundException e) {
@@ -101,11 +99,11 @@ public class TwoDSlideShow extends Panel implements ActionListener {
 		serverImgs = new Image[nrOfPicsServer];
 		iconArrayServer = new ImageIcon[nrOfPicsServer];
 		urlArray = new URL[nrOfPicsServer];
-		t = new Timer(Integer.valueOf(values[1]), this);
-		fileFormats = values[2].split(" ");
-		screenIndex = Byte.valueOf(values[3]);
-		xmlPath = values[4];
-		nrOfComments = Integer.valueOf(values[5]);
+		t = new Timer(Integer.valueOf(values[2]), this);
+		fileFormats = values[4].split(" ");
+		screenIndex = Byte.valueOf(values[5]);
+		xmlPath = values[6];
+		nrOfComments = Integer.valueOf(values[7]);
 
 	}
 
@@ -127,15 +125,14 @@ public class TwoDSlideShow extends Panel implements ActionListener {
 
 	private void updatePicture() {
 
-		if (currentPicture >= nrOfPicsServer) {
-			currentPicture = 0;
+		if(currentPicture>=nrOfPicsServer){
+			currentPicture=0;
 		}
 		if (currentPicture == nrOfPicsServer - 1) {
 			imgXMLList = xmlreader.getImagesInfo();
 
 		}
-		if (urlArray[currentPicture].equals(imgXMLList.get(currentPicture)
-				.getLink()) == false || serverImgs[currentPicture] == null) {
+		if (urlArray[currentPicture].equals(imgXMLList.get(currentPicture).getLink()) == false || serverImgs[currentPicture]==null) {
 			urlArray[currentPicture] = imgXMLList.get(currentPicture).getLink();
 			try {
 				serverImgs[currentPicture] = ImageIO
@@ -144,14 +141,10 @@ public class TwoDSlideShow extends Panel implements ActionListener {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-
+			
 		}
-		slideShowHandler.UpdatePicture(
-				(BufferedImage) serverImgs[currentPicture],
-				imgXMLList.get(currentPicture).getUser(),
-				imgXMLList.get(currentPicture).getImageText(),
-				imgXMLList.get(currentPicture).getComments());
-		currentPicture = currentPicture + 1;
+		slideShowHandler.UpdatePicture((BufferedImage) serverImgs[currentPicture],imgXMLList.get(currentPicture).getUser(),imgXMLList.get(currentPicture).getImageText(), imgXMLList.get(currentPicture).getComments());
+currentPicture = currentPicture + 1;
 
 	}
 
@@ -159,16 +152,18 @@ public class TwoDSlideShow extends Panel implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == t) {
 
-			slideShowHandler.MoveObjects();
-			if (slideShowHandler.getSlideImageX() > monitor.width) {
-				updatePicture();
+
+				slideShowHandler.MoveObjects();
+				if (slideShowHandler.getSlideImageX() > monitor.width) {
+					updatePicture();
+				}
 			}
 		}
+	
+	public static void main(String args[]) {
 
-	}
-
-	public static void main(String args[]) throws FileNotFoundException {
 		new TwoDSlideShow();
 
 	}
 }
+

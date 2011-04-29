@@ -1,4 +1,4 @@
- 
+  
 _|    _|  _|           _|_|_|_|_|          _|  _|
 _|  _|          _|_|_|     _|      _|_|_|  _|  _|  _|
 _|_|      _|  _|_|         _|    _|    _|  _|  _|_|
@@ -23,7 +23,7 @@ _|    _|  _|  _|_|_|       _|      _|_|_|  _|  _|    _|
 *'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*
 *'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*
  
-//	Filen senast ändrad 15:3 den 26/3
+//	Filen senast ï¿½ndrad 15:3 den 26/3
  
  
 Max_number_of_Images %7
@@ -36,7 +36,7 @@ Number_of_Jimmys %-
  
 supported_image_formats %.jpg .png .gif .bnp
  
-Screen_index %1
+Screen_index %0
  
 XMLURL %C:\\Users\\Andeers\\Documents\\Mina mottagna filer\\bild.xml
  
