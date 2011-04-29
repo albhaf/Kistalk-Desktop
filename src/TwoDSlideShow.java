@@ -86,33 +86,34 @@ public class TwoDSlideShow extends Panel implements ActionListener {
 	}
 
 	private void readConfig() {
-		List<String> values = new ArrayList<String>();
-		ConfigHandler reader = new ConfigHandler("Config.hans");
+		String[] values = new String[9];
+		ConfigHandler reader = new ConfigHandler();
 
 		try {
-			values = reader.processLineByLine(1);
+			values = reader.processLineByLine();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 		// Hantera inkommande data
-		nrOfPicsServer = Integer.valueOf(values.get(0));
+		nrOfPicsServer = Integer.valueOf(values[0]);
 		serverImgs = new Image[nrOfPicsServer];
 		iconArrayServer = new ImageIcon[nrOfPicsServer];
 		urlArray = new URL[nrOfPicsServer];
-		t = new Timer(Integer.valueOf(values.get(1)), this);
-		fileFormats = values.get(2).split(" ");
-		screenIndex = Byte.valueOf(values.get(3));
-		xmlPath = values.get(4);
-		nrOfComments = Integer.valueOf(values.get(5));
+		t = new Timer(Integer.valueOf(values[2]), this);
+		fileFormats = values[4].split(" ");
+		screenIndex = Byte.valueOf(values[5]);
+		xmlPath = values[6];
+		nrOfComments = Integer.valueOf(values[7]);
 
 	}
 
 	private void firstPicture() {
 		xmlreader = new XMLreader(xmlPath);
 		imgXMLList = xmlreader.getImagesInfo();
-		for (int i = 0; i < nrOfPicsServer; i++) {
+		nrOfPicsServer = imgXMLList.size(); //tillfälligt!
+		for (int i = 0; i < nrOfPicsServer && i < urlArray.length ; i++) { //nrOfPicsServer
 			urlArray[i] = imgXMLList.get(i).getLink();
 		}
 		try {

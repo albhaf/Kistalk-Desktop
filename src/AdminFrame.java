@@ -1,21 +1,22 @@
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.TextArea;
-import java.awt.TextComponent;
 import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.Checkbox;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.awt.*;
+import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Date;
 
 import javax.imageio.ImageIO;
 import javax.swing.AbstractButton;
@@ -23,49 +24,50 @@ import javax.swing.ButtonGroup;
 import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
-import javax.swing.Timer;
+import javax.swing.*;
 
 public class AdminFrame {
-	final int nrOfConfigLines = 11; // Includes regular textlines
+	final int nrOfConfigValues = 9; // Doesn't include regular textlines. If change, then change configHandler too
 	int nrOfPubSlides;
 	int slideNr = 0;
-	List<String> confValues = new ArrayList<String>();
+	String value;
+	Image bgImage;
+	String[] confValues = new String[nrOfConfigValues];
 	
 	JFrame adminFrame;
-	JPanel panel;
+	JFrame popFrame;
+	JPanel thePanel;
 	JLabel headerLbl;
 	
-	JButton newImgBtn;
-	JButton showAllImgsBtn;
-	JButton editImgBtn;
-	JButton delOneImgBtn;
-	JButton delAllImgsBtn;
 	JButton saveSetBtn;
 	JButton resetBtn;
 	JButton startBtn;
-	JButton saveSlideBtn;
-	JButton dscrdEditBtn;
 	
-	JLabel newImgLbl;
-	JLabel newTitleLbl;
-	JLabel uploadLbl;
-	JLabel upldInfoLbl;
-	JLabel newConLbl;
+	JButton lolButton;
+	JButton popButton;
+	
 	JLabel nrOfImgsLbl;
 	JLabel timeLbl;
 	JLabel foodSttLbl;
 	JLabel pubSttLbl;
 	JLabel statusLbl;
+	JLabel xmlPubPathLbl;
+	JLabel legalFilesLbl;
+	JLabel nrOfCommentsLbl;
+	JLabel screenLbl;
+	JLabel bgLbl;
 	
-	TextField titleTxt;
-	TextField uploadTxt;
-	TextArea contentTxt;
 	TextField nrOfImgsTxt;
 	TextField timeTxt;
+	TextField popText;
+	TextField xmlPubPathTxt;
+	TextField legalFilesTxt;
+	TextField nrOfCommentsTxt;
 	
 	JRadioButton yFoodRbtn;
 	JRadioButton nFoodRbtn;
@@ -74,52 +76,52 @@ public class AdminFrame {
 	ButtonGroup foodRbgr;
 	ButtonGroup pubRbgr;
 	
+	JComboBox pubSlidesDDLst;
+	JComboBox screenDDLst;
+	
 	ButtonListener listener = new ButtonListener();
-	FileHandler handler;
+	ConfigHandler handler;
+	GroupLayout groupLayout;
+	Graphics g;
 
 	//	Constructor
 	public AdminFrame() {
-		//countPubSlides();
 		readConfig();
-		setupPanel();
+		setupFrame();
 
 	}
 
 	//	Setting up the settings frame
-	private void setupPanel(){
+	private void setupFrame(){
+		// Background pic
+		ImageIcon icon = new ImageIcon("C:\\Users\\Andeers\\Pictures\\bgIcon.png");
+		bgImage = icon.getImage();
 		
-		//	Create new objects
+		//	Create all objects
 		adminFrame = new JFrame();
-		panel = new JPanel();
 		headerLbl = new JLabel();
 		
-		newImgBtn = new JButton();
-		showAllImgsBtn = new JButton();
-		editImgBtn = new JButton();
-		delOneImgBtn = new JButton();
-		delAllImgsBtn = new JButton();
 		saveSetBtn = new JButton();
 		resetBtn = new JButton();
 		startBtn = new JButton();
-		saveSlideBtn = new JButton();
-		dscrdEditBtn = new JButton();
+		lolButton = new JButton();
 		
-		newImgLbl = new JLabel();
-		newTitleLbl = new JLabel();
-		uploadLbl = new JLabel();
-		upldInfoLbl = new JLabel();
-		newConLbl = new JLabel();
 		nrOfImgsLbl = new JLabel();
 		timeLbl= new JLabel();
 		foodSttLbl = new JLabel();
 		pubSttLbl = new JLabel();
 		statusLbl = new JLabel();
+		xmlPubPathLbl = new JLabel();
+		legalFilesLbl = new JLabel();
+		nrOfCommentsLbl = new JLabel();
+		screenLbl = new JLabel();
+		bgLbl = new JLabel();
 		
-		titleTxt = new TextField();
-		uploadTxt = new TextField();
-		contentTxt = new TextArea();
 		nrOfImgsTxt = new TextField();
 		timeTxt = new TextField();
+		xmlPubPathTxt = new TextField();
+		legalFilesTxt = new TextField();
+		nrOfCommentsTxt = new TextField();
 		
 		yFoodRbtn = new JRadioButton();
 		nFoodRbtn = new JRadioButton();
@@ -128,9 +130,25 @@ public class AdminFrame {
 		foodRbgr = new ButtonGroup();
 		pubRbgr = new ButtonGroup();
 		
-		GroupLayout groupLayout = new GroupLayout(panel);
+		pubSlidesDDLst = new JComboBox();
+		screenDDLst = new JComboBox();
 		
+		// Create and Paint thePanel background
+		thePanel = new JPanel() //Observera att detta är en create!
+		{public void paint(Graphics g){
+				g.drawImage(bgImage, 0,0, this);
+	    		setOpaque(false); // Opaque sätts två ggr för att... thePanel inte skulle påverkas av något konstigt (?)
+	    		paintComponent(g);
+	    		setOpaque(true);
+	    		
+	    		System.out.println("paint"); //Visar mig när bg ritas upp
+	    		headerLbl.paint(headerLbl.getGraphics()); //Behövs tydligen för att rita ut loggan
+	    		
+			}
+		}
+		;
 		
+		groupLayout = new GroupLayout(thePanel);
 		
 		//	Frame settings
 		adminFrame.setSize(900,600);
@@ -140,37 +158,25 @@ public class AdminFrame {
 		adminFrame.setTitle("KisTalk Slideshow Settings");
 		
 		//	Panel settings
-		panel.setBackground(Color.BLACK);
-		panel.setOpaque(true);
-		panel.setLayout(groupLayout);
+		thePanel.setLayout(groupLayout);
+		thePanel.setBackground(Color.decode("#ae0808"));
 		
 		//	Label settings
-		headerLbl.setText("Welcome to KisTalk Administration Center!");
+		headerLbl.setIcon(new ImageIcon("C:\\Users\\Andeers\\Pictures\\kistalk_admin_logo.png"));
 		headerLbl.setFont(new Font("Cambria", Font.BOLD, 32));
 		headerLbl.setForeground(Color.WHITE);
-		
-		newImgLbl.setText("Add new slide:");
-		newImgLbl.setForeground(Color.WHITE);
-		newImgLbl.setFont(new Font("Helvetica", Font.BOLD, 13));
-		
-		newTitleLbl.setText("Title: ");
-		newTitleLbl.setForeground(Color.WHITE);
-		
-		uploadLbl.setText("Upload picture: ");
-		uploadLbl.setForeground(Color.WHITE);
-		
-		upldInfoLbl.setText("from URL or computer, leave empty for text only");
-		upldInfoLbl.setForeground(Color.WHITE);
-		upldInfoLbl.setFont(new Font("Helvetica", Font.ITALIC, 9));
-		
-		newConLbl.setText("Content: ");
-		newConLbl.setForeground(Color.WHITE);
 		
 		nrOfImgsLbl.setText("Nr of pics (from KisTalk): ");
 		nrOfImgsLbl.setForeground(Color.WHITE);
 		
 		timeLbl.setText("Time interval (ms): ");
 		timeLbl.setForeground(Color.WHITE);
+		
+		xmlPubPathLbl.setText("OpenOffice Powerpoint: ");
+		xmlPubPathLbl.setForeground(Color.WHITE);
+		
+		legalFilesLbl.setText("Approved file extensions: ");
+		legalFilesLbl.setForeground(Color.WHITE);
 		
 		pubSttLbl.setText("The pub is open");
 		pubSttLbl.setForeground(Color.WHITE);
@@ -182,112 +188,70 @@ public class AdminFrame {
 		statusLbl.setForeground(Color.WHITE);
 		statusLbl.setFont(new Font("Helvetica", Font.ITALIC, 9));
 		
+		nrOfCommentsLbl.setText("Number of shown comments: ");
+		nrOfCommentsLbl.setForeground(Color.WHITE);
+		
+		screenLbl.setText("Choose screen: ");
+		screenLbl.setForeground(Color.WHITE);
+		
 		//	Text settings
-		titleTxt.setText("");
-		titleTxt.setFont(new Font("Cambria", Font.BOLD, 14));
-		
-		uploadTxt.setText("");
-		
-		contentTxt.setText("");
-		contentTxt.setFont(new Font("Courer", Font.PLAIN, 12));
-		
-		nrOfImgsTxt.setText(confValues.get(0));
+		nrOfImgsTxt.setText(confValues[0]);
 		nrOfImgsTxt.setFont(new Font("Algerian", Font.ITALIC, 12));
 		
-		timeTxt.setText(confValues.get(1));
+		timeTxt.setText(confValues[2]);
 		timeTxt.setFont(new Font("Algerian", Font.ITALIC, 12));
 		
+		xmlPubPathTxt.setText(confValues[8]);
+		xmlPubPathTxt.setFont(new Font("Algerian", Font.ITALIC, 12));
+		
+		legalFilesTxt.setText(confValues[4]);
+		legalFilesTxt.setFont(new Font("Algerian", Font.ITALIC, 12));
+		legalFilesTxt.setEnabled(false);
+		
+		nrOfCommentsTxt.setText(confValues[7]);
+		nrOfCommentsTxt.setFont(new Font("Algerian", Font.ITALIC, 12));
+		
 		//	Button settings
-		newImgBtn.setText("Lï¿½gg till ny slide");
-		newImgBtn.setForeground(Color.WHITE);
-		newImgBtn.setBackground(Color.BLACK);
-		newImgBtn.addActionListener(listener);
-		newImgBtn.setOpaque(false);
-		
-		showAllImgsBtn.setText("Visa existerande slides");
-		showAllImgsBtn.setForeground(Color.WHITE);
-		showAllImgsBtn.setBackground(Color.BLACK);
-		showAllImgsBtn.addActionListener(listener);
-		showAllImgsBtn.setOpaque(false);
-		
-		editImgBtn.setText("Edit a slide");
-		editImgBtn.setForeground(Color.WHITE);
-		editImgBtn.setBackground(Color.BLACK);
-		editImgBtn.addActionListener(listener);
-		editImgBtn.setOpaque(false);
-		
-		delOneImgBtn.setText("Delete slide");
-		delOneImgBtn.setForeground(Color.WHITE);
-		delOneImgBtn.setBackground(Color.BLACK);
-		delOneImgBtn.addActionListener(listener);
-		delOneImgBtn.setOpaque(false);
-		
-		delAllImgsBtn.setText("Rensa slides");
-		delAllImgsBtn.setForeground(Color.WHITE);
-		delAllImgsBtn.setBackground(Color.BLACK);
-		delAllImgsBtn.addActionListener(listener);
-		delAllImgsBtn.setOpaque(false);
-		
 		saveSetBtn.setText("Save settings");
 		saveSetBtn.setForeground(Color.WHITE);
-		saveSetBtn.setBackground(Color.BLACK);
 		saveSetBtn.addActionListener(listener);
 		saveSetBtn.setOpaque(false);
 		
 		resetBtn.setText("Reset settings");
 		resetBtn.setForeground(Color.WHITE);
-		resetBtn.setBackground(Color.BLACK);
 		resetBtn.addActionListener(listener);
 		resetBtn.setOpaque(false);
 		
 		startBtn.setText("Start slideshow");
 		startBtn.setForeground(Color.WHITE);
-		startBtn.setBackground(Color.BLACK);
 		startBtn.addActionListener(listener);
 		startBtn.setOpaque(false);
 		
-		saveSlideBtn.setText("Save slide");
-		saveSlideBtn.setForeground(Color.WHITE);
-		saveSlideBtn.setBackground(Color.BLACK);
-		saveSlideBtn.addActionListener(listener);
-		saveSlideBtn.setOpaque(false);
-		saveSlideBtn.setEnabled(false);
-		saveSlideBtn.setVisible(false);
-		
-		dscrdEditBtn.setText("Avbryt edit");
-		dscrdEditBtn.setForeground(Color.WHITE);
-		dscrdEditBtn.setBackground(Color.BLACK);
-		dscrdEditBtn.addActionListener(listener);
-		dscrdEditBtn.setOpaque(false);
-		dscrdEditBtn.setEnabled(false);
-		dscrdEditBtn.setVisible(false);
+		lolButton.setText("popup!");
+		lolButton.addActionListener(listener);
 		
 		//	Radiobuttons settings
 		yFoodRbtn.setText("True");
-		yFoodRbtn.setBackground(Color.BLACK);
 		yFoodRbtn.setForeground(Color.WHITE);
-		yFoodRbtn.setOpaque(false);
 		yFoodRbtn.addActionListener(listener);
+		yFoodRbtn.setOpaque(false);
 		
 		nFoodRbtn.setSelected(true);
 		nFoodRbtn.setText("False");
-		nFoodRbtn.setBackground(Color.BLACK);
 		nFoodRbtn.setForeground(Color.WHITE);
-		nFoodRbtn.setOpaque(false);
 		nFoodRbtn.addActionListener(listener);
+		nFoodRbtn.setOpaque(false);
 		
 		yPubRbtn.setText("True");
-		yPubRbtn.setBackground(Color.BLACK);
 		yPubRbtn.setForeground(Color.WHITE);
-		yPubRbtn.setOpaque(false);
 		yPubRbtn.addActionListener(listener);
+		yPubRbtn.setOpaque(false);
 		
 		nPubRbtn.setSelected(true);
 		nPubRbtn.setText("False");
-		nPubRbtn.setBackground(Color.BLACK);
 		nPubRbtn.setForeground(Color.WHITE);
-		nPubRbtn.setOpaque(false);
 		nPubRbtn.addActionListener(listener);
+		nPubRbtn.setOpaque(false);
 		
 		foodRbgr.add(yFoodRbtn);
 		foodRbgr.add(nFoodRbtn);
@@ -295,53 +259,93 @@ public class AdminFrame {
 		pubRbgr.add(yPubRbtn);
 		pubRbgr.add(nPubRbtn);
 		
+		//	DropDownList settings, with ItemListeners
+		pubSlidesDDLst.addItem("[Other Slideshow]");
+		pubSlidesDDLst.addItem("TMEIT");
+		pubSlidesDDLst.addItem("Qmisk");
+		pubSlidesDDLst.addItem("ITK");
+		pubSlidesDDLst.setFont(new Font("Algerian", Font.ITALIC, 12));
+		pubSlidesDDLst.addItemListener(
+				new ItemListener(){
+					public void itemStateChanged(ItemEvent e){
+						if (e.getStateChange() == ItemEvent.SELECTED){
+							
+							if (e.getItem().toString() == "[Other Slideshow]"){
+								xmlPubPathTxt.enable();
+								statusLbl.setText("Choose a Slideshow");
+								
+							}else{
+								xmlPubPathTxt.disable();
+								statusLbl.setText(e.getItem().toString() + "s Slideshow is choosed");
+								
+							}
+						}
+					}
+				}
+		);
+		
+		screenDDLst.addItem("External");
+		screenDDLst.addItem("This");
+		screenDDLst.setFont(new Font("Algerian", Font.ITALIC, 12));
+		screenDDLst.addItemListener(
+				new ItemListener(){
+					public void itemStateChanged(ItemEvent e){
+						if (e.getStateChange() == ItemEvent.SELECTED)
+							statusLbl.setText(e.getItem().toString() + " screen it is!");
+					}
+				}
+		);
 		
 		//	Layout settings & add components
 		groupLayout.setAutoCreateGaps(true);
 		groupLayout.setAutoCreateContainerGaps(true);
 		
+		//	Layout
 			//	Horisontal
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(GroupLayout.Alignment.CENTER)
 			.addComponent(headerLbl)
+			.addGap(70)
 			.addGroup(groupLayout.createSequentialGroup()
-				.addGap(100)
+				
 			   	.addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-			   			.addComponent(newImgLbl)
-				   		.addGroup(groupLayout.createSequentialGroup()
-				   			.addComponent(newTitleLbl)
-				   			.addComponent(titleTxt, 300, 300, 300)
-				   		)
-				   		.addGroup(groupLayout.createSequentialGroup()
-				   			.addComponent(uploadLbl)
-				   			.addComponent(uploadTxt, 200, 200, 200)
-				   		)
-				   		.addGroup(groupLayout.createSequentialGroup()
-				   			.addGap(100)
-				   			.addComponent(upldInfoLbl)
-				   		)
-				   		.addGroup(groupLayout.createSequentialGroup()
-				   			.addComponent(newConLbl)
-				   			.addComponent(contentTxt, 310, 310, 310)
-				   		)
-				   		.addGroup(groupLayout.createSequentialGroup()
-				   			.addGap(0)
-				   			.addComponent(newImgBtn, 140, 140, 140)
-				   			.addComponent(showAllImgsBtn, 140, 140, 140)
-				   			.addComponent(delAllImgsBtn, 140, 140, 140)
-				   		)
+			   			
+			   			.addGroup(groupLayout.createSequentialGroup()
+						   	.addComponent(nrOfImgsLbl)
+						   	.addComponent(nrOfImgsTxt, 50, 50, 50)
+						)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(timeLbl)
+							.addComponent(timeTxt, 100, 100, 100)
+						)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(nrOfCommentsLbl)
+							.addComponent(nrOfCommentsTxt, 100, 100, 100)
+						)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(legalFilesLbl)
+							.addComponent(legalFilesTxt, 110, 110, 110)
+						)
+						.addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+								.addComponent(screenLbl)
+								.addComponent(screenDDLst, 150, 150, 150)
+						)
+			   			.addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+			   					.addComponent(xmlPubPathLbl)
+			   					.addComponent(pubSlidesDDLst, 200, 200, 200)
+								.addComponent(xmlPubPathTxt, 300, 300, 300)
+					   	)
 				   		.addGroup(groupLayout.createSequentialGroup()
 				   			.addComponent(saveSetBtn, 140, 140, 140)
 				   			.addComponent(resetBtn, 140, 140, 140)
 				   			.addComponent(startBtn, 140, 140, 140)
 				   		)
-				   		.addGroup(groupLayout.createSequentialGroup()
-				   			.addComponent(delOneImgBtn)
-							.addComponent(editImgBtn)
-				   		)
 				)
-				.addGap(50)
+				
+				.addGap(100)
+				
 				.addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+						
 						.addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
 						   	.addComponent(foodSttLbl)
 						   	.addComponent(yFoodRbtn)
@@ -352,19 +356,9 @@ public class AdminFrame {
 							 .addComponent(yPubRbtn)
 							 .addComponent(nPubRbtn)
 						)
-					   	.addGroup(groupLayout.createSequentialGroup()
-					   		.addComponent(nrOfImgsLbl)
-					   		.addComponent(nrOfImgsTxt, 50, 50, 50)
-						)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(timeLbl)
-							.addComponent(timeTxt, 100, 100, 100)
-						)
-						.addComponent(saveSlideBtn)
-						.addComponent(dscrdEditBtn)
-						.addComponent(statusLbl)
 			   	)
 			)
+			.addComponent(statusLbl)
 		);
 		
 			//	Vertical
@@ -373,82 +367,78 @@ public class AdminFrame {
 				   	.addComponent(headerLbl)
 				   	.addGap(45)
 				   	.addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+				   		
 				   		.addGroup(groupLayout.createSequentialGroup()
-				   				.addComponent(newImgLbl)
+				   				
 					   			.addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-					   				.addComponent(newTitleLbl)
-					   				.addComponent(titleTxt, 20, 20, 20)
+						   			.addComponent(nrOfImgsLbl)
+						   			.addComponent(nrOfImgsTxt, 20, 20, 20)
+						   		)
+								.addGap(10)
+						   		.addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+						   			.addComponent(timeLbl)
+						   			.addComponent(timeTxt, 20, 20, 20)
+						   		)
+								.addGap(10)
+								.addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+									.addComponent(nrOfCommentsLbl)
+									.addComponent(nrOfCommentsTxt, 20, 20, 20)
+								)
+								.addGap(10)
+								.addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+									.addComponent(legalFilesLbl)
+									.addComponent(legalFilesTxt, 20, 20, 20)
+								)
+								.addGap(10)
+								.addGroup(groupLayout.createSequentialGroup()
+									.addComponent(screenLbl)
+									.addComponent(screenDDLst, 20, 20, 20)
+								)
+								.addGap(20)
+					   			.addGroup(groupLayout.createSequentialGroup()
+									.addComponent(xmlPubPathLbl)
+									.addComponent(pubSlidesDDLst, 20, 20, 20)
+									.addComponent(xmlPubPathTxt, 20, 20, 20)
 					   			)
-					   			.addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-					   				.addComponent(uploadLbl)
-					   				.addComponent(uploadTxt, 20, 20, 20)
-					   			)
-					   			.addComponent(upldInfoLbl)
-					   			.addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-					   				.addComponent(newConLbl)
-					   				.addComponent(contentTxt, 150, 150, 150)
-					   			)
-					   			.addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-					   				.addComponent(newImgBtn, 30, 30, 30)
-					   				.addComponent(showAllImgsBtn, 30, 30, 30)
-					   				.addComponent(delAllImgsBtn, 30, 30, 30)
-					   			)
-					   			.addGap(20)
+								.addGap(60)
 					   			.addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
 					   				.addComponent(saveSetBtn, 30, 30, 30)
 					   				.addComponent(resetBtn, 30, 30, 30)
 					   				.addComponent(startBtn, 30, 30, 30)
 					   			)
-					   			.addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-					   				.addComponent(delOneImgBtn)
-									.addComponent(editImgBtn)
-					   			)
 				   		)
+				   		
 				   		.addGroup(groupLayout.createSequentialGroup()
-				   				.addGap(30)
+				   				
 				   				.addGroup(groupLayout.createSequentialGroup()
-						   				.addComponent(foodSttLbl)
-						   				.addComponent(yFoodRbtn)
-						   				.addComponent(nFoodRbtn))
-						   			.addGroup(groupLayout.createSequentialGroup()
-						   				.addComponent(pubSttLbl)
-						   				.addComponent(yPubRbtn)
-						   				.addComponent(nPubRbtn))
-						   			.addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-						   				.addComponent(nrOfImgsLbl)
-						   				.addComponent(nrOfImgsTxt, 20, 20, 20)
-						   			)
-						   			.addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-						   				.addComponent(timeLbl)
-						   				.addComponent(timeTxt, 20, 20, 20)
-						   			)
-						   			.addComponent(saveSlideBtn)
-						   			.addComponent(dscrdEditBtn)
-						   			.addGap(80)
-						   			.addComponent(statusLbl)
+						   			.addComponent(foodSttLbl)
+						   			.addComponent(yFoodRbtn)
+						   			.addComponent(nFoodRbtn)
+						   		)
+								.addGap(20)
+						   		.addGroup(groupLayout.createSequentialGroup()
+						   			.addComponent(pubSttLbl)
+						   			.addComponent(yPubRbtn)
+						   			.addComponent(nPubRbtn)
+						   		)
 				   		)
-				   )
+				   		
+				  )
+				  .addGap(50)
+				  .addComponent(statusLbl)
 			);
 		
 		//	Add panel
-		adminFrame.add(panel);
-		
+		adminFrame.add(thePanel);
 		adminFrame.setVisible(true);
-	}
-	
-	//	Counts the number of pub slides
-	public void countPubSlides(){
-		handler = new FileHandler("PubSlides.hans");
-		nrOfPubSlides = handler.countLines();
-		
 	}
 	
 	//	Reads Config and saves values in 'confValues'
 	private void readConfig() {
-		handler = new FileHandler("Config.hans");
+		handler = new ConfigHandler();
 		
 		try {
-			confValues = handler.processLineByLine(1);
+			confValues = handler.processLineByLine();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -456,319 +446,138 @@ public class AdminFrame {
 		
 	}
 
-	//	Saves current settings to Config
+	//	Saves current settings to Config (except Default Turtle, he only lives in config when config is defaultahrized)
 	public void saveSettings() {
+		String[] lines = new String[45];
+		Date today = new Date();
 		
-		handler = new FileHandler("Config.hans");
-		String[] valueslcl = new String[11];
+		handler = new ConfigHandler();
 		
 		//	Standard text
-		valueslcl[0] = "**Hans_config-fil**";
-		valueslcl[1] = "//	Specifiera exakt hur mï¿½nga bilder som har hï¿½mtats";
-		valueslcl[3] = "Number_of_Hans %-";
-		valueslcl[5] = "Number_of_Jimmys %-";
-		valueslcl[10] = "Hejdï¿½!";
+		lines[0] = "";
+		lines[1] = "_|    _|  _|           _|_|_|_|_|          _|  _|";
+		lines[2] = "_|  _|          _|_|_|     _|      _|_|_|  _|  _|  _|";
+		lines[3] = "_|_|      _|  _|_|         _|    _|    _|  _|  _|_|";
+		lines[4] = "_|  _|    _|      _|_|     _|    _|    _|  _|  _|  _|";
+		lines[5] = "_|    _|  _|  _|_|_|       _|      _|_|_|  _|  _|    _|";
+		lines[6] = "";
+		lines[7] = "";
+		lines[8] = "    _      _      _      _      _";
+		lines[9] = " __(')> __(')> __(')> __(')> __(^)<";
+		lines[10] = " \\___)  \\___)  \\___)  \\___)  \\___)";
+		lines[11] = "*'*'*'*'*'*'*Config.hans*'*'*'*'*'*'*";
+		lines[12] = "*'*'* The official config file  *'*'*";
+		lines[13] = "*'*'* of KisTalk. Please support*'*'*";
+		lines[14] = "*'*'* our provider, Hans, by    *'*'*";
+		lines[15] = "*'*'* sending a dollar to:      *'*'*";
+		lines[16] = "*'*'*     Hans                  *'*'*";
+		lines[17] = "*'*'*     17 Corey Dr Franklin  *'*'*";
+		lines[18] = "*'*'*     TN 37067, USA         *'*'*";
+		lines[19] = "*'*'* Mark your letter with     *'*'*";
+		lines[20] = "*'*'* 'KisTalk-Hans'            *'*'*";
+		lines[21] = "*'*'*                    //Hans *'*'*";
+		lines[22] = "*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*";
+		lines[23] = "*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*";
+		lines[24] = "";
+		lines[25] = "//	Filen senast ändrad " + today.getHours() + ":" + today.getMinutes() + " den " + today.getDate() + "/" + today.getMonth();
+		lines[26] = "";
+		lines[27] = "";
 		
 		//	Defined values
-		valueslcl[2] = "Max_number_of_Images %" + nrOfImgsTxt.getText();
-		valueslcl[4] = "Timer_interval %" + timeTxt.getText();
-		valueslcl[6] = "supported_image_formats %.jpg .png .gif .bnp";
-		valueslcl[7] = "Screen_index %1";
-		valueslcl[8] = "XMLURL %C:\\\\Users\\\\Andeers\\\\Documents\\\\Mina mottagna filer\\\\bild.xml";
-		valueslcl[9] = "Number_of_comments %2";
+		lines[28] = "Max_number_of_Images %" + nrOfImgsTxt.getText();
+		lines[30] = "Number_of_Hans %-";
+		lines[32] = "Timer_interval %" + timeTxt.getText();
+		lines[34] = "Number_of_Jimmys %-";
+		lines[36] = "supported_image_formats %.jpg .png .gif .bnp";
+		lines[38] = "Screen_index %1";
+		lines[40] = "XMLURL %C:\\\\Users\\\\Andeers\\\\Documents\\\\Mina mottagna filer\\\\bild.xml";
+		lines[42] = "Number_of_comments %2";
+		lines[44] = "Path_to_Pubslides %" + xmlPubPathTxt.getText();
 		
 		// Write to file (config)
-		handler.setConfig(valueslcl);
+		handler.setConfig(lines);
 		readConfig();
 		
 	}
 
 	//	Resets Config to its standard state
 	public void resetConfig() {
-		handler = new FileHandler("Config.hans"); //null
+		handler = new ConfigHandler();
 		
 		//	Reset Config-file
 		try {
 			handler.resetConfig();
 		} catch (IOException e) {
-			System.out.println("Default config file has been removed or modified, Please contact Hans.");
+			System.out.println("Default config file has been removed or modified, Please contact Hans at <i>hans@kistalk.com</i>.");
 		}
 		
 		// Reset 'confValues'
 		readConfig();
-		nrOfImgsTxt.setText(confValues.get(0));
-		timeTxt.setText(confValues.get(1));
+		nrOfImgsTxt.setText(confValues[0]);
+		timeTxt.setText(confValues[1]);
 		
-	}
-	
-
-	//	Creates a new slide and saves it
-	public void newPubSlide() {
-		List<String> lines = new ArrayList<String>();
-		String[] tmp = null;
-		StringBuffer sb = new StringBuffer();
-		handler = new FileHandler("PubSlides.hans");
-		
-		String imgLink = chkSlideCon();
-		
-		//	Create String[]
-		try {
-			lines = handler.processLineByLine(5);
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		sb.append(titleTxt.getText() + "%" + contentTxt.getText() + "%" + imgLink);
-		lines.add(sb.toString());
-		
-		for (int i = 0; i < nrOfPubSlides; i++){
-			tmp[i] = lines.get(i);
-		}
-		
-		//	Write to file
-		handler.setConfig(tmp);
-		
-		nrOfPubSlides++;
-		
-	}
-	
-	//	Shows all slides
-	public void readPubSlides(){
-		List<String> title = new ArrayList<String>();
-		List<String> content = new ArrayList<String>();
-		List<String> link = new ArrayList<String>();
-		
-		FileHandler handler = new FileHandler("PubSlides.hans");
-		StringBuffer sb = new StringBuffer();
-		
-		//	Get titles and content
-		try {
-			title = handler.processLineByLine(1);
-			content = handler.processLineByLine(2);
-			link = handler.processLineByLine(3);
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		//	Show all titles and content in a textfield
-		for (int i = 0; i < nrOfPubSlides; i++){
-			if (link.get(i) != null){
-				sb.append("index " + i + ":" + "\n" + title.get(i) + "\n" + link.get(i) + "\n" + content.get(i) + "\n" + "\n");
-			}else {
-				sb.append("index " + i + ":" + "\n" + title.get(i) + "\n" + content.get(i) + "\n" + "\n");
-			}
-		}
-		
-		contentTxt.setText(sb.toString());
 	}
 
-	//	Edits an existing slide
-	public void editSlide(){
-		String title, content, link;
-		List<String> lines = new ArrayList<String>();
-		String[] tmp = new String[nrOfPubSlides];
-		handler = new FileHandler("PubSlides.hans");
-		
-		disabelButtons();
-		
-		// VÃ¤lj vilken slide som ska editeras, slideNr
-		//Popup("Vilken bild ska editeras?");
-		
-		try {
-			lines = handler.processLineByLine(5);
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+	//	Set the path
+	public void setPubSlidesPath(String name){
+		if (name == "TMEIT"){
+			xmlPubPathTxt.setText("C://TMEIT");
+		}else if (name == "Qmisk"){
+			xmlPubPathTxt.setText("C://Qmisk");
+		}else if (name == "ITK"){
+			xmlPubPathTxt.setText("C://ITK");
 		}
-		
-		title = handler.processLine(lines.get(slideNr))[0];
-		content = handler.processLine(lines.get(slideNr))[1];
-		link = handler.processLine(lines.get(slideNr))[2];
-		
-		titleTxt.setText(title);
-		contentTxt.setText(content);
-		uploadTxt.setText(link);
 		
 	}
 	
-	//	Save a slide after editing
-	public void saveSlide(){
-		List<String> lines = new ArrayList<String>();
-		StringBuffer sb = new StringBuffer();
-		handler = new FileHandler("PubSlides.hans");
-		String[] tmp = null;
+	//	Disable buttons
+	public void disabelButtons(){ // Inte färdig, men användbar (bla pop-up)
 		
-		//	Check if content and title are valid, and returns ev link
-		String imgLink = chkSlideCon();
-		
-		try {
-			lines = handler.processLineByLine(5);
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-//		Create String[]
-		sb.append(titleTxt.getText() + "%" + contentTxt.getText() + "%" + imgLink);
-		lines.remove(slideNr);
-		lines.add(slideNr, sb.toString());
-		
-		
-		//	Write to file
-		for (int i = 0; i < nrOfPubSlides; i++){
-			tmp[i] = lines.get(i);
-		}
-		
-		//	Write to file
-		handler.setConfig(tmp);
-		
-		enableButtons();
-		nrOfPubSlides++;
-		slideNr = 0;
-		
-	}
-	
-	public String chkSlideCon(){
-		int nrOfConLtrs = 200;
-		int nrOfTitLtrs = 35;
-		String imgLink = "-";
-		
-		//	Check for an ev image
-		if (uploadTxt.getText().equals("") == false){
-			System.out.println("Du har valt att ladda upp en bild! Grattis!");
-			
-			// Skicka med lï¿½nken till textfilen!
-			imgLink = uploadTxt.getText();
-			
-			nrOfConLtrs = 50;
-		}
-		
-		//	Check if number of letters is correct
-		if (titleTxt.getText().length() > nrOfTitLtrs){
-			System.out.println("Too many letters. The number of letters in the title is limited to " + nrOfTitLtrs);
-			// Avbryt saveSlide(), tillbaka till edit-mode
-		}
-		if (contentTxt.getText().length() > nrOfConLtrs){
-			System.out.println("Too many letters. The number of letters in the content is limited to " + nrOfConLtrs);
-			// Avbryt saveSlide(), tillbaka till edit-mode
-		}
-		if (titleTxt.getText().length() < 2){
-			System.out.println("Too few letters in the title field");
-			// Avbryt saveSlide(), tillbaka till edit-mode
-		}
-		if (contentTxt.getText().length() < 2){
-			System.out.println("Too few letters in the content field");
-			// Avbryt saveSlide(), tillbaka till edit-mode
-		}
-		
-		return imgLink;
-	}
-	
-	public void disabelButtons(){
-		//	Disable buttons
-		newImgBtn.setEnabled(false);
-		newImgBtn.setVisible(false);
-		showAllImgsBtn.setEnabled(false);
-		showAllImgsBtn.setVisible(false);
-		editImgBtn.setEnabled(false);
-		editImgBtn.setVisible(false);
-		delOneImgBtn.setEnabled(false);
-		delOneImgBtn.setVisible(false);
-		delAllImgsBtn.setEnabled(false);
-		delAllImgsBtn.setVisible(false);
 		saveSetBtn.setEnabled(false);
 		saveSetBtn.setVisible(false);
 		resetBtn.setEnabled(false);
 		resetBtn.setVisible(false);
-		
-		saveSlideBtn.setEnabled(true);
-		saveSlideBtn.setVisible(true);
-		dscrdEditBtn.setEnabled(true);
-		dscrdEditBtn.setVisible(true);
 	}
 	
-	public void enableButtons(){
-		//	Enable buttons
-		newImgBtn.setEnabled(true);
-		newImgBtn.setVisible(true);
-		showAllImgsBtn.setEnabled(true);
-		showAllImgsBtn.setVisible(true);
-		editImgBtn.setEnabled(true);
-		editImgBtn.setVisible(true);
-		delOneImgBtn.setEnabled(true);
-		delOneImgBtn.setVisible(true);
-		delAllImgsBtn.setEnabled(true);
-		delAllImgsBtn.setVisible(true);
+	//	Enable buttons
+	public void enableButtons(){ // Inte färdig, men användbar (bla pop-up)
+		
 		saveSetBtn.setEnabled(true);
 		saveSetBtn.setVisible(true);
 		resetBtn.setEnabled(true);
 		resetBtn.setVisible(true);
-		
-		saveSlideBtn.setEnabled(false);
-		saveSlideBtn.setVisible(false);
-		dscrdEditBtn.setEnabled(false);
-		dscrdEditBtn.setVisible(false);
 	}
 	
-	public void popup(){
-		JFrame popFrame = new JFrame();
+	//	Creates a pop-up
+	public void popup(String message){ // Inte färdig, men användbar (Specificering av mat m.m.)
+		popFrame = new JFrame();
 		JPanel popPanel = new JPanel();
 		JLabel popLabel = new JLabel();
-		TextField popText = new TextField();
-		JButton popButton = new JButton();
+		popText = new TextField();
+		popButton = new JButton();
+		
+		popFrame.setLocation(400, 100);
+		popFrame.setTitle("KisTalk Popup");
+		popPanel.setBackground(Color.BLACK);
+		popLabel.setText(message);
+		popLabel.setForeground(Color.WHITE);
+		popText.setSize(10, 5);
+		popButton.setText("Submit");
+		popButton.addActionListener(listener);
+		popButton.setForeground(Color.WHITE);
+		popButton.setBackground(Color.BLACK);
 		
 		popPanel.add(popLabel);
-		//popText
-		//popButton
-		//popFrame.add(popPanel);
+		popPanel.add(popText);
+		popPanel.add(popButton);
+		popFrame.add(popPanel);
 		
-	}
-
-	public void delOnePubSlide(){
-		List<String> lines = new ArrayList<String>();
-		handler = new FileHandler("PubSlides.hans");
-		
-		int slideNr = 0;
-		
-		// Vï¿½lj vilken slide som ska tas bort, slideNr
-		
-		if (slideNr >= nrOfPubSlides){
-			System.out.println("Du mï¿½ste vï¿½lja en slide som faktiskt finns! :(");
-		}
-		
-		try {
-			lines = handler.processLineByLine(5);
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-lines.remove(slideNr);
-		
-		nrOfPubSlides--;
-		
-	}
-
-	//	Deletes all slides
-	public void delAllPubSlides(){
-		handler = new FileHandler("PubSlides.hans");
-		String[] tmp = new String[nrOfPubSlides];
-		
-		for (int i = 0; i < nrOfPubSlides; i++) // Nej!?
-			tmp[i] = null;
-		
-		//	Set all lines in the file to null
-		handler.setConfig(tmp);
-		
-		nrOfPubSlides = 0;
-		
-		readPubSlides();
+		popFrame.setVisible(true);
 		
 	}
 	
-	public void yFood() {
+	//	Dinner is served, send HTTP-post to server
+	public void yFood() {//Dålig kod, Per fixar
 		URL url;
 		try {
 			url = new URL("http://hostname:80/cgi");
@@ -787,7 +596,8 @@ lines.remove(slideNr);
 	    
 	}
 	
-	public void nFood(){
+	//	Dinner isn't served, send HTTP-post to server
+	public void nFood(){//Dålig kod, Per fixar
 		URL url;
 		try {
 			url = new URL("http://hostname:80/cgi");
@@ -805,7 +615,8 @@ lines.remove(slideNr);
 		}
 	}
 	
-	public void yPub(){
+	//	Pub is open, send HTTP-post to server
+	public void yPub(){ //Dålig kod, Per fixar
 		URL url;
 		try {
 			url = new URL("http://hostname:80/cgi");
@@ -823,7 +634,8 @@ lines.remove(slideNr);
 		}
 	}
 	
-	public void nPub(){
+	//	Pub is closed, send HTTP-post to server
+	public void nPub(){//Dålig kod, Per fixar
 		URL url;
 		try {
 			url = new URL("http://hostname:80/cgi");
@@ -841,28 +653,6 @@ lines.remove(slideNr);
 		}
 	}
 	
-//	Get an image and returns it
-	public ImageIcon getPubImg(){
-		String fileTxt = uploadTxt.getText();
-		ImageIcon picture;
-		
-		if (fileTxt.startsWith("http://") || fileTxt.startsWith("ftp://")){
-			URL url = null;
-			try {
-				url = new URL(uploadTxt.getText());
-			} catch (MalformedURLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			picture = new ImageIcon(url);
-		}else{
-			picture = new ImageIcon(uploadTxt.getText());
-		}
-		
-		return picture;
-		
-	}
-
 	//	Starts the Slideshow
 	public void startSlideshow() {
 		saveSettings();
@@ -881,50 +671,38 @@ lines.remove(slideNr);
 	//	Listener
 	public class ButtonListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			if (e.getSource() == saveSetBtn){
+			if (e.getSource() == saveSetBtn){ //Save settings
 				saveSettings();
 				statusLbl.setText("Status: Settings saved to Config");
-			}else if (e.getSource() == resetBtn){
+			}else if (e.getSource() == resetBtn){ //Reset config
 				resetConfig();
 				statusLbl.setText("Status: Config is back to normal");
-			}else if (e.getSource() == startBtn){
+			}else if (e.getSource() == startBtn){ //Start slideshow
 				System.out.println("Startar bildspel..."); //startSlideshow();
 				statusLbl.setText("Status: Starting Slideshow...");
-			}else if (e.getSource() == newImgBtn){
-				newPubSlide();
-				statusLbl.setText("Status: Slide saved");
-			}else if (e.getSource() == showAllImgsBtn){
-				readPubSlides();
-				statusLbl.setText("Status: Slides loaded");
-			}else if(e.getSource() == editImgBtn){
-				statusLbl.setText("Status: You're now editing a slide");
-			}else if (e.getSource() == delOneImgBtn){
-				delOnePubSlide();
-				statusLbl.setText("Status: Slide deleted");
-			}else if (e.getSource() == delAllImgsBtn){
-				delAllPubSlides();
-				statusLbl.setText("Status: All slides deleted");
-			}else if (e.getSource() == saveSlideBtn){
-				saveSlide();
-			}else if(e.getSource() == dscrdEditBtn){
-				System.out.println("Under construction, dont discard!");
-			}else if(e.getSource() == yFoodRbtn){
+			}else if(e.getSource() == yFoodRbtn){ //Dinner served
 				yFood();
 				statusLbl.setText("Dinner is served!");
-			}else if(e.getSource() == nFoodRbtn){
+			}else if(e.getSource() == nFoodRbtn){ //No dinner
 				nFood();
 				statusLbl.setText("Food is no more");
-			}else if(e.getSource() == yPubRbtn){
+			}else if(e.getSource() == yPubRbtn){ //Pub open
 				yPub();
 				statusLbl.setText("The pub is open!");
-			}else if(e.getSource() == nPubRbtn){
+			}else if(e.getSource() == nPubRbtn){ //Pub closed
 				nPub();
 				statusLbl.setText("The pub is closed");
+			}else if(e.getSource() == popButton){ // För att testa pop-upen
+				value = popText.getText();
+				popFrame.dispose();
+			}else if(e.getSource() == lolButton){ // För att testa pop-upen
+				popup("hejhejhallå!");
+				statusLbl.setText("popup! Kom igen!");
 			}else if(e.getSource() == null){
 				
 			}
 
-			
 		}
 	}
+	
 }
