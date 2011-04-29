@@ -36,7 +36,7 @@ public class ShowImage extends JPanel {
 	/**
 	 * Image comments 
 	 */
-	public TextToDisplay[] imageComments;
+	public TextToDisplay[] comments;
 	/**
 	 * false if picture is moving to middle and while still, true otherwise
 	 */
@@ -113,7 +113,7 @@ public class ShowImage extends JPanel {
 	 * @param ImageComments	CommentXML list that contains the comments to display
 	 */
 	public ShowImage(BufferedImage tmpImage, String tmpImageUserString, String tmpImageText,   
-			Rectangle tmpmonitor, int tmpTimeStill, List<CommentXML> ImageComments) {
+			Rectangle tmpmonitor, int tmpTimeStill, List<CommentXML> imageComments) {
 
 		monitorSize = tmpmonitor;
 
@@ -133,20 +133,8 @@ public class ShowImage extends JPanel {
 		// Image comments
 		// imageComments = new TextDisplay[ImageComments.size()];
 		// for(int i =0;i<imageComments.length;i++){
-		if (ImageComments.size() > 0) {
-
-			imageComments = new TextToDisplay[ImageComments.size()];
-			for (int i = 0; i < imageComments.length; i++) {
-				imageComments[i] = new TextToDisplay(10, 10, 1000, 100);
-				imageComments[i].setString(ImageComments.get(i).getContent());
-				transperacy = 0;
-
-				imageComments[i].addX(1000);
-				imageComments[i].addY(200 + (i * 100));
-			}
-			// System.out.println(ImageComments.get(i).getContent());
-			// }
-		}
+		setComments(imageComments);
+		
 		// ImageCommentTxt setup
 		imageCommentTxtDsp = new TextToDisplay(100, 1000, 2, 1);
 		imageCommentTxtDsp.setString(tmpImageText);
@@ -164,12 +152,28 @@ public class ShowImage extends JPanel {
 		slideImage = tmpImage;
 
 
-		imageStopPosition = (monitorSize.width / 2) - (2 * imageSize.width / 3);
+		imageStopPosition = ((monitorSize.width - imageSize.width - 750));
 		imageStopPosition = imageStopPosition - (imageStopPosition % 5);
 		setDoubleBuffered(true);
 
 		ImgRect = new ImgRect(-200, 100, imageSize.width * factor,
 				imageSize.height);
+	}
+	
+	private void setComments(List<CommentXML> imageComments){
+		if (imageComments.size() > 0) {
+			comments = new TextToDisplay[imageComments.size()];
+			for (int i = 0; i < comments.length; i++) {
+				comments[i] = new TextToDisplay(100, 100, 1000, 100);
+
+				comments[i].setString(imageComments.get(i).getUser()
+						+ " wrote: " + imageComments.get(i).getContent());
+				comments[i].resetPos();
+				comments[i].addX(800);
+				comments[i].addY(200 + (i * 100));
+			}
+
+		}
 	}
 	
 	/**
@@ -194,7 +198,7 @@ public class ShowImage extends JPanel {
 	 * @param ImageComments	CommentXML list that contains the comments to display
 	 */
 	public void UpdatePicture(BufferedImage tmpImg, String tmpUserString,
-			String tmpImageText, List<CommentXML> ImageComments) {
+			String tmpImageText, List<CommentXML> imageComments) {
 		
 		// Bilden
 		slideImage = tmpImg;
@@ -208,24 +212,12 @@ public class ShowImage extends JPanel {
 		ImgRect.addX(-200);
 
 		//resets the image comments
-		imageComments = null;
+		comments = null;
 		
 		//sets the new comments if they exist 
 		// imageComments = new TextDisplay[ImageComments.size()];
 		// for(int i =0;i<imageComments.length;i++){
-		if (ImageComments.size() > 0) {
-			imageComments = new TextToDisplay[ImageComments.size()];
-			for (int i = 0; i < imageComments.length; i++) {
-				imageComments[i] = new TextToDisplay(100, 100, 1000, 100);
-
-				imageComments[i].setString(ImageComments.get(i).getUser()
-						+ " wrote: " + ImageComments.get(i).getContent());
-				imageComments[i].resetPos();
-				imageComments[i].addX(1000);
-				imageComments[i].addY(200 + (i * 100));
-			}
-
-		}
+		setComments(imageComments);
 
 		transperacy = 0;
 		// imageComments[0].setString( ImageComments.get(0).getContent());
@@ -366,11 +358,11 @@ public class ShowImage extends JPanel {
 		g2d.setFont(commentfont);
 		g2d.setColor(Color.WHITE);
 
-		if (imageComments != null) {
+		if (comments != null) {
 
-			for (int i = 0; i < imageComments.length; i++) {
-				g2d.drawString(imageComments[i].getString(),
-						imageComments[i].x, imageComments[i].y);
+			for (int i = 0; i < comments.length; i++) {
+				g2d.drawString(comments[i].getString(),
+						comments[i].x, comments[i].y);
 			}
 		}
 		

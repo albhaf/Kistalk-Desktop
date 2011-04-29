@@ -79,7 +79,7 @@ public class TwoDSlideShowInfo{
 	}
 	
 	protected void setPicture() {
-		if (currentPicture >= nrOfPicsServer || currentPicture == 0) {			
+		if (currentPicture >= nrOfPicsServer) {			
 			setLinks();			
 			currentPicture = 0;			
 		}
