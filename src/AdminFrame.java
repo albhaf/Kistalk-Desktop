@@ -482,7 +482,7 @@ public class AdminFrame {
 		lines[22] = "*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*";
 		lines[23] = "*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*";
 		lines[24] = "";
-		lines[25] = "//	Filen senast ändrad " + today.getHours() + ":" + today.getMinutes() + " den " + today.getDate() + "/" + today.getMonth();
+		lines[25] = "//	Date of last revision: " + today.getHours() + ":" + today.getMinutes() + " den " + today.getDate() + "/" + today.getMonth();
 		lines[26] = "";
 		lines[27] = "";
 		
@@ -504,7 +504,7 @@ public class AdminFrame {
 	}
 
 	//	Resets Config to its standard state
-	public void resetConfig() {
+	public void resetConfig() { //Error
 		handler = new ConfigHandler();
 		
 		//	Reset Config-file
@@ -681,7 +681,7 @@ public class AdminFrame {
 				resetConfig();
 				statusLbl.setText("Status: Config is back to normal");
 			}else if (e.getSource() == startBtn){ //Start slideshow
-				System.out.println("Startar bildspel..."); //startSlideshow();
+				//startSlideshow();
 				statusLbl.setText("Status: Starting Slideshow...");
 			}else if(e.getSource() == yFoodRbtn){ //Dinner served
 				yFood();
