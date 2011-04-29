@@ -23,7 +23,7 @@ public class ConfigHandler {
 	}
 
 	//	Counts the number of lines in a file
-//	public int countLines() { // Behövs inte, än så länge...
+//	public int countLines() { // Behï¿½vs inte, ï¿½n sï¿½ lï¿½nge...
 //		int nrOfLinesLocal = 0;
 //		Scanner scanner = null;
 //
@@ -56,7 +56,7 @@ public class ConfigHandler {
 
 		//	Write to file
 		try {
-			out = new BufferedWriter(new FileWriter(fFile));
+			out = new BufferedWriter(new FileWriter(fFile));			
 			out.write(sb.toString());
 			out.close();
 		} catch (IOException e) {
@@ -82,11 +82,9 @@ public class ConfigHandler {
 	}
 
 	//Get all lines in an array
-	public String[] getAllLines() throws FileNotFoundException{ // Behövs antagligen inte, därför är den inte klar
+	public String[] getAllLines() throws FileNotFoundException{ // Behï¿½vs antagligen inte, dï¿½rfï¿½r ï¿½r den inte klar
 		Scanner scanner = new Scanner(new FileReader(fFile));
 		String[] lines = new String[nrOfValues];
-		
-		
 		
 		return lines;
 	}

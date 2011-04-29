@@ -8,5 +8,8 @@
 	<classpathentry kind="lib" path="httpclient-cache-4.1.1.jar"/>
 	<classpathentry kind="lib" path="httpcore-4.1.jar"/>
 	<classpathentry kind="lib" path="httpmime-4.1.1.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Apache poi"/>
+	<classpathentry kind="lib" path="C:/Users/Andeers/workspace/Kistalk-Desktop/lib/apache poi/poi-3.7-20101029.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Andeers/workspace/Kistalk-Desktop/lib/apache poi/poi-scratchpad-3.7-20101029.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
