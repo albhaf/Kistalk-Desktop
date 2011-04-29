@@ -46,7 +46,7 @@ public class AdminFrame {
 	JButton saveSetBtn;
 	JButton resetBtn;
 	JButton startBtn;
-	
+	JButton exitBtn;
 	JButton lolButton;
 	JButton popButton;
 	
@@ -103,7 +103,8 @@ public class AdminFrame {
 		saveSetBtn = new JButton();
 		resetBtn = new JButton();
 		startBtn = new JButton();
-		lolButton = new JButton();
+//		lolButton = new JButton();
+		exitBtn = new JButton();
 		
 		nrOfImgsLbl = new JLabel();
 		timeLbl= new JLabel();
@@ -231,8 +232,13 @@ public class AdminFrame {
 		startBtn.addActionListener(listener);
 		startBtn.setOpaque(false);
 		
-		lolButton.setText("popup!");
-		lolButton.addActionListener(listener);
+//		lolButton.setText("popup!");
+//		lolButton.addActionListener(listener);
+		
+		exitBtn.setText("Exit");
+		exitBtn.setForeground(Color.BLACK);
+		exitBtn.addActionListener(listener);
+		exitBtn.setOpaque(false);
 		
 		//	Radiobuttons settings
 		yFoodRbtn.setText("True");
@@ -361,6 +367,7 @@ public class AdminFrame {
 				   			.addComponent(saveSetBtn, 140, 140, 140)
 				   			.addComponent(resetBtn, 140, 140, 140)
 				   			.addComponent(startBtn, 140, 140, 140)
+				   			.addComponent(exitBtn, 140, 140, 140)
 			)
 			.addComponent(statusLbl)
 		);
@@ -426,6 +433,7 @@ public class AdminFrame {
 					   				.addComponent(saveSetBtn, 30, 30, 30)
 					   				.addComponent(resetBtn, 30, 30, 30)
 					   				.addComponent(startBtn, 30, 30, 30)
+					   				.addComponent(exitBtn, 30, 30, 30)
 				  )
 				  .addGap(50)
 				  .addComponent(statusLbl)
@@ -668,6 +676,7 @@ public class AdminFrame {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		startBtn.disable();
 		
 	}
 	
@@ -706,6 +715,8 @@ public class AdminFrame {
 			}else if(e.getSource() == lolButton){ // För att testa pop-upen
 				popup("hejhejhallå!");
 				statusLbl.setText("popup! Kom igen!");
+			}else if(e.getSource() == exitBtn){
+				statusLbl.setText("There is no escape!");
 			}else if(e.getSource() == null){
 				
 			}
