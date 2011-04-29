@@ -1,4 +1,4 @@
-  
+ 
 _|    _|  _|           _|_|_|_|_|          _|  _|
 _|  _|          _|_|_|     _|      _|_|_|  _|  _|  _|
 _|_|      _|  _|_|         _|    _|    _|  _|  _|_|
@@ -23,6 +23,8 @@ _|    _|  _|  _|_|_|       _|      _|_|_|  _|  _|    _|
 *'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*
 *'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*
  
+//	Config is back to normal
+ 
  
 Max_number_of_Images %7
  
@@ -40,7 +42,7 @@ XMLURL %http://www.kistalk.com/desktop_images.xml
  
 Number_of_comments %2
  
-Path_to_Pubslides %C:\\myAss\\Lol
+Path_to_Pubslides %C:\\Default mapp\\Default pubslides
  
  
                              ___-------___

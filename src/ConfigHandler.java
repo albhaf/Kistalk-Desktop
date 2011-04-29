@@ -112,9 +112,12 @@ public class ConfigHandler {
 		String part = null;
 		
 		scanner.useDelimiter("%");
+		
+		if (scanner.hasNext()){
 		scanner.next();
-		if(scanner.hasNext()){
-			part = scanner.next();
+			if(scanner.hasNext()){
+				part = scanner.next();
+			}
 		}
 		
 		return part;

@@ -2,7 +2,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.TextArea;
 import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -133,16 +132,21 @@ public class AdminFrame {
 		pubSlidesDDLst = new JComboBox();
 		screenDDLst = new JComboBox();
 		
+		Container contentPane = adminFrame.getContentPane();
+		
 		// Create and Paint thePanel background
 		thePanel = new JPanel() //Observera att detta är en create!
 		{public void paint(Graphics g){
+//				headerLbl.setDoubleBuffered(true);
 				g.drawImage(bgImage, 0,0, this);
-	    		setOpaque(false); // Opaque sätts två ggr för att... thePanel inte skulle påverkas av något konstigt (?)
-	    		paintComponent(g);
+				setOpaque(false); // Opaque sätts två ggr för att... thePanel inte skulle påverkas av något konstigt (?)
+	    		super.paint(g);
+	    		repaint();
 	    		setOpaque(true);
 	    		
-	    		System.out.println("paint"); //Visar mig när bg ritas upp
-	    		headerLbl.paint(headerLbl.getGraphics()); //Behövs tydligen för att rita ut loggan
+//	    		System.out.println("paint"); //Visar mig när bg ritas upp
+//	    		headerLbl.paint(headerLbl.getGraphics()); //Behövs tydligen för att rita ut loggan
+//	    		startBtn.paint(getGraphics());
 	    		
 			}
 		}
@@ -151,9 +155,9 @@ public class AdminFrame {
 		groupLayout = new GroupLayout(thePanel);
 		
 		//	Frame settings
-		adminFrame.setSize(900,600);
+		adminFrame.setSize(550,600);
 		adminFrame.setResizable(false);
-		adminFrame.setLocation(200, 50);
+		adminFrame.setLocation(300, 50);
 		adminFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		adminFrame.setTitle("KisTalk Slideshow Settings");
 		
@@ -213,17 +217,17 @@ public class AdminFrame {
 		
 		//	Button settings
 		saveSetBtn.setText("Save settings");
-		saveSetBtn.setForeground(Color.WHITE);
+		saveSetBtn.setForeground(Color.BLACK);
 		saveSetBtn.addActionListener(listener);
 		saveSetBtn.setOpaque(false);
 		
 		resetBtn.setText("Reset settings");
-		resetBtn.setForeground(Color.WHITE);
+		resetBtn.setForeground(Color.BLACK);
 		resetBtn.addActionListener(listener);
 		resetBtn.setOpaque(false);
 		
 		startBtn.setText("Start slideshow");
-		startBtn.setForeground(Color.WHITE);
+		startBtn.setForeground(Color.BLACK);
 		startBtn.addActionListener(listener);
 		startBtn.setOpaque(false);
 		
@@ -335,14 +339,9 @@ public class AdminFrame {
 			   					.addComponent(pubSlidesDDLst, 200, 200, 200)
 								.addComponent(xmlPubPathTxt, 300, 300, 300)
 					   	)
-				   		.addGroup(groupLayout.createSequentialGroup()
-				   			.addComponent(saveSetBtn, 140, 140, 140)
-				   			.addComponent(resetBtn, 140, 140, 140)
-				   			.addComponent(startBtn, 140, 140, 140)
-				   		)
 				)
 				
-				.addGap(100)
+				.addGap(50)
 				
 				.addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
 						
@@ -357,6 +356,11 @@ public class AdminFrame {
 							 .addComponent(nPubRbtn)
 						)
 			   	)
+			)
+			.addGroup(groupLayout.createSequentialGroup()
+				   			.addComponent(saveSetBtn, 140, 140, 140)
+				   			.addComponent(resetBtn, 140, 140, 140)
+				   			.addComponent(startBtn, 140, 140, 140)
 			)
 			.addComponent(statusLbl)
 		);
@@ -400,12 +404,6 @@ public class AdminFrame {
 									.addComponent(pubSlidesDDLst, 20, 20, 20)
 									.addComponent(xmlPubPathTxt, 20, 20, 20)
 					   			)
-								.addGap(60)
-					   			.addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-					   				.addComponent(saveSetBtn, 30, 30, 30)
-					   				.addComponent(resetBtn, 30, 30, 30)
-					   				.addComponent(startBtn, 30, 30, 30)
-					   			)
 				   		)
 				   		
 				   		.addGroup(groupLayout.createSequentialGroup()
@@ -422,7 +420,12 @@ public class AdminFrame {
 						   			.addComponent(nPubRbtn)
 						   		)
 				   		)
-				   		
+				  )
+				  .addGap(50)
+				  .addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+					   				.addComponent(saveSetBtn, 30, 30, 30)
+					   				.addComponent(resetBtn, 30, 30, 30)
+					   				.addComponent(startBtn, 30, 30, 30)
 				  )
 				  .addGap(50)
 				  .addComponent(statusLbl)
@@ -479,7 +482,7 @@ public class AdminFrame {
 		lines[22] = "*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*";
 		lines[23] = "*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*";
 		lines[24] = "";
-		lines[25] = "//	Filen senast ändrad " + today.getHours() + ":" + today.getMinutes() + " den " + today.getDate() + "/" + today.getMonth();
+		lines[25] = "//	Date of last revision: " + today.getHours() + ":" + today.getMinutes() + " den " + today.getDate() + "/" + today.getMonth();
 		lines[26] = "";
 		lines[27] = "";
 		
@@ -501,7 +504,7 @@ public class AdminFrame {
 	}
 
 	//	Resets Config to its standard state
-	public void resetConfig() {
+	public void resetConfig() { //Error
 		handler = new ConfigHandler();
 		
 		//	Reset Config-file
@@ -549,7 +552,7 @@ public class AdminFrame {
 	}
 	
 	//	Creates a pop-up
-	public void popup(String message){ // Inte färdig, men användbar (Specificering av mat m.m.)
+	public void popup(String message){ // Inte färdig, men användbar (Specificering av mat, Log-In m.m.)
 		popFrame = new JFrame();
 		JPanel popPanel = new JPanel();
 		JLabel popLabel = new JLabel();
@@ -578,79 +581,79 @@ public class AdminFrame {
 	
 	//	Dinner is served, send HTTP-post to server
 	public void yFood() {//Dålig kod, Per fixar
-		URL url;
-		try {
-			url = new URL("http://hostname:80/cgi");
-			URLConnection conn = url.openConnection();
-		    conn.setDoOutput(true);
-		    OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream());
-		    wr.write("yFood");
-		    wr.flush();
-		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		URL url;
+//		try {
+//			url = new URL("http://hostname:80/cgi");
+//			URLConnection conn = url.openConnection();
+//		    conn.setDoOutput(true);
+//		    OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream());
+//		    wr.write("yFood");
+//		    wr.flush();
+//		} catch (MalformedURLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 	    
 	}
 	
 	//	Dinner isn't served, send HTTP-post to server
 	public void nFood(){//Dålig kod, Per fixar
-		URL url;
-		try {
-			url = new URL("http://hostname:80/cgi");
-			URLConnection conn = url.openConnection();
-		    conn.setDoOutput(true);
-		    OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream());
-		    wr.write("nFood");
-		    wr.flush();
-		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		URL url;
+//		try {
+//			url = new URL("http://hostname:80/cgi");
+//			URLConnection conn = url.openConnection();
+//		    conn.setDoOutput(true);
+//		    OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream());
+//		    wr.write("nFood");
+//		    wr.flush();
+//		} catch (MalformedURLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 	}
 	
 	//	Pub is open, send HTTP-post to server
 	public void yPub(){ //Dålig kod, Per fixar
-		URL url;
-		try {
-			url = new URL("http://hostname:80/cgi");
-			URLConnection conn = url.openConnection();
-		    conn.setDoOutput(true);
-		    OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream());
-		    wr.write("yPub");
-		    wr.flush();
-		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		URL url;
+//		try {
+//			url = new URL("http://hostname:80/cgi");
+//			URLConnection conn = url.openConnection();
+//		    conn.setDoOutput(true);
+//		    OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream());
+//		    wr.write("yPub");
+//		    wr.flush();
+//		} catch (MalformedURLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 	}
 	
 	//	Pub is closed, send HTTP-post to server
 	public void nPub(){//Dålig kod, Per fixar
-		URL url;
-		try {
-			url = new URL("http://hostname:80/cgi");
-			URLConnection conn = url.openConnection();
-		    conn.setDoOutput(true);
-		    OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream());
-		    wr.write("nPub");
-		    wr.flush();
-		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		URL url;
+//		try {
+//			url = new URL("http://hostname:80/cgi");
+//			URLConnection conn = url.openConnection();
+//		    conn.setDoOutput(true);
+//		    OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream());
+//		    wr.write("nPub");
+//		    wr.flush();
+//		} catch (MalformedURLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 	}
 	
 	//	Starts the Slideshow
@@ -678,7 +681,7 @@ public class AdminFrame {
 				resetConfig();
 				statusLbl.setText("Status: Config is back to normal");
 			}else if (e.getSource() == startBtn){ //Start slideshow
-				System.out.println("Startar bildspel..."); //startSlideshow();
+				//startSlideshow();
 				statusLbl.setText("Status: Starting Slideshow...");
 			}else if(e.getSource() == yFoodRbtn){ //Dinner served
 				yFood();

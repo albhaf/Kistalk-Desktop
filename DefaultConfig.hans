@@ -23,22 +23,14 @@ _|    _|  _|  _|_|_|       _|      _|_|_|  _|  _|    _|
 *'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*
 *'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*
  
-<<<<<<< HEAD
-//	Default config
-=======
-//	Config återställd
->>>>>>> 7ed1f0398dbdc681a79051dd69dd6e4bcbe502a9
+//	Config is back to normal
  
  
 Max_number_of_Images %7
  
 Number_of_Hans %-
  
-<<<<<<< HEAD
-Timer_interval %5000
-=======
 Timer_interval %10
->>>>>>> 7ed1f0398dbdc681a79051dd69dd6e4bcbe502a9
  
 Number_of_Jimmys %-
  
@@ -46,20 +38,11 @@ supported_image_formats %.jpg .png .gif .bnp
  
 Screen_index %0
  
-<<<<<<< HEAD
 XMLURL %http://www.kistalk.com/desktop_images.xml
  
 Number_of_comments %2
  
-Path_to_Pubslides %C:\\myAss\\Lol
-=======
-XMLURL %C:\\Users\\Andeers\\Documents\\Mina mottagna filer\\bild.xml
- 
-Number_of_comments %2
- 
 Path_to_Pubslides %C:\\Default mapp\\Default pubslides
- 
->>>>>>> 7ed1f0398dbdc681a79051dd69dd6e4bcbe502a9
  
  
                              ___-------___
