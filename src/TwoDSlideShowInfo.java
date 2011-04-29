@@ -16,7 +16,7 @@ public class TwoDSlideShowInfo{
 	XMLreader xmlreader;
 	String xmlPath;
 	List<ImageXML> imgXMLList;
-	String[] fileFormats = new String[4];
+	String[] fileFormats;
 	ImageIcon[] iconArrayServer;
 	ImageIcon[] iconArrayPub;
 	Image[] serverImgs;
@@ -30,6 +30,7 @@ public class TwoDSlideShowInfo{
 	
 	
 	public TwoDSlideShowInfo() {
+		fileFormats  = new String[4];
 	}
 
 	protected Rectangle getScreenSize(int screenIndex) {
@@ -78,9 +79,8 @@ public class TwoDSlideShowInfo{
 	}
 	
 	protected void setPicture() {
-		if (currentPicture >= nrOfPicsServer) {			
-			setLinks();
-			
+		if (currentPicture >= nrOfPicsServer || currentPicture == 0) {			
+			setLinks();			
 			currentPicture = 0;			
 		}
 		try {

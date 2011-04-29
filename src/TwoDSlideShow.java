@@ -54,8 +54,8 @@ public class TwoDSlideShow extends Panel implements ActionListener {
 	}
 
 	private void updatePicture() {
-		info.setPicture();
 		info.updatePicture(slideShowHandler);
+		info.setPicture();		
 	}
 
 	@Override
