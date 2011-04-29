@@ -1,5 +1,3 @@
-import org.apache.poi.hslf.HSLFSlideShow;
-import org.apache.poi.hslf.extractor.PowerPointExtractor;
 import org.apache.poi.hslf.model.Slide;
 import org.apache.poi.hslf.usermodel.SlideShow;
 
