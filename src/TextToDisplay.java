@@ -20,8 +20,7 @@ import java.awt.geom.Rectangle2D;
 		 * @param width width of object containing the text
 		 * @param height height of object containing the text
 		 */
-		public TextToDisplay(float x, float y, float width, float height) {
-			setRect(x, y, width, height);
+		public TextToDisplay() {
 		}
 
 		/**

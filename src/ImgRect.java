@@ -14,8 +14,7 @@ public class ImgRect extends Rectangle2D.Float {
 		 * @param width width of the image.
 		 * @param height images height.
 		 */
-		public ImgRect(float x, float y, float width, float height) {
-			setRect(x, y, width, height);
+		public ImgRect(){
 		}
 		
 		/**
