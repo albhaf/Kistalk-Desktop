@@ -8,6 +8,7 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import java.awt.Image;
+import java.util.ArrayList;
 import java.util.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,7 +16,7 @@ import java.awt.image.BufferedImage;
 import java.net.URL;
 
 @SuppressWarnings("serial")
-public class TwoDSlideShow extends Panel implements ActionListener {
+public class ZNOTUSEDFrameBackground extends Panel implements ActionListener {
 
 	Timer t;
 
@@ -45,7 +46,7 @@ public class TwoDSlideShow extends Panel implements ActionListener {
 
 	Rectangle monitor = new Rectangle();
 
-	public TwoDSlideShow() {
+	public ZNOTUSEDFrameBackground() {
 		readConfig();
 		getScreenResolution();
 		firstPicture();
@@ -99,11 +100,11 @@ public class TwoDSlideShow extends Panel implements ActionListener {
 		serverImgs = new Image[nrOfPicsServer];
 		iconArrayServer = new ImageIcon[nrOfPicsServer];
 		urlArray = new URL[nrOfPicsServer];
-		t = new Timer(Integer.valueOf(values[2]), this);
-		fileFormats = values[4].split(" ");
-		screenIndex = Byte.valueOf(values[5]);
-		xmlPath = values[6];
-		nrOfComments = Integer.valueOf(values[7]);
+		t = new Timer(Integer.valueOf(values[1]), this);
+		fileFormats = values[2].split(" ");
+		screenIndex = Byte.valueOf(values[3]);
+		xmlPath = values[4];
+		nrOfComments = Integer.valueOf(values[5]);
 
 	}
 
@@ -158,12 +159,47 @@ currentPicture = currentPicture + 1;
 					updatePicture();
 				}
 			}
+
 		}
+
+	/*public static void copyPptPics() throws IOException{
+	        
+	                ZipFile zf = new ZipFile("C:\\Users\\Ludvig\\Documents\\asd.odp");
+	                Enumeration<? extends ZipEntry> files = zf.entries();
+
+	                while (files.hasMoreElements()) {
+	                  ZipEntry ze = files.nextElement();
+
+	                  System.out.println("Decompressing " + ze.getName());
+	                  System.out.println("  Compressed Size: " + ze.getCompressedSize()
+	                      + "  Expanded Size: " + ze.getSize() + "\n");
+	                     if(ze.isDirectory()==false){
+	                  BufferedInputStream fin = new BufferedInputStream(zf.getInputStream(ze));
+	                  BufferedOutputStream fout = new BufferedOutputStream(
+
+	                		  new FileOutputStream(ze.getName()));
+
+	                  int i;
+	                  do {
+	                    i = fin.read();
+	                    if (i != -1)
+	                      fout.write(i);
+	                  } while (i != -1);
+
+	                  fout.close();
+	                  fin.close();
+	                     }
+	                }
+	                zf.close();
+	              }*/
+		 
 	
 	public static void main(String args[]) {
 
-		new TwoDSlideShow();
+
+//		PubXMLReader blah = new PubXMLReader();
+//		blah.parseDocument();
+		new ZNOTUSEDFrameBackground();
 
 	}
 }
-

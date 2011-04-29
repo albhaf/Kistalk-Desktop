@@ -1,4 +1,4 @@
-.class
+*.class
 *~
 *.lock
 *.DS_Store

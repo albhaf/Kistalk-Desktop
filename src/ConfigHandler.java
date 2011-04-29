@@ -15,7 +15,7 @@ import java.util.Scanner;
 
 public class ConfigHandler {
 	private File fFile = new File("Config.hans");
-	public int nrOfValues = 9;
+	public int nrOfValues = 9; // Doesn't include regular textlines. If change, then change AdminFrame too
 
 	//	Constructor
 	public ConfigHandler() {
@@ -23,7 +23,7 @@ public class ConfigHandler {
 	}
 
 	//	Counts the number of lines in a file
-//	public int countLines() {
+//	public int countLines() { // Behövs inte, än så länge...
 //		int nrOfLinesLocal = 0;
 //		Scanner scanner = null;
 //
@@ -81,9 +81,19 @@ public class ConfigHandler {
 
 	}
 
+<<<<<<< HEAD
 	//Get all lines in an array ??
 	public String[] getAllLines() throws FileNotFoundException{
 		String[] lines = new String[nrOfValues];	
+=======
+	//Get all lines in an array
+	public String[] getAllLines() throws FileNotFoundException{ // Behövs antagligen inte, därför är den inte klar
+		Scanner scanner = new Scanner(new FileReader(fFile));
+		String[] lines = new String[nrOfValues];
+		
+		
+		
+>>>>>>> 249055b4b81049ce0131621d2475caa92904bd06
 		return lines;
 	}
 	
@@ -109,7 +119,7 @@ public class ConfigHandler {
 		Scanner scanner = new Scanner(aLine);
 		String part = null;
 		
-		scanner.useDelimiter("%"); //Behandla rader utan %
+		scanner.useDelimiter("%");
 		scanner.next();
 		if(scanner.hasNext()){
 			part = scanner.next();
