@@ -88,7 +88,9 @@ public class TwoDSlideShow extends Panel implements ActionListener {
 	}
 
 	private void readConfig() {
+
 		String[] values = new String[10];
+
 		ConfigHandler reader = new ConfigHandler();
 
 		try {
@@ -114,8 +116,10 @@ public class TwoDSlideShow extends Panel implements ActionListener {
 	private void firstPicture() {
 		xmlreader = new XMLreader(xmlPath);
 		imgXMLList = xmlreader.getImagesInfo();
-		nrOfPicsServer = imgXMLList.size();
-		for (int i = 0; i < nrOfPicsServer && i < urlArray.length; i++) {
+
+		nrOfPicsServer = imgXMLList.size(); //tillfälligt!
+		for (int i = 0; i < nrOfPicsServer && i < urlArray.length ; i++) { //nrOfPicsServer
+
 			urlArray[i] = imgXMLList.get(i).getLink();
 		}
 		try {
