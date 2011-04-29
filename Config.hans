@@ -34,8 +34,6 @@ Timer_interval %10
  
 Number_of_Jimmys %-
  
-Timer_interval %10
- 
 supported_image_formats %.jpg .png .gif .bnp
  
 Screen_index %0
