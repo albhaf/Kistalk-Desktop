@@ -149,7 +149,7 @@ public class AdminFrame {
 		thePanel.setBackground(Color.decode("#ae0808"));
 		
 		//	Label settings
-		headerLbl.setIcon(new ImageIcon("C:\\Users\\Andeers\\Pictures\\kistalk_admin_logo.png"));
+		headerLbl.setIcon(new ImageIcon("kistalk_adm_logo.png"));
 		headerLbl.setFont(new Font("Cambria", Font.BOLD, 32));
 		headerLbl.setForeground(Color.WHITE);
 		
@@ -183,10 +183,10 @@ public class AdminFrame {
 		
 		//	Text settings
 		nrOfImgsTxt.setText(confValues[0]);
-		nrOfImgsTxt.setFont(new Font("Algerian", Font.ITALIC, 12));
+		nrOfImgsTxt.setFont(new Font("Algerian", Font.PLAIN, 12));
 		
 		timeTxt.setText(confValues[2]);
-		timeTxt.setFont(new Font("Algerian", Font.ITALIC, 12));
+		timeTxt.setFont(new Font("Algerian", Font.PLAIN, 12));
 		
 		xmlPubPathTxt.setText(confValues[8]);
 		xmlPubPathTxt.setFont(new Font("Algerian", Font.PLAIN, 12));
@@ -196,7 +196,7 @@ public class AdminFrame {
 		legalFilesTxt.setEnabled(false);
 		
 		nrOfCommentsTxt.setText(confValues[7]);
-		nrOfCommentsTxt.setFont(new Font("Algerian", Font.ITALIC, 12));
+		nrOfCommentsTxt.setFont(new Font("Algerian", Font.PLAIN, 12));
 		
 		//	Button settings
 		saveSetBtn.setText("Save settings");
@@ -415,7 +415,7 @@ public class AdminFrame {
 						  .addComponent(resetBtn, 30, 30, 30)
 						  .addComponent(exitBtn, 30, 30, 30)
 				  )
-				  .addGap(50)
+				  .addGap(30)
 				  .addComponent(statusLbl)
 			);
 		
@@ -512,22 +512,22 @@ public class AdminFrame {
 	//	Set the path
 	public void setPubSlidesPath(String name){
 		if (name == "TMEIT"){
-			xmlPubPathTxt.setText("C://TMEIT");
+			xmlPubPathTxt.setText("C:\\TMEIT");
 			xmlPubPathTxt.setFont(new Font("Algerian", Font.ITALIC, 12));
 			xmlPubPathTxt.disable();
 			statusLbl.setText(name + "s Slideshow is choosed");
 		}else if (name == "Qmisk"){
-			xmlPubPathTxt.setText("C://Qmisk");
+			xmlPubPathTxt.setText("C:\\Qmisk");
 			xmlPubPathTxt.setFont(new Font("Algerian", Font.ITALIC, 12));
 			xmlPubPathTxt.disable();
 			statusLbl.setText(name + "s Slideshow is choosed");
 		}else if (name == "ITK"){
-			xmlPubPathTxt.setText("C://ITK");
+			xmlPubPathTxt.setText("C:\\ITK");
 			xmlPubPathTxt.setFont(new Font("Algerian", Font.ITALIC, 12));
 			xmlPubPathTxt.disable();
 			statusLbl.setText(name + "s Slideshow is choosed");
 		}else if (name == "[Other Slideshow]"){
-			xmlPubPathTxt.setText("C:/...");
+			xmlPubPathTxt.setText("C:\\...");
 			xmlPubPathTxt.setFont(new Font("Algerian", Font.PLAIN, 12));
 			xmlPubPathTxt.enable();
 			statusLbl.setText("Choose a Slideshow");
@@ -550,8 +550,8 @@ public class AdminFrame {
 	}
 	
 	//	Disable buttons
-	public void disableButtons(){ // Inte färdig, men användbar (bla pop-up)
-		saveSetBtn.setEnabled(false);
+	public void disableButtons(){
+		saveSetBtn.setEnabled(false); //BUGG! xmlPubPathTxt enablas, även om den inte ska vara enbled
 		resetBtn.setEnabled(false);
 		startBtn.setEnabled(false);
 		exitBtn.setEnabled(false);
@@ -569,7 +569,7 @@ public class AdminFrame {
 	}
 	
 	//	Enable buttons
-	public void enableButtons(){ // Inte färdig, men användbar (bla pop-up)
+	public void enableButtons(){
 		
 		saveSetBtn.setEnabled(true);
 		resetBtn.setEnabled(true);
@@ -609,7 +609,7 @@ public class AdminFrame {
 		popClsBtn = new JButton();
 		GroupLayout popLayout = new GroupLayout(popPanel);
 		
-		popFrame.setLocation(500, 300);
+		popFrame.setLocation(400, 270);
 		popFrame.setSize(400, 100);
 		popFrame.setTitle("KisTalk Popup");
 		popFrame.setResizable(false);
@@ -661,9 +661,6 @@ public class AdminFrame {
 	
 	//	Dinner is served, send HTTP-post to server
 	public void yFood() {//Dålig kod, Per fixar
-		// Specify food
-//		popUp("What food?");
-		System.out.println(food);
 		//	Send info (like "food" [String])
 //		URL url;
 //		try {
