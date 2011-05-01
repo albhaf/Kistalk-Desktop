@@ -12,9 +12,8 @@ public class TwoDSlideShow extends Panel implements ActionListener {
 	byte screenIndex;
 	final int nrOfConfigLines = 10;
 
-
 	int timeStill = 200;
-	
+
 	ShowImage slideShowHandler;
 
 	Rectangle monitor = new Rectangle();
@@ -28,6 +27,7 @@ public class TwoDSlideShow extends Panel implements ActionListener {
 		getScreenResolution();
 		firstPicture();
 		createFrame();
+		updatePicture();
 		t.start();
 	}
 
@@ -49,13 +49,11 @@ public class TwoDSlideShow extends Panel implements ActionListener {
 
 	private void firstPicture() {
 		info.setLinks();
-		info.setPicture();
-		
+		info.setPictures();
 	}
 
 	private void updatePicture() {
 		info.updatePicture(slideShowHandler);
-		info.setPicture();		
 	}
 
 	@Override

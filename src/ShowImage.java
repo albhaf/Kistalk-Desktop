@@ -10,7 +10,6 @@ import java.awt.TexturePaint;
 import java.awt.image.BufferedImage;
 import java.util.List;
 
-
 import javax.swing.JPanel;
 
 public class ShowImage extends JPanel {
@@ -19,12 +18,11 @@ public class ShowImage extends JPanel {
 	 */
 	private static final long serialVersionUID = 887346353483336091L;
 
-
 	// Variables
 	/**
 	 * The Rectangle containing the image
 	 */
-	private ImgRect ImgRect; //
+	private ImgRect imgRect; //
 	/**
 	 * Image uploader
 	 */
@@ -34,25 +32,25 @@ public class ShowImage extends JPanel {
 	 */
 	private TextToDisplay imageCommentTxtDsp;
 	/**
-	 * Image comments 
+	 * Image comments
 	 */
-	public TextToDisplay[] imageComments;
+	public TextToDisplay[] comments;
 	/**
 	 * false if picture is moving to middle and while still, true otherwise
 	 */
-	private boolean outgoing = false; 
+	private boolean outgoing = false;
 	/**
 	 * Current picture to display
 	 */
-	BufferedImage slideImage; 
+	BufferedImage slideImage;
 	/**
 	 * Value 0-1, 0 transparent
 	 */
 	float transperacy = 0;
 	/**
-	* A value to position imageUserTxtDsp right
-	*/
-	private int correction; 
+	 * A value to position imageUserTxtDsp right
+	 */
+	private int correction;
 
 	// Variables which are set in constructor
 	/**
@@ -60,18 +58,15 @@ public class ShowImage extends JPanel {
 	 */
 	private Rectangle monitorSize;
 	/**
-	 *  width == Ypos, height == Xpos.
+	 * width == Ypos, height == Xpos.
 	 */
 	private Dimension textStartPosition = new Dimension();
 	/**
 	 * A value to position imageUserTxtDsp right
 	 * 
-	private int correction;
-	/**
-	 * Image shown on screen
+	 * private int correction; /** Image shown on screen
 	 */
 	private BufferedImage image;
-
 
 	/**
 	 * height == time to stand still, width == time for current image
@@ -80,12 +75,11 @@ public class ShowImage extends JPanel {
 	/**
 	 * what y coordinate the image is supposed to stop at
 	 */
-	private float imageStopPosition; 
+	private float imageStopPosition;
 	/**
 	 * width == image size x, height == image size y.
 	 */
-	private Dimension imageSize = new Dimension(); 
-
+	private Dimension imageSize = new Dimension();
 
 	// Konstanter
 	/**
@@ -96,82 +90,55 @@ public class ShowImage extends JPanel {
 	 * font used to display text
 	 */
 	Font font = new Font("Serif", Font.BOLD, 50);
-	
+
 	/**
-	 *font for the comments 
+	 *font for the comments
 	 */
 	Font commentfont = new Font("Serif", Font.BOLD, 30);
 
-	
 	/**
 	 * 
-	 * @param tmpImg The new picture which should be display.
-	 * @param tmpUserString	String containing the user who uploaded the picture
-	 * @param tmpImageText String containing the image text.
-	 * @param tmpmonitor Which monitor to display the slideshow on.
-	 * @param tmpTimeStill sets the time the picture is supposed to freeze on screen.
-	 * @param ImageComments	CommentXML list that contains the comments to display
+	 * @param tmpImg
+	 *            The new picture which should be display.
+	 * @param tmpUserString
+	 *            String containing the user who uploaded the picture
+	 * @param tmpImageText
+	 *            String containing the image text.
+	 * @param tmpmonitor
+	 *            Which monitor to display the slideshow on.
+	 * @param tmpTimeStill
+	 *            sets the time the picture is supposed to freeze on screen.
+	 * @param ImageComments
+	 *            CommentXML list that contains the comments to display
 	 */
-	public ShowImage(BufferedImage tmpImage, String tmpImageUserString, String tmpImageText,   
-			Rectangle tmpmonitor, int tmpTimeStill, List<CommentXML> ImageComments) {
+	public ShowImage(Rectangle tmpmonitor, int tmpTimeStill) {
 
 		monitorSize = tmpmonitor;
-
-		float factor = (float) (tmpImage.getWidth()) / (float) (tmpImage.getHeight());;
-
-	// FontMetrics fontmetrics;
-
-
-		image = new BufferedImage(100, /* (int)(100*factor) */100,
-				BufferedImage.TYPE_INT_RGB);
+		imgRect = new ImgRect();
+		image = new BufferedImage(100, 100, BufferedImage.TYPE_INT_RGB);
+		imageCommentTxtDsp = new TextToDisplay();
+		imageUserTxtDsp = new TextToDisplay();
 
 		timeStill.width = tmpTimeStill;
 		timeStill.height = timeStill.width;
-
-		correction = (tmpImageUserString.length() + 6) / 2;
-
-		// Image comments
-		// imageComments = new TextDisplay[ImageComments.size()];
-		// for(int i =0;i<imageComments.length;i++){
-		if (ImageComments.size() > 0) {
-
-			imageComments = new TextToDisplay[ImageComments.size()];
-			for (int i = 0; i < imageComments.length; i++) {
-				imageComments[i] = new TextToDisplay(10, 10, 1000, 100);
-				imageComments[i].setString(ImageComments.get(i).getContent());
-				transperacy = 0;
-
-				imageComments[i].addX(1000);
-				imageComments[i].addY(200 + (i * 100));
-			}
-			// System.out.println(ImageComments.get(i).getContent());
-			// }
-		}
-		// ImageCommentTxt setup
-		imageCommentTxtDsp = new TextToDisplay(100, 1000, 2, 1);
-		imageCommentTxtDsp.setString(tmpImageText);
-
-		// ImageUser setup
-		textStartPosition.width = (monitorSize.width / 2)
-				- (correction * (ImageUserFontSize / 2));
-
-		imageUserTxtDsp = new TextToDisplay(textStartPosition.width, 0, 2, 1);
-		imageUserTxtDsp.setString(tmpImageUserString + " posted: ");
-
-		scalePositionImageAndText();
-
-
-		slideImage = tmpImage;
-
-
-		imageStopPosition = (monitorSize.width / 2) - (2 * imageSize.width / 3);
-		imageStopPosition = imageStopPosition - (imageStopPosition % 5);
-		setDoubleBuffered(true);
-
-		ImgRect = new ImgRect(-200, 100, imageSize.width * factor,
-				imageSize.height);
 	}
-	
+
+	private void setComments(List<CommentXML> imageComments) {
+		if (imageComments.size() > 0) {
+			comments = new TextToDisplay[imageComments.size()];
+			for (int i = 0; i < comments.length; i++) {
+				comments[i] = new TextToDisplay();
+
+				comments[i].setString(imageComments.get(i).getUser()
+						+ " wrote: " + imageComments.get(i).getContent());
+				comments[i].resetPos();
+				comments[i].addX(monitorSize.width - monitorSize.width / 3);
+				comments[i].addY(200 + (i * 100));
+			}
+
+		}
+	}
+
 	/**
 	 * Scaling the image and text to fit the screen and position them right.
 	 */
@@ -184,74 +151,78 @@ public class ShowImage extends JPanel {
 				- (correction * (ImageUserFontSize / 3));
 	}
 
-	/**
-	 * Updating the Picture and text to display on screen. 
-	 * Resets all the necessary variables.
-	 * 
-	 * @param tmpImg The new picture which should be display.
-	 * @param tmpUserString	String containing the user who uploaded the picture
-	 * @param tmpImageText String containing the image text
-	 * @param ImageComments	CommentXML list that contains the comments to display
-	 */
-	public void UpdatePicture(BufferedImage tmpImg, String tmpUserString,
-			String tmpImageText, List<CommentXML> ImageComments) {
-		
-		// Bilden
-		slideImage = tmpImg;
-		ImgRect.resetPos();
-		// Rect.addHeight(h);
-
-		float factor = (float) (tmpImg.getWidth()) / (float) (tmpImg.getHeight());
-		ImgRect.height = imageSize.height;
-		ImgRect.width = ImgRect.height * factor;
-		ImgRect.addY(100);
-		ImgRect.addX(-200);
-
-		//resets the image comments
-		imageComments = null;
-		
-		//sets the new comments if they exist 
-		// imageComments = new TextDisplay[ImageComments.size()];
-		// for(int i =0;i<imageComments.length;i++){
-		if (ImageComments.size() > 0) {
-			imageComments = new TextToDisplay[ImageComments.size()];
-			for (int i = 0; i < imageComments.length; i++) {
-				imageComments[i] = new TextToDisplay(100, 100, 1000, 100);
-
-				imageComments[i].setString(ImageComments.get(i).getUser()
-						+ " wrote: " + ImageComments.get(i).getContent());
-				imageComments[i].resetPos();
-				imageComments[i].addX(1000);
-				imageComments[i].addY(200 + (i * 100));
-			}
-
-		}
-
-		transperacy = 0;
-		// imageComments[0].setString( ImageComments.get(0).getContent());
-		// }
-
-		// Bildtexten
+	private void setImageText(String tmpImageText) {
 		imageCommentTxtDsp.setString(tmpImageText);
 		imageCommentTxtDsp.resetPos();
 		imageCommentTxtDsp.addX(100);
 		imageCommentTxtDsp.addY(monitorSize.height + ImageUserFontSize);
+	}
 
-		// Image user
+	private void setUserText(String tmpUserString) {
 		imageUserTxtDsp.setString(tmpUserString + " posted: ");
 		imageUserTxtDsp.resetPos();
 		scalePositionImageAndText();
 		imageUserTxtDsp.addX(textStartPosition.width);
 		imageUserTxtDsp.addY(0);
+	}
 
-		// Nollställning av variabler
+	private void setImage(BufferedImage tmpImage) {
+		slideImage = tmpImage;
+		imgRect.resetPos();
 
-		outgoing = false;
-		timeStill.height = timeStill.width;
+		float factor = (float) (tmpImage.getWidth())
+				/ (float) (tmpImage.getHeight());
+		imgRect.height = imageSize.height;
+		imgRect.width = imgRect.height * factor;
+		imgRect.addY(100);
+		imgRect.addX(-200);
+		imageStopPosition = ((monitorSize.width - imgRect.width
+				- (monitorSize.width / 3) - 30));
+		imageStopPosition = imageStopPosition - (imageStopPosition % 5);
 	}
 
 	/**
-	 * Change the boolean "outgoing" to indicate that the Image is moving out, towards the end of screen.
+	 * Updating the Picture and text to display on screen. Resets all the
+	 * necessary variables.
+	 * 
+	 * @param tmpImg
+	 *            The new picture which should be display.
+	 * @param tmpUserString
+	 *            String containing the user who uploaded the picture
+	 * @param tmpImageText
+	 *            String containing the image text
+	 * @param ImageComments
+	 *            CommentXML list that contains the comments to display
+	 */
+
+	public void updatePicture(BufferedImage tmpImage, String tmpUserString,
+			String tmpImageText, List<CommentXML> imageComments) {
+
+		transperacy = 0;
+		outgoing = false;
+		timeStill.height = timeStill.width;
+		correction = (tmpUserString.length() + 6) / 2;
+	
+
+
+		// resets the image comments
+		comments = null;
+		setComments(imageComments);
+
+		// Bildtexten
+		setImageText(tmpImageText);
+				
+		// Image user
+		setUserText(tmpUserString);
+		
+		// Bilden
+		setImage(tmpImage);
+	
+	}
+
+	/**
+	 * Change the boolean "outgoing" to indicate that the Image is moving out,
+	 * towards the end of screen.
 	 */
 	public void changeDirection() {
 		outgoing = true;
@@ -261,18 +232,16 @@ public class ShowImage extends JPanel {
 	 * Handles moving and transparancy of the image and texts
 	 */
 	public void MoveObjects() {
-		if (timeStill.height != 0 && ImgRect.getX() == (int) imageStopPosition) {
+		if (timeStill.height != 0 && imgRect.getX() == (int) imageStopPosition) {
 
 			timeStill.height = timeStill.height - 1;
 		} else {
 
-		 	ImgRect.addX(5);
+			imgRect.addX(5);
 
 		}
 
 		if (outgoing == false) {
-			// if(imageComments[0]!=null){
-
 			if (transperacy < 1) {
 				transperacy = (float) (transperacy + 0.008);
 			}
@@ -291,7 +260,8 @@ public class ShowImage extends JPanel {
 			}
 		}
 
-		//changes outgoing to true if the picture is supposed to move again after standstill
+		// changes outgoing to true if the picture is supposed to move again
+		// after standstill
 
 		if (timeStill.height == 0) {
 			outgoing = true;
@@ -311,18 +281,18 @@ public class ShowImage extends JPanel {
 		repaint();
 	}
 
-
 	/**
 	 * Gets the text x-coordinate
+	 * 
 	 * @return returns a double with the x-coordinate
 	 */
 	public double getTextX() {
 		return imageUserTxtDsp.getX();
 	}
 
-
 	/**
 	 * Gets the text y-coordinate
+	 * 
 	 * @return returns a double with the y-coordinate
 	 */
 	public double getTxtY() {
@@ -331,65 +301,67 @@ public class ShowImage extends JPanel {
 
 	/**
 	 * Gets the image x-coordinate
+	 * 
 	 * @return returns a double with the x-coordinate
 	 */
 	public double getSlideImageX() {
-		return ImgRect.getX();
+		return imgRect.getX();
 	}
 
 	/**
 	 * Gets the image y-coordinate
+	 * 
 	 * @return returns a double with the y-coordinate
 	 */
 	public double getSlideImageY() {
-		return ImgRect.getX();
+		return imgRect.getX();
 	}
-
 
 	/**
 	 * Called every time the frame is drawn
 	 */
 	public void paint(Graphics g) {
 		/*
-		 *sets some values and settings.
+		 * sets some values and settings.
 		 */
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.setPaint(Color.BLACK);
 		g2d.fillRect(0, 0, monitorSize.width, monitorSize.height);
-		g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, transperacy));
+		g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,
+				transperacy));
 		g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
 				RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 				RenderingHints.VALUE_ANTIALIAS_ON);
 
-		//Draws the image comments on screen if any.
+		// Draws the image comments on screen if any.
 		g2d.setFont(commentfont);
 		g2d.setColor(Color.WHITE);
 
-		if (imageComments != null) {
+		if (comments != null) {
 
-			for (int i = 0; i < imageComments.length; i++) {
-				g2d.drawString(imageComments[i].getString(),
-						imageComments[i].x, imageComments[i].y);
+			for (int i = 0; i < comments.length; i++) {
+				g2d.drawString(comments[i].getString(), comments[i].x,
+						comments[i].y);
 			}
 		}
-		
-		//paints the image text and image user texts
+
+		// paints the image text and image user texts
 		g2d.setFont(font);
-		try{
-		g2d.drawString(imageCommentTxtDsp.getString(), imageCommentTxtDsp.x,
-				imageCommentTxtDsp.y);
-		g2d.drawString(imageUserTxtDsp.getString(), imageUserTxtDsp.x,
-				imageUserTxtDsp.y);
-		} catch (NullPointerException e){}
+		try {
+			g2d.drawString(imageCommentTxtDsp.getString(),
+					imageCommentTxtDsp.x, imageCommentTxtDsp.y);
+			g2d.drawString(imageUserTxtDsp.getString(), imageUserTxtDsp.x,
+					imageUserTxtDsp.y);
+		} catch (NullPointerException e) {
+		}
 		// for(int i =0;i<imageComments.length;i++){
 
-		//Paints the iamge rectangle
-		TexturePaint tp = new TexturePaint(slideImage, ImgRect);
+		// Paints the iamge rectangle
+		TexturePaint tp = new TexturePaint(slideImage, imgRect);
 		g2d.setPaint(tp);
-		g2d.fill(ImgRect);
+		g2d.fill(imgRect);
 		// g2d.setColor(Color.WHITE);
 
 	}
-	}
-
+}

@@ -12,7 +12,7 @@ import java.util.List;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
-public class TwoDSlideShowInfo{
+public class TwoDSlideShowInfo {
 	XMLreader xmlreader;
 	String xmlPath;
 	List<ImageXML> imgXMLList;
@@ -21,16 +21,15 @@ public class TwoDSlideShowInfo{
 	ImageIcon[] iconArrayPub;
 	Image[] serverImgs;
 	URL[] urlArray;
-	
+
 	int currentPicture = 0;
 	int currentPubPicture = 0;
 	int nrOfComments = 0;
 	int nrOfPicsServer;
 	int timeStill;
-	
-	
+
 	public TwoDSlideShowInfo() {
-		fileFormats  = new String[4];
+		fileFormats = new String[4];
 	}
 
 	protected Rectangle getScreenSize(int screenIndex) {
@@ -45,7 +44,7 @@ public class TwoDSlideShowInfo{
 		// Get size and position of the screen
 		return gc[0].getBounds();
 	}
-	
+
 	protected void readConfig(int screenIndex) throws FileNotFoundException {
 
 		ConfigHandler reader = new ConfigHandler();
@@ -75,35 +74,37 @@ public class TwoDSlideShowInfo{
 		imgXMLList = xmlreader.getImagesInfo();
 		for (int i = 0; i < nrOfPicsServer; i++) {
 			urlArray[i] = imgXMLList.get(i).getLink();
-		}		
-	}
-	
-	protected void setPicture() {
-		if (currentPicture >= nrOfPicsServer || currentPicture == 0) {			
-			setLinks();			
-			currentPicture = 0;			
 		}
-		try {
-			serverImgs[currentPicture] = ImageIO.read(urlArray[currentPicture]);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		currentPicture++;
 	}
-	
-	protected ShowImage createShowImage(Rectangle monitor){
-		return new ShowImage((BufferedImage) serverImgs[0],
-				imgXMLList.get(0).getUser(),imgXMLList.get(0).getImageText(),
-				monitor, timeStill, imgXMLList.get(0).getComments());	
-	}
-	
-	protected void updatePicture(ShowImage slideShowHandler){
-		slideShowHandler.UpdatePicture(
-				(BufferedImage) serverImgs[currentPicture - 1],imgXMLList
-						.get(currentPicture - 1).getUser(),imgXMLList.get(
-						currentPicture - 1).getImageText(),imgXMLList.get(
-						currentPicture - 1).getComments());
 
+	protected void setPictures() {
+		for (int i = 0; i < nrOfPicsServer; i++) {
+			try {
+				serverImgs[i] = ImageIO
+						.read(urlArray[i]);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+
+	protected ShowImage createShowImage(Rectangle monitor) {
+		return new ShowImage(monitor, timeStill);
+	}
+
+	protected void updatePicture(ShowImage slideShowHandler) {
+		if (currentPicture >= nrOfPicsServer) {
+			setLinks();
+			if(urlArray[0] != imgXMLList.get(0).getLink())
+				setPictures();
+			currentPicture = 0;
+		}
+		slideShowHandler.updatePicture(
+				(BufferedImage) serverImgs[currentPicture], imgXMLList.get(
+						currentPicture).getUser(), imgXMLList.get(
+						currentPicture).getImageText(), imgXMLList.get(
+						currentPicture).getComments());
+		currentPicture++;
 	}
 }
