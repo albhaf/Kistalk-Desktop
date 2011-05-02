@@ -23,23 +23,33 @@ _|    _|  _|  _|_|_|       _|      _|_|_|  _|  _|    _|
 *'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*
 *'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*
 
-//	Date of last revision: 15:44 den 1/4
+//	Date of last revision: 10:25 den 2/4
 
 
 Max_number_of_Images %7
-null
+
 Number_of_Hans %-
-null
+
 Timer_interval %10
-null
+
 Number_of_Jimmys %-
-null
+
 supported_image_formats %.jpg .png .gif .bnp
-null
+
 Screen_index %0
+<<<<<<< HEAD
 null
 XMLURL %http://www.kistalk.com/api/images/desktop.xml
 null
+=======
+
+XMLURL %http://www.kistalk.com/desktop_images.xml
+
+>>>>>>> 865baca5b3c145ae6b324cbea3979377b3c04a47
 Number_of_comments %2
-null
+
 Path_to_Pubslides %C:\\Default mapp\\Default pubslides
+
+Saved_Pubslides %TMEIT¤Qmisk¤ITK
+
+Saved_Paths %C:\\TMEIT¤C:\\Qmisk¤C:\\ITK

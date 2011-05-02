@@ -21,7 +21,7 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 
 public class AdminFrame {
-	final int nrOfConfigValues = 9; // Doesn't include regular textlines. If change, then change configHandler too
+	final int nrOfConfigValues = 11; // Doesn't include regular textlines. If change, then change configHandler too
 	int nrOfPubSlides;
 	int slideNr = 0;
 	String food;
@@ -30,6 +30,7 @@ public class AdminFrame {
 	
 	JFrame adminFrame;
 	JFrame popFrame;
+	JFrame logFrame;
 	JPanel thePanel;
 	JLabel headerLbl;
 	
@@ -37,8 +38,12 @@ public class AdminFrame {
 	JButton resetBtn;
 	JButton startBtn;
 	JButton exitBtn;
+	JButton savePathBtn;
+	JButton remPathBtn;
 	JButton popSbmBtn;
 	JButton popClsBtn;
+	JButton logSbmBtn;
+	JButton logClsBtn;
 	
 	JLabel nrOfImgsLbl;
 	JLabel timeLbl;
@@ -58,6 +63,8 @@ public class AdminFrame {
 	TextField xmlPubPathTxt;
 	TextField legalFilesTxt;
 	TextField nrOfCommentsTxt;
+	TextField logUserTxt;
+	TextField logPassTxt;
 	
 	JRadioButton yFoodRbtn;
 	JRadioButton nFoodRbtn;
@@ -76,16 +83,12 @@ public class AdminFrame {
 
 	//	Constructor
 	public AdminFrame() {
-		readConfig();
-		setupFrame();
-
+		logInFrame();
+		
 	}
 
 	//	Setting up the settings frame
 	private void setupFrame(){
-		// Background pic
-		ImageIcon icon = new ImageIcon("bgIcon.png");
-		bgImage = icon.getImage();
 		
 		//	Create all objects
 		adminFrame = new JFrame();
@@ -95,6 +98,8 @@ public class AdminFrame {
 		resetBtn = new JButton();
 		startBtn = new JButton();
 		exitBtn = new JButton();
+		savePathBtn = new JButton();
+		remPathBtn = new JButton();
 		
 		nrOfImgsLbl = new JLabel();
 		timeLbl= new JLabel();
@@ -138,7 +143,7 @@ public class AdminFrame {
 		groupLayout = new GroupLayout(thePanel);
 		
 		//	Frame settings
-		adminFrame.setSize(550,600);
+		adminFrame.setSize(500,600);
 		adminFrame.setResizable(false);
 		adminFrame.setLocation(300, 50);
 		adminFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -150,8 +155,6 @@ public class AdminFrame {
 		
 		//	Label settings
 		headerLbl.setIcon(new ImageIcon("kistalk_adm_logo.png"));
-		headerLbl.setFont(new Font("Cambria", Font.BOLD, 32));
-		headerLbl.setForeground(Color.WHITE);
 		
 		nrOfImgsLbl.setText("Nr of pics (from KisTalk): ");
 		nrOfImgsLbl.setForeground(Color.WHITE);
@@ -202,22 +205,26 @@ public class AdminFrame {
 		saveSetBtn.setText("Save settings");
 		saveSetBtn.setForeground(Color.BLACK);
 		saveSetBtn.addActionListener(listener);
-		saveSetBtn.setOpaque(false);
 		
 		resetBtn.setText("Reset settings");
 		resetBtn.setForeground(Color.BLACK);
 		resetBtn.addActionListener(listener);
-		resetBtn.setOpaque(false);
 		
 		startBtn.setText("Start slideshow");
 		startBtn.setForeground(Color.BLACK);
 		startBtn.addActionListener(listener);
-		startBtn.setOpaque(false);
 		
 		exitBtn.setText("Exit");
 		exitBtn.setForeground(Color.BLACK);
 		exitBtn.addActionListener(listener);
-		exitBtn.setOpaque(false);
+		
+		savePathBtn.setText("Save path");
+		savePathBtn.setForeground(Color.BLACK);
+		savePathBtn.addActionListener(listener);
+		
+		remPathBtn.setText("Remove Path");
+		remPathBtn.setForeground(Color.BLACK);
+		remPathBtn.addActionListener(listener);
 		
 		//	Radiobuttons settings
 		yFoodRbtn.setText("True");
@@ -340,12 +347,14 @@ public class AdminFrame {
 			)
 			.addGroup(groupLayout.createSequentialGroup()
 				   	.addComponent(saveSetBtn, 140, 140, 140)
-				   	.addComponent(startBtn, 140, 140, 140)
+				   	.addComponent(savePathBtn, 140, 140,140)
+					.addComponent(remPathBtn, 140, 140, 140)
 				   			
 			)
 			.addGroup(groupLayout.createSequentialGroup()
 					.addComponent(resetBtn, 140, 140, 140)
 					.addComponent(exitBtn, 140, 140, 140)
+					.addComponent(startBtn, 140, 140, 140)
 			)
 			.addComponent(statusLbl)
 		);
@@ -408,12 +417,14 @@ public class AdminFrame {
 				  )
 				  .addGap(30)
 				  .addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-					   				.addComponent(saveSetBtn, 30, 30, 30)
-					   				.addComponent(startBtn, 30, 30, 30)
+					   		.addComponent(saveSetBtn, 30, 30, 30)
+					   		.addComponent(savePathBtn, 30, 30, 30)
+							  .addComponent(remPathBtn, 30, 30, 30)
 				  )
 				  .addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
 						  .addComponent(resetBtn, 30, 30, 30)
 						  .addComponent(exitBtn, 30, 30, 30)
+					   		.addComponent(startBtn, 30, 30, 30)
 				  )
 				  .addGap(30)
 				  .addComponent(statusLbl)
@@ -439,7 +450,7 @@ public class AdminFrame {
 
 	//	Saves current settings to Config (except Default Turtle, he only lives in config when config is defaultahrized)
 	public void saveSettings() {
-		String[] lines = new String[45];
+		String[] lines = new String[49];
 		Date today = new Date();
 		
 		handler = new ConfigHandler();
@@ -473,6 +484,16 @@ public class AdminFrame {
 		lines[25] = "//	Date of last revision: " + today.getHours() + ":" + today.getMinutes() + " den " + today.getDate() + "/" + today.getMonth();
 		lines[26] = "";
 		lines[27] = "";
+		lines[29] = "";
+		lines[31] = "";
+		lines[33] = "";
+		lines[35] = "";
+		lines[37] = "";
+		lines[39] = "";
+		lines[41] = "";
+		lines[43] = "";
+		lines[45] = "";
+		lines[47] = "";
 		
 		//	Defined values
 		lines[28] = "Max_number_of_Images %" + nrOfImgsTxt.getText();
@@ -483,7 +504,9 @@ public class AdminFrame {
 		lines[38] = "Screen_index %" + confValues[5];
 		lines[40] = "XMLURL %http://www.kistalk.com/desktop_images.xml";
 		lines[42] = "Number_of_comments %2";
-		lines[44] = "Path_to_Pubslides %" + xmlPubPathTxt.getText();
+		lines[44] = "Path_to_Pubslides %" + xmlPubPathTxt.getText(); //Ett \ tas bort var gång filen laddas?
+		lines[46] = "Saved_Pubslides %" + confValues[9];
+		lines[48] = "Saved_Paths %" + confValues[10];
 		
 		// Write to file (config)
 		handler.setConfig(lines);
@@ -659,8 +682,123 @@ public class AdminFrame {
 		
 	}
 	
+	public void logInFrame(){
+//		disableButtons();
+
+		// Background pic
+		ImageIcon icon = new ImageIcon("bgIcon.png");
+		bgImage = icon.getImage();
+		
+		logFrame = new JFrame();
+		JPanel logPanel = new JPanel(){
+			public void paint(Graphics g){
+				g.drawImage(bgImage, 0,0, this);
+				setOpaque(false);
+	    		super.paint(g);
+	    		setOpaque(true);
+	    		repaint();
+	    		
+			}
+		};
+		JLabel logInLbl = new JLabel();
+		JLabel logUserLbl = new JLabel();
+		JLabel logMailLbl = new JLabel();
+		JLabel logPassLbl = new JLabel();
+		JLabel logInstrLbl = new JLabel();
+		logUserTxt = new TextField();
+		logPassTxt = new TextField();
+		logSbmBtn = new JButton();
+		logClsBtn = new JButton();
+		GroupLayout logLayout = new GroupLayout(logPanel);
+		
+		logFrame.setLocation(400, 230);
+		logFrame.setSize(300, 190);
+		logFrame.setTitle("KisTalk Login");
+		logFrame.setResizable(false);
+		logFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		logPanel.setLayout(logLayout);
+		
+		logInLbl.setText("LogIn");
+		logInLbl.setForeground(Color.WHITE);
+		logInLbl.setFont(new Font("Imperial", Font.BOLD, 22));
+		logUserLbl.setText("username: ");
+		logUserLbl.setForeground(Color.WHITE);
+		logMailLbl.setText("@kth.se");
+		logMailLbl.setForeground(Color.WHITE);
+		logPassLbl.setText("token: ");
+		logPassLbl.setForeground(Color.WHITE);
+		logInstrLbl.setText("To get your token, log in to KisTalk.com");
+		logInstrLbl.setForeground(Color.WHITE);
+		logInstrLbl.setFont(new Font("Imperial", Font.ITALIC, 8));
+		
+		logSbmBtn.setText("Submit");
+		logSbmBtn.addActionListener(listener);
+		logClsBtn.setText("Close");
+		logClsBtn.addActionListener(listener);
+		
+		logLayout.setHorizontalGroup(
+				logLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+					.addGroup(logLayout.createSequentialGroup()
+					.addGap(110)
+					.addComponent(logInLbl)
+					)
+					.addGap(10)
+					.addGroup(logLayout.createSequentialGroup()
+							.addGap(15)
+							.addComponent(logUserLbl)
+							.addGap(5)
+							.addComponent(logUserTxt, 100, 100, 100)
+							.addGap(3)
+							.addComponent(logMailLbl)
+					)
+					.addGroup(logLayout.createSequentialGroup()
+							.addGap(15)
+							.addComponent(logPassLbl)
+							.addGap(31)
+							.addComponent(logPassTxt, 100, 100, 100)
+					)
+					.addGroup(logLayout.createSequentialGroup()
+							.addGap(50)
+							.addComponent(logClsBtn, 80, 80, 80)
+							.addGap(10)
+							.addComponent(logSbmBtn, 80, 80, 80)
+					).addGroup(logLayout.createSequentialGroup()
+							.addGap(5)
+							.addComponent(logInstrLbl)
+					)
+		);
+		
+		logLayout.setVerticalGroup(
+				logLayout.createSequentialGroup()
+				.addComponent(logInLbl)
+				.addGap(10)
+				.addGroup(logLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+						.addComponent(logUserLbl)
+						.addComponent(logUserTxt, 20, 20, 20)
+						.addComponent(logMailLbl)
+				)
+				.addGap(10)
+				.addGroup(logLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+						.addComponent(logPassLbl)
+						.addComponent(logPassTxt, 20, 20, 20)
+				)
+				.addGap(10)
+				.addGroup(logLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+						.addComponent(logClsBtn, 25, 25, 25)
+						.addComponent(logSbmBtn, 25, 25, 25)
+				)
+				.addGap(20)
+				.addComponent(logInstrLbl)
+				
+		);
+		
+		logFrame.add(logPanel);
+		
+		logFrame.setVisible(true);
+	}
+	
 	//	Dinner is served, send HTTP-post to server
-	public void yFood() {//Dålig kod, Per fixar
+	public void yFood(String food) {//Dålig kod, Per fixar
 		//	Send info (like "food" [String])
 //		URL url;
 //		try {
@@ -786,12 +924,17 @@ public class AdminFrame {
 				statusLbl.setText("The pub is closed");
 			}else if(e.getSource() == exitBtn){ //Exit
 				exit();
+			}else if(e.getSource() == savePathBtn){
+				popUp("Name your Slideshow: ");
+				confValues[9] = confValues[9] + "¤" + xmlPubPathTxt.getText();
+				pubSlidesDDLst.addItem(xmlPubPathTxt.getText());
+				saveSettings();
 			}else if(e.getSource() == popSbmBtn){ //Popup
 				if (popLbl.getText() == "What is teh food?"){
-					food = popTxt.getText();
-					yFood();
+					String food = popTxt.getText();
+					yFood(food);
 				}else{
-					System.out.println("Something else?"); // Log-In kanske?
+//					pubPathSave();
 				}
 				popFrame.dispose();
 				enableButtons();
@@ -799,6 +942,12 @@ public class AdminFrame {
 				popFrame.dispose();
 				enableButtons();
 				nFoodRbtn.setSelected(true);
+			}else if(e.getSource() == logSbmBtn){
+				logFrame.dispose();
+				readConfig();
+				setupFrame();
+			}else if(e.getSource() == logClsBtn){
+				logFrame.dispose();
 			}else if(e.getSource() == null){
 				
 			}
