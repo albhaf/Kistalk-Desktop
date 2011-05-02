@@ -54,6 +54,18 @@ public class TwoDSlideShow extends Panel implements ActionListener {
 
 	private void updatePicture() {
 		info.updatePicture(slideShowHandler);
+		// resets the image comments
+		
+		slideShowHandler.setComments(info.getImageComments());
+
+		// Bildtexten
+		slideShowHandler.setImageText(info.getImageText());
+				
+		// Image user
+		slideShowHandler.setUserText(info.getUser());
+		
+		// Bilden
+		slideShowHandler.setImage(info.getImage());
 	}
 
 	@Override

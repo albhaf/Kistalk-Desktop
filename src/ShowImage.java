@@ -23,94 +23,27 @@ public class ShowImage extends JPanel {
 	 * The Rectangle containing the image
 	 */
 	private ImgRect imgRect; //
-	/**
-	 * Image uploader
-	 */
 	private TextToDisplay imageUserTxtDsp;
-	/**
-	 * Image text
-	 */
 	private TextToDisplay imageCommentTxtDsp;
-	/**
-	 * Image comments
-	 */
-	public TextToDisplay[] comments;
-	/**
-	 * false if picture is moving to middle and while still, true otherwise
-	 */
+	private TextToDisplay[] comments;
 	private boolean outgoing = false;
-	/**
-	 * Current picture to display
-	 */
-	BufferedImage slideImage;
-	/**
-	 * Value 0-1, 0 transparent
-	 */
-	float transperacy = 0;
-	/**
-	 * A value to position imageUserTxtDsp right
-	 */
+	private BufferedImage slideImage;
+	private float transperacy = 0;
 	private int correction;
 
 	// Variables which are set in constructor
-	/**
-	 * screen resolution
-	 */
 	private Rectangle monitorSize;
-	/**
-	 * width == Ypos, height == Xpos.
-	 */
 	private Dimension textStartPosition = new Dimension();
-	/**
-	 * A value to position imageUserTxtDsp right
-	 * 
-	 * private int correction; /** Image shown on screen
-	 */
 	private BufferedImage image;
-
-	/**
-	 * height == time to stand still, width == time for current image
-	 */
 	private Dimension timeStill = new Dimension();
-	/**
-	 * what y coordinate the image is supposed to stop at
-	 */
 	private float imageStopPosition;
-	/**
-	 * width == image size x, height == image size y.
-	 */
 	private Dimension imageSize = new Dimension();
 
 	// Konstanter
-	/**
-	 * Font size for the text to display on screen
-	 */
 	private final int ImageUserFontSize = 50;
-	/**
-	 * font used to display text
-	 */
-	Font font = new Font("Serif", Font.BOLD, 50);
+	private Font font = new Font("Serif", Font.BOLD, 50);
+	private Font commentfont = new Font("Serif", Font.BOLD, 30);
 
-	/**
-	 *font for the comments
-	 */
-	Font commentfont = new Font("Serif", Font.BOLD, 30);
-
-	/**
-	 * 
-	 * @param tmpImg
-	 *            The new picture which should be display.
-	 * @param tmpUserString
-	 *            String containing the user who uploaded the picture
-	 * @param tmpImageText
-	 *            String containing the image text.
-	 * @param tmpmonitor
-	 *            Which monitor to display the slideshow on.
-	 * @param tmpTimeStill
-	 *            sets the time the picture is supposed to freeze on screen.
-	 * @param ImageComments
-	 *            CommentXML list that contains the comments to display
-	 */
 	public ShowImage(Rectangle tmpmonitor, int tmpTimeStill) {
 
 		monitorSize = tmpmonitor;
@@ -123,7 +56,7 @@ public class ShowImage extends JPanel {
 		timeStill.height = timeStill.width;
 	}
 
-	private void setComments(List<CommentXML> imageComments) {
+	protected void setComments(List<CommentXML> imageComments) {
 		if (imageComments.size() > 0) {
 			comments = new TextToDisplay[imageComments.size()];
 			for (int i = 0; i < comments.length; i++) {
@@ -151,14 +84,15 @@ public class ShowImage extends JPanel {
 				- (correction * (ImageUserFontSize / 3));
 	}
 
-	private void setImageText(String tmpImageText) {
+	protected void setImageText(String tmpImageText) {
 		imageCommentTxtDsp.setString(tmpImageText);
 		imageCommentTxtDsp.resetPos();
 		imageCommentTxtDsp.addX(100);
 		imageCommentTxtDsp.addY(monitorSize.height + ImageUserFontSize);
 	}
 
-	private void setUserText(String tmpUserString) {
+	protected void setUserText(String tmpUserString) {
+		correction = (tmpUserString.length() + 6) / 2;
 		imageUserTxtDsp.setString(tmpUserString + " posted: ");
 		imageUserTxtDsp.resetPos();
 		scalePositionImageAndText();
@@ -166,7 +100,7 @@ public class ShowImage extends JPanel {
 		imageUserTxtDsp.addY(0);
 	}
 
-	private void setImage(BufferedImage tmpImage) {
+	protected void setImage(BufferedImage tmpImage) {
 		slideImage = tmpImage;
 		imgRect.resetPos();
 
@@ -181,43 +115,11 @@ public class ShowImage extends JPanel {
 		imageStopPosition = imageStopPosition - (imageStopPosition % 5);
 	}
 
-	/**
-	 * Updating the Picture and text to display on screen. Resets all the
-	 * necessary variables.
-	 * 
-	 * @param tmpImg
-	 *            The new picture which should be display.
-	 * @param tmpUserString
-	 *            String containing the user who uploaded the picture
-	 * @param tmpImageText
-	 *            String containing the image text
-	 * @param ImageComments
-	 *            CommentXML list that contains the comments to display
-	 */
-
-	public void updatePicture(BufferedImage tmpImage, String tmpUserString,
-			String tmpImageText, List<CommentXML> imageComments) {
-
+	public void resetPicture() {
 		transperacy = 0;
 		outgoing = false;
 		timeStill.height = timeStill.width;
-		correction = (tmpUserString.length() + 6) / 2;
-	
-
-
-		// resets the image comments
 		comments = null;
-		setComments(imageComments);
-
-		// Bildtexten
-		setImageText(tmpImageText);
-				
-		// Image user
-		setUserText(tmpUserString);
-		
-		// Bilden
-		setImage(tmpImage);
-	
 	}
 
 	/**
