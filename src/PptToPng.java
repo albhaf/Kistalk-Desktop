@@ -1,11 +1,9 @@
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -21,8 +19,7 @@ public class PptToPng {
 	 * String with the full path to the file + filename
 	 */
 	String filepath;
-	int imgWidth;
-	int imgHeight;
+	int nrFiles;
 
 	/**
 	 * constructor which sets the filepath to the passed argument.
@@ -31,87 +28,13 @@ public class PptToPng {
 	 */
 	public PptToPng(String tmp) {
 		filepath = tmp;
-		extractWoScale();
+		extract();
 	}
 
-	/**
-	 * Constructor which only sets the dimension to scale the slides.
-	 * 
-	 * @param tmpDims
-	 *            Rectangle which width and height is the the dimensions the
-	 *            slides should be sclaed to.
-	 */
-	public PptToPng(Rectangle tmpDims) {
-		imgWidth = tmpDims.width;
-		imgHeight = tmpDims.height;
+	public int getNrFiles(){
+		return nrFiles;
 	}
 
-	/**
-	 * Constructor which sets both filepath and dimension.
-	 * 
-	 * @param tmpPath
-	 *            constructor which sets the filepath to the passed argument.
-	 * @param tmpDims
-	 *            Rectangle which width and height is the the dimensions the
-	 *            slides should be sclaed to
-	 */
-	public PptToPng(String tmpPath, Rectangle tmpDims) {
-		filepath = tmpPath;
-		imgWidth = tmpDims.width;
-		imgHeight = tmpDims.height;
-	}
-
-	/**
-	 * constructor.
-	 */
-	public PptToPng() {
-	}
-
-	/**
-	 * Setter for height to scale to.
-	 * 
-	 * @param tmpH
-	 *            int, height which the slide should be scaled to.
-	 */
-	public void setHeight(int tmpH) {
-		imgHeight = tmpH;
-	}
-
-	/**
-	 * Setter for the width.
-	 * 
-	 * @param tmpW
-	 *            int, width which the slide should be scaled to.
-	 */
-	public void setWidth(int tmpW) {
-		imgWidth = tmpW;
-	}
-
-	/**
-	 * Method for setting the scaling dimensions
-	 * 
-	 * @param tmp
-	 *            Rectangle, containing the width and height which the slides
-	 *            should be scaled to
-	 */
-	public void setDimensions(Rectangle tmp) {
-		imgWidth = tmp.width;
-		imgHeight = tmp.height;
-	}
-
-	/**
-	 * Method for setting all the parameters.
-	 * 
-	 * @param tmpPath
-	 *            String, Filepath.
-	 * @param tmpDims
-	 *            Rectangle, containing the dimensions for scaling.
-	 */
-	public void setAll(String tmpPath, Rectangle tmpDims) {
-		filepath = tmpPath;
-		imgWidth = tmpDims.width;
-		imgHeight = tmpDims.height;
-	}
 
 	/**
 	 * Method for setting the filepath to the passed argument.
@@ -130,43 +53,9 @@ public class PptToPng {
 	 * 
 	 */
 	public void extract() {
-		converter(filepath, imgWidth, imgHeight);
-	}
-
-	/**
-	 * Method for extracting the slides with the passed parameters without
-	 * setting the objects parameters.
-	 * 
-	 * @param tmpPath
-	 *            String, filepath.
-	 * @param tmpDims
-	 *            Rectangle, Dimension which the slides should be scaled to.
-	 */
-	public void extract(String tmpPath, Rectangle tmpDims) {
-		converter(filepath, tmpDims.width, tmpDims.height);
-	}
-
-	/**
-	 *Method for extracting the slides with the passed parameters without
-	 * setting the objects parameters.
-	 * 
-	 * @param tmpPath
-	 *            String, filepath.
-	 * @param tmpwidth
-	 *            int, width which the slides should be scaled to.
-	 * @param tmpHeight
-	 *            int, height which the slides should be scaled to.
-	 */
-	public void extract(String tmpPath, int tmpwidth, int tmpHeight) {
-		converter(filepath, tmpwidth, tmpHeight);
-	}
-
-	/**
-	 * Mehtod to extract the slides without converting them.
-	 */
-	public void extractWoScale() {
 		converter(filepath, 0, 0);
 	}
+
 
 	/**
 	 * Opens the ppt file and returns it in a SlideShow.
@@ -198,17 +87,6 @@ public class PptToPng {
 	private void pngWriter(BufferedImage tmpImg, String tmpName)
 			throws IOException {
 		FileOutputStream out = new FileOutputStream((tmpName) + ".hansimage");
-		javax.imageio.ImageIO.write(tmpImg, "png", out);
-		out.close();
-//		
-//		File dir = new File("C:\\images" + File.separator +"Hejsan" );
-//		if(dir.exists()==false){
-//			dir.mkdir();
-//			dir.deleteOnExit();
-//		}
-//			FileOutputStream out = new FileOutputStream("C:\\images" + File.separator + "slide-" + (tmpName) + ".hansimage");
-//			ImageIO.write(tmpImg, "png", out);
-//			out.close();
 	}
 
 	/**
@@ -246,9 +124,9 @@ public class PptToPng {
 			// save the output
 			try {
 				pngWriter(bImg, "slide-" + i);
+				nrFiles=nrFiles+1;
 			} catch (IOException e) {
-				System.out.println("Kunde inte skriva slide" + i
-						+ "till ny fil");
+				System.out.println("Kunde inte skriva slide" + i + "till ny fil");
 			}
 		}
 	}
