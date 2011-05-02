@@ -15,7 +15,7 @@ import java.util.Scanner;
 
 public class ConfigHandler {
 	private File fFile = new File("Config.hans");
-	public int nrOfValues = 10; // Doesn't include regular textlines. If change, then change AdminFrame too
+	public int nrOfValues = 11; // Doesn't include regular textlines. If change, then change AdminFrame too
 
 	//	Constructor
 	public ConfigHandler() {

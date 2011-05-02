@@ -21,7 +21,7 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 
 public class AdminFrame {
-	final int nrOfConfigValues = 10; // Doesn't include regular textlines. If change, then change configHandler too
+	final int nrOfConfigValues = 11; // Doesn't include regular textlines. If change, then change configHandler too
 	int nrOfPubSlides;
 	int slideNr = 0;
 	String food;
@@ -38,6 +38,8 @@ public class AdminFrame {
 	JButton resetBtn;
 	JButton startBtn;
 	JButton exitBtn;
+	JButton savePathBtn;
+	JButton remPathBtn;
 	JButton popSbmBtn;
 	JButton popClsBtn;
 	JButton logSbmBtn;
@@ -96,6 +98,8 @@ public class AdminFrame {
 		resetBtn = new JButton();
 		startBtn = new JButton();
 		exitBtn = new JButton();
+		savePathBtn = new JButton();
+		remPathBtn = new JButton();
 		
 		nrOfImgsLbl = new JLabel();
 		timeLbl= new JLabel();
@@ -201,22 +205,26 @@ public class AdminFrame {
 		saveSetBtn.setText("Save settings");
 		saveSetBtn.setForeground(Color.BLACK);
 		saveSetBtn.addActionListener(listener);
-		saveSetBtn.setOpaque(false);
 		
 		resetBtn.setText("Reset settings");
 		resetBtn.setForeground(Color.BLACK);
 		resetBtn.addActionListener(listener);
-		resetBtn.setOpaque(false);
 		
 		startBtn.setText("Start slideshow");
 		startBtn.setForeground(Color.BLACK);
 		startBtn.addActionListener(listener);
-		startBtn.setOpaque(false);
 		
 		exitBtn.setText("Exit");
 		exitBtn.setForeground(Color.BLACK);
 		exitBtn.addActionListener(listener);
-		exitBtn.setOpaque(false);
+		
+		savePathBtn.setText("Save path");
+		savePathBtn.setForeground(Color.BLACK);
+		savePathBtn.addActionListener(listener);
+		
+		remPathBtn.setText("Remove Path");
+		remPathBtn.setForeground(Color.BLACK);
+		remPathBtn.addActionListener(listener);
 		
 		//	Radiobuttons settings
 		yFoodRbtn.setText("True");
@@ -339,12 +347,14 @@ public class AdminFrame {
 			)
 			.addGroup(groupLayout.createSequentialGroup()
 				   	.addComponent(saveSetBtn, 140, 140, 140)
-				   	.addComponent(startBtn, 140, 140, 140)
+				   	.addComponent(savePathBtn, 140, 140,140)
+					.addComponent(remPathBtn, 140, 140, 140)
 				   			
 			)
 			.addGroup(groupLayout.createSequentialGroup()
 					.addComponent(resetBtn, 140, 140, 140)
 					.addComponent(exitBtn, 140, 140, 140)
+					.addComponent(startBtn, 140, 140, 140)
 			)
 			.addComponent(statusLbl)
 		);
@@ -407,12 +417,14 @@ public class AdminFrame {
 				  )
 				  .addGap(30)
 				  .addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-					   				.addComponent(saveSetBtn, 30, 30, 30)
-					   				.addComponent(startBtn, 30, 30, 30)
+					   		.addComponent(saveSetBtn, 30, 30, 30)
+					   		.addComponent(savePathBtn, 30, 30, 30)
+							  .addComponent(remPathBtn, 30, 30, 30)
 				  )
 				  .addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
 						  .addComponent(resetBtn, 30, 30, 30)
 						  .addComponent(exitBtn, 30, 30, 30)
+					   		.addComponent(startBtn, 30, 30, 30)
 				  )
 				  .addGap(30)
 				  .addComponent(statusLbl)
@@ -438,7 +450,7 @@ public class AdminFrame {
 
 	//	Saves current settings to Config (except Default Turtle, he only lives in config when config is defaultahrized)
 	public void saveSettings() {
-		String[] lines = new String[47];
+		String[] lines = new String[49];
 		Date today = new Date();
 		
 		handler = new ConfigHandler();
@@ -481,6 +493,7 @@ public class AdminFrame {
 		lines[41] = "";
 		lines[43] = "";
 		lines[45] = "";
+		lines[47] = "";
 		
 		//	Defined values
 		lines[28] = "Max_number_of_Images %" + nrOfImgsTxt.getText();
@@ -491,8 +504,9 @@ public class AdminFrame {
 		lines[38] = "Screen_index %" + confValues[5];
 		lines[40] = "XMLURL %http://www.kistalk.com/desktop_images.xml";
 		lines[42] = "Number_of_comments %2";
-		lines[44] = "Path_to_Pubslides %" + xmlPubPathTxt.getText();
-		lines[46] = "Saved_Pubslides %C:\\TMEIT¤C:\\Qmisk¤C:\\ITK";
+		lines[44] = "Path_to_Pubslides %" + xmlPubPathTxt.getText(); //Ett \ tas bort var gång filen laddas?
+		lines[46] = "Saved_Pubslides %" + confValues[9];
+		lines[48] = "Saved_Paths %" + confValues[10];
 		
 		// Write to file (config)
 		handler.setConfig(lines);
@@ -784,7 +798,7 @@ public class AdminFrame {
 	}
 	
 	//	Dinner is served, send HTTP-post to server
-	public void yFood() {//Dålig kod, Per fixar
+	public void yFood(String food) {//Dålig kod, Per fixar
 		//	Send info (like "food" [String])
 //		URL url;
 //		try {
@@ -910,9 +924,18 @@ public class AdminFrame {
 				statusLbl.setText("The pub is closed");
 			}else if(e.getSource() == exitBtn){ //Exit
 				exit();
+			}else if(e.getSource() == savePathBtn){
+				popUp("Name your Slideshow: ");
+				confValues[9] = confValues[9] + "¤" + xmlPubPathTxt.getText();
+				pubSlidesDDLst.addItem(xmlPubPathTxt.getText());
+				saveSettings();
 			}else if(e.getSource() == popSbmBtn){ //Popup
-					food = popTxt.getText();
-					yFood();
+				if (popLbl.getText() == "What is teh food?"){
+					String food = popTxt.getText();
+					yFood(food);
+				}else{
+//					pubPathSave();
+				}
 				popFrame.dispose();
 				enableButtons();
 			}else if(e.getSource() == popClsBtn){
