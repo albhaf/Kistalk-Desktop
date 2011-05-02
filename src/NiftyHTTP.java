@@ -59,13 +59,6 @@ public class NiftyHTTP {
 		}
 	}
 	
-	public static void main(String[] args) {
-		
-		NiftyHTTP n = new NiftyHTTP("panderse", "emgkxra2it");
-		
-		System.out.println(n.getXMLFeed());
-	}
-	
 	private boolean validateToken() {
 		
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
