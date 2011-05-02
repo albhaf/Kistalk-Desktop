@@ -1,6 +1,3 @@
-import org.apache.poi.hslf.model.Slide;
-import org.apache.poi.hslf.usermodel.SlideShow;
-
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
@@ -8,7 +5,12 @@ import java.awt.Rectangle;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
-import java.io.*;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+import org.apache.poi.hslf.model.Slide;
+import org.apache.poi.hslf.usermodel.SlideShow;
 
 public class PptToPng {
 

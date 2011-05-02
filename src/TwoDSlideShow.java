@@ -1,8 +1,10 @@
-import java.awt.*;
-import javax.swing.*;
-import java.io.*;
+import java.awt.Panel;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
+
+import javax.swing.Timer;
 
 @SuppressWarnings("serial")
 public class TwoDSlideShow extends Panel implements ActionListener {
@@ -11,8 +13,6 @@ public class TwoDSlideShow extends Panel implements ActionListener {
 
 	byte screenIndex;
 	final int nrOfConfigLines = 10;
-
-	int timeStill = 200;
 
 	ShowImage slideShowHandler;
 
@@ -33,7 +33,7 @@ public class TwoDSlideShow extends Panel implements ActionListener {
 
 	// Build the frame (Slideshow)
 	public void createFrame() {
-		slideShowHandler = info.createShowImage(monitor);
+		slideShowHandler =  new ShowImage(monitor, info.getTimeStill());
 		view.createFrame(slideShowHandler, monitor);
 	}
 
@@ -43,7 +43,7 @@ public class TwoDSlideShow extends Panel implements ActionListener {
 	}
 
 	private void readConfig() throws FileNotFoundException {
-		info.readConfig(screenIndex);
+		screenIndex = info.readConfig(screenIndex);
 		t = new Timer(10, this);
 	}
 
@@ -53,19 +53,9 @@ public class TwoDSlideShow extends Panel implements ActionListener {
 	}
 
 	private void updatePicture() {
-		info.updatePicture(slideShowHandler);
-		// resets the image comments
-		
-		slideShowHandler.setComments(info.getImageComments());
-
-		// Bildtexten
-		slideShowHandler.setImageText(info.getImageText());
-				
-		// Image user
-		slideShowHandler.setUserText(info.getUser());
-		
-		// Bilden
-		slideShowHandler.setImage(info.getImage());
+		info.updatePicture();
+		slideShowHandler.setNewPicture(info.getImage(), info.getUser(), info.getImageText(), info.getImageComments());
+	
 	}
 
 	@Override

@@ -7,18 +7,19 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.awt.*;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.Date;
 
-import javax.imageio.ImageIO;
-import javax.swing.*;
+import javax.swing.ButtonGroup;
+import javax.swing.GroupLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 
 public class AdminFrame {
 	String[] confValues = new String[11];
@@ -120,7 +121,7 @@ public class AdminFrame {
 		screenDDLst = new JComboBox();
 		
 		// Create and Paint thePanel background
-		thePanel = new JPanel(){ //Observera att detta är en create!
+		thePanel = new JPanel(){ //Observera att detta ï¿½r en create!
 			public void paint(Graphics g){
 				g.drawImage(bgImage, 0,0, this);
 				setOpaque(false);

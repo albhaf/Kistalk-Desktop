@@ -8,9 +8,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class ConfigHandler {
@@ -21,27 +18,6 @@ public class ConfigHandler {
 	public ConfigHandler() {
 		
 	}
-
-	//	Counts the number of lines in a file
-//	public int countLines() { // Beh�vs inte, �n s� l�nge...
-//		int nrOfLinesLocal = 0;
-//		Scanner scanner = null;
-//
-//		try {
-//			scanner = new Scanner(fFile);
-//		} catch (FileNotFoundException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//
-//		//	Count lines
-//		while (scanner.hasNextLine()) {
-//			scanner.nextLine();
-//			nrOfLinesLocal++;
-//		}
-//		return nrOfLinesLocal;
-//
-//	}
 
 	//	Gives Config new value/s
 	public void setConfig(String[] tmp) {
@@ -81,14 +57,6 @@ public class ConfigHandler {
 
 	}
 
-	//Get all lines in an array
-//	public String[] getAllLines() throws FileNotFoundException{ // Beh�vs antagligen inte, d�rf�r �r den inte klar
-//		Scanner scanner = new Scanner(new FileReader(fFile));
-//		String[] lines = new String[nrOfValues];
-//		
-//		return lines;
-//	}
-	
 	//	Returns all wanted values in lines, or parts of lines
 	public String[] processLineByLine() throws FileNotFoundException{
 		Scanner scanner = new Scanner(new FileReader(fFile));

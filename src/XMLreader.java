@@ -41,7 +41,7 @@ public class XMLreader extends DefaultHandler {
 			// get a new instance of parser
 			SAXParser sp = spf.newSAXParser();
 			// parse the file and also register this class for call backs
-			sp.parse(XMLURL, this);
+			sp.parse(XMLURL + "?username=panderse&token=z0vu7iegcn", this);
 		} catch (SAXException se) {
 			se.printStackTrace();
 		} catch (ParserConfigurationException pce) {
@@ -51,18 +51,6 @@ public class XMLreader extends DefaultHandler {
 		}
 	}
 	
-	/**
-	 * Iterate through the list and print the contents
-	 */
-	/*
-	 * private void printData(){
-	 * 
-	 * System.out.println("No of Images '" + images.size() + "'.");
-	 * 
-	 * Iterator<ImageXML> it = images.iterator(); while(it.hasNext()) {
-	 * System.out.println(it.next().toString()); } }
-	 */
-
 	// Event Handlers
 	public void startElement(String uri, String localName, String qName,
 			Attributes attributes) throws SAXException {
@@ -94,8 +82,6 @@ public class XMLreader extends DefaultHandler {
 			tempComment.setUser(tempVal);
 		} else if (qName.equalsIgnoreCase("comment-content")) {
 			tempComment.setContent(tempVal);
-		} else if (qName.equalsIgnoreCase("comment-created_at")) {
-			tempComment.setCreated(tempVal);
 		} else if (qName.equalsIgnoreCase("URL-big")) {
 			URL urli = null;
 			try {
