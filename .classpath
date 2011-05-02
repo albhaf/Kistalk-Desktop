@@ -7,5 +7,7 @@
 	<classpathentry kind="lib" path="httpcore-4.1.jar"/>
 	<classpathentry kind="lib" path="httpmime-4.1.1.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Apache poi"/>
+	<classpathentry kind="lib" path="commons-codec-1.4.jar"/>
+	<classpathentry kind="lib" path="commons-logging-1.1.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
