@@ -7,10 +7,6 @@ import javax.imageio.ImageIO;
 
 
 public class ImportPubSlides {
-	private int nrFiles;
-	private String path;
-	private String[] files;
-	private int fileNr;
 	PptToPng pptToPng;
 
 	/**
@@ -18,45 +14,12 @@ public class ImportPubSlides {
 	 * @param tmpPath String, filepath to the pubslides in image format.
 	 */
 	public ImportPubSlides(String tmpPath){
-		path = "C:\\images";
-		fileNr = 0;
-		countFiles();
 		pptToPng = new PptToPng(tmpPath);
-		pptToPng.extractWoScale();
+		pptToPng.extract();
 	}
-		
-	/**
-	 * Method for setting the path to the directory containing the file(s).
-	 * @param tmpPath String, directory path.
-	 */
-	public void setPath(String tmpPath){
-		//path = tmpPath;
-		files = null;
-		nrFiles=0;
-	}
-	
-	/**
-	 * Returns the path to the directory which contains the files.
-	 * @return String, directory path.
-	 */
-	public String getPath(){
-		return path;
-	}
-	
-	/**
-	 * Method for counting the files in the directory
-	 */
-	public void countFiles(){
-		files = new File(path).list();
-		nrFiles = files.length;
-	}
-
-	/**
-	 * Returns the number of files found in the set directory.
-	 * @return int, number of files found
-	 */
-	public int getNrFiles(){
-		return nrFiles;
+			
+	public int countFiles(){
+		return pptToPng.getNrFiles();
 	}
 	
 	/**
@@ -65,35 +28,11 @@ public class ImportPubSlides {
 	 * @return Image, returns the chosen file as Image.
 	 * @throws IOException Throws IOException if the file couldn't be found.
 	 */
-	public BufferedImage getImage() throws IOException{
-		Image img = ImageIO.read(new File(files[fileNr]));
-		if(fileNr >= getNrFiles())
-			fileNr = 0;
-		else
-			fileNr++;
+	public BufferedImage getImage(int i) throws IOException{
+		Image img = ImageIO.read(new File("slide-" + i + ".hansimage"));
 		return (BufferedImage) img;
 	}
-	/*
-	public void delIni(){
-		File path = new File("C:\\images");
-		deleteDirectory(path);
-	}
 	
-	public boolean deleteDirectory(File path){
-
-		if( path.exists() ) {
-		      File[] files = path.listFiles();
-		      for(int i=0; i<files.length; i++) {
-		         if(files[i].isDirectory()) {
-		           deleteDirectory(files[i]);
-		         }
-		         else {
-		           files[i].delete();
-		         }
-		      }
-		    }
-		    return( path.delete() );
-		  }*/
 	}
 	
 	
