@@ -38,7 +38,7 @@ supported_image_formats %.jpg .png .gif .bnp
 
 Screen_index %0
 
-XMLURL %http://www.kistalk.com/api/images/desktop
+XMLURL %http://www.kistalk.com/api/feed/desktop
 
 Number_of_comments %2
 

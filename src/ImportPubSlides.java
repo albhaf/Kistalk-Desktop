@@ -1,4 +1,5 @@
 import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
@@ -9,6 +10,8 @@ public class ImportPubSlides {
 	private int nrFiles;
 	private String path;
 	private String[] files;
+	private int fileNr;
+	PptToPng pptToPng;
 
 	/**
 	 * constructor which takes the directory path to the file(s)  as input argument.
@@ -16,6 +19,14 @@ public class ImportPubSlides {
 	 */
 	public ImportPubSlides(String tmpPath){
 		path = tmpPath;
+		fileNr = 0;
+		countFiles();
+	}
+	
+	public ImportPubSlides(){
+		path = null;
+		nrFiles = 0;
+		fileNr = 0;
 	}
 	
 	/**
@@ -40,7 +51,7 @@ public class ImportPubSlides {
 	 * Method for counting the files in the directory
 	 */
 	public void countFiles(){
-		 files = new File(path).list();
+		files = new File(path).list();
 		nrFiles = files.length;
 	}
 
@@ -58,9 +69,13 @@ public class ImportPubSlides {
 	 * @return Image, returns the chosen file as Image.
 	 * @throws IOException Throws IOException if the file couldn't be found.
 	 */
-	public Image loadPicutre(int fileNr) throws IOException{
+	public BufferedImage getImage() throws IOException{
 		Image img = ImageIO.read(new File(files[fileNr]));
-		return img;
+		if(fileNr >= getNrFiles())
+			fileNr = 0;
+		else
+			fileNr++;
+		return (BufferedImage) img;
 	}
 	
 	public void delIni(){

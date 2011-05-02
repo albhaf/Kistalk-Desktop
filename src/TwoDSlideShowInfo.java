@@ -45,7 +45,7 @@ public class TwoDSlideShowInfo {
 		return gc[0].getBounds();
 	}
 
-	protected byte readConfig(int screenIndex) throws FileNotFoundException {
+	protected void readConfig(int screenIndex) throws FileNotFoundException {
 
 		ConfigHandler reader = new ConfigHandler();
 		String[] values = new String[9];
@@ -59,14 +59,14 @@ public class TwoDSlideShowInfo {
 
 		// Hantera inkommande data
 		nrOfPics = Integer.valueOf(values[0]);
-		serverImgs = new Image[nrOfPics];
 		iconArrayServer = new ImageIcon[nrOfPics];
 		urlArray = new URL[nrOfPics];
+		serverImgs = new Image[nrOfPics];
+		timeStill = Integer.valueOf(values[2]);
 		fileFormats = values[4].split(" ");
+		screenIndex = Byte.valueOf(values[5]);
 		xmlPath = values[6];
 		nrOfComments = Integer.valueOf(values[7]);
-		timeStill = Integer.valueOf(values[2]);
-		return Byte.valueOf(values[5]);
 	}
 
 	protected void setLinks() {
@@ -93,7 +93,7 @@ public class TwoDSlideShowInfo {
 		return new ShowImage(monitor, timeStill);
 	}
 
-	protected void updatePicture() {
+	protected void updatePicture() {		
 		currentPicture++;
 		if (currentPicture >= nrOfPics) {
 			setLinks();
