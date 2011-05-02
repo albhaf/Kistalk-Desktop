@@ -35,7 +35,8 @@ public class ImportPubSlides {
 	 */
 	public void setPath(String tmpPath){
 		path = tmpPath;
-		
+		files = null;
+		nrFiles=0;
 	}
 	
 	/**

@@ -37,14 +37,13 @@ Number_of_Jimmys %-
 supported_image_formats %.jpg .png .gif .bnp
 
 Screen_index %0
-null
-XMLURL %http://www.kistalk.com/api/feed/desktop.xml
-null
+
+XMLURL %http://www.kistalk.com/api/images/desktop
 
 Number_of_comments %2
 
 Path_to_Pubslides %C:\\Default mapp\\Default pubslides
 
-Saved_Pubslides %TMEIT�Qmisk�ITK
+Saved_Pubslides %TMEIT|Qmisk|ITK
 
-Saved_Paths %C:\\TMEIT�C:\\Qmisk�C:\\ITK
+Saved_Paths %C:\\TMEIT|C:\\Qmisk|C:\\ITK

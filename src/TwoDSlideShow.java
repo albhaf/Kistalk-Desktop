@@ -1,8 +1,11 @@
-import java.awt.*;
-import javax.swing.*;
-import java.io.*;
+import java.awt.Panel;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
+import javax.swing.Timer;
 
 @SuppressWarnings("serial")
 public class TwoDSlideShow extends Panel implements ActionListener {
