@@ -197,20 +197,18 @@ public class PptToPng {
 	 */
 	private void pngWriter(BufferedImage tmpImg, String tmpName)
 			throws IOException {
-/*		FileOutputStream out = new FileOutputStream((tmpName) + ".hansimage");
+		FileOutputStream out = new FileOutputStream((tmpName) + ".hansimage");
 		javax.imageio.ImageIO.write(tmpImg, "png", out);
-		out.close();*/
-		
-		File dir = new File("C:\\images" + File.separator +"Hejsan" );
-		if(dir.exists()){
-			System.out.println("hej");
-		}else{
-			dir.mkdir();
-			dir.deleteOnExit();
-		}
-			FileOutputStream out = new FileOutputStream("C:\\images" + File.separator + "slide-" + (tmpName) + ".hansimage");
-			ImageIO.write(tmpImg, "png", out);
-			out.close();
+		out.close();
+//		
+//		File dir = new File("C:\\images" + File.separator +"Hejsan" );
+//		if(dir.exists()==false){
+//			dir.mkdir();
+//			dir.deleteOnExit();
+//		}
+//			FileOutputStream out = new FileOutputStream("C:\\images" + File.separator + "slide-" + (tmpName) + ".hansimage");
+//			ImageIO.write(tmpImg, "png", out);
+//			out.close();
 	}
 
 	/**
