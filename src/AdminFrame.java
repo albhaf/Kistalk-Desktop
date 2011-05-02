@@ -7,18 +7,19 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.awt.*;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.Date;
 
-import javax.imageio.ImageIO;
-import javax.swing.*;
+import javax.swing.ButtonGroup;
+import javax.swing.GroupLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 
 public class AdminFrame {
 	final int nrOfConfigValues = 11; // Doesn't include regular textlines. If change, then change configHandler too
@@ -129,7 +130,7 @@ public class AdminFrame {
 		screenDDLst = new JComboBox();
 		
 		// Create and Paint thePanel background
-		thePanel = new JPanel(){ //Observera att detta är en create!
+		thePanel = new JPanel(){ //Observera att detta ï¿½r en create!
 			public void paint(Graphics g){
 				g.drawImage(bgImage, 0,0, this);
 				setOpaque(false);
@@ -504,7 +505,7 @@ public class AdminFrame {
 		lines[38] = "Screen_index %" + confValues[5];
 		lines[40] = "XMLURL %http://www.kistalk.com/desktop_images.xml";
 		lines[42] = "Number_of_comments %2";
-		lines[44] = "Path_to_Pubslides %" + xmlPubPathTxt.getText(); //Ett \ tas bort var gång filen laddas?
+		lines[44] = "Path_to_Pubslides %" + xmlPubPathTxt.getText(); //Ett \ tas bort var gï¿½ng filen laddas?
 		lines[46] = "Saved_Pubslides %" + confValues[9];
 		lines[48] = "Saved_Paths %" + confValues[10];
 		
@@ -560,7 +561,7 @@ public class AdminFrame {
 	
 	//	Exit slideshow or, if slideshow's off, KisTalk
 	public void exit() {
-//		if (twoDSlideShow() == true){	//Om bildspelet är igång *VIKTIGT!*
+//		if (twoDSlideShow() == true){	//Om bildspelet ï¿½r igï¿½ng *VIKTIGT!*
 //			statusLbl.setText("The slideshow is dead...");
 //			twDSlideshow.dispose();
 //			startBtn.setEnabled(true);
@@ -574,7 +575,7 @@ public class AdminFrame {
 	
 	//	Disable buttons
 	public void disableButtons(){
-		saveSetBtn.setEnabled(false); //BUGG! xmlPubPathTxt enablas, även om den inte ska vara enbled
+		saveSetBtn.setEnabled(false); //BUGG! xmlPubPathTxt enablas, ï¿½ven om den inte ska vara enbled
 		resetBtn.setEnabled(false);
 		startBtn.setEnabled(false);
 		exitBtn.setEnabled(false);
@@ -612,11 +613,11 @@ public class AdminFrame {
 	}
 	
 	//	Creates a pop-up
-	public void popUp(String message){ //Användas för LogIn kanske?
+	public void popUp(String message){ //Anvï¿½ndas fï¿½r LogIn kanske?
 		disableButtons();
 		
 		popFrame = new JFrame();
-		JPanel popPanel = new JPanel(){ // Insert annan bild! Knapp ist för Kryss
+		JPanel popPanel = new JPanel(){ // Insert annan bild! Knapp ist fï¿½r Kryss
 			public void paint(Graphics g){
 				g.drawImage(bgImage, 0,0, this);
 				setOpaque(false);
@@ -798,7 +799,7 @@ public class AdminFrame {
 	}
 	
 	//	Dinner is served, send HTTP-post to server
-	public void yFood(String food) {//Dålig kod, Per fixar
+	public void yFood(String food) {//Dï¿½lig kod, Per fixar
 		//	Send info (like "food" [String])
 //		URL url;
 //		try {
@@ -819,7 +820,7 @@ public class AdminFrame {
 	}
 	
 	//	Dinner isn't served, send HTTP-post to server
-	public void nFood(){//Dålig kod, Per fixar
+	public void nFood(){//Dï¿½lig kod, Per fixar
 //		URL url;
 //		try {
 //			url = new URL("http://hostname:80/cgi");
@@ -838,7 +839,7 @@ public class AdminFrame {
 	}
 	
 	//	Pub is open, send HTTP-post to server
-	public void yPub(){ //Dålig kod, Per fixar
+	public void yPub(){ //Dï¿½lig kod, Per fixar
 //		URL url;
 //		try {
 //			url = new URL("http://hostname:80/cgi");
@@ -857,7 +858,7 @@ public class AdminFrame {
 	}
 	
 	//	Pub is closed, send HTTP-post to server
-	public void nPub(){//Dålig kod, Per fixar
+	public void nPub(){//Dï¿½lig kod, Per fixar
 //		URL url;
 //		try {
 //			url = new URL("http://hostname:80/cgi");
@@ -926,7 +927,7 @@ public class AdminFrame {
 				exit();
 			}else if(e.getSource() == savePathBtn){
 				popUp("Name your Slideshow: ");
-				confValues[9] = confValues[9] + "¤" + xmlPubPathTxt.getText();
+				confValues[9] = confValues[9] + "ï¿½" + xmlPubPathTxt.getText();
 				pubSlidesDDLst.addItem(xmlPubPathTxt.getText());
 				saveSettings();
 			}else if(e.getSource() == popSbmBtn){ //Popup
