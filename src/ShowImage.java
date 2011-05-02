@@ -22,11 +22,11 @@ public class ShowImage extends JPanel {
 	/**
 	 * The Rectangle containing the image
 	 */
-	private ImgRect imgRect; //
-	private TextToDisplay imageUserTxtDsp;
-	private TextToDisplay imageCommentTxtDsp;
-	private TextToDisplay[] comments;
-	private boolean outgoing = false;
+	protected ImgRect imgRect; //
+	protected TextToDisplay imageUserTxtDsp;
+	protected TextToDisplay imageCommentTxtDsp;
+	protected TextToDisplay[] comments;
+	protected boolean outgoing = false;
 	private BufferedImage slideImage;
 	private float transperacy = 0;
 	private int correction;
@@ -56,72 +56,10 @@ public class ShowImage extends JPanel {
 		timeStill.height = timeStill.width;
 	}
 
-	protected void setComments(List<CommentXML> imageComments) {
-		if (imageComments.size() > 0) {
-			comments = new TextToDisplay[imageComments.size()];
-			for (int i = 0; i < comments.length; i++) {
-				comments[i] = new TextToDisplay();
 
-				comments[i].setString(imageComments.get(i).getUser()
-						+ " wrote: " + imageComments.get(i).getContent());
-				comments[i].resetPos();
-				comments[i].addX(monitorSize.width - monitorSize.width / 3);
-				comments[i].addY(200 + (i * 100));
-			}
-
-		}
-	}
-
+	
 	/**
 	 * Scaling the image and text to fit the screen and position them right.
-	 */
-	public void scalePositionImageAndText() {
-		double ration = image.getWidth() / image.getHeight();
-		imageSize.height = (int) (image.getHeight() * monitorSize.height * 0.005);
-		imageSize.width = (int) (imageSize.height * ration);
-		correction = (imageUserTxtDsp.length() + 6) / 2;
-		textStartPosition.width = (monitorSize.width / 2)
-				- (correction * (ImageUserFontSize / 3));
-	}
-
-	protected void setImageText(String tmpImageText) {
-		imageCommentTxtDsp.setString(tmpImageText);
-		imageCommentTxtDsp.resetPos();
-		imageCommentTxtDsp.addX(100);
-		imageCommentTxtDsp.addY(monitorSize.height + ImageUserFontSize);
-	}
-
-	protected void setUserText(String tmpUserString) {
-		correction = (tmpUserString.length() + 6) / 2;
-		imageUserTxtDsp.setString(tmpUserString + " posted: ");
-		imageUserTxtDsp.resetPos();
-		scalePositionImageAndText();
-		imageUserTxtDsp.addX(textStartPosition.width);
-		imageUserTxtDsp.addY(0);
-	}
-
-	protected void setImage(BufferedImage tmpImage) {
-		slideImage = tmpImage;
-		imgRect.resetPos();
-
-		float factor = (float) (tmpImage.getWidth())
-				/ (float) (tmpImage.getHeight());
-		imgRect.height = imageSize.height;
-		imgRect.width = imgRect.height * factor;
-		imgRect.addY(100);
-		imgRect.addX(-200);
-		imageStopPosition = ((monitorSize.width - imgRect.width
-				- (monitorSize.width / 3) - 30));
-		imageStopPosition = imageStopPosition - (imageStopPosition % 5);
-	}
-
-	public void resetPicture() {
-		transperacy = 0;
-		outgoing = false;
-		timeStill.height = timeStill.width;
-		comments = null;
-	}
-
 	/**
 	 * Change the boolean "outgoing" to indicate that the Image is moving out,
 	 * towards the end of screen.
@@ -133,73 +71,7 @@ public class ShowImage extends JPanel {
 	/**
 	 * Handles moving and transparancy of the image and texts
 	 */
-	public void MoveObjects() {
-		if (timeStill.height != 0 && imgRect.getX() == (int) imageStopPosition) {
 
-			timeStill.height = timeStill.height - 1;
-		} else {
-
-			imgRect.addX(5);
-
-		}
-
-		if (outgoing == false) {
-			if (transperacy < 1) {
-				transperacy = (float) (transperacy + 0.008);
-			}
-			if (transperacy > 1) {
-				transperacy = 1;
-				// }
-			}
-		} else if (outgoing == true) {
-			// if(imageComments[0]!=null){
-			if (transperacy > 0.01) {
-				transperacy = (float) (transperacy - 0.008);
-			}
-			if (transperacy < 0.01) {
-				transperacy = (float) 0.01;
-				// }
-			}
-		}
-
-		// changes outgoing to true if the picture is supposed to move again
-		// after standstill
-
-		if (timeStill.height == 0) {
-			outgoing = true;
-		}
-		// bild user r;relse
-		if (outgoing == true) {
-			imageUserTxtDsp.addY(-1);
-		} else if (outgoing == false && imageUserTxtDsp.getY() < 80) {
-			imageUserTxtDsp.addY(1);
-		}
-		// bildtext r;relse
-		if (imageCommentTxtDsp.getY() > 750 && outgoing == false) {
-			imageCommentTxtDsp.addY(-2);
-		} else if (outgoing == true) {
-			imageCommentTxtDsp.addY(2);
-		}
-		repaint();
-	}
-
-	/**
-	 * Gets the text x-coordinate
-	 * 
-	 * @return returns a double with the x-coordinate
-	 */
-	public double getTextX() {
-		return imageUserTxtDsp.getX();
-	}
-
-	/**
-	 * Gets the text y-coordinate
-	 * 
-	 * @return returns a double with the y-coordinate
-	 */
-	public double getTxtY() {
-		return imageUserTxtDsp.getY();
-	}
 
 	/**
 	 * Gets the image x-coordinate
@@ -207,15 +79,6 @@ public class ShowImage extends JPanel {
 	 * @return returns a double with the x-coordinate
 	 */
 	public double getSlideImageX() {
-		return imgRect.getX();
-	}
-
-	/**
-	 * Gets the image y-coordinate
-	 * 
-	 * @return returns a double with the y-coordinate
-	 */
-	public double getSlideImageY() {
 		return imgRect.getX();
 	}
 
@@ -257,13 +120,11 @@ public class ShowImage extends JPanel {
 					imageUserTxtDsp.y);
 		} catch (NullPointerException e) {
 		}
-		// for(int i =0;i<imageComments.length;i++){
 
 		// Paints the iamge rectangle
 		TexturePaint tp = new TexturePaint(slideImage, imgRect);
 		g2d.setPaint(tp);
 		g2d.fill(imgRect);
-		// g2d.setColor(Color.WHITE);
-
 	}
+
 }

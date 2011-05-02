@@ -12,13 +12,12 @@ public class TwoDSlideShow extends Panel implements ActionListener {
 	byte screenIndex;
 	final int nrOfConfigLines = 10;
 
-	int timeStill = 200;
-
 	ShowImage slideShowHandler;
 
 	Rectangle monitor = new Rectangle();
 	TwoDSlideShowView view;
 	TwoDSlideShowInfo info;
+	ShowImageSet slideShowSet;
 
 	public TwoDSlideShow() throws FileNotFoundException {
 		view = new TwoDSlideShowView();
@@ -33,7 +32,8 @@ public class TwoDSlideShow extends Panel implements ActionListener {
 
 	// Build the frame (Slideshow)
 	public void createFrame() {
-		slideShowHandler = info.createShowImage(monitor);
+		slideShowHandler =  new ShowImage(monitor, info.getTimeStill());
+		slideShowSet = new ShowImageSet(monitor, info.getTimeStill());
 		view.createFrame(slideShowHandler, monitor);
 	}
 
@@ -53,19 +53,17 @@ public class TwoDSlideShow extends Panel implements ActionListener {
 	}
 
 	private void updatePicture() {
-		info.updatePicture(slideShowHandler);
-		// resets the image comments
-		
-		slideShowHandler.setComments(info.getImageComments());
-
+		info.updatePicture();
+		slideShowHandler.resetPicture();
+		slideShowHandler.resetPicture();
+		// Kommentarer
+		slideShowSet.setComments(info.getImageComments());
 		// Bildtexten
-		slideShowHandler.setImageText(info.getImageText());
-				
+		slideShowSet.setImageText(info.getImageText());				
 		// Image user
-		slideShowHandler.setUserText(info.getUser());
-		
+		slideShowSet.setUserText(info.getUser());
 		// Bilden
-		slideShowHandler.setImage(info.getImage());
+		slideShowSet.setImage(info.getImage());
 	}
 
 	@Override

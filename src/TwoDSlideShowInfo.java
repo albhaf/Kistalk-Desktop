@@ -22,7 +22,7 @@ public class TwoDSlideShowInfo {
 	Image[] serverImgs;
 	URL[] urlArray;
 
-	int currentPicture = -1;
+	int currentPicture = 0;
 	int currentPubPicture = 0;
 	int nrOfComments = 0;
 	int nrOfPicsServer;
@@ -93,7 +93,7 @@ public class TwoDSlideShowInfo {
 		return new ShowImage(monitor, timeStill);
 	}
 
-	protected void updatePicture(ShowImage slideShowHandler) {
+	protected void updatePicture() {
 		currentPicture++;
 		if (currentPicture >= nrOfPicsServer) {
 			setLinks();
@@ -101,7 +101,7 @@ public class TwoDSlideShowInfo {
 				setPictures();
 			currentPicture = 0;
 		}
-		slideShowHandler.resetPicture();
+
 	}
 	
 	protected BufferedImage getImage(){
@@ -118,6 +118,10 @@ public class TwoDSlideShowInfo {
 	
 	protected String getUser(){
 		return imgXMLList.get(currentPicture).getUser();
+	}
+	
+	protected int getTimeStill(){
+		return timeStill;
 	}
 	
 }

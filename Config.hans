@@ -38,7 +38,7 @@ supported_image_formats %.jpg .png .gif .bnp
 null
 Screen_index %0
 null
-XMLURL %http://www.kistalk.com/desktop_images.xml
+XMLURL %http://www.kistalk.com/api/images/desktop.xml
 null
 Number_of_comments %2
 null
