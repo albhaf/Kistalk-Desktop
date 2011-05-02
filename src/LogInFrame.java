@@ -3,6 +3,8 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.TextField;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
@@ -14,15 +16,16 @@ import javax.swing.JPanel;
 public class LogInFrame{
 	public JButton sbmBtn;
 	public JButton clsBtn;
+	public TextField logUserTxt;
+	public TextField logPassTxt;
+	public JFrame logFrame;
 	
 	public LogInFrame(){
-		ButtonListener listener = new ButtonListener();
-		
 		// Background pic
 		ImageIcon icon = new ImageIcon("bgIcon.png");
 		final Image bgImage = icon.getImage();
 		
-		JFrame logFrame = new JFrame();
+		logFrame = new JFrame();
 		JPanel logPanel = new JPanel(){
 			public void paint(Graphics g){
 				g.drawImage(bgImage, 0,0, this);
@@ -38,8 +41,8 @@ public class LogInFrame{
 		JLabel logMailLbl = new JLabel();
 		JLabel logPassLbl = new JLabel();
 		JLabel logInstrLbl = new JLabel();
-		TextField logUserTxt = new TextField();
-		TextField logPassTxt = new TextField();
+		logUserTxt = new TextField();
+		logPassTxt = new TextField();
 		sbmBtn = new JButton();
 		clsBtn = new JButton();
 		GroupLayout logLayout = new GroupLayout(logPanel);
@@ -65,9 +68,9 @@ public class LogInFrame{
 		logInstrLbl.setFont(new Font("Imperial", Font.ITALIC, 8));
 		
 		sbmBtn.setText("Submit");
-		sbmBtn.addActionListener(listener);
+		sbmBtn.addActionListener(new LoginListener());
 		clsBtn.setText("Close");
-		clsBtn.addActionListener(listener);
+		clsBtn.addActionListener(new LoginListener());
 		
 		logLayout.setHorizontalGroup(
 				logLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
@@ -128,5 +131,11 @@ public class LogInFrame{
 		logFrame.add(logPanel);
 		
 		logFrame.setVisible(true);
+	}
+	
+	private class LoginListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			//lokal actionlistener
+		}
 	}
 }

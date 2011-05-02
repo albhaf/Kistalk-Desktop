@@ -4,17 +4,12 @@ import java.awt.event.ActionListener;
 
 	//	Listener
 	public class ButtonListener extends AdminFrame implements ActionListener {
-		AdminFrame adminFrame = new AdminFrame();
+		AdminFrame adminframe = new AdminFrame();
 		public void actionPerformed(ActionEvent e) {
-			LogInFrame login = new LogInFrame();
-			ButtonSettings buttons = new ButtonSettings();
-			ConfigSettings config = new ConfigSettings();
-			PopupFrame pop = new PopupFrame(null);
-			StartnStop slideShow = new StartnStop();
-			Radiobtns rbtn = new Radiobtns();
+			DesktopApplication controller = new DesktopApplication();
 			
 			if (e.getSource() == saveSetBtn){ //Save settings
-				config.setValues(confValues);
+				config.setValues(confValues, adminframe);
 				statusLbl.setText("Status: Settings saved to Config");
 			}else if (e.getSource() == resetBtn){ //Reset config
 				config.resetValues();
@@ -48,7 +43,7 @@ import java.awt.event.ActionListener;
 					confValues[9] = confValues[9] + "¤" + popTxt.getText();
 					confValues[10] = confValues[10] + "¤" + xmlPubPathTxt.getText();
 					pubSlidesDDLst.addItem(xmlPubPathTxt.getText());
-					config.setValues(confValues);
+					config.setValues(confValues, adminframe);
 				}
 				popFrame.dispose();
 				buttons.enable();
@@ -56,11 +51,9 @@ import java.awt.event.ActionListener;
 				popFrame.dispose();
 				buttons.enable();
 				nFoodRbtn.setSelected(true);
-			}else if(e.getSource() == login.sbmBtn){
-				logFrame.dispose();
-				config.getValues();
-				setupFrame();
-			}else if(e.getSource() == login.clsBtn){
+			}else if(e.getSource() == loginframe.sbmBtn){
+				controller.login();
+			}else if(e.getSource() == loginframe.clsBtn){
 				logFrame.dispose();
 			}else if(e.getSource() == null){
 				

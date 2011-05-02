@@ -7,7 +7,6 @@ public class ConfigSettings {
 	final int nrOfConfigValues = 11; // Doesn't include regular textlines. If change, then change configHandler too
 	String[] confValues = new String[nrOfConfigValues];
 	ConfigHandler handler;
-	AdminFrame adminframe = new AdminFrame();
 	
 	//	Reads Config and saves values in 'confValues'
 	public String[] getValues() {
@@ -25,7 +24,7 @@ public class ConfigSettings {
 	}
 
 	//	Saves current settings to Config (except Default Turtle, he only lives in config when config is defaultahrized)
-	public void setValues(String[] confValues) {
+	public void setValues(String[] confValues, AdminFrame adminframe) {
 		String[] lines = new String[49];
 		Date today = new Date();
 		handler = new ConfigHandler();

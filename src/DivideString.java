@@ -2,7 +2,7 @@ import java.util.List;
 import java.util.Scanner;
 
 
-public class DivideString { //Ej testad
+public class DivideString { //Ej testad, är till för De nya configraderna
 	public DivideString() {
 		
 	}

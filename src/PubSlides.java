@@ -1,29 +1,29 @@
 import java.awt.Font;
 
 
-public class PubSlides extends AdminFrame {
+public class PubSlides {
 	//	Set the path
-	public void setPath(String name){
+	public void setPath(String name, AdminFrame adminframe){
 		if (name == "TMEIT"){
-			xmlPubPathTxt.setText("C:\\TMEIT");
-			xmlPubPathTxt.setFont(new Font("Algerian", Font.ITALIC, 12));
-			xmlPubPathTxt.disable();
-			statusLbl.setText(name + "s Slideshow is choosed");
+			adminframe.xmlPubPathTxt.setText("C:\\TMEIT");
+			adminframe.xmlPubPathTxt.setFont(new Font("Algerian", Font.ITALIC, 12));
+			adminframe.xmlPubPathTxt.disable();
+			adminframe.statusLbl.setText(name + "s Slideshow is choosed");
 		}else if (name == "Qmisk"){
-			xmlPubPathTxt.setText("C:\\Qmisk");
-			xmlPubPathTxt.setFont(new Font("Algerian", Font.ITALIC, 12));
-			xmlPubPathTxt.disable();
-			statusLbl.setText(name + "s Slideshow is choosed");
+			adminframe.xmlPubPathTxt.setText("C:\\Qmisk");
+			adminframe.xmlPubPathTxt.setFont(new Font("Algerian", Font.ITALIC, 12));
+			adminframe.xmlPubPathTxt.disable();
+			adminframe.statusLbl.setText(name + "s Slideshow is choosed");
 		}else if (name == "ITK"){
-			xmlPubPathTxt.setText("C:\\ITK");
-			xmlPubPathTxt.setFont(new Font("Algerian", Font.ITALIC, 12));
-			xmlPubPathTxt.disable();
-			statusLbl.setText(name + "s Slideshow is choosed");
+			adminframe.xmlPubPathTxt.setText("C:\\ITK");
+			adminframe.xmlPubPathTxt.setFont(new Font("Algerian", Font.ITALIC, 12));
+			adminframe.xmlPubPathTxt.disable();
+			adminframe.statusLbl.setText(name + "s Slideshow is choosed");
 		}else if (name == "[Other Slideshow]"){
-			xmlPubPathTxt.setText("C:\\...");
-			xmlPubPathTxt.setFont(new Font("Algerian", Font.PLAIN, 12));
-			xmlPubPathTxt.enable();
-			statusLbl.setText("Choose a Slideshow");
+			adminframe.xmlPubPathTxt.setText("C:\\...");
+			adminframe.xmlPubPathTxt.setFont(new Font("Algerian", Font.PLAIN, 12));
+			adminframe.xmlPubPathTxt.enable();
+			adminframe.statusLbl.setText("Choose a Slideshow");
 		}
 		
 	}

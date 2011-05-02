@@ -70,7 +70,6 @@ public class AdminFrame {
 	JComboBox pubSlidesDDLst;
 	JComboBox screenDDLst;
 	
-	ButtonListener listener = new ButtonListener();
 	GroupLayout groupLayout;
 	Graphics g;
 
@@ -80,7 +79,7 @@ public class AdminFrame {
 	}
 
 	//	Setting up the settings frame
-	protected void setupFrame(){
+	protected void setupFrame(ButtonListener listener){
 		
 		//	Create all objects
 		adminFrame = new JFrame();
@@ -260,7 +259,7 @@ public class AdminFrame {
 				new ItemListener(){
 					public void itemStateChanged(ItemEvent e){
 						if (e.getStateChange() == ItemEvent.SELECTED){
-							pubslides.setPath(e.getItem().toString());
+							pubslides.setPath(e.getItem().toString(), new AdminFrame());
 						}
 					}
 				}
