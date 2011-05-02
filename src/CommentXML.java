@@ -19,7 +19,6 @@ public class CommentXML {
 		user = temp;
 	}
 	
-	
 	public String getContent(){
 		return content;
 	}
@@ -31,8 +30,7 @@ public class CommentXML {
 	public String getUser(){
 		return user;
 	}
-	
-	
+		
 	public String toString(){
 		StringBuffer sb = new StringBuffer();
 		sb.append(user);

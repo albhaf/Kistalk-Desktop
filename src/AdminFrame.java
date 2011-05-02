@@ -820,7 +820,7 @@ public class AdminFrame {
 	}
 	
 	//	Dinner isn't served, send HTTP-post to server
-	public void nFood(){//D�lig kod, Per fixar
+	public void nFood(){//D]lig kod, Per fixar
 //		URL url;
 //		try {
 //			url = new URL("http://hostname:80/cgi");
