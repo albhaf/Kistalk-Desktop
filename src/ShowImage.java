@@ -30,6 +30,9 @@ public class ShowImage extends JPanel {
 	private BufferedImage slideImage;
 	private float transperacy = 0;
 	private int correction;
+	private ShowImageSet showImageSet;
+	private ShowImageMovement showImageMovement;
+	private ShowImageDrawing showImageDrawing;
 
 	// Variables which are set in constructor
 	private Rectangle monitorSize;
@@ -41,11 +44,9 @@ public class ShowImage extends JPanel {
 
 	// Konstanter
 	private final int ImageUserFontSize = 50;
-	private Font font = new Font("Serif", Font.BOLD, 50);
-	private Font commentfont = new Font("Serif", Font.BOLD, 30);
+
 
 	public ShowImage(Rectangle tmpmonitor, int tmpTimeStill) {
-
 		monitorSize = tmpmonitor;
 		imgRect = new ImgRect();
 		image = new BufferedImage(100, 100, BufferedImage.TYPE_INT_RGB);
@@ -54,24 +55,107 @@ public class ShowImage extends JPanel {
 
 		timeStill.width = tmpTimeStill;
 		timeStill.height = timeStill.width;
+		showImageSet = new ShowImageSet();
+		showImageMovement = new ShowImageMovement();
+		showImageDrawing = new ShowImageDrawing();
 	}
 
+	public void resetPicture() {
+		transperacy = 0;
+		outgoing = false;
+		timeStill.height = timeStill.width;
+		comments = null;
+	}
 
-	
+	public void scalePositionImageAndText() {
+		double ration = image.getWidth() / image.getHeight();
+		imageSize.height = (int) (image.getHeight() * monitorSize.height * 0.005);
+		imageSize.width = (int) (imageSize.height * ration);
+		correction = (imageUserTxtDsp.length() + 6) / 2;
+		textStartPosition.width = (monitorSize.width / 2)
+				- (correction * (ImageUserFontSize / 3));
+	}
+
+	public void MoveObjects() {
+		timeStill.height = showImageMovement.moveImage(timeStill, imgRect, (int) imageStopPosition);
+		transperacy = showImageMovement.setTransperacy(transperacy, outgoing);
+
+		// changes outgoing to true if the picture is supposed to move again
+		// after standstill
+
+		if (timeStill.height == 0) {
+			outgoing = true;
+		}
+
+		showImageMovement.moveUserText(imageUserTxtDsp, outgoing);
+		showImageMovement.moveImageText(imageCommentTxtDsp, outgoing);
+		repaint();
+	}
+
 	/**
-	 * Scaling the image and text to fit the screen and position them right.
+	 * Called every time the frame is drawn
+	 */
+	public void paint(Graphics g) {
+		showImageDrawing.drawBackground(g, monitorSize, transperacy);
+		showImageDrawing.drawComments(comments);
+		showImageDrawing.paintImage(imageCommentTxtDsp,imageUserTxtDsp, slideImage, imgRect);
+	}
+
+	protected void setImageText(String tmpImageText) {
+		imageCommentTxtDsp.setString(tmpImageText);
+		imageCommentTxtDsp.resetPos();
+		imageCommentTxtDsp.addX(100);
+		imageCommentTxtDsp.addY(monitorSize.height + ImageUserFontSize);
+	}
+
+	protected void setUserText(String tmpUserString) {
+		correction = (tmpUserString.length() + 6) / 2;
+		imageUserTxtDsp.setString(tmpUserString + " posted: ");
+		imageUserTxtDsp.resetPos();
+		scalePositionImageAndText();
+		imageUserTxtDsp.addX(textStartPosition.width);
+		imageUserTxtDsp.addY(0);
+	}
+
+	protected void setImage(BufferedImage tmpImage) {
+		slideImage = tmpImage;
+		imgRect.resetPos();
+
+		float factor = (float) (tmpImage.getWidth())
+				/ (float) (tmpImage.getHeight());
+		imgRect.height = imageSize.height;
+		imgRect.width = imgRect.height * factor;
+		imgRect.addY(100);
+		imgRect.addX(-200);
+		imageStopPosition = ((monitorSize.width - imgRect.width
+				- (monitorSize.width / 3) - 30));
+		imageStopPosition = imageStopPosition - (imageStopPosition % 5);
+	}
+
+	protected void setComments(List<CommentXML> imageComments) {
+		if (imageComments.size() > 0) {
+			comments = new TextToDisplay[imageComments.size()];
+			for (int i = 0; i < comments.length; i++) {
+				comments[i] = new TextToDisplay();
+
+				comments[i].setString(imageComments.get(i).getUser()
+						+ " wrote: " + imageComments.get(i).getContent());
+				comments[i].resetPos();
+				comments[i].addX(monitorSize.width - monitorSize.width / 3);
+				comments[i].addY(200 + (i * 100));
+			}
+
+		}
+	}
+
 	/**
+	 * Scaling the image and text to fit the screen and position them right. /**
 	 * Change the boolean "outgoing" to indicate that the Image is moving out,
 	 * towards the end of screen.
 	 */
 	public void changeDirection() {
 		outgoing = true;
 	}
-
-	/**
-	 * Handles moving and transparancy of the image and texts
-	 */
-
 
 	/**
 	 * Gets the image x-coordinate
@@ -81,50 +165,4 @@ public class ShowImage extends JPanel {
 	public double getSlideImageX() {
 		return imgRect.getX();
 	}
-
-	/**
-	 * Called every time the frame is drawn
-	 */
-	public void paint(Graphics g) {
-		/*
-		 * sets some values and settings.
-		 */
-		Graphics2D g2d = (Graphics2D) g;
-		g2d.setPaint(Color.BLACK);
-		g2d.fillRect(0, 0, monitorSize.width, monitorSize.height);
-		g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,
-				transperacy));
-		g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
-				RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-				RenderingHints.VALUE_ANTIALIAS_ON);
-
-		// Draws the image comments on screen if any.
-		g2d.setFont(commentfont);
-		g2d.setColor(Color.WHITE);
-
-		if (comments != null) {
-
-			for (int i = 0; i < comments.length; i++) {
-				g2d.drawString(comments[i].getString(), comments[i].x,
-						comments[i].y);
-			}
-		}
-
-		// paints the image text and image user texts
-		g2d.setFont(font);
-		try {
-			g2d.drawString(imageCommentTxtDsp.getString(),
-					imageCommentTxtDsp.x, imageCommentTxtDsp.y);
-			g2d.drawString(imageUserTxtDsp.getString(), imageUserTxtDsp.x,
-					imageUserTxtDsp.y);
-		} catch (NullPointerException e) {
-		}
-
-		// Paints the iamge rectangle
-		TexturePaint tp = new TexturePaint(slideImage, imgRect);
-		g2d.setPaint(tp);
-		g2d.fill(imgRect);
-	}
-
 }

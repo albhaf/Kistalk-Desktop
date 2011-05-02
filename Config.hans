@@ -37,19 +37,14 @@ Number_of_Jimmys %-
 supported_image_formats %.jpg .png .gif .bnp
 
 Screen_index %0
-<<<<<<< HEAD
 null
 XMLURL %http://www.kistalk.com/api/images/desktop.xml
 null
-=======
 
-XMLURL %http://www.kistalk.com/desktop_images.xml
-
->>>>>>> 865baca5b3c145ae6b324cbea3979377b3c04a47
 Number_of_comments %2
 
 Path_to_Pubslides %C:\\Default mapp\\Default pubslides
 
-Saved_Pubslides %TMEIT¤Qmisk¤ITK
+Saved_Pubslides %TMEITï¿½Qmiskï¿½ITK
 
-Saved_Paths %C:\\TMEIT¤C:\\Qmisk¤C:\\ITK
+Saved_Paths %C:\\TMEITï¿½C:\\Qmiskï¿½C:\\ITK
