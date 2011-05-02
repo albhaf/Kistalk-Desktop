@@ -1,19 +1,8 @@
 import java.awt.*;
-
 import javax.swing.*;
-
 import java.io.*;
-
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import java.awt.Image;
-import java.util.ArrayList;
-import java.util.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.net.URL;
 
 @SuppressWarnings("serial")
 public class TwoDSlideShow extends Panel implements ActionListener {
@@ -21,139 +10,62 @@ public class TwoDSlideShow extends Panel implements ActionListener {
 	Timer t;
 
 	byte screenIndex;
-
-	int nrOfPicsServer;
-	int nrOfPicsPub;
 	final int nrOfConfigLines = 10;
-	String[] fileFormats = new String[4];
-	ImageIcon[] iconArrayServer;
-	ImageIcon[] iconArrayPub;
-	Image[] serverImgs;
-	URL[] urlArray;
-	int currentPicture = 0;
-	int currentPubPicture = 0;
-	int nrOfComments = 0;
+
 	int timeStill = 200;
 
-	Graphics2D g2d;
-	JPanel panel;
-	XMLreader xmlreader;
-	String xmlPath;
-	List<ImageXML> imgXMLList;
 	ShowImage slideShowHandler;
 
-	int timestill = 100;
-
 	Rectangle monitor = new Rectangle();
+	TwoDSlideShowView view;
+	TwoDSlideShowInfo info;
 
-	public TwoDSlideShow() {
+	public TwoDSlideShow() throws FileNotFoundException {
+		view = new TwoDSlideShowView();
+		info = new TwoDSlideShowInfo();
 		readConfig();
 		getScreenResolution();
 		firstPicture();
 		createFrame();
+		updatePicture();
 		t.start();
 	}
 
 	// Build the frame (Slideshow)
 	public void createFrame() {
-
-		JFrame frame = new JFrame("ShowImage.java");
-		slideShowHandler = new ShowImage((BufferedImage) serverImgs[0],
-				imgXMLList.get(0).getUser(), imgXMLList.get(0).getImageText(),
-				monitor, timeStill, imgXMLList.get(0).getComments());
-		panel = slideShowHandler;
-		frame.getContentPane().add(panel);
-
-		frame.setUndecorated(true);
-		frame.setSize(monitor.width, monitor.height);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setVisible(true);
+		slideShowHandler = info.createShowImage(monitor);
+		view.createFrame(slideShowHandler, monitor);
 	}
 
 	// Get the size of the monitor
 	private void getScreenResolution() {
-		GraphicsEnvironment gfxEnviro = GraphicsEnvironment
-				.getLocalGraphicsEnvironment();
-		GraphicsDevice[] gfxScreenDev = gfxEnviro.getScreenDevices();
-
-		// Get the right screen
-		GraphicsConfiguration[] gc = gfxScreenDev[screenIndex]
-				.getConfigurations();
-
-		// Get size and position of the screen
-		monitor = gc[0].getBounds();
-
+		monitor = info.getScreenSize(screenIndex);
 	}
 
-	private void readConfig() {
-		String[] values = new String[9];
-		ConfigHandler reader = new ConfigHandler();
-
-		try {
-			values = reader.processLineByLine();
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		// Hantera inkommande data
-		nrOfPicsServer = Integer.valueOf(values[0]);
-		serverImgs = new Image[nrOfPicsServer];
-		iconArrayServer = new ImageIcon[nrOfPicsServer];
-		urlArray = new URL[nrOfPicsServer];
-		t = new Timer(Integer.valueOf(values[2]), this);
-		fileFormats = values[4].split(" ");
-		screenIndex = Byte.valueOf(values[5]);
-		xmlPath = values[6];
-		nrOfComments = Integer.valueOf(values[7]);
-
+	private void readConfig() throws FileNotFoundException {
+		info.readConfig(screenIndex);
+		t = new Timer(10, this);
 	}
 
 	private void firstPicture() {
-		xmlreader = new XMLreader(xmlPath);
-		imgXMLList = xmlreader.getImagesInfo();
-		nrOfPicsServer = imgXMLList.size(); //tillfälligt!
-		for (int i = 0; i < nrOfPicsServer && i < urlArray.length ; i++) { //nrOfPicsServer
-			urlArray[i] = imgXMLList.get(i).getLink();
-		}
-		try {
-			serverImgs[currentPicture] = ImageIO.read(urlArray[currentPicture]);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		currentPicture = currentPicture + 1;
-
+		info.setLinks();
+		info.setPictures();
 	}
 
 	private void updatePicture() {
+		info.updatePicture(slideShowHandler);
+		// resets the image comments
+		
+		slideShowHandler.setComments(info.getImageComments());
 
-		if (currentPicture >= nrOfPicsServer) {
-			currentPicture = 0;
-		}
-		if (currentPicture == nrOfPicsServer - 1) {
-			imgXMLList = xmlreader.getImagesInfo();
-
-		}
-		if (urlArray[currentPicture].equals(imgXMLList.get(currentPicture)
-				.getLink()) == false || serverImgs[currentPicture] == null) {
-			urlArray[currentPicture] = imgXMLList.get(currentPicture).getLink();
-			try {
-				serverImgs[currentPicture] = ImageIO
-						.read(urlArray[currentPicture]);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-		}
-		slideShowHandler.UpdatePicture(
-				(BufferedImage) serverImgs[currentPicture],
-				imgXMLList.get(currentPicture).getUser(),
-				imgXMLList.get(currentPicture).getImageText(),
-				imgXMLList.get(currentPicture).getComments());
-		currentPicture = currentPicture + 1;
-
+		// Bildtexten
+		slideShowHandler.setImageText(info.getImageText());
+				
+		// Image user
+		slideShowHandler.setUserText(info.getUser());
+		
+		// Bilden
+		slideShowHandler.setImage(info.getImage());
 	}
 
 	@Override
@@ -168,33 +80,7 @@ public class TwoDSlideShow extends Panel implements ActionListener {
 
 	}
 
-	/*
-	 * public static void copyPptPics() throws IOException{
-	 * 
-	 * ZipFile zf = new ZipFile("C:\\Users\\Ludvig\\Documents\\asd.odp");
-	 * Enumeration<? extends ZipEntry> files = zf.entries();
-	 * 
-	 * while (files.hasMoreElements()) { ZipEntry ze = files.nextElement();
-	 * 
-	 * System.out.println("Decompressing " + ze.getName());
-	 * System.out.println("  Compressed Size: " + ze.getCompressedSize() +
-	 * "  Expanded Size: " + ze.getSize() + "\n"); if(ze.isDirectory()==false){
-	 * BufferedInputStream fin = new BufferedInputStream(zf.getInputStream(ze));
-	 * BufferedOutputStream fout = new BufferedOutputStream(
-	 * 
-	 * new FileOutputStream(ze.getName()));
-	 * 
-	 * int i; do { i = fin.read(); if (i != -1) fout.write(i); } while (i !=
-	 * -1);
-	 * 
-	 * fout.close(); fin.close(); } } zf.close(); }
-	 */
-
-	public static void main(String args[]) {
-		// PubXMLReader blah = new PubXMLReader();
-		// blah.parseDocument();
-
+	public static void main(String args[]) throws FileNotFoundException {
 		new TwoDSlideShow();
-
 	}
 }

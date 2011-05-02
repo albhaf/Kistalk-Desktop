@@ -2,7 +2,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.TextArea;
 import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,37 +18,32 @@ import java.net.URLConnection;
 import java.util.Date;
 
 import javax.imageio.ImageIO;
-import javax.swing.AbstractButton;
-import javax.swing.ButtonGroup;
-import javax.swing.GroupLayout;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 import javax.swing.*;
 
 public class AdminFrame {
-	final int nrOfConfigValues = 9; // Doesn't include regular textlines. If change, then change configHandler too
+	final int nrOfConfigValues = 11; // Doesn't include regular textlines. If change, then change configHandler too
 	int nrOfPubSlides;
 	int slideNr = 0;
-	String value;
+	String food;
 	Image bgImage;
 	String[] confValues = new String[nrOfConfigValues];
 	
 	JFrame adminFrame;
 	JFrame popFrame;
+	JFrame logFrame;
 	JPanel thePanel;
 	JLabel headerLbl;
 	
 	JButton saveSetBtn;
 	JButton resetBtn;
 	JButton startBtn;
-	
-	JButton lolButton;
-	JButton popButton;
+	JButton exitBtn;
+	JButton savePathBtn;
+	JButton remPathBtn;
+	JButton popSbmBtn;
+	JButton popClsBtn;
+	JButton logSbmBtn;
+	JButton logClsBtn;
 	
 	JLabel nrOfImgsLbl;
 	JLabel timeLbl;
@@ -61,13 +55,16 @@ public class AdminFrame {
 	JLabel nrOfCommentsLbl;
 	JLabel screenLbl;
 	JLabel bgLbl;
+	JLabel popLbl;
 	
 	TextField nrOfImgsTxt;
 	TextField timeTxt;
-	TextField popText;
+	TextField popTxt;
 	TextField xmlPubPathTxt;
 	TextField legalFilesTxt;
 	TextField nrOfCommentsTxt;
+	TextField logUserTxt;
+	TextField logPassTxt;
 	
 	JRadioButton yFoodRbtn;
 	JRadioButton nFoodRbtn;
@@ -86,16 +83,12 @@ public class AdminFrame {
 
 	//	Constructor
 	public AdminFrame() {
-		readConfig();
-		setupFrame();
-
+		logInFrame();
+		
 	}
 
 	//	Setting up the settings frame
 	private void setupFrame(){
-		// Background pic
-		ImageIcon icon = new ImageIcon("C:\\Users\\Andeers\\Pictures\\bgIcon.png");
-		bgImage = icon.getImage();
 		
 		//	Create all objects
 		adminFrame = new JFrame();
@@ -104,7 +97,9 @@ public class AdminFrame {
 		saveSetBtn = new JButton();
 		resetBtn = new JButton();
 		startBtn = new JButton();
-		lolButton = new JButton();
+		exitBtn = new JButton();
+		savePathBtn = new JButton();
+		remPathBtn = new JButton();
 		
 		nrOfImgsLbl = new JLabel();
 		timeLbl= new JLabel();
@@ -134,26 +129,23 @@ public class AdminFrame {
 		screenDDLst = new JComboBox();
 		
 		// Create and Paint thePanel background
-		thePanel = new JPanel() //Observera att detta är en create!
-		{public void paint(Graphics g){
+		thePanel = new JPanel(){ //Observera att detta är en create!
+			public void paint(Graphics g){
 				g.drawImage(bgImage, 0,0, this);
-	    		setOpaque(false); // Opaque sätts två ggr för att... thePanel inte skulle påverkas av något konstigt (?)
-	    		paintComponent(g);
+				setOpaque(false);
+	    		super.paint(g);
 	    		setOpaque(true);
-	    		
-	    		System.out.println("paint"); //Visar mig när bg ritas upp
-	    		headerLbl.paint(headerLbl.getGraphics()); //Behövs tydligen för att rita ut loggan
+	    		repaint();
 	    		
 			}
-		}
-		;
+		};
 		
 		groupLayout = new GroupLayout(thePanel);
 		
 		//	Frame settings
-		adminFrame.setSize(900,600);
+		adminFrame.setSize(500,600);
 		adminFrame.setResizable(false);
-		adminFrame.setLocation(200, 50);
+		adminFrame.setLocation(300, 50);
 		adminFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		adminFrame.setTitle("KisTalk Slideshow Settings");
 		
@@ -162,9 +154,7 @@ public class AdminFrame {
 		thePanel.setBackground(Color.decode("#ae0808"));
 		
 		//	Label settings
-		headerLbl.setIcon(new ImageIcon("C:\\Users\\Andeers\\Pictures\\kistalk_admin_logo.png"));
-		headerLbl.setFont(new Font("Cambria", Font.BOLD, 32));
-		headerLbl.setForeground(Color.WHITE);
+		headerLbl.setIcon(new ImageIcon("kistalk_adm_logo.png"));
 		
 		nrOfImgsLbl.setText("Nr of pics (from KisTalk): ");
 		nrOfImgsLbl.setForeground(Color.WHITE);
@@ -196,39 +186,45 @@ public class AdminFrame {
 		
 		//	Text settings
 		nrOfImgsTxt.setText(confValues[0]);
-		nrOfImgsTxt.setFont(new Font("Algerian", Font.ITALIC, 12));
+		nrOfImgsTxt.setFont(new Font("Algerian", Font.PLAIN, 12));
 		
 		timeTxt.setText(confValues[2]);
-		timeTxt.setFont(new Font("Algerian", Font.ITALIC, 12));
+		timeTxt.setFont(new Font("Algerian", Font.PLAIN, 12));
 		
 		xmlPubPathTxt.setText(confValues[8]);
-		xmlPubPathTxt.setFont(new Font("Algerian", Font.ITALIC, 12));
+		xmlPubPathTxt.setFont(new Font("Algerian", Font.PLAIN, 12));
 		
 		legalFilesTxt.setText(confValues[4]);
 		legalFilesTxt.setFont(new Font("Algerian", Font.ITALIC, 12));
 		legalFilesTxt.setEnabled(false);
 		
 		nrOfCommentsTxt.setText(confValues[7]);
-		nrOfCommentsTxt.setFont(new Font("Algerian", Font.ITALIC, 12));
+		nrOfCommentsTxt.setFont(new Font("Algerian", Font.PLAIN, 12));
 		
 		//	Button settings
 		saveSetBtn.setText("Save settings");
-		saveSetBtn.setForeground(Color.WHITE);
+		saveSetBtn.setForeground(Color.BLACK);
 		saveSetBtn.addActionListener(listener);
-		saveSetBtn.setOpaque(false);
 		
 		resetBtn.setText("Reset settings");
-		resetBtn.setForeground(Color.WHITE);
+		resetBtn.setForeground(Color.BLACK);
 		resetBtn.addActionListener(listener);
-		resetBtn.setOpaque(false);
 		
 		startBtn.setText("Start slideshow");
-		startBtn.setForeground(Color.WHITE);
+		startBtn.setForeground(Color.BLACK);
 		startBtn.addActionListener(listener);
-		startBtn.setOpaque(false);
 		
-		lolButton.setText("popup!");
-		lolButton.addActionListener(listener);
+		exitBtn.setText("Exit");
+		exitBtn.setForeground(Color.BLACK);
+		exitBtn.addActionListener(listener);
+		
+		savePathBtn.setText("Save path");
+		savePathBtn.setForeground(Color.BLACK);
+		savePathBtn.addActionListener(listener);
+		
+		remPathBtn.setText("Remove Path");
+		remPathBtn.setForeground(Color.BLACK);
+		remPathBtn.addActionListener(listener);
 		
 		//	Radiobuttons settings
 		yFoodRbtn.setText("True");
@@ -264,21 +260,12 @@ public class AdminFrame {
 		pubSlidesDDLst.addItem("TMEIT");
 		pubSlidesDDLst.addItem("Qmisk");
 		pubSlidesDDLst.addItem("ITK");
-		pubSlidesDDLst.setFont(new Font("Algerian", Font.ITALIC, 12));
+		pubSlidesDDLst.setFont(new Font("Gulim", Font.PLAIN, 12));
 		pubSlidesDDLst.addItemListener(
 				new ItemListener(){
 					public void itemStateChanged(ItemEvent e){
 						if (e.getStateChange() == ItemEvent.SELECTED){
-							
-							if (e.getItem().toString() == "[Other Slideshow]"){
-								xmlPubPathTxt.enable();
-								statusLbl.setText("Choose a Slideshow");
-								
-							}else{
-								xmlPubPathTxt.disable();
-								statusLbl.setText(e.getItem().toString() + "s Slideshow is choosed");
-								
-							}
+							setPubSlidesPath(e.getItem().toString());
 						}
 					}
 				}
@@ -286,12 +273,17 @@ public class AdminFrame {
 		
 		screenDDLst.addItem("External");
 		screenDDLst.addItem("This");
-		screenDDLst.setFont(new Font("Algerian", Font.ITALIC, 12));
+		screenDDLst.setFont(new Font("Gulim", Font.PLAIN, 12));
 		screenDDLst.addItemListener(
 				new ItemListener(){
 					public void itemStateChanged(ItemEvent e){
 						if (e.getStateChange() == ItemEvent.SELECTED)
 							statusLbl.setText(e.getItem().toString() + " screen it is!");
+							if (e.getItem().toString() == "This"){
+								confValues[5] = "0";
+							}else if (e.getItem().toString() == "External"){
+								confValues[5] = "1";
+							}
 					}
 				}
 		);
@@ -332,17 +324,12 @@ public class AdminFrame {
 						)
 			   			.addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
 			   					.addComponent(xmlPubPathLbl)
+			   					.addComponent(xmlPubPathTxt, 300, 300, 300)
 			   					.addComponent(pubSlidesDDLst, 200, 200, 200)
-								.addComponent(xmlPubPathTxt, 300, 300, 300)
 					   	)
-				   		.addGroup(groupLayout.createSequentialGroup()
-				   			.addComponent(saveSetBtn, 140, 140, 140)
-				   			.addComponent(resetBtn, 140, 140, 140)
-				   			.addComponent(startBtn, 140, 140, 140)
-				   		)
 				)
 				
-				.addGap(100)
+				.addGap(50)
 				
 				.addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
 						
@@ -357,6 +344,17 @@ public class AdminFrame {
 							 .addComponent(nPubRbtn)
 						)
 			   	)
+			)
+			.addGroup(groupLayout.createSequentialGroup()
+				   	.addComponent(saveSetBtn, 140, 140, 140)
+				   	.addComponent(savePathBtn, 140, 140,140)
+					.addComponent(remPathBtn, 140, 140, 140)
+				   			
+			)
+			.addGroup(groupLayout.createSequentialGroup()
+					.addComponent(resetBtn, 140, 140, 140)
+					.addComponent(exitBtn, 140, 140, 140)
+					.addComponent(startBtn, 140, 140, 140)
 			)
 			.addComponent(statusLbl)
 		);
@@ -389,22 +387,16 @@ public class AdminFrame {
 									.addComponent(legalFilesLbl)
 									.addComponent(legalFilesTxt, 20, 20, 20)
 								)
-								.addGap(10)
+								.addGap(15)
 								.addGroup(groupLayout.createSequentialGroup()
 									.addComponent(screenLbl)
 									.addComponent(screenDDLst, 20, 20, 20)
 								)
-								.addGap(20)
+								.addGap(15)
 					   			.addGroup(groupLayout.createSequentialGroup()
 									.addComponent(xmlPubPathLbl)
-									.addComponent(pubSlidesDDLst, 20, 20, 20)
 									.addComponent(xmlPubPathTxt, 20, 20, 20)
-					   			)
-								.addGap(60)
-					   			.addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-					   				.addComponent(saveSetBtn, 30, 30, 30)
-					   				.addComponent(resetBtn, 30, 30, 30)
-					   				.addComponent(startBtn, 30, 30, 30)
+									.addComponent(pubSlidesDDLst, 20, 20, 20)
 					   			)
 				   		)
 				   		
@@ -422,9 +414,19 @@ public class AdminFrame {
 						   			.addComponent(nPubRbtn)
 						   		)
 				   		)
-				   		
 				  )
-				  .addGap(50)
+				  .addGap(30)
+				  .addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+					   		.addComponent(saveSetBtn, 30, 30, 30)
+					   		.addComponent(savePathBtn, 30, 30, 30)
+							  .addComponent(remPathBtn, 30, 30, 30)
+				  )
+				  .addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+						  .addComponent(resetBtn, 30, 30, 30)
+						  .addComponent(exitBtn, 30, 30, 30)
+					   		.addComponent(startBtn, 30, 30, 30)
+				  )
+				  .addGap(30)
 				  .addComponent(statusLbl)
 			);
 		
@@ -448,7 +450,7 @@ public class AdminFrame {
 
 	//	Saves current settings to Config (except Default Turtle, he only lives in config when config is defaultahrized)
 	public void saveSettings() {
-		String[] lines = new String[45];
+		String[] lines = new String[49];
 		Date today = new Date();
 		
 		handler = new ConfigHandler();
@@ -479,9 +481,19 @@ public class AdminFrame {
 		lines[22] = "*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*";
 		lines[23] = "*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*";
 		lines[24] = "";
-		lines[25] = "//	Filen senast ändrad " + today.getHours() + ":" + today.getMinutes() + " den " + today.getDate() + "/" + today.getMonth();
+		lines[25] = "//	Date of last revision: " + today.getHours() + ":" + today.getMinutes() + " den " + today.getDate() + "/" + today.getMonth();
 		lines[26] = "";
 		lines[27] = "";
+		lines[29] = "";
+		lines[31] = "";
+		lines[33] = "";
+		lines[35] = "";
+		lines[37] = "";
+		lines[39] = "";
+		lines[41] = "";
+		lines[43] = "";
+		lines[45] = "";
+		lines[47] = "";
 		
 		//	Defined values
 		lines[28] = "Max_number_of_Images %" + nrOfImgsTxt.getText();
@@ -489,10 +501,12 @@ public class AdminFrame {
 		lines[32] = "Timer_interval %" + timeTxt.getText();
 		lines[34] = "Number_of_Jimmys %-";
 		lines[36] = "supported_image_formats %.jpg .png .gif .bnp";
-		lines[38] = "Screen_index %1";
-		lines[40] = "XMLURL %C:\\\\Users\\\\Andeers\\\\Documents\\\\Mina mottagna filer\\\\bild.xml";
+		lines[38] = "Screen_index %" + confValues[5];
+		lines[40] = "XMLURL %http://www.kistalk.com/desktop_images.xml";
 		lines[42] = "Number_of_comments %2";
-		lines[44] = "Path_to_Pubslides %" + xmlPubPathTxt.getText();
+		lines[44] = "Path_to_Pubslides %" + xmlPubPathTxt.getText(); //Ett \ tas bort var gång filen laddas?
+		lines[46] = "Saved_Pubslides %" + confValues[9];
+		lines[48] = "Saved_Paths %" + confValues[10];
 		
 		// Write to file (config)
 		handler.setConfig(lines);
@@ -501,7 +515,7 @@ public class AdminFrame {
 	}
 
 	//	Resets Config to its standard state
-	public void resetConfig() {
+	public void resetConfig() { //Error
 		handler = new ConfigHandler();
 		
 		//	Reset Config-file
@@ -521,136 +535,344 @@ public class AdminFrame {
 	//	Set the path
 	public void setPubSlidesPath(String name){
 		if (name == "TMEIT"){
-			xmlPubPathTxt.setText("C://TMEIT");
+			xmlPubPathTxt.setText("C:\\TMEIT");
+			xmlPubPathTxt.setFont(new Font("Algerian", Font.ITALIC, 12));
+			xmlPubPathTxt.disable();
+			statusLbl.setText(name + "s Slideshow is choosed");
 		}else if (name == "Qmisk"){
-			xmlPubPathTxt.setText("C://Qmisk");
+			xmlPubPathTxt.setText("C:\\Qmisk");
+			xmlPubPathTxt.setFont(new Font("Algerian", Font.ITALIC, 12));
+			xmlPubPathTxt.disable();
+			statusLbl.setText(name + "s Slideshow is choosed");
 		}else if (name == "ITK"){
-			xmlPubPathTxt.setText("C://ITK");
+			xmlPubPathTxt.setText("C:\\ITK");
+			xmlPubPathTxt.setFont(new Font("Algerian", Font.ITALIC, 12));
+			xmlPubPathTxt.disable();
+			statusLbl.setText(name + "s Slideshow is choosed");
+		}else if (name == "[Other Slideshow]"){
+			xmlPubPathTxt.setText("C:\\...");
+			xmlPubPathTxt.setFont(new Font("Algerian", Font.PLAIN, 12));
+			xmlPubPathTxt.enable();
+			statusLbl.setText("Choose a Slideshow");
 		}
 		
 	}
 	
-	//	Disable buttons
-	public void disabelButtons(){ // Inte färdig, men användbar (bla pop-up)
+	//	Exit slideshow or, if slideshow's off, KisTalk
+	public void exit() {
+//		if (twoDSlideShow() == true){	//Om bildspelet är igång *VIKTIGT!*
+//			statusLbl.setText("The slideshow is dead...");
+//			twDSlideshow.dispose();
+//			startBtn.setEnabled(true);
+//			exitBtn.setText("Quit KisTalk");
+//		}else{
+//			statusLbl.setText("Goodbye!");
+//			adminFrame.dispose();
+//		}
 		
-		saveSetBtn.setEnabled(false);
-		saveSetBtn.setVisible(false);
+	}
+	
+	//	Disable buttons
+	public void disableButtons(){
+		saveSetBtn.setEnabled(false); //BUGG! xmlPubPathTxt enablas, även om den inte ska vara enbled
 		resetBtn.setEnabled(false);
-		resetBtn.setVisible(false);
+		startBtn.setEnabled(false);
+		exitBtn.setEnabled(false);
+		yFoodRbtn.setEnabled(false);
+		nFoodRbtn.setEnabled(false);
+		yPubRbtn.setEnabled(false);
+		nPubRbtn.setEnabled(false);
+		screenDDLst.setEnabled(false);
+		pubSlidesDDLst.setEnabled(false);
+		nrOfImgsTxt.setEnabled(false);
+		timeTxt.setEnabled(false);
+		nrOfCommentsTxt.setEnabled(false);
+		xmlPubPathTxt.setEnabled(false);
+		
 	}
 	
 	//	Enable buttons
-	public void enableButtons(){ // Inte färdig, men användbar (bla pop-up)
+	public void enableButtons(){
 		
 		saveSetBtn.setEnabled(true);
-		saveSetBtn.setVisible(true);
 		resetBtn.setEnabled(true);
-		resetBtn.setVisible(true);
+		startBtn.setEnabled(true);
+		exitBtn.setEnabled(true);
+		yFoodRbtn.setEnabled(true);
+		nFoodRbtn.setEnabled(true);
+		yPubRbtn.setEnabled(true);
+		nPubRbtn.setEnabled(true);
+		screenDDLst.setEnabled(true);
+		pubSlidesDDLst.setEnabled(true);
+		nrOfImgsTxt.setEnabled(true);
+		timeTxt.setEnabled(true);
+		nrOfCommentsTxt.setEnabled(true);
+		xmlPubPathTxt.setEnabled(true);
+		
 	}
 	
 	//	Creates a pop-up
-	public void popup(String message){ // Inte färdig, men användbar (Specificering av mat m.m.)
+	public void popUp(String message){ //Användas för LogIn kanske?
+		disableButtons();
+		
 		popFrame = new JFrame();
-		JPanel popPanel = new JPanel();
-		JLabel popLabel = new JLabel();
-		popText = new TextField();
-		popButton = new JButton();
+		JPanel popPanel = new JPanel(){ // Insert annan bild! Knapp ist för Kryss
+			public void paint(Graphics g){
+				g.drawImage(bgImage, 0,0, this);
+				setOpaque(false);
+	    		super.paint(g);
+	    		setOpaque(true);
+	    		repaint();
+	    		
+			}
+		};
+		popLbl = new JLabel();
+		popTxt = new TextField();
+		popSbmBtn = new JButton();
+		popClsBtn = new JButton();
+		GroupLayout popLayout = new GroupLayout(popPanel);
 		
-		popFrame.setLocation(400, 100);
+		popFrame.setLocation(400, 270);
+		popFrame.setSize(400, 100);
 		popFrame.setTitle("KisTalk Popup");
-		popPanel.setBackground(Color.BLACK);
-		popLabel.setText(message);
-		popLabel.setForeground(Color.WHITE);
-		popText.setSize(10, 5);
-		popButton.setText("Submit");
-		popButton.addActionListener(listener);
-		popButton.setForeground(Color.WHITE);
-		popButton.setBackground(Color.BLACK);
+		popFrame.setResizable(false);
+		popPanel.setLayout(popLayout);
+		popLbl.setText(message);
+		popLbl.setForeground(Color.WHITE);
+		popSbmBtn.setText("Submit");
+		popSbmBtn.addActionListener(listener);
+		popClsBtn.setText("Close");
+		popClsBtn.addActionListener(listener);
 		
-		popPanel.add(popLabel);
-		popPanel.add(popText);
-		popPanel.add(popButton);
+		popLayout.setHorizontalGroup(
+				popLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+						
+						.addGroup(popLayout.createSequentialGroup()
+								.addGap(10)
+								.addComponent(popLbl)
+								.addGap(5)
+								.addComponent(popTxt, 200, 200, 200)
+						)
+						.addGroup(popLayout.createSequentialGroup()
+								.addGap(120)
+								.addComponent(popSbmBtn, 90, 90, 90)
+								.addGap(5)
+								.addComponent(popClsBtn, 90, 90, 90)
+						)
+		);
+		
+		popLayout.setVerticalGroup(
+				popLayout.createSequentialGroup()
+				.addGap(10)
+				.addGroup(popLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+						.addComponent(popLbl)
+						.addComponent(popTxt, 20, 20, 20)
+				)
+				.addGap(10)
+				.addGroup(popLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+						.addComponent(popSbmBtn, 25, 25, 25)
+						.addComponent(popClsBtn, 25, 25, 25)
+				)
+				
+		);
+		
 		popFrame.add(popPanel);
 		
 		popFrame.setVisible(true);
 		
 	}
 	
+	public void logInFrame(){
+//		disableButtons();
+
+		// Background pic
+		ImageIcon icon = new ImageIcon("bgIcon.png");
+		bgImage = icon.getImage();
+		
+		logFrame = new JFrame();
+		JPanel logPanel = new JPanel(){
+			public void paint(Graphics g){
+				g.drawImage(bgImage, 0,0, this);
+				setOpaque(false);
+	    		super.paint(g);
+	    		setOpaque(true);
+	    		repaint();
+	    		
+			}
+		};
+		JLabel logInLbl = new JLabel();
+		JLabel logUserLbl = new JLabel();
+		JLabel logMailLbl = new JLabel();
+		JLabel logPassLbl = new JLabel();
+		JLabel logInstrLbl = new JLabel();
+		logUserTxt = new TextField();
+		logPassTxt = new TextField();
+		logSbmBtn = new JButton();
+		logClsBtn = new JButton();
+		GroupLayout logLayout = new GroupLayout(logPanel);
+		
+		logFrame.setLocation(400, 230);
+		logFrame.setSize(300, 190);
+		logFrame.setTitle("KisTalk Login");
+		logFrame.setResizable(false);
+		logFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		logPanel.setLayout(logLayout);
+		
+		logInLbl.setText("LogIn");
+		logInLbl.setForeground(Color.WHITE);
+		logInLbl.setFont(new Font("Imperial", Font.BOLD, 22));
+		logUserLbl.setText("username: ");
+		logUserLbl.setForeground(Color.WHITE);
+		logMailLbl.setText("@kth.se");
+		logMailLbl.setForeground(Color.WHITE);
+		logPassLbl.setText("token: ");
+		logPassLbl.setForeground(Color.WHITE);
+		logInstrLbl.setText("To get your token, log in to KisTalk.com");
+		logInstrLbl.setForeground(Color.WHITE);
+		logInstrLbl.setFont(new Font("Imperial", Font.ITALIC, 8));
+		
+		logSbmBtn.setText("Submit");
+		logSbmBtn.addActionListener(listener);
+		logClsBtn.setText("Close");
+		logClsBtn.addActionListener(listener);
+		
+		logLayout.setHorizontalGroup(
+				logLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+					.addGroup(logLayout.createSequentialGroup()
+					.addGap(110)
+					.addComponent(logInLbl)
+					)
+					.addGap(10)
+					.addGroup(logLayout.createSequentialGroup()
+							.addGap(15)
+							.addComponent(logUserLbl)
+							.addGap(5)
+							.addComponent(logUserTxt, 100, 100, 100)
+							.addGap(3)
+							.addComponent(logMailLbl)
+					)
+					.addGroup(logLayout.createSequentialGroup()
+							.addGap(15)
+							.addComponent(logPassLbl)
+							.addGap(31)
+							.addComponent(logPassTxt, 100, 100, 100)
+					)
+					.addGroup(logLayout.createSequentialGroup()
+							.addGap(50)
+							.addComponent(logClsBtn, 80, 80, 80)
+							.addGap(10)
+							.addComponent(logSbmBtn, 80, 80, 80)
+					).addGroup(logLayout.createSequentialGroup()
+							.addGap(5)
+							.addComponent(logInstrLbl)
+					)
+		);
+		
+		logLayout.setVerticalGroup(
+				logLayout.createSequentialGroup()
+				.addComponent(logInLbl)
+				.addGap(10)
+				.addGroup(logLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+						.addComponent(logUserLbl)
+						.addComponent(logUserTxt, 20, 20, 20)
+						.addComponent(logMailLbl)
+				)
+				.addGap(10)
+				.addGroup(logLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+						.addComponent(logPassLbl)
+						.addComponent(logPassTxt, 20, 20, 20)
+				)
+				.addGap(10)
+				.addGroup(logLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+						.addComponent(logClsBtn, 25, 25, 25)
+						.addComponent(logSbmBtn, 25, 25, 25)
+				)
+				.addGap(20)
+				.addComponent(logInstrLbl)
+				
+		);
+		
+		logFrame.add(logPanel);
+		
+		logFrame.setVisible(true);
+	}
+	
 	//	Dinner is served, send HTTP-post to server
-	public void yFood() {//Dålig kod, Per fixar
-		URL url;
-		try {
-			url = new URL("http://hostname:80/cgi");
-			URLConnection conn = url.openConnection();
-		    conn.setDoOutput(true);
-		    OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream());
-		    wr.write("yFood");
-		    wr.flush();
-		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	public void yFood(String food) {//Dålig kod, Per fixar
+		//	Send info (like "food" [String])
+//		URL url;
+//		try {
+//			url = new URL("http://hostname:80/cgi");
+//			URLConnection conn = url.openConnection();
+//		    conn.setDoOutput(true);
+//		    OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream());
+//		    wr.write("yFood");
+//		    wr.flush();
+//		} catch (MalformedURLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 	    
 	}
 	
 	//	Dinner isn't served, send HTTP-post to server
 	public void nFood(){//Dålig kod, Per fixar
-		URL url;
-		try {
-			url = new URL("http://hostname:80/cgi");
-			URLConnection conn = url.openConnection();
-		    conn.setDoOutput(true);
-		    OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream());
-		    wr.write("nFood");
-		    wr.flush();
-		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		URL url;
+//		try {
+//			url = new URL("http://hostname:80/cgi");
+//			URLConnection conn = url.openConnection();
+//		    conn.setDoOutput(true);
+//		    OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream());
+//		    wr.write("nFood");
+//		    wr.flush();
+//		} catch (MalformedURLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 	}
 	
 	//	Pub is open, send HTTP-post to server
 	public void yPub(){ //Dålig kod, Per fixar
-		URL url;
-		try {
-			url = new URL("http://hostname:80/cgi");
-			URLConnection conn = url.openConnection();
-		    conn.setDoOutput(true);
-		    OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream());
-		    wr.write("yPub");
-		    wr.flush();
-		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		URL url;
+//		try {
+//			url = new URL("http://hostname:80/cgi");
+//			URLConnection conn = url.openConnection();
+//		    conn.setDoOutput(true);
+//		    OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream());
+//		    wr.write("yPub");
+//		    wr.flush();
+//		} catch (MalformedURLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 	}
 	
 	//	Pub is closed, send HTTP-post to server
 	public void nPub(){//Dålig kod, Per fixar
-		URL url;
-		try {
-			url = new URL("http://hostname:80/cgi");
-			URLConnection conn = url.openConnection();
-		    conn.setDoOutput(true);
-		    OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream());
-		    wr.write("nPub");
-		    wr.flush();
-		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		URL url;
+//		try {
+//			url = new URL("http://hostname:80/cgi");
+//			URLConnection conn = url.openConnection();
+//		    conn.setDoOutput(true);
+//		    OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream());
+//		    wr.write("nPub");
+//		    wr.flush();
+//		} catch (MalformedURLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 	}
 	
 	//	Starts the Slideshow
@@ -659,7 +881,15 @@ public class AdminFrame {
 		readConfig();
 		
 		// Starta bildspelet
-		//new TwoDSlideShow();
+		try {
+			new TwoDSlideShow();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		exitBtn.setText("Quit SlideShow");
+		startBtn.setEnabled(false);
 		
 	}
 	
@@ -678,10 +908,10 @@ public class AdminFrame {
 				resetConfig();
 				statusLbl.setText("Status: Config is back to normal");
 			}else if (e.getSource() == startBtn){ //Start slideshow
-				System.out.println("Startar bildspel..."); //startSlideshow();
+				startSlideshow();
 				statusLbl.setText("Status: Starting Slideshow...");
 			}else if(e.getSource() == yFoodRbtn){ //Dinner served
-				yFood();
+				popUp("What is teh food?");
 				statusLbl.setText("Dinner is served!");
 			}else if(e.getSource() == nFoodRbtn){ //No dinner
 				nFood();
@@ -692,12 +922,32 @@ public class AdminFrame {
 			}else if(e.getSource() == nPubRbtn){ //Pub closed
 				nPub();
 				statusLbl.setText("The pub is closed");
-			}else if(e.getSource() == popButton){ // För att testa pop-upen
-				value = popText.getText();
+			}else if(e.getSource() == exitBtn){ //Exit
+				exit();
+			}else if(e.getSource() == savePathBtn){
+				popUp("Name your Slideshow: ");
+				confValues[9] = confValues[9] + "¤" + xmlPubPathTxt.getText();
+				pubSlidesDDLst.addItem(xmlPubPathTxt.getText());
+				saveSettings();
+			}else if(e.getSource() == popSbmBtn){ //Popup
+				if (popLbl.getText() == "What is teh food?"){
+					String food = popTxt.getText();
+					yFood(food);
+				}else{
+//					pubPathSave();
+				}
 				popFrame.dispose();
-			}else if(e.getSource() == lolButton){ // För att testa pop-upen
-				popup("hejhejhallå!");
-				statusLbl.setText("popup! Kom igen!");
+				enableButtons();
+			}else if(e.getSource() == popClsBtn){
+				popFrame.dispose();
+				enableButtons();
+				nFoodRbtn.setSelected(true);
+			}else if(e.getSource() == logSbmBtn){
+				logFrame.dispose();
+				readConfig();
+				setupFrame();
+			}else if(e.getSource() == logClsBtn){
+				logFrame.dispose();
 			}else if(e.getSource() == null){
 				
 			}
