@@ -22,13 +22,7 @@ public class ImportPubSlides {
 		fileNr = 0;
 		countFiles();
 	}
-	
-	public ImportPubSlides(){
-		path = null;
-		nrFiles = 0;
-		fileNr = 0;
-	}
-	
+		
 	/**
 	 * Method for setting the path to the directory containing the file(s).
 	 * @param tmpPath String, directory path.
@@ -77,7 +71,7 @@ public class ImportPubSlides {
 			fileNr++;
 		return (BufferedImage) img;
 	}
-	
+	/*
 	public void delIni(){
 		File path = new File("C:\\images");
 		deleteDirectory(path);
@@ -97,7 +91,7 @@ public class ImportPubSlides {
 		      }
 		    }
 		    return( path.delete() );
-		  }
+		  }*/
 	}
 	
 	

@@ -28,6 +28,7 @@ public class PptToPng {
 	 */
 	public PptToPng(String tmp) {
 		filepath = tmp;
+		extractWoScale();
 	}
 
 	/**
