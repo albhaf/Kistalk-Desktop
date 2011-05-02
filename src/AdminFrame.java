@@ -21,7 +21,7 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 
 public class AdminFrame {
-	final int nrOfConfigValues = 9; // Doesn't include regular textlines. If change, then change configHandler too
+	final int nrOfConfigValues = 10; // Doesn't include regular textlines. If change, then change configHandler too
 	int nrOfPubSlides;
 	int slideNr = 0;
 	String food;
@@ -438,7 +438,7 @@ public class AdminFrame {
 
 	//	Saves current settings to Config (except Default Turtle, he only lives in config when config is defaultahrized)
 	public void saveSettings() {
-		String[] lines = new String[45];
+		String[] lines = new String[47];
 		Date today = new Date();
 		
 		handler = new ConfigHandler();
@@ -492,7 +492,7 @@ public class AdminFrame {
 		lines[40] = "XMLURL %http://www.kistalk.com/desktop_images.xml";
 		lines[42] = "Number_of_comments %2";
 		lines[44] = "Path_to_Pubslides %" + xmlPubPathTxt.getText();
-//		lines[46] = "Saved_Pubslides %C:\\TMEIT七:\\Qmisk七:\\ITK";
+		lines[46] = "Saved_Pubslides %C:\\TMEIT七:\\Qmisk七:\\ITK";
 		
 		// Write to file (config)
 		handler.setConfig(lines);
