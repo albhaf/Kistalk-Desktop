@@ -42,13 +42,6 @@ public class NiftyHTTP {
 		}
 	}
 	
-	public boolean postAnnouncementUpdatea(String URL, String[] announcements){
-		//bygg params
-		
-		this.simplePost(URL, params);
-		
-	}
-	
 	private boolean validateToken() {
 		
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
@@ -92,8 +85,8 @@ public class NiftyHTTP {
 					System.err.print("Failed to encode url for GET request: ");
 					System.err.println(e.getStackTrace());
 				}
-			}
-		}
+		
+		
 		
 		System.out.println(URL);
 		
