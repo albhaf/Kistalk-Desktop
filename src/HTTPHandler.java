@@ -38,7 +38,7 @@ import org.apache.http.protocol.HttpContext;
 public class HTTPHandler {
 	
 	public static void main(String args[]) throws ClientProtocolException, IOException {
-		kistalkLogin("http://kistalk.com/login/create", "fuckyou", "");
+		
 	}
 	
 	public HTTPHandler() {

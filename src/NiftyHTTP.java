@@ -41,7 +41,7 @@ import org.*;
 public class NiftyHTTP {
 	
 	final static String AUTH_URL = "http://kistalk.com/api/validate_token";
-	final static String FEED_URL = "http://kistalk.com/api/feed/android.xml";
+	final static String FEED_URL = "http://kistalk.com/api/feed/desktop.xml";
 	
 	private String username;
 	private String authToken;
@@ -53,21 +53,13 @@ public class NiftyHTTP {
 		
 		try {
 			this.validateToken();
-			System.out.println("woot");
 		} catch (RuntimeException e) {
 			System.err.print("Failed to authenticate token: ");
 			System.err.println(e.getStackTrace());
 		}
 	}
 	
-	public static void main(String[] args) {
-		
-		NiftyHTTP n = new NiftyHTTP("panderse", "emgkxra2it");
-		
-		System.out.println(n.getXMLFeed());
-	}
-	
-	public boolean validateToken() {
+	private boolean validateToken() {
 		
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
 		
