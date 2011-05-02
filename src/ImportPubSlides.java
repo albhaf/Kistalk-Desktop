@@ -18,9 +18,11 @@ public class ImportPubSlides {
 	 * @param tmpPath String, filepath to the pubslides in image format.
 	 */
 	public ImportPubSlides(String tmpPath){
-		path = tmpPath;
+		path = "C:\\images";
 		fileNr = 0;
 		countFiles();
+		pptToPng = new PptToPng(tmpPath);
+		pptToPng.extractWoScale();
 	}
 		
 	/**
@@ -28,7 +30,7 @@ public class ImportPubSlides {
 	 * @param tmpPath String, directory path.
 	 */
 	public void setPath(String tmpPath){
-		path = tmpPath;
+		//path = tmpPath;
 		files = null;
 		nrFiles=0;
 	}
