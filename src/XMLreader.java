@@ -82,8 +82,6 @@ public class XMLreader extends DefaultHandler {
 			tempComment.setUser(tempVal);
 		} else if (qName.equalsIgnoreCase("comment-content")) {
 			tempComment.setContent(tempVal);
-		} else if (qName.equalsIgnoreCase("comment-created_at")) {
-			tempComment.setCreated(tempVal);
 		} else if (qName.equalsIgnoreCase("URL-big")) {
 			URL urli = null;
 			try {
