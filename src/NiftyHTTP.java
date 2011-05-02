@@ -46,6 +46,9 @@ public class NiftyHTTP {
 	private String username;
 	private String authToken;
 	
+	public static void main (String[] args) {
+	}
+	
 	public NiftyHTTP (String username, String authToken) throws RuntimeException {
 		
 		this.username = username;

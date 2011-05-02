@@ -1,12 +1,6 @@
-import java.awt.AlphaComposite;
-import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.Rectangle;
-import java.awt.RenderingHints;
-import java.awt.TexturePaint;
 import java.awt.image.BufferedImage;
 import java.util.List;
 
@@ -29,51 +23,48 @@ public class ShowImage extends JPanel {
 	protected boolean outgoing = false;
 	private BufferedImage slideImage;
 	private float transperacy = 0;
-	private int correction;
+
 	private ShowImageSet showImageSet;
 	private ShowImageMovement showImageMovement;
 	private ShowImageDrawing showImageDrawing;
+	
 
 	// Variables which are set in constructor
 	private Rectangle monitorSize;
-	private Dimension textStartPosition = new Dimension();
-	private BufferedImage image;
+
 	private Dimension timeStill = new Dimension();
 	private float imageStopPosition;
-	private Dimension imageSize = new Dimension();
-
-	// Konstanter
-	private final int ImageUserFontSize = 50;
-
-
+	
 	public ShowImage(Rectangle tmpmonitor, int tmpTimeStill) {
 		monitorSize = tmpmonitor;
 		imgRect = new ImgRect();
-		image = new BufferedImage(100, 100, BufferedImage.TYPE_INT_RGB);
+
 		imageCommentTxtDsp = new TextToDisplay();
 		imageUserTxtDsp = new TextToDisplay();
 
 		timeStill.width = tmpTimeStill;
 		timeStill.height = timeStill.width;
-		showImageSet = new ShowImageSet();
+		showImageSet = new ShowImageSet(monitorSize);
 		showImageMovement = new ShowImageMovement();
 		showImageDrawing = new ShowImageDrawing();
 	}
 
-	public void resetPicture() {
+	public void setNewPicture(BufferedImage image, String user, String imageText, List<CommentXML> commentsList) {
 		transperacy = 0;
 		outgoing = false;
 		timeStill.height = timeStill.width;
 		comments = null;
-	}
-
-	public void scalePositionImageAndText() {
-		double ration = image.getWidth() / image.getHeight();
-		imageSize.height = (int) (image.getHeight() * monitorSize.height * 0.005);
-		imageSize.width = (int) (imageSize.height * ration);
-		correction = (imageUserTxtDsp.length() + 6) / 2;
-		textStartPosition.width = (monitorSize.width / 2)
-				- (correction * (ImageUserFontSize / 3));
+		slideImage = image;
+		
+	
+		// Kommentarer
+		comments = showImageSet.setComments(commentsList, comments);
+		// Bildtexten
+		showImageSet.setImageText(imageText, imageCommentTxtDsp);				
+		// Image user
+		showImageSet.setUserText(user, imageUserTxtDsp);
+		// Bilden
+		imageStopPosition = showImageSet.setImage(slideImage, imgRect, imageStopPosition);
 	}
 
 	public void MoveObjects() {
@@ -99,53 +90,6 @@ public class ShowImage extends JPanel {
 		showImageDrawing.drawBackground(g, monitorSize, transperacy);
 		showImageDrawing.drawComments(comments);
 		showImageDrawing.paintImage(imageCommentTxtDsp,imageUserTxtDsp, slideImage, imgRect);
-	}
-
-	protected void setImageText(String tmpImageText) {
-		imageCommentTxtDsp.setString(tmpImageText);
-		imageCommentTxtDsp.resetPos();
-		imageCommentTxtDsp.addX(100);
-		imageCommentTxtDsp.addY(monitorSize.height + ImageUserFontSize);
-	}
-
-	protected void setUserText(String tmpUserString) {
-		correction = (tmpUserString.length() + 6) / 2;
-		imageUserTxtDsp.setString(tmpUserString + " posted: ");
-		imageUserTxtDsp.resetPos();
-		scalePositionImageAndText();
-		imageUserTxtDsp.addX(textStartPosition.width);
-		imageUserTxtDsp.addY(0);
-	}
-
-	protected void setImage(BufferedImage tmpImage) {
-		slideImage = tmpImage;
-		imgRect.resetPos();
-
-		float factor = (float) (tmpImage.getWidth())
-				/ (float) (tmpImage.getHeight());
-		imgRect.height = imageSize.height;
-		imgRect.width = imgRect.height * factor;
-		imgRect.addY(100);
-		imgRect.addX(-200);
-		imageStopPosition = ((monitorSize.width - imgRect.width
-				- (monitorSize.width / 3) - 30));
-		imageStopPosition = imageStopPosition - (imageStopPosition % 5);
-	}
-
-	protected void setComments(List<CommentXML> imageComments) {
-		if (imageComments.size() > 0) {
-			comments = new TextToDisplay[imageComments.size()];
-			for (int i = 0; i < comments.length; i++) {
-				comments[i] = new TextToDisplay();
-
-				comments[i].setString(imageComments.get(i).getUser()
-						+ " wrote: " + imageComments.get(i).getContent());
-				comments[i].resetPos();
-				comments[i].addX(monitorSize.width - monitorSize.width / 3);
-				comments[i].addY(200 + (i * 100));
-			}
-
-		}
 	}
 
 	/**
