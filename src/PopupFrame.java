@@ -3,6 +3,8 @@ import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.TextField;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
@@ -16,19 +18,17 @@ public class PopupFrame{
 	public JButton sbmBtn;
 	public JButton clsBtn;
 	public JLabel label;
+	public JFrame popFrame;
+	public TextField popTxt;
 	
 	public PopupFrame(String message){
 		ButtonListener listener = new ButtonListener();
-		ButtonSettings buttons = new ButtonSettings();
-		
-		//	Disabel buttons
-		buttons.disable();
 		
 		//	Background Pic
 		ImageIcon icon = new ImageIcon("bgIcon.png");
 		final Image bgImage = icon.getImage();
 		
-		Frame popFrame = new JFrame();
+		popFrame = new JFrame();
 		JPanel popPanel = new JPanel(){ // Insert annan bild! Knapp ist för Kryss
 			public void paint(Graphics g){
 				g.drawImage(bgImage, 0,0, this);
@@ -40,7 +40,7 @@ public class PopupFrame{
 			}
 		};
 		label = new JLabel();
-		TextField popTxt = new TextField();
+		popTxt = new TextField();
 		sbmBtn = new JButton();
 		clsBtn = new JButton();
 		GroupLayout popLayout = new GroupLayout(popPanel);
@@ -94,5 +94,16 @@ public class PopupFrame{
 		
 		popFrame.setVisible(true);
 		
+	}
+	
+	private class ButtonListener extends DesktopApplication implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			if (e.getSource() == sbmBtn){
+//				announcePub(popTxt.getText(), foodChb.isSelected(), pubChb.isSelected());
+				
+			}else if(e.getSource() == clsBtn){
+				popFrame.dispose();
+			}
+		}
 	}
 }
