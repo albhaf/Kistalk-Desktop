@@ -32,39 +32,52 @@ import org.*;
 import java.util.Map.Entry;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpParams;
 
 public class NiftyHTTP {
 
 	final static String AUTH_URL = "http://kistalk.com/api/validate_token";
 	final static String FEED_URL = "http://kistalk.com/api/feed/desktop.xml";
-	final static String ANNOUNCEMENTS_URL = "http://kistalk.com/api/announcement/new";
+	final static String ANNOUNCEMENTS_URL = "http://kistalk.com/api/announcement/create";
 	final static String ENCODING = "UTF-8";
 
 	private String username;
 	private String authToken;
+	
+	public static void main(String[] args) {
+		NiftyHTTP nh = new NiftyHTTP("panderse", "z0vu7iegcn");
+		
+		System.out.println(nh.validateToken());
+		
+		nh.postAnnouncement("de ä ölkörv", "de ä pub", true, false);
+	}
 
 	public NiftyHTTP(String username, String authToken) throws RuntimeException {
 		this.username = username;
 		this.authToken = authToken;
 	}
 
-	public String postAnnouncement(HashMap<String, String> announcements) {
+	public String postAnnouncement(String food_description, String event, boolean pub_open, boolean food_ready) {
 
 		/*
 		 * Typically, these announcements can be posted: pub_open ( = 0 or 1),
-		 * food_ready ( = 0 or 1), food_description, event
+		 * food_ready ( = 0 or 1), food_description (string), event (string)
 		 */
-
+		
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
-
-		params.add(new BasicNameValuePair("utf-8", "✓"));
-		params.add(new BasicNameValuePair("username", this.username));
-		params.add(new BasicNameValuePair("token", this.authToken));
-
-		for (Entry<String, String> e : announcements.entrySet()) {
-			params.add(new BasicNameValuePair(e.getKey(), e.getValue()));
-		}
-
+		
+		int po, fr;
+		
+		po = pub_open ? 1 : 0;
+		fr = food_ready ? 1 : 0;
+		
+		
+		params.add(new BasicNameValuePair("food_description", food_description));
+		params.add(new BasicNameValuePair("event", event));
+		params.add(new BasicNameValuePair("pub_open", String.valueOf(po)));
+		params.add(new BasicNameValuePair("food_ready", String.valueOf(fr)));
+		
 		return this.simplePost(ANNOUNCEMENTS_URL, params);
 	}
 
@@ -121,8 +134,7 @@ public class NiftyHTTP {
 				while(it.hasNext()) {
 				
 					NameValuePair nvp = it.next();
-				
-				
+					
 					URL = URL + URLEncoder.encode(nvp.getName(), ENCODING) + "=" + URLEncoder.encode(nvp.getValue(), ENCODING);
 					
 					if (it.hasNext()){
@@ -134,7 +146,6 @@ public class NiftyHTTP {
 				e.printStackTrace();
 			}
 		}
-		
 		
 		HttpGet request = new HttpGet(URL);
 		
@@ -153,7 +164,7 @@ public class NiftyHTTP {
 
 		return response;
 	}
-		
+	
 	private String simplePost(String URL, List<NameValuePair> params) {
 
 		HttpClient client = new DefaultHttpClient();
@@ -162,8 +173,11 @@ public class NiftyHTTP {
 		request.setHeader("ContentType",
 				"application/x-www-form-urlencoded;charset=utf-8;");
 
+		params.add(new BasicNameValuePair("username", this.username));
+		params.add(new BasicNameValuePair("token", this.authToken));
+		
 		try {
-			UrlEncodedFormEntity formEntity = new UrlEncodedFormEntity(params);
+			UrlEncodedFormEntity formEntity = new UrlEncodedFormEntity(params, "UTF-8");
 			request.setEntity(formEntity);
 		} catch (UnsupportedEncodingException e) {
 			System.err
