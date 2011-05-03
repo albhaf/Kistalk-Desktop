@@ -4,6 +4,7 @@ import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -86,8 +87,8 @@ public class PptToPng {
 	 */
 	private void pngWriter(BufferedImage tmpImg, String tmpName)
 			throws IOException {
-		FileOutputStream out = new FileOutputStream((tmpName) + ".hansimage");
-		ImageIO.write(tmpImg, "png", out);
+		FileOutputStream out = new FileOutputStream("Images//" +(tmpName) + ".hansimage");
+		ImageIO.write( tmpImg, "png", out);
 		out.close();
 		
 	}
@@ -102,6 +103,10 @@ public class PptToPng {
 		Slide[] slide;
 		SlideShow ppt = null;
 
+		File dir = new File("Images");
+		//dir.deleteOnExit();
+		dir.mkdir();
+		
 		try {
 			ppt = fileOpener(tmpFilepath);
 		} catch (IOException e) {
@@ -126,7 +131,7 @@ public class PptToPng {
 
 			// save the output
 			try {
-				pngWriter(bImg, "slide-" + i);
+				pngWriter(bImg,"slide-" + i);
 				nrFiles=nrFiles+1;
 			} catch (IOException e) {
 				System.out.println("Kunde inte skriva slide" + i + "till ny fil");
