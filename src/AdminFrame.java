@@ -21,7 +21,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
-public class AdminFrame {
+public class AdminFrame implements Runnable {
 	String[] confValues = new String[11];
 	int nrOfPubSlids;
 	String food;
@@ -122,6 +122,7 @@ public class AdminFrame {
 		
 		// Create and Paint thePanel background
 		thePanel = new JPanel(){ //Observera att detta �r en create!
+
 			public void paint(Graphics g){
 				g.drawImage(bgImage, 0,0, this);
 				setOpaque(false);
@@ -428,6 +429,12 @@ public class AdminFrame {
 		//	Add panel
 		adminFrame.add(thePanel);
 		adminFrame.setVisible(true);
+	}
+
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

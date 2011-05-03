@@ -12,7 +12,7 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-public class XMLreader extends DefaultHandler {
+public class XMLreader extends DefaultHandler{
 
 	private List<ImageXML> images;
 	private List<CommentXML> comments;
