@@ -27,8 +27,8 @@ public class TwoDSlideShow extends Panel implements ActionListener {
  		imageSlide = true;
 		view = new TwoDSlideShowView();
 		info = new TwoDSlideShowInfo();
-//		pubSlides = new ImportPubSlides();
-		pubSlides = new ImportPubSlides("//home//zandra//Documents//testSlide.ppt");
+		pubSlides = new ImportPubSlides();
+//		pubSlides = new ImportPubSlides("//home//zandra//Documents//testSlide.ppt");
 		readConfig();
 		getScreenResolution();
 		firstPicture();
