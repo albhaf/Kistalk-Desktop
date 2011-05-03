@@ -10,6 +10,7 @@ import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.impl.client.BasicCookieStore;
@@ -34,15 +35,9 @@ public class NiftyHTTP {
 		this.username = username;
 		this.authToken = authToken;
 		
-		try {
-			this.validateToken();
-		} catch (RuntimeException e) {
-			System.err.print("Failed to authenticate token: ");
-			System.err.println(e.getStackTrace());
-		}
 	}
 	
-	private boolean validateToken() {
+	public boolean validateToken() {
 		
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
 		
