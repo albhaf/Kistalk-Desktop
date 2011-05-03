@@ -3,6 +3,7 @@ import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 import javax.swing.Timer;
 
@@ -15,14 +16,19 @@ public class TwoDSlideShow extends Panel implements ActionListener {
 	final int nrOfConfigLines = 10;
 
 	ShowImage slideShowHandler;
+	ImportPubSlides pubSlides;
 
 	Rectangle monitor = new Rectangle();
 	TwoDSlideShowView view;
 	TwoDSlideShowInfo info;
+	private boolean pubSlide;
 
-	public TwoDSlideShow() throws FileNotFoundException {
+ 	public TwoDSlideShow() throws IOException {
+ 		pubSlide = true;
 		view = new TwoDSlideShowView();
 		info = new TwoDSlideShowInfo();
+		pubSlides = new ImportPubSlides();
+//		pubSlides = new ImportPubSlides("/home/zandra/Documents/testSlide.ppt");
 		readConfig();
 		getScreenResolution();
 		firstPicture();
@@ -43,7 +49,7 @@ public class TwoDSlideShow extends Panel implements ActionListener {
 	}
 
 	private void readConfig() throws FileNotFoundException {
-		screenIndex = info.readConfig(screenIndex);
+		info.readConfig(screenIndex);
 		t = new Timer(10, this);
 	}
 
@@ -52,10 +58,15 @@ public class TwoDSlideShow extends Panel implements ActionListener {
 		info.setPictures();
 	}
 
-	private void updatePicture() {
+	private void updatePicture() throws IOException {
 		info.updatePicture();
-		slideShowHandler.setNewPicture(info.getImage(), info.getUser(), info.getImageText(), info.getImageComments());
-	
+		if(pubSlide && pubSlides.getNrFiles() > 0){
+			slideShowHandler.setNewPicture(pubSlides.getImage(), info.getUser(), info.getImageText(), info.getImageComments());
+			pubSlide = false;
+		} else {
+			slideShowHandler.setNewPicture(info.getImage(), info.getUser(), info.getImageText(), info.getImageComments());
+			pubSlide = true;
+		}
 	}
 
 	@Override
@@ -64,13 +75,18 @@ public class TwoDSlideShow extends Panel implements ActionListener {
 
 			slideShowHandler.MoveObjects();
 			if (slideShowHandler.getSlideImageX() > monitor.width) {
-				updatePicture();
+				try {
+					updatePicture();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		}
 
 	}
 
-	public static void main(String args[]) throws FileNotFoundException {
+	public static void main(String args[]) throws IOException {
 		new TwoDSlideShow();
 	}
 }
