@@ -4,34 +4,32 @@ import java.util.Observer;
 
 import javax.swing.JFrame;
 
-public class DesktopApplication implements Observer {
+public class DesktopApplication {
 	String event, food_description;
 	boolean pub_open = false;
 	NiftyHTTP nifty;
 	ConfigSettings config = new ConfigSettings();
-	AdminFrame adminframe = new AdminFrame();
 	SlidePath slidepath = new SlidePath();
 	
 	public DesktopApplication() {
 		LogInFrame loginframe = new LogInFrame();
+		loginframe.logFrame.setVisible(true);
 		//loginframe.addObserver(this); add observable?
 		
 	}
 
-	public void update(Observable o, Object p) {
-
-	}
-
 	public void login(String user, String token, JFrame logFrame) {
-		
+		String[] values = new String[11];
+		AdminFrame adminframe = new AdminFrame();
 		nifty = new NiftyHTTP(user, token);
+		
 		if (nifty.validateToken()) {
 			logFrame.dispose();
-			adminframe.setupFrame(config.getValues());
+			values = config.getValues();
+			adminframe.setupFrame(values, slidepath.ninja(values[9]), slidepath.ninja(values[10]));
 			
 		} else {
-			//tryAgain
-			
+			// Fel token/user, notifiera!
 		}
 	}
 	
@@ -78,15 +76,14 @@ public class DesktopApplication implements Observer {
 		//exit twoDSlideShow only...
 	}
 	
-	public String popup(String message){
-		String value = null; //tillfälligt
+	public String popup(String message){ //Pub, Food & SaveSlideshow
 		PopupFrame popupframe = new PopupFrame(message);
+		return popupframe.popTxt.getText(); //Returnera? eller köra genom submit()?
 		
-		return value;
 	}
 	
-	public void submit(){
-		
+	public String submit(String value){
+		return value;
 	}
 	
 
@@ -95,4 +92,5 @@ public class DesktopApplication implements Observer {
 		new DesktopApplication();
 
 	}
+	
 }

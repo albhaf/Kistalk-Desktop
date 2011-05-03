@@ -7,10 +7,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.util.List;
 
-import javax.swing.ButtonGroup;
 import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -72,7 +70,7 @@ public class AdminFrame {
 	}
 
 	//	Setting up the settings frame
-	protected void setupFrame(final String[] confValues){
+	protected void setupFrame(final String[] confValues, final List<String> slideNames, final List<String> slidePaths){
 		
 		//	Create all objects
 		adminFrame = new JFrame();
@@ -221,18 +219,17 @@ public class AdminFrame {
 		pubChb.setOpaque(false);
 		
 		//	DropDownList settings, with ItemListeners
-		pubSlidesDDLst.addItem("[Other Slideshow]"); //Ändra på så att den automagiskt hämtar in items från configfilen.
-		pubSlidesDDLst.addItem("TMEIT"); // Läs också in pathen så att den kan sättas i listenern, kanske i listor?
-		pubSlidesDDLst.addItem("Qmisk");
-		pubSlidesDDLst.addItem("ITK");
+		pubSlidesDDLst.addItem("[Other Slideshow]");
+		for (int i = 0; i < slideNames.size(); i++)
+			pubSlidesDDLst.addItem(slideNames.get(i));
 		
 		pubSlidesDDLst.setFont(new Font("Gulim", Font.PLAIN, 12));
 		pubSlidesDDLst.addItemListener(
 				new ItemListener(){
 					public void itemStateChanged(ItemEvent e){
 						if (e.getStateChange() == ItemEvent.SELECTED){
-							if (e.getItem().toString() != "[Other Slideshow]"){
-								xmlPubPathTxt.setText(""); //Hämta dess path!
+							if (e.getItem().toString() != "[Other Slideshow]"){ // Set pathen to the path that belongs to the selected Item
+								xmlPubPathTxt.setText(slidePaths.get(slideNames.indexOf(e.getItem().toString())));
 								xmlPubPathTxt.setEnabled(false);
 								xmlPubPathTxt.setFont(new Font("Algerian", Font.ITALIC, 12));
 								statusLbl.setText("Status: " + e.getItem().toString() + "s Slideshow is choosed");
@@ -427,13 +424,13 @@ public class AdminFrame {
 				
 			}else if (e.getSource() == foodChb){ // Announce food
 				disable();
-				announceFood(popup("What food? "), foodChb.isSelected(), foodChb.isSelected());
+				announceFood(popup("What food? "), foodChb.isSelected(), pubChb.isSelected());
 				enable();
 				statusLbl.setText("Status: Dinner is served!");
 				
 			}else if (e.getSource() == pubChb){ // Announce pub
 				disable();
-				announcePub(popup("What event? "), foodChb.isSelected(), foodChb.isSelected());
+				popup("What event? ");
 				enable();
 				statusLbl.setText("Status: Pub is open!");
 				
