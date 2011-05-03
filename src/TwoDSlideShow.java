@@ -2,6 +2,7 @@ import java.awt.Panel;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
@@ -27,8 +28,8 @@ public class TwoDSlideShow extends Panel implements ActionListener {
  		pubSlide = true;
 		view = new TwoDSlideShowView();
 		info = new TwoDSlideShowInfo();
-		pubSlides = new ImportPubSlides();
-//		pubSlides = new ImportPubSlides("/home/zandra/Documents/testSlide.ppt");
+//		pubSlides = new ImportPubSlides();
+		pubSlides = new ImportPubSlides("//home//zandra//Documents//testSlide.ppt");
 		readConfig();
 		getScreenResolution();
 		firstPicture();
@@ -49,7 +50,7 @@ public class TwoDSlideShow extends Panel implements ActionListener {
 	}
 
 	private void readConfig() throws FileNotFoundException {
-		info.readConfig(screenIndex);
+		screenIndex = info.readConfig();
 		t = new Timer(10, this);
 	}
 
@@ -60,6 +61,7 @@ public class TwoDSlideShow extends Panel implements ActionListener {
 
 	private void updatePicture() throws IOException {
 		info.updatePicture();
+		BufferedImage img = pubSlides.getImage();
 		if(pubSlide && pubSlides.getNrOfSlides() > 0){
 			slideShowHandler.setNewSlide(pubSlides.getImage());
 			pubSlide = false;

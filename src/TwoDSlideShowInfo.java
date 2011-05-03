@@ -45,7 +45,7 @@ public class TwoDSlideShowInfo {
 		return gc[0].getBounds();
 	}
 
-	protected void readConfig(int screenIndex) throws FileNotFoundException {
+	protected byte readConfig() throws FileNotFoundException {
 
 		ConfigHandler reader = new ConfigHandler();
 		String[] values = new String[9];
@@ -64,9 +64,9 @@ public class TwoDSlideShowInfo {
 		serverImgs = new Image[nrOfPics];
 		timeStill = Integer.valueOf(values[2]);
 		fileFormats = values[4].split(" ");
-		screenIndex = Byte.valueOf(values[5]);
 		xmlPath = values[6];
 		nrOfComments = Integer.valueOf(values[7]);
+		return Byte.valueOf(values[5]);
 	}
 
 	protected void setLinks() {
