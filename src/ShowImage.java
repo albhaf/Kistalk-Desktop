@@ -13,6 +13,7 @@ public class ShowImage extends JPanel {
 	private static final long serialVersionUID = 887346353483336091L;
 
 	// Variables
+	private boolean pubSlide;
 	/**
 	 * The Rectangle containing the image
 	 */
@@ -49,6 +50,17 @@ public class ShowImage extends JPanel {
 		showImageDrawing = new ShowImageDrawing();
 	}
 
+	public void setNewSlide(BufferedImage image){
+		slideImage = image;
+		pubSlide = true;
+		transperacy = 0;
+		outgoing = false;
+		timeStill.height = timeStill.width;
+		comments = null;
+		
+		imageStopPosition = showImageSet.setImage(slideImage, imgRect, imageStopPosition);
+	}
+	
 	public void setNewPicture(BufferedImage image, String user, String imageText, List<CommentXML> commentsList) {
 		transperacy = 0;
 		outgoing = false;
@@ -88,8 +100,12 @@ public class ShowImage extends JPanel {
 	 */
 	public void paint(Graphics g) {
 		showImageDrawing.drawBackground(g, monitorSize, transperacy);
-		showImageDrawing.drawComments(comments);
-		showImageDrawing.paintImage(imageCommentTxtDsp,imageUserTxtDsp, slideImage, imgRect);
+		if(pubSlide){
+			
+		}else{
+			showImageDrawing.drawComments(comments);
+			showImageDrawing.paintImage(imageCommentTxtDsp,imageUserTxtDsp, slideImage, imgRect);
+		}
 	}
 
 	/**

@@ -27,8 +27,8 @@ public class TwoDSlideShow extends Panel implements ActionListener {
  		pubSlide = true;
 		view = new TwoDSlideShowView();
 		info = new TwoDSlideShowInfo();
-//		pubSlides = new ImportPubSlides();
-		pubSlides = new ImportPubSlides("/home/zandra/Documents/testSlide.ppt");
+		pubSlides = new ImportPubSlides();
+//		pubSlides = new ImportPubSlides("/home/zandra/Documents/testSlide.ppt");
 		readConfig();
 		getScreenResolution();
 		firstPicture();
@@ -60,8 +60,8 @@ public class TwoDSlideShow extends Panel implements ActionListener {
 
 	private void updatePicture() throws IOException {
 		info.updatePicture();
-		if(pubSlide && pubSlides.getNrFiles() > 0){
-			slideShowHandler.setNewPicture(pubSlides.getImage(), info.getUser(), info.getImageText(), info.getImageComments());
+		if(pubSlide && pubSlides.getNrOfSlides() > 0){
+			slideShowHandler.setNewSlide(pubSlides.getImage());
 			pubSlide = false;
 		} else {
 			slideShowHandler.setNewPicture(info.getImage(), info.getUser(), info.getImageText(), info.getImageComments());

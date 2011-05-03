@@ -8,14 +8,21 @@ import javax.imageio.ImageIO;
 
 public class ImportPubSlides {
 	PptToPng pptToPng;
+	private int currentSlide, nrOfSlides;
 
 	/**
 	 * constructor which takes the directory path to the file(s)  as input argument.
 	 * @param tmpPath String, filepath to the pubslides in image format.
 	 */
 	public ImportPubSlides(String tmpPath){
+		currentSlide = 0;
 		pptToPng = new PptToPng(tmpPath);
 		pptToPng.extract();
+		countFiles();
+	}
+	
+	public ImportPubSlides(){
+		nrOfSlides = 0;
 	}
 
 	
@@ -28,9 +35,12 @@ public class ImportPubSlides {
 	 * @return int, number of files found
 	 */
 	
-	public int countFiles(){
-		return pptToPng.getNrFiles();
-
+	public void countFiles(){
+		nrOfSlides = pptToPng.getNrFiles();
+	}
+	
+	public int getNrOfSlides(){
+		return nrOfSlides;
 	}
 	
 	/**
@@ -39,8 +49,12 @@ public class ImportPubSlides {
 	 * @return Image, returns the chosen file as Image.
 	 * @throws IOException Throws IOException if the file couldn't be found.
 	 */
-	public BufferedImage getImage(int i) throws IOException{
-		Image img = ImageIO.read(new File("slide-" + i + ".hansimage"));
+	public BufferedImage getImage() throws IOException{
+		if(currentSlide < nrOfSlides)
+			currentSlide++;
+		else
+			currentSlide = 0;
+		Image img = ImageIO.read(new File("slide-" + currentSlide + ".hansimage"));
 		return (BufferedImage) img;
 	}
 	

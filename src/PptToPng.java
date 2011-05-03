@@ -28,6 +28,7 @@ public class PptToPng {
 	 */
 	public PptToPng(String tmp) {
 		filepath = tmp;
+		nrFiles = 0;
 		extract();
 	}
 
@@ -102,7 +103,7 @@ public class PptToPng {
 		try {
 			ppt = fileOpener(tmpFilepath);
 		} catch (IOException e) {
-			System.out.println("Kunde inte hitta eller oppna filen");
+			System.err.println("Kunde inte hitta eller oppna filen");
 		}
 
 		Dimension dimension = ppt.getPageSize();
@@ -124,7 +125,7 @@ public class PptToPng {
 			// save the output
 			try {
 				pngWriter(bImg, "slide-" + i);
-				nrFiles=nrFiles+1;
+				nrFiles++;
 			} catch (IOException e) {
 				System.out.println("Kunde inte skriva slide" + i + "till ny fil");
 			}
