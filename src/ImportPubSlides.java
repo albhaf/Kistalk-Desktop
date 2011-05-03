@@ -34,7 +34,6 @@ public class ImportPubSlides {
 	/**
 	 * Method for counting the files in the directory
 	 */
-
 	/**
 	 * Returns the number of files found in the set directory.
 	 * 
@@ -82,6 +81,7 @@ public class ImportPubSlides {
 	//b�r v�l l�ggas i ngn annan stans antar jag och k�ras d� programmet avslutas... men koden funkar iaf.
 	   public boolean deleteDirectory() {
 		   File path = new File("Images");
+		   nrOfSlides = 0;
 		   return delDir(path);
 		  }
 	

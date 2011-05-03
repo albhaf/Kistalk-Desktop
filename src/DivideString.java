@@ -12,7 +12,7 @@ public class DivideString { //Ej testad, är till för De nya configraderna
 		List<String> part = null;
 		int i = 0;
 		
-		scanner.useDelimiter("¤");
+		scanner.useDelimiter("|");
 		
 		while(scanner.hasNext()){
 			part.add(scanner.next());
