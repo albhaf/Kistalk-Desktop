@@ -78,7 +78,7 @@ public class XMLreader extends DefaultHandler {
 			images.add(tempImg);
 		} else if (qName.equalsIgnoreCase("comment")) {
 			comments.add(tempComment);
-		} else if (qName.equalsIgnoreCase("comment-user")) {
+		} else if (qName.equalsIgnoreCase("comment-user-name")) {
 			tempComment.setUser(tempVal);
 		} else if (qName.equalsIgnoreCase("comment-content")) {
 			tempComment.setContent(tempVal);
@@ -94,7 +94,7 @@ public class XMLreader extends DefaultHandler {
 
 		} else if (qName.equalsIgnoreCase("image-created_at")) {
 			tempImg.setDate((tempVal));
-		} else if (qName.equalsIgnoreCase("Image-User")) {
+		} else if (qName.equalsIgnoreCase("image-user-name")) {
 			tempImg.setUser((tempVal));
 		} else if (qName.equalsIgnoreCase("text")) {
 			tempImg.setImageText(tempVal);

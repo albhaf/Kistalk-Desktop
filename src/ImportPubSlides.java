@@ -19,11 +19,27 @@ public class ImportPubSlides {
 	 *            String, filepath to the pubslides in image format.
 	 */
 	public ImportPubSlides(String tmpPath) {
+
 		pptToPng = new PptToPng(tmpPath);
 		countFiles();
 		currentSlide = -1;
 		pptToPng.extract();
+		countFiles();
 	}
+
+	public ImportPubSlides() {
+		nrOfSlides = 0;
+	}
+
+	/**
+	 * Method for counting the files in the directory
+	 */
+
+	/**
+	 * Returns the number of files found in the set directory.
+	 * 
+	 * @return int, number of files found
+	 */
 
 	public void countFiles() {
 		nrOfSlides = pptToPng.getNrFiles();
@@ -43,17 +59,27 @@ public class ImportPubSlides {
 	 * @throws IOException
 	 *             Throws IOException if the file couldn't be found.
 	 */
+
+	/**
+	 * Methoed which loads one picture in the selected directory and returns it
+	 * as an Image.
+	 * 
+	 * @param fileNr
+	 *            int, which file in the array of found files.
+	 * @return Image, returns the chosen file as Image.
+	 * @throws IOException
+	 *             Throws IOException if the file couldn't be found.
+	 */
 	public BufferedImage getImage() throws IOException {
-		if(currentSlide < nrOfSlides)
+		if(currentSlide < nrOfSlides-1)
 			currentSlide++;
 		else
 			currentSlide = 0;
-		
 		Image img = ImageIO.read(new File("Images//slide-" + currentSlide + ".hansimage"));
 		return (BufferedImage) img;
 	}
 	
-	//bör väl läggas i ngn annan stans antar jag och köras då programmet avslutas... men koden funkar iaf.
+	//bï¿½r vï¿½l lï¿½ggas i ngn annan stans antar jag och kï¿½ras dï¿½ programmet avslutas... men koden funkar iaf.
 	   public boolean deleteDirectory() {
 		   File path = new File("Images");
 		   return delDir(path);
