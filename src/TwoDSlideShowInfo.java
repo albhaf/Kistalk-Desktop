@@ -21,7 +21,7 @@ public class TwoDSlideShowInfo {
 	Image[] serverImgs;
 	URL[] urlArray;
 
-	int currentPicture = -1;
+	int currentPicture = 0;
 	int currentPubPicture = 0;
 	int nrOfComments = 0;
 	int nrOfPics;
