@@ -9,22 +9,18 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Date;
 
 import javax.swing.ButtonGroup;
 import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 
 public class AdminFrame {
-	String[] confValues = new String[11];
-	int nrOfPubSlids;
-	String food;
 	Image bgImage;
 	
 	ConfigSettings config = new ConfigSettings();
@@ -61,12 +57,8 @@ public class AdminFrame {
 	TextField legalFilesTxt;
 	TextField nrOfCommentsTxt;
 	
-	JRadioButton yFoodRbtn;
-	JRadioButton nFoodRbtn;
-	JRadioButton yPubRbtn;
-	JRadioButton nPubRbtn;
-	ButtonGroup foodRbgr;
-	ButtonGroup pubRbgr;
+	JCheckBox foodChb;
+	JCheckBox pubChb;
 	
 	JComboBox pubSlidesDDLst;
 	JComboBox screenDDLst;
@@ -80,7 +72,7 @@ public class AdminFrame {
 	}
 
 	//	Setting up the settings frame
-	protected void setupFrame(ButtonListener listener){
+	protected void setupFrame(final String[] confValues){
 		
 		//	Create all objects
 		adminFrame = new JFrame();
@@ -110,15 +102,13 @@ public class AdminFrame {
 		legalFilesTxt = new TextField();
 		nrOfCommentsTxt = new TextField();
 		
-		yFoodRbtn = new JRadioButton();
-		nFoodRbtn = new JRadioButton();
-		yPubRbtn = new JRadioButton();
-		nPubRbtn = new JRadioButton();
-		foodRbgr = new ButtonGroup();
-		pubRbgr = new ButtonGroup();
+		foodChb = new JCheckBox();
+		pubChb = new JCheckBox();
 		
 		pubSlidesDDLst = new JComboBox();
 		screenDDLst = new JComboBox();
+		
+		ButtonListener listener = new ButtonListener();
 		
 		// Create and Paint thePanel background
 		thePanel = new JPanel(){ //Observera att detta ï¿½r en create!
@@ -133,9 +123,6 @@ public class AdminFrame {
 		};
 		
 		groupLayout = new GroupLayout(thePanel);
-		
-		//	Get config values
-		confValues = config.getValues();
 		
 		//	Frame settings
 		adminFrame.setSize(500,600);
@@ -221,34 +208,16 @@ public class AdminFrame {
 		remPathBtn.setForeground(Color.BLACK);
 		remPathBtn.addActionListener(listener);
 		
-		//	Radiobuttons settings
-		yFoodRbtn.setText("True"); //Ska bytas ut mot Checkboxes
-		yFoodRbtn.setForeground(Color.WHITE);
-		yFoodRbtn.addActionListener(listener);
-		yFoodRbtn.setOpaque(false);
+		//	Checkboxes settings
+		foodChb.setText("There is food");
+		foodChb.setForeground(Color.WHITE);
+		foodChb.addActionListener(listener);
+		foodChb.setOpaque(false);
 		
-		nFoodRbtn.setSelected(true);
-		nFoodRbtn.setText("False");
-		nFoodRbtn.setForeground(Color.WHITE);
-		nFoodRbtn.addActionListener(listener);
-		nFoodRbtn.setOpaque(false);
-		
-		yPubRbtn.setText("True");
-		yPubRbtn.setForeground(Color.WHITE);
-		yPubRbtn.addActionListener(listener);
-		yPubRbtn.setOpaque(false);
-		
-		nPubRbtn.setSelected(true);
-		nPubRbtn.setText("False");
-		nPubRbtn.setForeground(Color.WHITE);
-		nPubRbtn.addActionListener(listener);
-		nPubRbtn.setOpaque(false);
-		
-		foodRbgr.add(yFoodRbtn);
-		foodRbgr.add(nFoodRbtn);
-		
-		pubRbgr.add(yPubRbtn);
-		pubRbgr.add(nPubRbtn);
+		pubChb.setText("Pub is open");
+		pubChb.setForeground(Color.WHITE);
+		pubChb.addActionListener(listener);
+		pubChb.setOpaque(false);
 		
 		//	DropDownList settings, with ItemListeners
 		pubSlidesDDLst.addItem("[Other Slideshow]");
@@ -330,13 +299,11 @@ public class AdminFrame {
 						
 						.addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
 						   	.addComponent(foodSttLbl)
-						   	.addComponent(yFoodRbtn)
-						   	.addComponent(nFoodRbtn)
+						   	.addComponent(foodChb)
 						)
 						.addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
 							 .addComponent(pubSttLbl)
-							 .addComponent(yPubRbtn)
-							 .addComponent(nPubRbtn)
+							 .addComponent(pubChb)
 						)
 			   	)
 			)
@@ -399,14 +366,12 @@ public class AdminFrame {
 				   				
 				   				.addGroup(groupLayout.createSequentialGroup()
 						   			.addComponent(foodSttLbl)
-						   			.addComponent(yFoodRbtn)
-						   			.addComponent(nFoodRbtn)
+						   			.addComponent(foodChb)
 						   		)
 								.addGap(20)
 						   		.addGroup(groupLayout.createSequentialGroup()
 						   			.addComponent(pubSttLbl)
-						   			.addComponent(yPubRbtn)
-						   			.addComponent(nPubRbtn)
+						   			.addComponent(pubChb)
 						   		)
 				   		)
 				  )
@@ -428,6 +393,86 @@ public class AdminFrame {
 		//	Add panel
 		adminFrame.add(thePanel);
 		adminFrame.setVisible(true);
+	}
+	
+	private class ButtonListener extends DesktopApplication implements ActionListener {
+		String[] values = new String[11];
+		
+		public void actionPerformed(ActionEvent e) {
+			if (e.getSource() == saveSetBtn){
+				getTxt();
+				setConf(values);
+				statusLbl.setText("Status: Settings saved to Config");
+				
+			}else if (e.getSource() == resetBtn){
+				values = resetConf();
+				setTxt();
+				statusLbl.setText("Status: Config is back to normal");
+				
+			}else if (e.getSource() == foodChb){
+				if (foodChb.isSelected()){
+					yFood();
+					statusLbl.setText("Dinner is served!");
+				}else{
+					nFood();
+					statusLbl.setText("Dinner is no more");
+				}
+				
+			}else if (e.getSource() == pubChb){
+				if (foodChb.isSelected()){
+					yPub();
+					statusLbl.setText("Pub is open!");
+				}else{
+					nPub();
+					statusLbl.setText("Pub is closed");
+				}
+				
+			}else if (e.getSource() == savePathBtn){
+				savePath(xmlPubPathTxt.getText());
+				statusLbl.setText("Slideshow saved");
+				
+			}else if (e.getSource() == remPathBtn){ //Fixa DDLst först!
+//				remPath(xmlPubPathDDLst.Item().getText());
+				//Ta bort från DDlst osså
+				statusLbl.setText("Slideshow removed");
+				
+			}else if (e.getSource() == startBtn){
+				getTxt();
+				setConf(values);
+				exitBtn.setText("Quit SlideShow");
+				startBtn.setEnabled(false);
+				statusLbl.setText("Status: Starting Slideshow...");
+				startShow();
+				
+			}else if (e.getSource() == exitBtn){
+				if (exitBtn.getText().equals("Quit SlideShow")){
+					statusLbl.setText("The slideshow is dead...");
+					exitBtn.setText("Quit KisTalk");
+					startBtn.setEnabled(true);
+					exitShow();
+				}else{
+					adminFrame.dispose();
+				}
+				
+			}
+		}
+		
+		public void getTxt(){
+			values[0] = nrOfImgsTxt.getText();
+			values[2] = timeTxt.getText();
+			values[7] = nrOfCommentsTxt.getText();
+			values[8] = xmlPubPathTxt.getText();
+			
+		}
+		
+		public void setTxt(){
+			nrOfImgsTxt.setText(values[0]);
+			timeTxt.setText(values[2]);
+			nrOfCommentsTxt.setText(values[7]);
+			xmlPubPathTxt.setText(values[8]);
+			
+		}
+		
 	}
 
 }
