@@ -14,6 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class LogInFrame{
+	public JLabel logInstrLbl;
 	public JButton sbmBtn;
 	public JButton clsBtn;
 	public TextField logUserTxt;
@@ -40,7 +41,7 @@ public class LogInFrame{
 		JLabel logUserLbl = new JLabel();
 		JLabel logMailLbl = new JLabel();
 		JLabel logPassLbl = new JLabel();
-		JLabel logInstrLbl = new JLabel();
+		logInstrLbl = new JLabel();
 		logUserTxt = new TextField();
 		logPassTxt = new TextField();
 		sbmBtn = new JButton();
@@ -129,8 +130,6 @@ public class LogInFrame{
 		);
 		
 		logFrame.add(logPanel);
-		
-		logFrame.setVisible(true);
 	}
 	
 	private class LoginListener extends DesktopApplication implements ActionListener {

@@ -1,3 +1,0 @@
-public enum EventType {
-	START_GAME, CARD_PICKED, GAME_FINISHED, LOL
-}

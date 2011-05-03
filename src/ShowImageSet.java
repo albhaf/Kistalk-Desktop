@@ -43,12 +43,29 @@ public class ShowImageSet {
 				/ (float) (tmpImage.getHeight());
 		imgRect.height = imageSize.height;
 		imgRect.width = imgRect.height * factor;
+		imgRect.setY(((int)monitorSize.getHeight()-tmpImage.getHeight())/4);
+		imgRect.setX(((int)monitorSize.getWidth()-tmpImage.getWidth())/4);
+		imageStopPosition = ((monitorSize.width - imgRect.width
+				- (monitorSize.width / 3) - 30));
+		imageStopPosition = imageStopPosition - (imageStopPosition % 5);
+		scalePositionPicture();
+		return imageStopPosition;
+	}
+	
+	protected float setSlide(BufferedImage tmpImage, ImgRect imgRect, Rectangle monitorHeight, 
+			float imageStopPosition) {
+		imgRect.resetPos();
+
+		float factor = (float) (tmpImage.getWidth())
+				/ (float) (tmpImage.getHeight());
+		imgRect.height = imageSize.height;
+		imgRect.width = imgRect.height * factor;
 		imgRect.addY(100);
 		imgRect.addX(-200);
 		imageStopPosition = ((monitorSize.width - imgRect.width
 				- (monitorSize.width / 3) - 30));
 		imageStopPosition = imageStopPosition - (imageStopPosition % 5);
-		scalePositionPicture();
+		scalePositionSlide();
 		return imageStopPosition;
 	}
 
@@ -81,6 +98,12 @@ public class ShowImageSet {
 	public void scalePositionPicture(){
 		double ration = image.getWidth() / image.getHeight();
 		imageSize.height = (int) (image.getHeight() * monitorSize.height * 0.005);
+		imageSize.width = (int) (imageSize.height * ration);
+	}
+	
+	public void scalePositionSlide(){
+		double ration = image.getWidth() / image.getHeight();
+		imageSize.height = (int) (image.getHeight() * monitorSize.height * 0.01);
 		imageSize.width = (int) (imageSize.height * ration);
 	}
 }

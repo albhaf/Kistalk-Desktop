@@ -4,31 +4,32 @@ import java.util.Observer;
 
 import javax.swing.JFrame;
 
-public class DesktopApplication implements Observer {
+public class DesktopApplication {
+	String event, food_description;
+	boolean pub_open = false;
 	NiftyHTTP nifty;
 	ConfigSettings config = new ConfigSettings();
-	AdminFrame adminframe = new AdminFrame();
+	SlidePath slidepath = new SlidePath();
 	
 	public DesktopApplication() {
 		LogInFrame loginframe = new LogInFrame();
-		loginframe.addObserver(this);
+		loginframe.logFrame.setVisible(true);
+		//loginframe.addObserver(this); add observable?
 		
-	}
-
-	public void update(Observable o, Object p) {
-
 	}
 
 	public void login(String user, String token, JFrame logFrame) {
-		
+		String[] values = new String[11];
+		AdminFrame adminframe = new AdminFrame();
 		nifty = new NiftyHTTP(user, token);
+		
 		if (nifty.validateToken()) {
 			logFrame.dispose();
-			adminframe.setupFrame(config.getValues());
+			values = config.getValues();
+			adminframe.setupFrame(values, slidepath.ninja(values[9]), slidepath.ninja(values[10]));
 			
 		} else {
-			//tryAgain
-			
+			// Fel token/user, notifiera!
 		}
 	}
 	
@@ -44,38 +45,23 @@ public class DesktopApplication implements Observer {
 		return config.resetValues();
 	}
 	
-	public void yFood(){
-		//Popup
-		//Skicka info till servern
-	}
-	
-	public void nFood(){
-		//Skicka info till servern
+	public void announceFood(String food, boolean pub_open, boolean food_ready){
+		food_description = food;
+		nifty.postAnnouncement(food_description, event, pub_open, food_ready);
 	}
 
-	public void yPub(){
-		//Skicka info till servern
-	}
-
-	public void nPub(){
-		//Skicka info till servern
+	public void announcePub(String ev, boolean pub_open, boolean food_ready){
+		String event = ev;
+		nifty.postAnnouncement(food_description, event, pub_open, food_ready);
 	}
 	
 	public void savePath(String path){
-		//Name = Popup.value();
-		//Skriv till fil
+		String name = popup("Name your path: ");
+		config.setValues(slidepath.add(name, path, getConf()));
 	}
 	
 	public void remPath(String name){
-		// String[] string = config.getValues();
-		// newString1[] = DivideString.ninja(string[10])
-		// newString2[] = DivideString.ninja(string[11])
-		// while(newString1[i] != name)
-		// newString1[i].delete();
-		// newString2[i].delete();
-		// string[10] = DivideString.putTogheter(newString1[])
-		// string[11] = DivideString.putTogheter(newString2[])
-		// config.setValues(string);
+		config.setValues(slidepath.remove(name, getConf()));
 	}
 	
 	public void startShow(){
@@ -87,7 +73,17 @@ public class DesktopApplication implements Observer {
 	}
 	
 	public void exitShow(){
-		//exit twpDSlideShow only...
+		//exit twoDSlideShow only...
+	}
+	
+	public String popup(String message){ //Pub, Food & SaveSlideshow
+		PopupFrame popupframe = new PopupFrame(message);
+		return popupframe.popTxt.getText(); //Returnera? eller köra genom submit()?
+		
+	}
+	
+	public String submit(String value){
+		return value;
 	}
 	
 
@@ -96,4 +92,5 @@ public class DesktopApplication implements Observer {
 		new DesktopApplication();
 
 	}
+	
 }

@@ -41,7 +41,7 @@ public class XMLreader extends DefaultHandler{
 			// get a new instance of parser
 			SAXParser sp = spf.newSAXParser();
 			// parse the file and also register this class for call backs
-			sp.parse(XMLURL + "?username=panderse&token=z0vu7iegcn", this);
+			sp.parse(XMLURL + "?username=znorman&token=vqlcotvzuu", this);
 		} catch (SAXException se) {
 			se.printStackTrace();
 		} catch (ParserConfigurationException pce) {

@@ -27,12 +27,13 @@ public class TwoDSlideShow extends Panel implements ActionListener {
  		imageSlide = false;
 		view = new TwoDSlideShowView();
 		info = new TwoDSlideShowInfo();
-		pubSlides = new ImportPubSlides();
-//		pubSlides = new ImportPubSlides("//home//zandra//Documents//testSlide.ppt");
+//		pubSlides = new ImportPubSlides();
+		pubSlides = new ImportPubSlides("//home//zandra//Documents//testSlide.ppt");
 		readConfig();
 		getScreenResolution();
 		firstPicture();
 		createFrame();
+		updatePicture();
 		updatePicture();
 		t.start();
 	}
@@ -53,7 +54,7 @@ public class TwoDSlideShow extends Panel implements ActionListener {
 		t = new Timer(10, this);
 	}
 
-	private void firstPicture() {
+	private void firstPicture() throws IOException {
 		info.setLinks();
 		info.setPictures();
 	}
@@ -65,8 +66,7 @@ public class TwoDSlideShow extends Panel implements ActionListener {
 		} else {
 			info.updatePicture();
 			imageSlide = false;
-			slideShowHandler.setNewPicture(info.getImage(), info.getUser(), info.getImageText(), info.getImageComments());
-			
+			slideShowHandler.setNewPicture(info.getImage(), info.getUser(), info.getImageText(), info.getImageComments());		
 		}
 	}
 	@Override
