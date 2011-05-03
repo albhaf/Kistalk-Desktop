@@ -24,7 +24,7 @@ public class TwoDSlideShow extends Panel implements ActionListener {
 	private boolean imageSlide;
 
  	public TwoDSlideShow() throws IOException {
- 		imageSlide = true;
+ 		imageSlide = false;
 		view = new TwoDSlideShowView();
 		info = new TwoDSlideShowInfo();
 		pubSlides = new ImportPubSlides();
