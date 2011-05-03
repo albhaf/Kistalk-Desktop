@@ -43,7 +43,13 @@ public class ShowImageDrawing {
 			}
 		}
 	}
-
+	
+	protected void paintSlide(BufferedImage slideImage, ImgRect imgRect){
+		TexturePaint tp = new TexturePaint(slideImage, imgRect);
+		g2d.setPaint(tp);
+		g2d.fill(imgRect);
+	}
+	
 	protected void paintImage(TextToDisplay imageCommentTxtDsp,
 			TextToDisplay imageUserTxtDsp, BufferedImage slideImage,
 			ImgRect imgRect) {
