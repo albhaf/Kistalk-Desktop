@@ -99,9 +99,4 @@ public class ImportPubSlides {
 	    }
 	    return( path.delete() );
 	   }
-	   
-	   public static void main(String[] args){
-		   ImportPubSlides p = new ImportPubSlides("//home//zandra//Documents//testSlide.ppt");
-		   p.deleteDirectory();
-	   }
 }
