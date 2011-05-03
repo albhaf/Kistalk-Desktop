@@ -71,24 +71,12 @@ public class ImportPubSlides {
 	 *             Throws IOException if the file couldn't be found.
 	 */
 	public BufferedImage getImage() throws IOException {
-		if(currentSlide < nrOfSlides)
+		if(currentSlide < nrOfSlides-1)
 			currentSlide++;
 		else
 			currentSlide = 0;
-		
 		Image img = ImageIO.read(new File("Images//slide-" + currentSlide + ".hansimage"));
 		return (BufferedImage) img;
-	}
-
-	public static void main(String a[]) throws IOException {
-		ImportPubSlides blah = new ImportPubSlides(
-				"/home/zandra/Documents/testSlide.ppt");
-//		FileOutputStream out = new FileOutputStream("Images//" + "hej"
-//				+ ".hansimage");
-		BufferedImage img = blah.getImage();
-		int i = 0;
-
-//		ImageIO.write(img, "png", out);
 	}
 
 }
