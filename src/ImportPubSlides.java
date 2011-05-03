@@ -78,5 +78,25 @@ public class ImportPubSlides {
 		Image img = ImageIO.read(new File("Images//slide-" + currentSlide + ".hansimage"));
 		return (BufferedImage) img;
 	}
-
+	
+	//b�r v�l l�ggas i ngn annan stans antar jag och k�ras d� programmet avslutas... men koden funkar iaf.
+	   public boolean deleteDirectory() {
+		   File path = new File("Images");
+		   return delDir(path);
+		  }
+	
+	   private boolean delDir(File path){
+	    if( path.exists() ) {
+	      File[] files = path.listFiles();
+	      for(int i=0; i<files.length; i++) {
+	         if(files[i].isDirectory()) {
+	           delDir(files[i]);
+	         }
+	         else {
+	           files[i].delete();
+	         }
+	      }
+	    }
+	    return( path.delete() );
+	   }
 }
