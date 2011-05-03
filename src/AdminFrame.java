@@ -22,9 +22,8 @@ import javax.swing.JPanel;
 
 public class AdminFrame {
 	Image bgImage;
-	
+	String slideItem = null;
 	ConfigSettings config = new ConfigSettings();
-	PubSlides pubslides = new PubSlides();
 	
 	JFrame adminFrame;
 	JFrame popFrame;
@@ -220,16 +219,31 @@ public class AdminFrame {
 		pubChb.setOpaque(false);
 		
 		//	DropDownList settings, with ItemListeners
-		pubSlidesDDLst.addItem("[Other Slideshow]");
-		pubSlidesDDLst.addItem("TMEIT");
+		pubSlidesDDLst.addItem("[Other Slideshow]"); //Ändra på så att den automagiskt hämtar in items från configfilen.
+		pubSlidesDDLst.addItem("TMEIT"); // Läs också in pathen så att den kan sättas i listenern, kanske i listor?
 		pubSlidesDDLst.addItem("Qmisk");
 		pubSlidesDDLst.addItem("ITK");
+		
 		pubSlidesDDLst.setFont(new Font("Gulim", Font.PLAIN, 12));
 		pubSlidesDDLst.addItemListener(
 				new ItemListener(){
 					public void itemStateChanged(ItemEvent e){
 						if (e.getStateChange() == ItemEvent.SELECTED){
-							pubslides.setPath(e.getItem().toString(), new AdminFrame());
+							if (e.getItem().toString() != "[Other Slideshow]"){
+								xmlPubPathTxt.setText(""); //Hämta dess path!
+								xmlPubPathTxt.setEnabled(false);
+								xmlPubPathTxt.setFont(new Font("Algerian", Font.ITALIC, 12));
+								statusLbl.setText("Status: " + e.getItem().toString() + "s Slideshow is choosed");
+								slideItem = e.getItem().toString();
+								
+							}else{
+								xmlPubPathTxt.setText("C:\\...");
+								xmlPubPathTxt.setEnabled(true);
+								xmlPubPathTxt.setFont(new Font("Algerian", Font.PLAIN, 12));
+								statusLbl.setText("Status: Choose a Slideshow or specify a path");
+								slideItem = null;
+								
+							}
 						}
 					}
 				}
@@ -242,7 +256,7 @@ public class AdminFrame {
 				new ItemListener(){
 					public void itemStateChanged(ItemEvent e){
 						if (e.getStateChange() == ItemEvent.SELECTED)
-							statusLbl.setText(e.getItem().toString() + " screen it is!");
+							statusLbl.setText("Status: " + e.getItem().toString() + " screen it is!");
 							if (e.getItem().toString() == "This"){
 								confValues[5] = "0";
 							}else if (e.getItem().toString() == "External"){
@@ -395,48 +409,50 @@ public class AdminFrame {
 		adminFrame.setVisible(true);
 	}
 	
+	public static void main(String[] args){
+		new AdminFrame();
+	}
+	
 	private class ButtonListener extends DesktopApplication implements ActionListener {
 		String[] values = new String[11];
 		
 		public void actionPerformed(ActionEvent e) {
-			if (e.getSource() == saveSetBtn){
+			if (e.getSource() == saveSetBtn){ // Save settings to config
 				getTxt();
 				setConf(values);
 				statusLbl.setText("Status: Settings saved to Config");
 				
-			}else if (e.getSource() == resetBtn){
+			}else if (e.getSource() == resetBtn){ // Reset settings in config
 				values = resetConf();
 				setTxt();
 				statusLbl.setText("Status: Config is back to normal");
 				
-			}else if (e.getSource() == foodChb){
-				if (foodChb.isSelected()){
-					yFood();
-					statusLbl.setText("Dinner is served!");
-				}else{
-					nFood();
-					statusLbl.setText("Dinner is no more");
-				}
+			}else if (e.getSource() == foodChb){ // Announce food
+				disable();
+				announceFood(popup("What food? "), foodChb.isSelected(), foodChb.isSelected());
+				enable();
+				statusLbl.setText("Status: Dinner is served!");
 				
-			}else if (e.getSource() == pubChb){
-				if (foodChb.isSelected()){
-					yPub();
-					statusLbl.setText("Pub is open!");
-				}else{
-					nPub();
-					statusLbl.setText("Pub is closed");
-				}
+			}else if (e.getSource() == pubChb){ // Announce pub
+				disable();
+				announcePub(popup("What event? "), foodChb.isSelected(), foodChb.isSelected());
+				enable();
+				statusLbl.setText("Status: Pub is open!");
 				
-			}else if (e.getSource() == savePathBtn){
+			}else if (e.getSource() == savePathBtn){ // Save Slideshow
 				savePath(xmlPubPathTxt.getText());
-				statusLbl.setText("Slideshow saved");
+				statusLbl.setText("Status: Slideshow saved");
 				
-			}else if (e.getSource() == remPathBtn){ //Fixa DDLst först!
-//				remPath(xmlPubPathDDLst.Item().getText());
-				//Ta bort från DDlst osså
-				statusLbl.setText("Slideshow removed");
+			}else if (e.getSource() == remPathBtn){ // Remove saved Slideshow
+				if (slideItem != null){
+					remPath(slideItem);
+					pubSlidesDDLst.removeItem(slideItem);
+					statusLbl.setText("Status: Slideshow removed");
+				}else{
+					statusLbl.setText("Status: Choose a slideshow to remove");
+				}
 				
-			}else if (e.getSource() == startBtn){
+			}else if (e.getSource() == startBtn){ // Start Slideshow
 				getTxt();
 				setConf(values);
 				exitBtn.setText("Quit SlideShow");
@@ -444,9 +460,9 @@ public class AdminFrame {
 				statusLbl.setText("Status: Starting Slideshow...");
 				startShow();
 				
-			}else if (e.getSource() == exitBtn){
+			}else if (e.getSource() == exitBtn){ // Exit Slideshow / Program
 				if (exitBtn.getText().equals("Quit SlideShow")){
-					statusLbl.setText("The slideshow is dead...");
+					statusLbl.setText("Status: The slideshow is dead...");
 					exitBtn.setText("Quit KisTalk");
 					startBtn.setEnabled(true);
 					exitShow();
@@ -457,7 +473,7 @@ public class AdminFrame {
 			}
 		}
 		
-		public void getTxt(){
+		public void getTxt(){ // Get text from textfields
 			values[0] = nrOfImgsTxt.getText();
 			values[2] = timeTxt.getText();
 			values[7] = nrOfCommentsTxt.getText();
@@ -465,11 +481,44 @@ public class AdminFrame {
 			
 		}
 		
-		public void setTxt(){
+		public void setTxt(){ // Write text to textfields
 			nrOfImgsTxt.setText(values[0]);
 			timeTxt.setText(values[2]);
 			nrOfCommentsTxt.setText(values[7]);
 			xmlPubPathTxt.setText(values[8]);
+			
+		}
+		
+		public void disable() { // Disable buttons
+			saveSetBtn.setEnabled(false); //BUGG! xmlPubPathTxt enablas, även om den inte ska vara enbled
+			resetBtn.setEnabled(false);
+			startBtn.setEnabled(false);
+			exitBtn.setEnabled(false);
+			pubChb.setEnabled(false);
+			foodChb.setEnabled(false);
+			screenDDLst.setEnabled(false);
+			pubSlidesDDLst.setEnabled(false);
+			nrOfImgsTxt.setEnabled(false);
+			timeTxt.setEnabled(false);
+			nrOfCommentsTxt.setEnabled(false);
+			xmlPubPathTxt.setEnabled(false);
+			
+		}
+	
+		public void enable(){ // Enable buttons
+			saveSetBtn.setEnabled(true);
+			resetBtn.setEnabled(true);
+			startBtn.setEnabled(true);
+			exitBtn.setEnabled(true);
+			pubChb.setEnabled(true);
+			foodChb.setEnabled(true);
+			screenDDLst.setEnabled(true);
+			pubSlidesDDLst.setEnabled(true);
+			nrOfImgsTxt.setEnabled(true);
+			timeTxt.setEnabled(true);
+			nrOfCommentsTxt.setEnabled(true);
+			if (slideItem == null)
+				xmlPubPathTxt.setEnabled(true);
 			
 		}
 		

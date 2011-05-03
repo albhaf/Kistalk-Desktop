@@ -5,13 +5,16 @@ import java.util.Observer;
 import javax.swing.JFrame;
 
 public class DesktopApplication implements Observer {
+	String event, food_description;
+	boolean pub_open = false;
 	NiftyHTTP nifty;
 	ConfigSettings config = new ConfigSettings();
 	AdminFrame adminframe = new AdminFrame();
+	SlidePath slidepath = new SlidePath();
 	
 	public DesktopApplication() {
 		LogInFrame loginframe = new LogInFrame();
-		loginframe.addObserver(this);
+		//loginframe.addObserver(this); add observable?
 		
 	}
 
@@ -44,38 +47,23 @@ public class DesktopApplication implements Observer {
 		return config.resetValues();
 	}
 	
-	public void yFood(){
-		//Popup
-		//Skicka info till servern
-	}
-	
-	public void nFood(){
-		//Skicka info till servern
+	public void announceFood(String food, boolean pub_open, boolean food_ready){
+		food_description = food;
+		nifty.postAnnouncement(food_description, event, pub_open, food_ready);
 	}
 
-	public void yPub(){
-		//Skicka info till servern
-	}
-
-	public void nPub(){
-		//Skicka info till servern
+	public void announcePub(String ev, boolean pub_open, boolean food_ready){
+		String event = ev;
+		nifty.postAnnouncement(food_description, event, pub_open, food_ready);
 	}
 	
 	public void savePath(String path){
-		//Name = Popup.value();
-		//Skriv till fil
+		String name = popup("Name your path: ");
+		config.setValues(slidepath.add(name, path, getConf()));
 	}
 	
 	public void remPath(String name){
-		// String[] string = config.getValues();
-		// newString1[] = DivideString.ninja(string[10])
-		// newString2[] = DivideString.ninja(string[11])
-		// while(newString1[i] != name)
-		// newString1[i].delete();
-		// newString2[i].delete();
-		// string[10] = DivideString.putTogheter(newString1[])
-		// string[11] = DivideString.putTogheter(newString2[])
-		// config.setValues(string);
+		config.setValues(slidepath.remove(name, getConf()));
 	}
 	
 	public void startShow(){
@@ -87,7 +75,18 @@ public class DesktopApplication implements Observer {
 	}
 	
 	public void exitShow(){
-		//exit twpDSlideShow only...
+		//exit twoDSlideShow only...
+	}
+	
+	public String popup(String message){
+		String value = null; //tillfälligt
+		PopupFrame popupframe = new PopupFrame(message);
+		
+		return value;
+	}
+	
+	public void submit(){
+		
 	}
 	
 

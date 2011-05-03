@@ -3,6 +3,8 @@ import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.TextField;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
@@ -19,10 +21,6 @@ public class PopupFrame{
 	
 	public PopupFrame(String message){
 		ButtonListener listener = new ButtonListener();
-		ButtonSettings buttons = new ButtonSettings();
-		
-		//	Disabel buttons
-		buttons.disable();
 		
 		//	Background Pic
 		ImageIcon icon = new ImageIcon("bgIcon.png");
@@ -94,5 +92,17 @@ public class PopupFrame{
 		
 		popFrame.setVisible(true);
 		
+	}
+	
+	private class ButtonListener extends DesktopApplication implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			if (e.getSource() == sbmBtn){
+				submit();
+				
+			}else if(e.getSource() == clsBtn){
+				
+				
+			}
+		}
 	}
 }
