@@ -82,15 +82,16 @@ public class ShowImage extends JPanel {
 
 	private void moveImageObjects() {
 		timeStill.height = showImageMovement.moveImage(timeStill, imgRect, (int) imageStopPosition);
-		transperacy = showImageMovement.setTransperacy(transperacy, outgoing);
+		transperacy = showImageMovement.setTransperacy(transperacy, outgoing, 0.01);
 
 		showImageMovement.moveUserText(imageUserTxtDsp, outgoing);
 		showImageMovement.moveImageText(imageCommentTxtDsp, outgoing);
 	}
 	
 	private void movePubSlide(){
-		timeStill.height = showImageMovement.moveSlide(timeStill, imgRect, monitorSize.width, slideImage.getWidth());
-		transperacy = showImageMovement.setTransperacy(transperacy, outgoing);
+		if(transperacy >= 0.98)
+			timeStill.height = showImageMovement.moveSlide(timeStill, imgRect, monitorSize.width, slideImage.getWidth());
+		transperacy = showImageMovement.setTransperacy(transperacy, outgoing, 0.03);
 	}
 	
 	
@@ -100,7 +101,7 @@ public class ShowImage extends JPanel {
 		}else{
 			moveImageObjects();
 		}
-		if (transperacy >= 0.98 && timeStill.height == 0) {
+		if (timeStill.height == 0) {
 			outgoing = true;
 		}
 		if(transperacy <= 0.001){

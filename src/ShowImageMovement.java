@@ -21,17 +21,17 @@ public class ShowImageMovement {
 		}
 	}
 	
-	protected float setTransperacy(float transperacy, boolean outgoing) {
+	protected float setTransperacy(float transperacy, boolean outgoing, double i) {
 		if (outgoing) {
 			if (transperacy > 0.01) {
-				return (float) (transperacy - 0.01);
+				return (float) (transperacy - i);
 			}
 			else{
 				return (float) 0.001;
 			}			
 		} else {
 			if (transperacy < 0.99) {
-				return (float) (transperacy + 0.01);
+				return (float) (transperacy + i);
 			}
 			else {
 				return (float) 0.99;
