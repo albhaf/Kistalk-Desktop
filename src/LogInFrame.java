@@ -133,9 +133,13 @@ public class LogInFrame{
 		logFrame.setVisible(true);
 	}
 	
-	private class LoginListener implements ActionListener {
+	private class LoginListener extends DesktopApplication implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			//lokal actionlistener
+			if (e.getSource() == sbmBtn){
+				login(logUserTxt.getText(), logPassTxt.getText(), logFrame);
+			}else if (e.getSource() == clsBtn){
+				logFrame.dispose();
+			}
 		}
 	}
 }

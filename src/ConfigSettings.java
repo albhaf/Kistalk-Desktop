@@ -5,26 +5,28 @@ import java.util.Date;
 
 public class ConfigSettings {
 	final int nrOfConfigValues = 11; // Doesn't include regular textlines. If change, then change configHandler too
-	String[] confValues = new String[nrOfConfigValues];
+	
 	ConfigHandler handler;
+	
 	
 	//	Reads Config and saves values in 'confValues'
 	public String[] getValues() {
+		String[] values = new String[nrOfConfigValues];
 		handler = new ConfigHandler();
 		
 		try {
-			confValues = handler.processLineByLine();
+			values = handler.processLineByLine();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-		return confValues;
+		return values;
 		
 	}
 
 	//	Saves current settings to Config (except Default Turtle, he only lives in config when config is defaultahrized)
-	public void setValues(String[] confValues, AdminFrame adminframe) {
+	public void setValues(String[] values) {
 		String[] lines = new String[49];
 		Date today = new Date();
 		handler = new ConfigHandler();
@@ -70,17 +72,17 @@ public class ConfigSettings {
 		lines[47] = "";
 		
 		//	Defined values
-		lines[28] = "Max_number_of_Images %" + adminframe.nrOfImgsTxt.getText();
+		lines[28] = "Max_number_of_Images %" + values[0];
 		lines[30] = "Number_of_Hans %-";
-		lines[32] = "Timer_interval %" + adminframe.timeTxt.getText();
+		lines[32] = "Timer_interval %" + values[2];
 		lines[34] = "Number_of_Jimmys %-";
 		lines[36] = "supported_image_formats %.jpg .png .gif .bnp";
-		lines[38] = "Screen_index %" + confValues[5];
+		lines[38] = "Screen_index %" + values[5];
 		lines[40] = "XMLURL %http://www.kistalk.com/desktop_images.xml";
-		lines[42] = "Number_of_comments %2";
-		lines[44] = "Path_to_Pubslides %" + adminframe.xmlPubPathTxt.getText(); //Ett \ tas bort var gång filen laddas?
-		lines[46] = "Saved_Pubslides %" + confValues[9];
-		lines[48] = "Saved_Paths %" + confValues[10];
+		lines[42] = "Number_of_comments %" + values[7];
+		lines[44] = "Path_to_Pubslides %" + values[8]; //Ett \ tas bort var gång filen laddas?
+		lines[46] = "Saved_Pubslides %" + values[9];
+		lines[48] = "Saved_Paths %" + values[10];
 		
 		// Write to file (config)
 		handler.setConfig(lines);
@@ -98,11 +100,7 @@ public class ConfigSettings {
 			System.out.println("Default config file has been removed or modified, Please contact Hans at <i>hans@kistalk.com</i>.");
 		}
 		
-		// Reset 'confValues'
-		getValues();
-		return confValues;
-//		nrOfImgsTxt.setText(confValues[0]);
-//		timeTxt.setText(confValues[1]);
+		return getValues();
 		
 	}
 }

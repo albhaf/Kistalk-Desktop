@@ -56,7 +56,9 @@ public class NiftyHTTP {
 	public NiftyHTTP(String username, String authToken) throws RuntimeException {
 		this.username = username;
 		this.authToken = authToken;
+
 	}
+	
 
 	public String postAnnouncement(String food_description, String event, boolean pub_open, boolean food_ready) {
 
@@ -134,7 +136,7 @@ public class NiftyHTTP {
 				while(it.hasNext()) {
 				
 					NameValuePair nvp = it.next();
-					
+
 					URL = URL + URLEncoder.encode(nvp.getName(), ENCODING) + "=" + URLEncoder.encode(nvp.getValue(), ENCODING);
 					
 					if (it.hasNext()){
