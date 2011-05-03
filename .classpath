@@ -9,5 +9,7 @@
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.USER_LIBRARY/Apache poi"/>
 	<classpathentry kind="lib" path="commons-codec-1.4.jar"/>
 	<classpathentry kind="lib" path="commons-logging-1.1.1.jar"/>
+	<classpathentry kind="lib" path="lib/apache poi/poi-3.7-20101029.jar"/>
+	<classpathentry kind="lib" path="lib/apache poi/poi-scratchpad-3.7-20101029.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

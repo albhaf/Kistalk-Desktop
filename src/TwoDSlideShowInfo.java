@@ -22,10 +22,10 @@ public class TwoDSlideShowInfo {
 	Image[] serverImgs;
 	URL[] urlArray;
 
-	int currentPicture = -1;
+	int currentPicture = 0;
 	int currentPubPicture = 0;
 	int nrOfComments = 0;
-	int nrOfPicsServer;
+	int nrOfPics;
 	int timeStill;
 
 	public TwoDSlideShowInfo() {
@@ -58,27 +58,27 @@ public class TwoDSlideShowInfo {
 		}
 
 		// Hantera inkommande data
-		nrOfPicsServer = Integer.valueOf(values[0]);
-		serverImgs = new Image[nrOfPicsServer];
-		iconArrayServer = new ImageIcon[nrOfPicsServer];
-		urlArray = new URL[nrOfPicsServer];
+		nrOfPics = Integer.valueOf(values[0]);
+		iconArrayServer = new ImageIcon[nrOfPics];
+		urlArray = new URL[nrOfPics];
+		serverImgs = new Image[nrOfPics];
+		timeStill = Integer.valueOf(values[2]);
 		fileFormats = values[4].split(" ");
 		screenIndex = Byte.valueOf(values[5]);
 		xmlPath = values[6];
 		nrOfComments = Integer.valueOf(values[7]);
-		timeStill = Integer.valueOf(values[2]);
 	}
 
 	protected void setLinks() {
 		xmlreader = new XMLreader(xmlPath);
 		imgXMLList = xmlreader.getImagesInfo();
-		for (int i = 0; i < nrOfPicsServer; i++) {
+		for (int i = 0; i < nrOfPics; i++) {
 			urlArray[i] = imgXMLList.get(i).getLink();
 		}
 	}
 
 	protected void setPictures() {
-		for (int i = 0; i < nrOfPicsServer; i++) {
+		for (int i = 0; i < nrOfPics; i++) {
 			try {
 				serverImgs[i] = ImageIO
 						.read(urlArray[i]);
@@ -93,15 +93,15 @@ public class TwoDSlideShowInfo {
 		return new ShowImage(monitor, timeStill);
 	}
 
-	protected void updatePicture(ShowImage slideShowHandler) {
+	protected void updatePicture() {		
 		currentPicture++;
-		if (currentPicture >= nrOfPicsServer) {
+		if (currentPicture >= nrOfPics) {
 			setLinks();
 			if(urlArray[0] != imgXMLList.get(0).getLink())
 				setPictures();
 			currentPicture = 0;
 		}
-		slideShowHandler.resetPicture();
+
 	}
 	
 	protected BufferedImage getImage(){
@@ -118,6 +118,10 @@ public class TwoDSlideShowInfo {
 	
 	protected String getUser(){
 		return imgXMLList.get(currentPicture).getUser();
+	}
+	
+	protected int getTimeStill(){
+		return timeStill;
 	}
 	
 }
