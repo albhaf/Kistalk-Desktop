@@ -8,13 +8,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
-
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.parsers.SAXParser;
-
-import org.xml.sax.SAXException;
 
 public class TwoDSlideShowInfo {
 	XMLreader xmlreader;
