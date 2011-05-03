@@ -28,6 +28,17 @@ public class ImagesQueue /*extends LinkedList<ImageXML> */{
 		maxSize=tmpSize;
 	}
 	
+	public void removeElement(int tmp){
+		images.remove(tmp);
+	}
+	
+	public ImageXML look(){
+		ImageXML image = images.peekFirst();
+		images.add(images.pop());
+		
+		return image;
+	}
+	
 	public boolean push(ImageXML tmp){
 		if(images.size()<maxSize){
 			images.push(tmp);

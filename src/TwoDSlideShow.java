@@ -69,7 +69,6 @@ public class TwoDSlideShow extends Panel implements ActionListener {
 			
 		}
 	}
-
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == t) {
@@ -79,7 +78,6 @@ public class TwoDSlideShow extends Panel implements ActionListener {
 				try {
 					updatePicture();
 				} catch (IOException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 			}
