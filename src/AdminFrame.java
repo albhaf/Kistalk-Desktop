@@ -20,6 +20,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+
 public class AdminFrame {
 	Image bgImage;
 	String slideItem = null;
@@ -111,6 +112,7 @@ public class AdminFrame {
 		
 		// Create and Paint thePanel background
 		thePanel = new JPanel(){ //Observera att detta ï¿½r en create!
+
 			public void paint(Graphics g){
 				g.drawImage(bgImage, 0,0, this);
 				setOpaque(false);
@@ -409,10 +411,6 @@ public class AdminFrame {
 		adminFrame.setVisible(true);
 	}
 	
-	public static void main(String[] args){
-		new AdminFrame();
-	}
-	
 	private class ButtonListener extends DesktopApplication implements ActionListener {
 		String[] values = new String[11];
 		
@@ -442,7 +440,7 @@ public class AdminFrame {
 			}else if (e.getSource() == savePathBtn){ // Save Slideshow
 				savePath(xmlPubPathTxt.getText());
 				statusLbl.setText("Status: Slideshow saved");
-				
+			
 			}else if (e.getSource() == remPathBtn){ // Remove saved Slideshow
 				if (slideItem != null){
 					remPath(slideItem);
@@ -488,6 +486,7 @@ public class AdminFrame {
 			xmlPubPathTxt.setText(values[8]);
 			
 		}
+
 		
 		public void disable() { // Disable buttons
 			saveSetBtn.setEnabled(false); //BUGG! xmlPubPathTxt enablas, även om den inte ska vara enbled

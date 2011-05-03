@@ -77,7 +77,7 @@ public class ShowImage extends JPanel {
 		// Image user
 		showImageSet.setUserText(user, imageUserTxtDsp);
 		// Bilden
-		imageStopPosition = showImageSet.setImage(slideImage, imgRect, imageStopPosition);
+		imageStopPosition = showImageSet.setSlide(slideImage, imgRect, imageStopPosition);
 	}
 
 	public void MoveObjects() {
@@ -87,12 +87,11 @@ public class ShowImage extends JPanel {
 		// changes outgoing to true if the picture is supposed to move again
 		// after standstill
 
+		showImageMovement.moveUserText(imageUserTxtDsp, outgoing);
+		showImageMovement.moveImageText(imageCommentTxtDsp, outgoing);
 		if (timeStill.height == 0) {
 			outgoing = true;
 		}
-
-		showImageMovement.moveUserText(imageUserTxtDsp, outgoing);
-		showImageMovement.moveImageText(imageCommentTxtDsp, outgoing);
 		repaint();
 	}
 

@@ -8,7 +8,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
-
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
@@ -22,7 +21,7 @@ public class TwoDSlideShowInfo {
 	Image[] serverImgs;
 	URL[] urlArray;
 
-	int currentPicture = 0;
+	int currentPicture = -1;
 	int currentPubPicture = 0;
 	int nrOfComments = 0;
 	int nrOfPics;
@@ -69,11 +68,15 @@ public class TwoDSlideShowInfo {
 		return Byte.valueOf(values[5]);
 	}
 
-	protected void setLinks() {
+	protected void setLinks() throws IOException {
 		xmlreader = new XMLreader(xmlPath);
 		imgXMLList = xmlreader.getImagesInfo();
-		for (int i = 0; i < nrOfPics; i++) {
-			urlArray[i] = imgXMLList.get(i).getLink();
+		for (int i = 0, j = 0; i < nrOfPics; i++, j++) {
+			try {
+				urlArray[i] = imgXMLList.get(j).getLink();
+			} catch (Exception e) {
+				i--;
+			}
 		}
 	}
 
@@ -93,7 +96,7 @@ public class TwoDSlideShowInfo {
 		return new ShowImage(monitor, timeStill);
 	}
 
-	protected void updatePicture() {		
+	protected void updatePicture() throws IOException {		
 		currentPicture++;
 		if (currentPicture >= nrOfPics) {
 			setLinks();
