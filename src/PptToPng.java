@@ -104,7 +104,7 @@ public class PptToPng {
 		SlideShow ppt = null;
 
 		File dir = new File("Images");
-		//dir.deleteOnExit();
+		dir.deleteOnExit();
 		dir.mkdir();
 		
 		try {

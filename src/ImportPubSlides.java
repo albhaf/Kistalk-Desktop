@@ -52,14 +52,25 @@ public class ImportPubSlides {
 		Image img = ImageIO.read(new File("Images//slide-" + currentSlide + ".hansimage"));
 		return (BufferedImage) img;
 	}
-
-	public static void main(String a[]) throws IOException {
-		ImportPubSlides blah = new ImportPubSlides(
-				"C:\\Users\\Ludvig\\Documents\\asd.ppt");
-		FileOutputStream out = new FileOutputStream("Images//" + "hej"
-				+ ".hansimage");
-		BufferedImage img = blah.getImage();
-		ImageIO.write(img, "png", out);
-	}
-
+	
+	//bör väl läggas i ngn annan stans antar jag och köras då programmet avslutas... men koden funkar iaf.
+	   public boolean deleteDirectory() {
+		   File path = new File("Images");
+		   return delDir(path);
+		  }
+	
+	   private boolean delDir(File path){
+	    if( path.exists() ) {
+	      File[] files = path.listFiles();
+	      for(int i=0; i<files.length; i++) {
+	         if(files[i].isDirectory()) {
+	           delDir(files[i]);
+	         }
+	         else {
+	           files[i].delete();
+	         }
+	      }
+	    }
+	    return( path.delete() );
+	   }
 }
