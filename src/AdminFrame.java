@@ -39,14 +39,19 @@ public class AdminFrame {
 	
 	JLabel nrOfImgsLbl;
 	JLabel timeLbl;
-	JLabel foodSttLbl;
-	JLabel pubSttLbl;
+	JLabel foodLbl;
+	JLabel pubLbl;
 	JLabel statusLbl;
 	JLabel xmlPubPathLbl;
 	JLabel legalFilesLbl;
 	JLabel nrOfCommentsLbl;
 	JLabel screenLbl;
 	JLabel bgLbl;
+	JLabel sttsFoodRdyLbl;
+	JLabel sttsPubLbl;
+	JLabel sttsFoodLbl;
+	JLabel sttsEventLbl;
+	JLabel foodInstrLbl;
 	
 	TextField nrOfImgsTxt;
 	TextField timeTxt;
@@ -94,8 +99,8 @@ public class AdminFrame {
 		
 		nrOfImgsLbl = new JLabel();
 		timeLbl= new JLabel();
-		foodSttLbl = new JLabel();
-		pubSttLbl = new JLabel();
+		foodLbl = new JLabel();
+		pubLbl = new JLabel();
 		statusLbl = new JLabel();
 		xmlPubPathLbl = new JLabel();
 		legalFilesLbl = new JLabel();
@@ -161,17 +166,17 @@ public class AdminFrame {
 		legalFilesLbl.setText("Approved file extensions: ");
 		legalFilesLbl.setForeground(Color.WHITE);
 		
-		pubSttLbl.setText("Specify event");
-		pubSttLbl.setForeground(Color.GRAY);
+		pubLbl.setText("Specify event:");
+		pubLbl.setForeground(Color.GRAY);
 		
-		foodSttLbl.setText("Specify food");
-		foodSttLbl.setForeground(Color.GRAY);
+		foodLbl.setText("Specify food:");
+		foodLbl.setForeground(Color.GRAY);
 		
 		statusLbl.setText("Status: Ready for some action");
 		statusLbl.setForeground(Color.WHITE);
-		statusLbl.setFont(new Font("Helvetica", Font.ITALIC, 9));
+		statusLbl.setFont(new Font("Helvetica", Font.ITALIC, 10));
 		
-		nrOfCommentsLbl.setText("Number of shown comments: ");
+		nrOfCommentsLbl.setText("Number of comments: ");
 		nrOfCommentsLbl.setForeground(Color.WHITE);
 		
 		screenLbl.setText("Choose screen: ");
@@ -242,7 +247,7 @@ public class AdminFrame {
 		pubChb.setOpaque(false);
 		
 		//	DropDownList settings, with ItemListeners
-		pubSlidesDDLst.addItem("[Other Slideshow]");
+		pubSlidesDDLst.addItem("[Saved slideshows]");
 		for (int i = 0; i < slideNames.size(); i++)
 			pubSlidesDDLst.addItem(slideNames.get(i));
 		
@@ -251,7 +256,7 @@ public class AdminFrame {
 				new ItemListener(){
 					public void itemStateChanged(ItemEvent e){
 						if (e.getStateChange() == ItemEvent.SELECTED){
-							if (e.getItem().toString() != "[Other Slideshow]"){ // Set pathen to the path that belongs to the selected Item
+							if (e.getItem().toString() != "[Saved slideshows]"){ // Set pathen to the path that belongs to the selected Item
 								xmlPubPathTxt.setText(slidePaths.get(slideNames.indexOf(e.getItem().toString())));
 								xmlPubPathTxt.setEnabled(false);
 								xmlPubPathTxt.setFont(new Font("Algerian", Font.ITALIC, 12));
@@ -305,28 +310,32 @@ public class AdminFrame {
 			   			
 			   			.addGroup(groupLayout.createSequentialGroup()
 						   	.addComponent(nrOfImgsLbl)
+						   	.addGap(23)
 						   	.addComponent(nrOfImgsTxt, 50, 50, 50)
 						)
 						.addGroup(groupLayout.createSequentialGroup()
 							.addComponent(timeLbl)
-							.addComponent(timeTxt, 100, 100, 100)
+							.addGap(58)
+							.addComponent(timeTxt, 50, 50, 50)
 						)
 						.addGroup(groupLayout.createSequentialGroup()
 							.addComponent(nrOfCommentsLbl)
-							.addComponent(nrOfCommentsTxt, 100, 100, 100)
+							.addGap(37)
+							.addComponent(nrOfCommentsTxt, 50, 50, 50)
 						)
 						.addGroup(groupLayout.createSequentialGroup()
 							.addComponent(legalFilesLbl)
+							.addGap(20)
 							.addComponent(legalFilesTxt, 110, 110, 110)
 						)
 						.addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
 								.addComponent(screenLbl)
-								.addComponent(screenDDLst, 150, 150, 150)
+								.addComponent(screenDDLst, 155, 155, 155)
 						)
 			   			.addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
 			   					.addComponent(xmlPubPathLbl)
-			   					.addComponent(xmlPubPathTxt, 300, 300, 300)
-			   					.addComponent(pubSlidesDDLst, 200, 200, 200)
+			   					.addComponent(xmlPubPathTxt, 277, 277, 277)
+			   					.addComponent(pubSlidesDDLst, 155, 155, 155)
 					   	)
 				)
 				
@@ -336,13 +345,13 @@ public class AdminFrame {
 						
 						.addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
 							.addComponent(pubChb)
-							.addComponent(pubSttLbl)
+							.addComponent(pubLbl)
 							.addComponent(eventTxt, 125, 125, 125)
 						)
 						.addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-							.addComponent(foodChb)
-						   	.addComponent(foodSttLbl)
+						   	.addComponent(foodLbl)
 						   	.addComponent(foodTxt, 125, 125, 125)
+						   	.addComponent(foodChb)
 						   	
 						)
 						.addComponent(announceBtn, 125, 125, 125)
@@ -411,20 +420,21 @@ public class AdminFrame {
 				   				
 						   		.addGroup(groupLayout.createSequentialGroup()
 						   			.addComponent(pubChb)
-						   			.addComponent(pubSttLbl)
+						   			.addGap(5)
+						   			.addComponent(pubLbl)
 						   			.addComponent(eventTxt, 20, 20, 20)
 						   		)
-						   		.addGap(20)
+						   		.addGap(10)
 						   		.addGroup(groupLayout.createSequentialGroup()
-						   			.addComponent(foodChb)
-						   			.addComponent(foodSttLbl)
+						   			.addComponent(foodLbl)
 								   	.addComponent(foodTxt, 20, 20, 20)
+								   	.addComponent(foodChb)
 						   		)
 						   		.addGap(20)
 								.addComponent(announceBtn, 25, 25, 25)
 				   		)
 				  )
-				  .addGap(30)
+				  .addGap(50)
 				  .addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
 					   		.addComponent(saveSetBtn, 25, 25, 25)
 					   		.addComponent(savePathBtn, 25, 25, 25)
@@ -435,13 +445,17 @@ public class AdminFrame {
 						  .addComponent(remPathBtn, 25, 25, 25)
 						  .addComponent(exitBtn, 25, 25, 25)
 				  )
-				  .addGap(30)
+				  .addGap(20)
 				  .addComponent(statusLbl)
 			);
 		
 		//	Add panel
 		adminFrame.add(thePanel);
 		adminFrame.setVisible(true);
+	}
+	
+	public void slideSaved(String name){
+		statusLbl.setText("Status: Slideshow saved as " + name);
 	}
 	
 	private class ButtonListener implements ActionListener {
@@ -461,29 +475,27 @@ public class AdminFrame {
 			}else if (e.getSource() == pubChb){ // Announce pub
 				if (pubChb.isSelected()){
 					foodChb.setEnabled(true);
-					foodSttLbl.setForeground(Color.WHITE);
+					foodLbl.setForeground(Color.WHITE);
 					foodTxt.setEnabled(true);
-					pubSttLbl.setForeground(Color.WHITE);
+					pubLbl.setForeground(Color.WHITE);
 					eventTxt.setEnabled(true);
 				}else{
 					foodChb.setEnabled(false);
-					foodSttLbl.setForeground(Color.GRAY);
+					foodLbl.setForeground(Color.GRAY);
 					foodTxt.setEnabled(false);
-					pubSttLbl.setForeground(Color.GRAY);
+					pubLbl.setForeground(Color.GRAY);
 					eventTxt.setEnabled(false);
 				}
 				
 			}else if (e.getSource() == foodChb){ // Announce food
-				//...
+				statusLbl.setText("Status: Omnomnomnomnomnomnom");
 				
 			}else if (e.getSource() == announceBtn){ // Announce
 				controller.announce(foodTxt.getText(), eventTxt.getText(), pubChb.isSelected(), foodChb.isSelected());
 				statusLbl.setText("Status: Announcement was sent!");
 				
 			}else if (e.getSource() == savePathBtn){ // Save Slideshow
-				disable();
-				controller.popup("Name the slideshow: ", xmlPubPathTxt.getText(), false, false);
-				enable();
+				controller.popup("Name the slideshow: ", xmlPubPathTxt.getText());
 				statusLbl.setText("Status: Slideshow saved");
 			
 			}else if (e.getSource() == remPathBtn){ // Remove saved Slideshow
@@ -533,38 +545,38 @@ public class AdminFrame {
 		}
 
 		
-		public void disable() { // Disable buttons
-			saveSetBtn.setEnabled(false); //BUGG! xmlPubPathTxt enablas, även om den inte ska vara enbled
-			resetBtn.setEnabled(false);
-			startBtn.setEnabled(false);
-			exitBtn.setEnabled(false);
-			pubChb.setEnabled(false);
-			foodChb.setEnabled(false);
-			screenDDLst.setEnabled(false);
-			pubSlidesDDLst.setEnabled(false);
-			nrOfImgsTxt.setEnabled(false);
-			timeTxt.setEnabled(false);
-			nrOfCommentsTxt.setEnabled(false);
-			xmlPubPathTxt.setEnabled(false);
-			
-		}
-	
-		public void enable(){ // Enable buttons
-			saveSetBtn.setEnabled(true);
-			resetBtn.setEnabled(true);
-			startBtn.setEnabled(true);
-			exitBtn.setEnabled(true);
-			pubChb.setEnabled(true);
-			foodChb.setEnabled(true);
-			screenDDLst.setEnabled(true);
-			pubSlidesDDLst.setEnabled(true);
-			nrOfImgsTxt.setEnabled(true);
-			timeTxt.setEnabled(true);
-			nrOfCommentsTxt.setEnabled(true);
-			if (slideItem == null)
-				xmlPubPathTxt.setEnabled(true);
-			
-		}
+//		public void disable() { // Disable buttons
+//			saveSetBtn.setEnabled(false);
+//			resetBtn.setEnabled(false);
+//			startBtn.setEnabled(false);
+//			exitBtn.setEnabled(false);
+//			pubChb.setEnabled(false);
+//			foodChb.setEnabled(false);
+//			screenDDLst.setEnabled(false);
+//			pubSlidesDDLst.setEnabled(false);
+//			nrOfImgsTxt.setEnabled(false);
+//			timeTxt.setEnabled(false);
+//			nrOfCommentsTxt.setEnabled(false);
+//			xmlPubPathTxt.setEnabled(false);
+//			
+//		}
+//	
+//		public void enable(){ // Enable buttons
+//			saveSetBtn.setEnabled(true);
+//			resetBtn.setEnabled(true);
+//			startBtn.setEnabled(true);
+//			exitBtn.setEnabled(true);
+//			pubChb.setEnabled(true);
+//			foodChb.setEnabled(true);
+//			screenDDLst.setEnabled(true);
+//			pubSlidesDDLst.setEnabled(true);
+//			nrOfImgsTxt.setEnabled(true);
+//			timeTxt.setEnabled(true);
+//			nrOfCommentsTxt.setEnabled(true);
+//			if (slideItem == null)
+//				xmlPubPathTxt.setEnabled(true);
+//			
+//		}
 		
 	}
 
