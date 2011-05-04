@@ -23,12 +23,16 @@ public class ShowImageDrawing {
 		g2d = (Graphics2D) g;
 		g2d.setPaint(Color.BLACK);
 		g2d.fillRect(0, 0, monitorSize.width, monitorSize.height);
+		
+		
 		g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,
 				transperacy));
 		g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
 				RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 				RenderingHints.VALUE_ANTIALIAS_ON);
+		g2d.setRenderingHint(RenderingHints.KEY_COLOR_RENDERING,RenderingHints.VALUE_COLOR_RENDER_QUALITY);
+		g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
 	}
 
 	protected void drawComments(TextToDisplay[] comments) {
@@ -46,8 +50,7 @@ public class ShowImageDrawing {
 	protected void paintSlide(BufferedImage slideImage,
 			ImgRect imgRect) {
 		TexturePaint tp = new TexturePaint(slideImage, imgRect);
-		g2d.setRenderingHint(RenderingHints.KEY_COLOR_RENDERING,RenderingHints.VALUE_COLOR_RENDER_QUALITY);
-		g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+
 		g2d.setPaint(tp);
 		g2d.fill(imgRect);
 	}
