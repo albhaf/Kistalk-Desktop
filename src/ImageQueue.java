@@ -39,6 +39,10 @@ public class ImageQueue{
 		images.remove(tmp);
 	}
 
+	/**
+	 * returns first element and places it last in the queue.
+	 * @return
+	 */
 	public ImageXML getFirst() {
 		ImageXML image = images.peekFirst();
 		images.add(images.pop());
