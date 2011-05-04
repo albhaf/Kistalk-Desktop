@@ -26,6 +26,7 @@ public class TwoDSlideShowInfo {
 	int nrOfComments = 0;
 	int nrOfPics;
 	int timeStill;
+	int fadingSpeed;
 
 	public TwoDSlideShowInfo() {
 		fileFormats = new String[4];
@@ -62,6 +63,7 @@ public class TwoDSlideShowInfo {
 		urlArray = new URL[nrOfPics];
 		serverImgs = new Image[nrOfPics];
 		timeStill = Integer.valueOf(values[2]);
+		fadingSpeed = Integer.valueOf(values[3]);
 		fileFormats = values[4].split(" ");
 		xmlPath = values[6];
 		nrOfComments = Integer.valueOf(values[7]);
@@ -93,7 +95,7 @@ public class TwoDSlideShowInfo {
 	}
 
 	protected ShowImage createShowImage(Rectangle monitor) {
-		return new ShowImage(monitor, timeStill);
+		return new ShowImage(monitor, timeStill, fadingSpeed);
 	}
 
 	protected void updatePicture() throws IOException {		
@@ -125,6 +127,10 @@ public class TwoDSlideShowInfo {
 	
 	protected int getTimeStill(){
 		return timeStill;
+	}
+	
+	public int getFadingSpeed(){
+		return fadingSpeed;
 	}
 	
 }

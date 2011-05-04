@@ -55,22 +55,12 @@ public class ImportPubSlides {
 	 * @throws IOException
 	 *             Throws IOException if the file couldn't be found.
 	 */
-
-	/**
-	 * Methoed which loads one picture in the selected directory and returns it
-	 * as an Image.
-	 * 
-	 * @param fileNr
-	 *            int, which file in the array of found files.
-	 * @return Image, returns the chosen file as Image.
-	 * @throws IOException
-	 *             Throws IOException if the file couldn't be found.
-	 */
 	public BufferedImage getImage() throws IOException {
-		if(currentSlide < nrOfSlides-1)
+		if(currentSlide < nrOfSlides-1){
 			currentSlide++;
-		else
+		}else{
 			currentSlide = 0;
+		}
 		Image img = ImageIO.read(new File("Images//slide-" + currentSlide + ".hansimage"));
 		return (BufferedImage) img;
 	}
@@ -88,8 +78,7 @@ public class ImportPubSlides {
 	      for(int i=0; i<files.length; i++) {
 	         if(files[i].isDirectory()) {
 	           delDir(files[i]);
-	         }
-	         else {
+	         }else {
 	           files[i].delete();
 	         }
 	      }

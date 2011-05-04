@@ -74,19 +74,24 @@ public class ShowImageSet {
 		return imageStopPosition;
 	}
 
-	protected TextToDisplay[] setComments(List<CommentXML> imageComments,
-			TextToDisplay[] comments) {
+	protected TextToDisplay[][] setComments(List<CommentXML> imageComments,
+			TextToDisplay[][] comments) {
 		if (imageComments != null) {
 			if (imageComments.size() > 0) {
-				comments = new TextToDisplay[imageComments.size()];
+				comments = new TextToDisplay[imageComments.size()][2];
 				for (int i = 0; i < comments.length; i++) {
-					comments[i] = new TextToDisplay();
+					comments[i][0] = new TextToDisplay();
+					comments[i][1] = new TextToDisplay();
 
-					comments[i].setString(imageComments.get(i).getUser()
-							+ " wrote: " + imageComments.get(i).getContent());
-					comments[i].resetPos();
-					comments[i].addX(monitorSize.width - monitorSize.width / 3);
-					comments[i].addY(200 + (i * 100));
+					comments[i][0].setString(imageComments.get(i).getUser()
+							+ " wrote:");
+					comments[i][1].setString(imageComments.get(i).getContent());
+					comments[i][0].resetPos();
+					comments[i][1].resetPos();
+					comments[i][0].addX(monitorSize.width - monitorSize.width / 3);
+					comments[i][1].addX(monitorSize.width - monitorSize.width / 3);
+					comments[i][0].addY(200 + (i * 100));
+					comments[i][1].addY(200 + (i * 100+30));
 				}
 
 			}

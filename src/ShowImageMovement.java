@@ -1,18 +1,18 @@
 import java.awt.Dimension;
 
-
 public class ShowImageMovement {
-	public ShowImageMovement(){	
+	public ShowImageMovement() {
 	}
-	
-	protected void moveImageText(TextToDisplay imageCommentTxtDsp, boolean outgoing) {
+
+	protected void moveImageText(TextToDisplay imageCommentTxtDsp,
+			boolean outgoing) {
 		if (imageCommentTxtDsp.getY() > 700 && outgoing == false) {
 			imageCommentTxtDsp.addY(-2);
 		} else if (outgoing == true) {
 			imageCommentTxtDsp.addY(2);
 		}
 	}
-	
+
 	protected void moveUserText(TextToDisplay imageUserTxtDsp, boolean outgoing) {
 		if (outgoing == true) {
 			imageUserTxtDsp.addY(-1);
@@ -20,26 +20,28 @@ public class ShowImageMovement {
 			imageUserTxtDsp.addY(1);
 		}
 	}
-	
+
 	protected float setTransperacy(float transperacy, boolean outgoing, double i) {
-		if (outgoing) {
-			if (transperacy > 0.01) {
-				return (float) (transperacy - i);
+		if (outgoing == true) {
+			if (transperacy > 0) {
+				transperacy = (float) (transperacy - i);
 			}
-			else{
-				return (float) 0.001;
-			}			
 		} else {
-			if (transperacy < 0.99) {
-				return (float) (transperacy + i);
-			}
-			else {
-				return (float) 0.99;
+			if (transperacy < 1) {
+				transperacy = (float) (transperacy + i);
 			}
 		}
+		if (transperacy > 1) {
+			return 1;
+		} else if (transperacy < 0) {
+			return 0;
+		}
+
+		return transperacy;
 	}
 
-	protected int moveImage(Dimension timeStill, ImgRect imgRect, int imageStopPosition) {
+	protected int moveImage(Dimension timeStill, ImgRect imgRect,
+			int imageStopPosition) {
 		if (timeStill.height != 0 && imgRect.getX() == imageStopPosition) {
 
 			return timeStill.height - 1;
@@ -48,9 +50,10 @@ public class ShowImageMovement {
 			return timeStill.height;
 		}
 	}
-	
-	protected int moveSlide(Dimension timeStill, ImgRect imgRect, int monitorWidth, int imageWidth){
-		imgRect.setX((monitorWidth-imageWidth)/4);
+
+	protected int moveSlide(Dimension timeStill, ImgRect imgRect,
+			int monitorWidth, int imageWidth) {
+		imgRect.setX((monitorWidth - imageWidth) / 4);
 		if (timeStill.height != 0) {
 			return timeStill.height - 1;
 		} else {
