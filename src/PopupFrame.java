@@ -56,7 +56,7 @@ public class PopupFrame{
 		popFrame.setSize(400, 100);
 		popFrame.setTitle("KisTalk Popup");
 		popFrame.setResizable(false);
-		popFrame.setUndecorated(true);
+		popFrame.setUndecorated(false);
 		popPanel.setLayout(popLayout);
 		label.setText(message);
 		label.setForeground(Color.WHITE);
@@ -75,10 +75,10 @@ public class PopupFrame{
 								.addComponent(popTxt, 200, 200, 200)
 						)
 						.addGroup(popLayout.createSequentialGroup()
-								.addGap(120)
-								.addComponent(sbmBtn, 90, 90, 90)
-								.addGap(5)
+								.addGap(136)
 								.addComponent(clsBtn, 90, 90, 90)
+								.addGap(5)
+								.addComponent(sbmBtn, 90, 90, 90)
 						)
 		);
 		
@@ -91,8 +91,8 @@ public class PopupFrame{
 				)
 				.addGap(10)
 				.addGroup(popLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-						.addComponent(sbmBtn, 25, 25, 25)
 						.addComponent(clsBtn, 25, 25, 25)
+						.addComponent(sbmBtn, 25, 25, 25)
 				)
 				
 		);
@@ -105,6 +105,7 @@ public class PopupFrame{
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource() == sbmBtn){
 				controller.savePath(popTxt.getText());
+				popFrame.dispose();
 				
 			}else if(e.getSource() == clsBtn){
 				popFrame.dispose();
