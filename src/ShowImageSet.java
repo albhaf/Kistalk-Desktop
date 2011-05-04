@@ -11,6 +11,7 @@ public class ShowImageSet {
 	private Rectangle monitorSize;
 	private Dimension textStartPosition = new Dimension();
 	private Dimension imageSize = new Dimension();
+	int y; 
 
 	public ShowImageSet(Rectangle size) {
 		image = new BufferedImage(100, 100, BufferedImage.TYPE_INT_RGB);
@@ -75,10 +76,63 @@ public class ShowImageSet {
 		return imageStopPosition;
 	}
 
+	private TextToDisplay[][] setComment(int i, String commentIn, TextToDisplay[][] comments){
+		int j = 0;
+		int breakLine = (int) comments[i][0].getX()/30;
+		String[] tmp;
+		
+		do {
+			j++;
+			comments[i][j] = new TextToDisplay();
+
+			comments[i][j].resetPos();
+			comments[i][j].addX(monitorSize.width
+					- monitorSize.width / 3);
+			y = y + 30;
+			comments[i][j].addY(y);
+			if(commentIn.length() > breakLine){
+				String nextLine = commentIn.substring(0, breakLine);
+				commentIn = commentIn.substring(breakLine);
+				tmp = commentIn.split(" ", 2);
+				comments[i][j].setString(nextLine + tmp[0]);
+				if (tmp.length > 1){
+					commentIn = tmp[1];
+				}else{
+					comments[i][0].setLines(j);
+					break;
+				}
+			}else{
+				comments[i][j].setString(commentIn);
+				comments[i][0].setLines(j);
+				break;
+			}
+		}while(true);
+		return comments;
+	}
+	
+	private TextToDisplay[][] writeComments(List<CommentXML> imageComments,
+			TextToDisplay[][] comments){
+		for (int i = 0; i < comments.length; i++) {
+			comments[i][0] = new TextToDisplay();
+			comments[i][0].setString(imageComments.get(i).getUser()
+					+ " wrote:");
+			comments[i][0].resetPos();
+			comments[i][0].addX(monitorSize.width - monitorSize.width
+					/ 3);
+			y = y + 40;
+			comments[i][0].addY(y);
+
+			String tmpComment = imageComments.get(i).getContent();
+			
+			comments = setComment(i, tmpComment, comments);
+		}
+		return comments;
+	}
+	
 	protected TextToDisplay[][] setComments(List<CommentXML> imageComments,
 			TextToDisplay[][] comments) {
 		if (imageComments != null) {
-			int y = 200;
+			y = 200;
 			if (imageComments.size() > 0) {
 				int lines = 1;
 				for (int i = 0; i < imageComments.size(); i++) {
@@ -87,38 +141,7 @@ public class ShowImageSet {
 				}
 
 				comments = new TextToDisplay[imageComments.size()][lines+1];
-				for (int i = 0; i < comments.length; i++) {
-					comments[i][0] = new TextToDisplay();
-					comments[i][0].setString(imageComments.get(i).getUser()
-							+ " wrote:");
-					comments[i][0].resetPos();
-					comments[i][0].addX(monitorSize.width - monitorSize.width
-							/ 3);
-					y = y + 40;
-					comments[i][0].addY(y);
-
-					int j = 0;
-					
-					do {
-						j++;
-						comments[i][j] = new TextToDisplay();
-
-						comments[i][j].resetPos();
-						comments[i][j].addX(monitorSize.width
-								- monitorSize.width / 3);
-						y = y + 30;
-						comments[i][j].addY(y);
-						if(imageComments.get(i).getContent().length() - (j-1)*30 >29){
-							comments[i][j].setString(imageComments.get(i)
-									.getContent().substring((j-1)*30, j*30));
-						}else{
-							comments[i][j].setString(imageComments.get(i)
-									.getContent().substring((j-1)*30, imageComments.get(i).getContent().length()));
-							break;
-						}
-					}while(true);
-				}
-
+				writeComments(imageComments, comments);
 			}
 		}
 		return comments;
