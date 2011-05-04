@@ -20,10 +20,11 @@ public class ShowImage extends JPanel {
 	protected ImgRect imgRect; //
 	protected TextToDisplay imageUserTxtDsp;
 	protected TextToDisplay imageCommentTxtDsp;
-	protected TextToDisplay[] comments;
-	protected boolean outgoing = false;
+	protected TextToDisplay[][] comments;
+	protected boolean outgoing;
 	private BufferedImage slideImage;
-	private float transperacy = 0;
+	private float transperacy;
+	private int fadingSpeed;
 
 	private ShowImageSet showImageSet;
 	private ShowImageMovement showImageMovement;
@@ -36,14 +37,17 @@ public class ShowImage extends JPanel {
 	private Dimension timeStill = new Dimension();
 	private float imageStopPosition;
 	
-	public ShowImage(Rectangle tmpmonitor, int tmpTimeStill) {
-		monitorSize = tmpmonitor;
+	public ShowImage(Rectangle monitorIn, int timeStillIn, int speedIn) {
+		monitorSize = monitorIn;
 		imgRect = new ImgRect();
+		outgoing = false;
+		transperacy = 0;
+		fadingSpeed = speedIn;
 
 		imageCommentTxtDsp = new TextToDisplay();
 		imageUserTxtDsp = new TextToDisplay();
 
-		timeStill.width = tmpTimeStill;
+		timeStill.width = timeStillIn;
 		timeStill.height = timeStill.width;
 		showImageSet = new ShowImageSet(monitorSize);
 		showImageMovement = new ShowImageMovement();
@@ -82,7 +86,7 @@ public class ShowImage extends JPanel {
 
 	private void moveImageObjects() {
 		timeStill.height = showImageMovement.moveImage(timeStill, imgRect, (int) imageStopPosition);
-		transperacy = showImageMovement.setTransperacy(transperacy, outgoing, 0.01);
+		transperacy = showImageMovement.setTransperacy(transperacy, outgoing, fadingSpeed*0.01);
 
 		showImageMovement.moveUserText(imageUserTxtDsp, outgoing);
 		showImageMovement.moveImageText(imageCommentTxtDsp, outgoing);
@@ -91,7 +95,7 @@ public class ShowImage extends JPanel {
 	private void movePubSlide(){
 		if(transperacy >= 0.98)
 			timeStill.height = showImageMovement.moveSlide(timeStill, imgRect, monitorSize.width, slideImage.getWidth());
-		transperacy = showImageMovement.setTransperacy(transperacy, outgoing, 0.03);
+		transperacy = showImageMovement.setTransperacy(transperacy, outgoing, fadingSpeed * 0.03);
 	}
 	
 	

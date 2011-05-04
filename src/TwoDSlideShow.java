@@ -27,7 +27,6 @@ public class TwoDSlideShow extends Panel implements ActionListener {
  		imageSlide = false;
 		view = new TwoDSlideShowView();
 		info = new TwoDSlideShowInfo();
-//		pubSlides = new ImportPubSlides();
 		pubSlides = new ImportPubSlides("asd.ppt");
 		readConfig();
 		getScreenResolution();
@@ -40,7 +39,7 @@ public class TwoDSlideShow extends Panel implements ActionListener {
 
 	// Build the frame (Slideshow)
 	public void createFrame() {
-		slideShowHandler =  new ShowImage(monitor, info.getTimeStill());
+		slideShowHandler =  new ShowImage(monitor, info.getTimeStill(), info.getFadingSpeed());
 		view.createFrame(slideShowHandler, monitor);
 	}
 
