@@ -37,6 +37,10 @@ public class LogInFrame{
 		
 		logFrame = new JFrame();
 		JPanel logPanel = new JPanel(){
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = -4955458211222040417L;
 
 			public void paint(Graphics g){
 				g.drawImage(bgImage, 0,0, this);

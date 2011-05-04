@@ -26,6 +26,7 @@ public class ConfigSettings {
 	}
 
 	//	Saves current settings to Config (except Default Turtle, he only lives in config when config is defaultahrized)
+	@SuppressWarnings("deprecation")
 	public void setValues(String[] values) {
 		String[] lines = new String[49];
 		Date today = new Date();

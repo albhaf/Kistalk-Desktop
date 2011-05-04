@@ -19,8 +19,7 @@ public class ShowImageDrawing {
 		font = new Font("Serif", Font.BOLD, 50);
 	}
 
-	protected void drawBackground(Graphics g, Rectangle monitorSize,
-			float transperacy) {
+	protected void drawBackground(Graphics g, Rectangle monitorSize,float transperacy) {
 		g2d = (Graphics2D) g;
 		g2d.setPaint(Color.BLACK);
 		g2d.fillRect(0, 0, monitorSize.width, monitorSize.height);
@@ -49,8 +48,19 @@ public class ShowImageDrawing {
 				g2d.drawString(comments[i][0].getString(), comments[i][0].x,
 						comments[i][0].y);
 				g2d.setFont(commentFont);
-				g2d.drawString(comments[i][1].getString(), comments[i][1].x,
-						comments[i][1].y);
+				int j = 0;
+				do {
+					j++;
+					if(comments[i][j].getString().length() - 29 > 0){
+						g2d.drawString(comments[i][j].getString(), comments[i][j].x,
+								comments[i][j].y);
+					}else{
+						g2d.drawString(comments[i][j].getString(), comments[i][j].x,
+								comments[i][j].y);
+						break;
+					}
+				}while(true);
+				
 			}
 		}
 	}
@@ -74,9 +84,14 @@ public class ShowImageDrawing {
 					imageUserTxtDsp.y);
 		} catch (NullPointerException e) {
 		}
-
+		
+		//System.out.println(slideImage);
+		//System.out.println(imgRect);
+		
 		// Paints the iamge rectangle
-		TexturePaint tp = new TexturePaint(slideImage, imgRect);
+
+		 TexturePaint tp = new TexturePaint(slideImage, imgRect);
+
 		g2d.setPaint(tp);
 		g2d.fill(imgRect);
 	}

@@ -11,6 +11,7 @@ import java.awt.geom.Rectangle2D;
 		/**
 		 * The string/text 
 		 */
+		private boolean hasNext = false;
 		private String text;
 
 		/**
@@ -89,6 +90,14 @@ import java.awt.geom.Rectangle2D;
 		public void resetPos() {
 			this.y = 0;
 			this.x = 0;
+		}
+		
+		public void setHasNext(boolean in){
+			hasNext = in;
+		}
+		
+		public boolean hasNext(){
+			return hasNext;
 		}
 
 	}

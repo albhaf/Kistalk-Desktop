@@ -71,7 +71,7 @@ public class TwoDSlideShowInfo {
 	}
 
 	protected void setLinks() throws IOException {
-		xmlreader = new XMLreader(xmlPath);
+		xmlreader = new XMLreader(xmlPath + "?username=znorman&token=vqlcotvzuu");
 		imgXMLList = xmlreader.getImagesInfo();
 		for (int i = 0, j = 0; i < nrOfPics; i++, j++) {
 			try {
@@ -85,8 +85,7 @@ public class TwoDSlideShowInfo {
 	protected void setPictures() {
 		for (int i = 0; i < nrOfPics; i++) {
 			try {
-				serverImgs[i] = ImageIO
-						.read(urlArray[i]);
+				serverImgs[i] = ImageIO.read(urlArray[i]);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
