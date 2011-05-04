@@ -19,8 +19,7 @@ public class ShowImageDrawing {
 		font = new Font("Serif", Font.BOLD, 50);
 	}
 
-	protected void drawBackground(Graphics g, Rectangle monitorSize,
-			float transperacy) {
+	protected void drawBackground(Graphics g, Rectangle monitorSize,float transperacy) {
 		g2d = (Graphics2D) g;
 		g2d.setPaint(Color.BLACK);
 		g2d.fillRect(0, 0, monitorSize.width, monitorSize.height);
@@ -85,9 +84,14 @@ public class ShowImageDrawing {
 					imageUserTxtDsp.y);
 		} catch (NullPointerException e) {
 		}
-
+		
+		//System.out.println(slideImage);
+		//System.out.println(imgRect);
+		
 		// Paints the iamge rectangle
-		TexturePaint tp = new TexturePaint(slideImage, imgRect);
+
+		 TexturePaint tp = new TexturePaint(slideImage, imgRect);
+
 		g2d.setPaint(tp);
 		g2d.fill(imgRect);
 	}

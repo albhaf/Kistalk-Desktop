@@ -20,14 +20,28 @@ public class LogInFrame{
 	public TextField logUserTxt;
 	public TextField logPassTxt;
 	public JFrame logFrame;
+	LoginListener listener = new LoginListener();
+	DesktopApplication contr;
 	
-	public LogInFrame(){
+	public LogInFrame(DesktopApplication desk){
+		setup();
+		contr = desk;
+		
+	}
+	
+	public void setup(){
+		
 		// Background pic
 		ImageIcon icon = new ImageIcon("bgIcon.png");
 		final Image bgImage = icon.getImage();
 		
 		logFrame = new JFrame();
 		JPanel logPanel = new JPanel(){
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = -4955458211222040417L;
+
 			public void paint(Graphics g){
 				g.drawImage(bgImage, 0,0, this);
 				setOpaque(false);
@@ -48,8 +62,8 @@ public class LogInFrame{
 		clsBtn = new JButton();
 		GroupLayout logLayout = new GroupLayout(logPanel);
 		
-		logFrame.setLocation(400, 230);
-		logFrame.setSize(300, 190);
+		logFrame.setLocation(450, 250);
+		logFrame.setSize(250, 170);
 		logFrame.setTitle("KisTalk Login");
 		logFrame.setResizable(false);
 		logFrame.setUndecorated(true);
@@ -69,15 +83,18 @@ public class LogInFrame{
 		logInstrLbl.setForeground(Color.WHITE);
 		logInstrLbl.setFont(new Font("Imperial", Font.ITALIC, 8));
 		
+		logUserTxt.setText("androse");
+		logPassTxt.setText("6dd3vr1xil");
+		
 		sbmBtn.setText("Submit");
-		sbmBtn.addActionListener(new LoginListener());
+		sbmBtn.addActionListener(listener);
 		clsBtn.setText("Close");
-		clsBtn.addActionListener(new LoginListener());
+		clsBtn.addActionListener(listener);
 		
 		logLayout.setHorizontalGroup(
 				logLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
 					.addGroup(logLayout.createSequentialGroup()
-					.addGap(110)
+					.addGap(95)
 					.addComponent(logInLbl)
 					)
 					.addGap(10)
@@ -108,6 +125,7 @@ public class LogInFrame{
 		
 		logLayout.setVerticalGroup(
 				logLayout.createSequentialGroup()
+				.addGap(10)
 				.addComponent(logInLbl)
 				.addGap(10)
 				.addGroup(logLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
@@ -133,10 +151,14 @@ public class LogInFrame{
 		logFrame.add(logPanel);
 	}
 	
-	private class LoginListener extends DesktopApplication implements ActionListener {
+	public void clooose(){
+		this.logFrame.dispose();
+	}
+	
+	private class LoginListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource() == sbmBtn){
-				login(logUserTxt.getText(), logPassTxt.getText(), logFrame);
+				contr.login(logUserTxt.getText(), logPassTxt.getText(), logFrame);
 			}else if (e.getSource() == clsBtn){
 				logFrame.dispose();
 			}

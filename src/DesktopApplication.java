@@ -1,29 +1,26 @@
 import java.io.IOException;
-import java.util.Observable;
-import java.util.Observer;
-
 import javax.swing.JFrame;
 
 public class DesktopApplication {
 	String event, food_description, path;
-	boolean pub_open = false, food_ready = false;
 	NiftyHTTP nifty;
 	ConfigSettings config = new ConfigSettings();
 	SlidePath slidepath = new SlidePath();
+	LogInFrame loginframe;
 	
 	public DesktopApplication() {
-		LogInFrame loginframe = new LogInFrame();
+		loginframe = new LogInFrame(this);
 		loginframe.logFrame.setVisible(true);
 		
 	}
 
 	public void login(String user, String token, JFrame logFrame) {
 		String[] values = new String[11];
-		AdminFrame adminframe = new AdminFrame();
+		AdminFrame adminframe = new AdminFrame(this);
 		nifty = new NiftyHTTP(user, token);
 		
 		if (nifty.validateToken()) {
-			logFrame.dispose();
+			loginframe.clooose();
 			values = config.getValues();
 			adminframe.setupFrame(values, slidepath.ninja(values[9]), slidepath.ninja(values[10]));
 			
@@ -45,12 +42,12 @@ public class DesktopApplication {
 		return config.resetValues();
 	}
 	
-	public void announce(String food, String ev){ // Send announcement to server
-		if (food.equals(null) == false){
-			food_description = food;
-		}else if(ev.equals(null) == false){
-			event = ev;
-		}
+	public void announce(String food_description, String event, boolean pub_open, boolean food_ready){ // Send announcement to server
+//		if (food.equals(null) == false){
+//			food_description = food;
+//		}else if(ev.equals(null) == false){
+//			event = ev;
+//		}
 		
 		nifty.postAnnouncement(food_description, event, pub_open, food_ready);
 	}
@@ -65,9 +62,7 @@ public class DesktopApplication {
 	
 	public void popup(String message, String pathTmp, boolean foodChbTmp, boolean pubChbTmp){ //Pub, Food & SaveSlideshow
 		path = pathTmp;
-		food_ready = foodChbTmp;
-		pub_open = pubChbTmp;
-		PopupFrame popupframe = new PopupFrame(message);
+		PopupFrame popupframe = new PopupFrame(message, this);
 		popupframe.popFrame.setVisible(true);
 		
 	}

@@ -85,8 +85,7 @@ public class TwoDSlideShowInfo {
 	protected void setPictures() {
 		for (int i = 0; i < nrOfPics; i++) {
 			try {
-				serverImgs[i] = ImageIO
-						.read(urlArray[i]);
+				serverImgs[i] = ImageIO.read(urlArray[i]);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
