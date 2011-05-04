@@ -11,7 +11,7 @@ import java.awt.geom.Rectangle2D;
 		/**
 		 * The string/text 
 		 */
-		private boolean hasNext = false;
+		private int lines = 0;
 		private String text;
 
 		/**
@@ -42,7 +42,7 @@ import java.awt.geom.Rectangle2D;
 		 */
 		public int length() {
 			return text.length();
-		}
+		}boolean hasNext = false;
 
 		/**
 		 * Gets the string
@@ -92,12 +92,13 @@ import java.awt.geom.Rectangle2D;
 			this.x = 0;
 		}
 		
-		public void setHasNext(boolean in){
-			hasNext = in;
+		public void setLines(int in){
+			lines = in;
 		}
 		
-		public boolean hasNext(){
-			return hasNext;
+		public int getLines(){
+			return lines;
 		}
+		
 
 	}
