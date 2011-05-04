@@ -21,6 +21,7 @@ import javax.swing.JPanel;
 
 public class AdminFrame {
 	String slideItem = null;
+	String[] values;
 	
 	JFrame adminFrame;
 	JFrame popFrame;
@@ -77,7 +78,7 @@ public class AdminFrame {
 
 	//	Setting up the settings frame
 	public void setupFrame(final String[] confValues, final List<String> slideNames, final List<String> slidePaths, final Image bgImage){
-		
+		values = confValues;
 		
 		//	Create all objects
 		adminFrame = new JFrame();
@@ -187,20 +188,20 @@ public class AdminFrame {
 		pubnfoodStatusLbl.setFont(new Font("Helvetica", Font.PLAIN, 10));
 		
 		//	Text settings
-		nrOfImgsTxt.setText(confValues[0]);
+		nrOfImgsTxt.setText(values[0]);
 		nrOfImgsTxt.setFont(new Font("Imperial", Font.PLAIN, 12));
 		
-		timeTxt.setText(confValues[2]);
+		timeTxt.setText(values[2]);
 		timeTxt.setFont(new Font("Imperial", Font.PLAIN, 12));
 		
-		xmlPubPathTxt.setText(confValues[8]);
+		xmlPubPathTxt.setText(values[8]);
 		xmlPubPathTxt.setFont(new Font("Imperial", Font.PLAIN, 12));
 		
-		legalFilesTxt.setText(confValues[4]);
+		legalFilesTxt.setText(values[4]);
 		legalFilesTxt.setFont(new Font("Imperial", Font.ITALIC, 12));
 		legalFilesTxt.setEnabled(false);
 		
-		nrOfCommentsTxt.setText(confValues[7]);
+		nrOfCommentsTxt.setText(values[7]);
 		nrOfCommentsTxt.setFont(new Font("Imperial", Font.PLAIN, 12));
 		
 		eventTxt.setFont(new Font("Imperial", Font.PLAIN, 12));
@@ -210,7 +211,7 @@ public class AdminFrame {
 		foodTxt.setEnabled(false);
 		
 		fadeTxt.setFont(new Font("Imperial", Font.PLAIN, 12));
-		fadeTxt.setText(confValues[3]);
+		fadeTxt.setText(values[3]);
 		
 		//	Button settings
 		saveSetBtn.setText("Save settings");
@@ -302,9 +303,9 @@ public class AdminFrame {
 						if (e.getStateChange() == ItemEvent.SELECTED)
 							statusLbl.setText("Status: " + e.getItem().toString() + " screen it is!");
 							if (e.getItem().toString() == "This"){
-								confValues[5] = "0";
+								values[5] = "0";
 							}else if (e.getItem().toString() == "External"){
-								confValues[5] = "1";
+								values[5] = "1";
 							}
 					}
 				}
@@ -491,7 +492,6 @@ public class AdminFrame {
 	}
 	
 	private class ButtonListener implements ActionListener {
-		String[] values = new String[11];
 		
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource() == saveSetBtn){ // Save settings to config
@@ -576,6 +576,7 @@ public class AdminFrame {
 		public void getTxt(){ // Get text from textfields
 			values[0] = nrOfImgsTxt.getText();
 			values[2] = timeTxt.getText();
+			values[3] = fadeTxt.getText();
 			values[7] = nrOfCommentsTxt.getText();
 			values[8] = xmlPubPathTxt.getText();
 			
@@ -584,6 +585,7 @@ public class AdminFrame {
 		public void setTxt(){ // Write text to textfields
 			nrOfImgsTxt.setText(values[0]);
 			timeTxt.setText(values[2]);
+			fadeTxt.setText(values[3]);
 			nrOfCommentsTxt.setText(values[7]);
 			xmlPubPathTxt.setText(values[8]);
 			
