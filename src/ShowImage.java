@@ -53,7 +53,7 @@ public class ShowImage extends JPanel {
 		showImageMovement = new ShowImageMovement();
 		showImageDrawing = new ShowImageDrawing();
 	}
-
+	
 	public void setNewSlide(BufferedImage image){
 		resetImage(image);
 		
