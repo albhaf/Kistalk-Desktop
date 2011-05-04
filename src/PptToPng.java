@@ -35,10 +35,9 @@ public class PptToPng {
 		extract();
 	}
 
-	public int getNrFiles(){
+	public int getNrFiles() {
 		return nrFiles;
 	}
-
 
 	/**
 	 * Method for setting the filepath to the passed argument.
@@ -59,7 +58,6 @@ public class PptToPng {
 	public void extract() {
 		converter(filepath);
 	}
-
 
 	/**
 	 * Opens the ppt file and returns it in a SlideShow.
@@ -88,10 +86,9 @@ public class PptToPng {
 	 *            String, the filename.
 	 * @throws IOException
 	 */
-	private void pngWriter(BufferedImage tmpImg, String tmpName)
-			throws IOException {
-		FileOutputStream out = new FileOutputStream("Images//" +(tmpName) + ".hansimage");
-		ImageIO.write( tmpImg, "png", out);
+	private void pngWriter(BufferedImage tmpImg, String tmpName) throws IOException {
+		FileOutputStream out = new FileOutputStream("Images//" + (tmpName) + ".hansimage");
+		ImageIO.write(tmpImg, "png", out);
 		out.close();
 	}
 
@@ -108,7 +105,7 @@ public class PptToPng {
 		File dir = new File("Images");
 		dir.deleteOnExit();
 		dir.mkdir();
-		
+
 		try {
 			ppt = fileOpener(tmpFilepath);
 		} catch (IOException e) {
@@ -123,16 +120,17 @@ public class PptToPng {
 
 			// if tmpimgWidth is 0 the slide shouldn't be scaled and therefore
 			// is slideToImage called with the scaling values set to slide size.
-				bImg = slideToImage(slide[i], dimension);
+			bImg = slideToImage(slide[i], dimension);
 
 			// save the output
 			try {
 				pngWriter(bImg, "slide-" + i);
-				
+				nrFiles = i + 1;
+
 			} catch (IOException e) {
 				System.out.println("Kunde inte skriva slide" + i + "till ny fil");
 			}
-			nrFiles = i+1;
+
 		}
 	}
 
@@ -151,20 +149,19 @@ public class PptToPng {
 	 */
 	private BufferedImage slideToImage(Slide tmpslide, Dimension dimension) {
 
-		BufferedImage img = new BufferedImage(dimension.width, dimension.height,
-				BufferedImage.TYPE_INT_RGB);
+		BufferedImage img = new BufferedImage(dimension.width,
+				dimension.height, BufferedImage.TYPE_INT_RGB);
 
 		// Creates and calculate the scaling properties
 
 		// create the graphic "painter"
 		Graphics2D graphics = img.createGraphics();
 
-
 		graphics.setPaint(Color.white);
 
-
 		// fills the image with a square
-		graphics.fill(new Rectangle2D.Float(0, 0, dimension.width,dimension.height));
+		graphics.fill(new Rectangle2D.Float(0, 0, dimension.width,
+				dimension.height));
 
 		// render image in the square
 		tmpslide.draw(graphics);
