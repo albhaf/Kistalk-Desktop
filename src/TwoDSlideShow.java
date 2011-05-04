@@ -39,6 +39,7 @@ public class TwoDSlideShow extends Panel implements ActionListener {
  	
  	public void close(){
  		view.terminate();
+ 		t.stop();
  	}
 
 	// Build the frame (Slideshow)
