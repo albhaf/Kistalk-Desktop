@@ -32,7 +32,7 @@ Number_of_Hans %-
  
 Timer_interval %10
  
-Fading_speed %1
+Fading_Speed %1
  
 supported_image_formats %.jpg .png .gif .bnp
  
