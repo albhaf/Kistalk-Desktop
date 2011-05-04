@@ -43,25 +43,26 @@ public class ShowImageSet {
 				/ (float) (tmpImage.getHeight());
 		imgRect.height = imageSize.height;
 		imgRect.width = imgRect.height * factor;
-		imgRect.setX(((int)monitorSize.getWidth()-tmpImage.getWidth())/4);
+		imgRect.setX(((int) monitorSize.getWidth() - tmpImage.getWidth()) / 4);
 		imageStopPosition = ((monitorSize.width - imgRect.width
 				- (monitorSize.width / 3) - 30));
 		imageStopPosition = imageStopPosition - (imageStopPosition % 5);
 		scalePositionPicture();
 		return imageStopPosition;
 	}
-	
-	protected float setSlide(BufferedImage tmpImage, ImgRect imgRect, Rectangle monitorHeight, 
-			float imageStopPosition) {
+
+	protected float setSlide(BufferedImage tmpImage, ImgRect imgRect,
+			Rectangle monitorHeight, float imageStopPosition) {
 		imgRect.resetPos();
-		if (tmpImage.getWidth()/monitorSize.getWidth() < tmpImage.getHeight()/monitorSize.getHeight()){
+		if (tmpImage.getWidth() / monitorSize.getWidth() < tmpImage.getHeight()
+				/ monitorSize.getHeight()) {
 			float factor = (float) (tmpImage.getWidth())
-				/ (float) (tmpImage.getHeight());
+					/ (float) (tmpImage.getHeight());
 			imgRect.height = imageSize.height;
 			imgRect.width = imgRect.height * factor;
-		}else{
+		} else {
 			float factor = (float) (tmpImage.getHeight())
-			/ (float) (tmpImage.getWidth());
+					/ (float) (tmpImage.getWidth());
 			imgRect.width = imageSize.width;
 			imgRect.height = imgRect.width * factor;
 		}
@@ -78,20 +79,38 @@ public class ShowImageSet {
 			TextToDisplay[][] comments) {
 		if (imageComments != null) {
 			if (imageComments.size() > 0) {
-				comments = new TextToDisplay[imageComments.size()][2];
+				int lines = 1;
+				for (int i = 0; i < imageComments.size(); i++) {
+					if (lines < imageComments.get(i).getContent().length())
+						lines = (imageComments.get(i).getContent().length() / 30) + 1;
+				}
+
+				comments = new TextToDisplay[imageComments.size()][lines];
 				for (int i = 0; i < comments.length; i++) {
 					comments[i][0] = new TextToDisplay();
-					comments[i][1] = new TextToDisplay();
-
 					comments[i][0].setString(imageComments.get(i).getUser()
 							+ " wrote:");
-					comments[i][1].setString(imageComments.get(i).getContent());
 					comments[i][0].resetPos();
-					comments[i][1].resetPos();
-					comments[i][0].addX(monitorSize.width - monitorSize.width / 3);
-					comments[i][1].addX(monitorSize.width - monitorSize.width / 3);
+					comments[i][0].addX(monitorSize.width - monitorSize.width
+							/ 3);
 					comments[i][0].addY(200 + (i * 100));
-					comments[i][1].addY(200 + (i * 100+30));
+
+					for (int j = 1; j < lines; j++) {
+						comments[i][j] = new TextToDisplay();
+						if(imageComments.get(i).getContent().length() - (j-1)*30 >29){
+							comments[i][j].setString(imageComments.get(i)
+									.getContent().substring((j-1)*30, j*30));
+							comments[i][j].setHasNext(true);
+						}else{
+							comments[i][j].setString(imageComments.get(i)
+									.getContent().substring((j-1)*30));
+							comments[i][j].setHasNext(false);
+						}
+						comments[i][j].resetPos();
+						comments[i][j].addX(monitorSize.width
+								- monitorSize.width / 3);
+						comments[i][j].addY(200 + (i * 100 + j*30));
+					}
 				}
 
 			}
@@ -104,14 +123,14 @@ public class ShowImageSet {
 		textStartPosition.width = (monitorSize.width / 2)
 				- (correction * (ImageUserFontSize / 3));
 	}
-	
-	public void scalePositionPicture(){
+
+	public void scalePositionPicture() {
 		double ration = image.getWidth() / image.getHeight();
 		imageSize.height = (int) (image.getHeight() * monitorSize.height * 0.006);
 		imageSize.width = (int) (imageSize.height * ration);
 	}
-	
-	public void scalePositionSlide(){
+
+	public void scalePositionSlide() {
 		double ration = image.getWidth() / image.getHeight();
 		imageSize.height = (int) (image.getHeight() * monitorSize.height * 0.01);
 		imageSize.width = (int) (imageSize.height * ration);
