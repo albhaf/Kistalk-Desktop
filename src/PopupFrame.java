@@ -19,8 +19,15 @@ public class PopupFrame{
 	public JLabel label;
 	public JFrame popFrame;
 	public TextField popTxt;
+	public DesktopApplication controller;
 	
-	public PopupFrame(String message){
+	public PopupFrame(String messageTmp, DesktopApplication contrTmp){
+		controller = contrTmp;
+		setup(messageTmp);
+	}
+	
+	public void setup(String message){
+		
 		ButtonListener listener = new ButtonListener();
 		
 		//	Background Pic
@@ -99,16 +106,10 @@ public class PopupFrame{
 		
 	}
 	
-	private class ButtonListener extends DesktopApplication implements ActionListener {
+	private class ButtonListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource() == sbmBtn){
-				if (label.getText().equals("What food? ")){
-					announce(popTxt.getText(), null);
-				}else if (label.getText().equals("What event? ")){
-					announce(null, popTxt.getText());
-				}else if (label.getText().equals("Name the slideshow: ")){
-					savePath(popTxt.getText());
-				}
+				controller.savePath(popTxt.getText());
 				
 			}else if(e.getSource() == clsBtn){
 				popFrame.dispose();
