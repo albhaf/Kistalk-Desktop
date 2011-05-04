@@ -129,6 +129,7 @@ public class AdminFrame {
 		adminFrame.setLocation(300, 50);
 		adminFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		adminFrame.setTitle("KisTalk Slideshow Settings");
+		adminFrame.setUndecorated(true);
 		
 		//	Panel settings
 		thePanel.setLayout(groupLayout);
@@ -250,6 +251,7 @@ public class AdminFrame {
 		
 		screenDDLst.addItem("External");
 		screenDDLst.addItem("This");
+		screenDDLst.setSelectedItem("THIS");
 		screenDDLst.setFont(new Font("Gulim", Font.PLAIN, 12));
 		screenDDLst.addItemListener(
 				new ItemListener(){
@@ -424,18 +426,20 @@ public class AdminFrame {
 				
 			}else if (e.getSource() == foodChb){ // Announce food
 				disable();
-				announceFood(popup("What food? "), foodChb.isSelected(), pubChb.isSelected());
+				popup("What food? ", null, foodChb.isSelected(), pubChb.isSelected());
 				enable();
 				statusLbl.setText("Status: Dinner is served!");
 				
 			}else if (e.getSource() == pubChb){ // Announce pub
 				disable();
-				popup("What event? ");
+				popup("What event? ", null, foodChb.isSelected(), pubChb.isSelected());
 				enable();
 				statusLbl.setText("Status: Pub is open!");
 				
 			}else if (e.getSource() == savePathBtn){ // Save Slideshow
-				savePath(xmlPubPathTxt.getText());
+				disable();
+				popup("Name the slideshow: ", xmlPubPathTxt.getText(), false, false);
+				enable();
 				statusLbl.setText("Status: Slideshow saved");
 			
 			}else if (e.getSource() == remPathBtn){ // Remove saved Slideshow

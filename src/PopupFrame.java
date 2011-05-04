@@ -92,14 +92,18 @@ public class PopupFrame{
 		
 		popFrame.add(popPanel);
 		
-		popFrame.setVisible(true);
-		
 	}
 	
 	private class ButtonListener extends DesktopApplication implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource() == sbmBtn){
-//				announcePub(popTxt.getText(), foodChb.isSelected(), pubChb.isSelected());
+				if (label.getText().equals("What food? ")){
+					announce(popTxt.getText(), null);
+				}else if (label.getText().equals("What event? ")){
+					announce(null, popTxt.getText());
+				}else if (label.getText().equals("Name the slideshow: ")){
+					savePath(popTxt.getText());
+				}
 				
 			}else if(e.getSource() == clsBtn){
 				popFrame.dispose();

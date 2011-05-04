@@ -52,6 +52,7 @@ public class LogInFrame{
 		logFrame.setSize(300, 190);
 		logFrame.setTitle("KisTalk Login");
 		logFrame.setResizable(false);
+		logFrame.setUndecorated(true);
 		logFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		logPanel.setLayout(logLayout);
 		

@@ -1,7 +1,7 @@
 import java.net.URL;
 import java.util.LinkedList;
 
-public class ImagesQueue /* extends LinkedList<ImageXML> */{
+public class ImageQueue{
 	/**
 	 * 
 	 */
@@ -10,9 +10,9 @@ public class ImagesQueue /* extends LinkedList<ImageXML> */{
 	LinkedList<ImageXML> images;
 	int maxSize;
 
-	public ImagesQueue() {
+	public ImageQueue() {
 		images = new LinkedList<ImageXML>();
-		maxSize = 0;
+		maxSize = 10;
 	}
 
 	public int Size() {
@@ -26,23 +26,44 @@ public class ImagesQueue /* extends LinkedList<ImageXML> */{
 	public void setMaxSize(int tmpSize) {
 		maxSize = tmpSize;
 	}
+	
+	public void removeLast(){
+		images.removeLast();
+	}
+	
+	public void removeFirst(){
+		images.removeFirst();
+	}
 
 	public void removeElement(int tmp) {
 		images.remove(tmp);
 	}
 
-	public ImageXML look() {
+	/**
+	 * returns first element and places it last in the queue.
+	 * @return
+	 */
+	public ImageXML getFirst() {
 		ImageXML image = images.peekFirst();
 		images.add(images.pop());
 
 		return image;
 	}
 
-	public boolean push(ImageXML tmp) {
+	public boolean addFirst(ImageXML tmp) {
 		if (images.size() < maxSize) {
 			images.push(tmp);
 			return true;
 		} else {
+			return false;
+		}
+	}
+	
+	public boolean addLast(ImageXML tmp){
+		if(images.size() < maxSize){
+			images.addLast(tmp);
+			return true;
+		}else {
 			return false;
 		}
 	}
@@ -65,7 +86,6 @@ public class ImagesQueue /* extends LinkedList<ImageXML> */{
 	}
 
 	public ImageXML pop() {
-
 		return images.pop();
 	}
 
