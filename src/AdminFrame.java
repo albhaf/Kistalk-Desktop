@@ -46,10 +46,7 @@ public class AdminFrame {
 	JLabel nrOfCommentsLbl;
 	JLabel screenLbl;
 	JLabel bgLbl;
-	JLabel sttsPubLbl;
-	JLabel sttsEventLbl;
-	JLabel sttsFoodRdyLbl;
-	JLabel sttsFoodLbl;
+	JLabel pubnfoodStatusLbl;
 	JLabel fadeLbl;
 	
 	TextField nrOfImgsTxt;
@@ -105,11 +102,7 @@ public class AdminFrame {
 		screenLbl = new JLabel();
 		bgLbl = new JLabel();
 		fadeLbl = new JLabel();
-		
-		sttsPubLbl = new JLabel();
-		sttsEventLbl = new JLabel();
-		sttsFoodRdyLbl = new JLabel();
-		sttsFoodLbl = new JLabel();
+		pubnfoodStatusLbl = new JLabel();
 		
 		nrOfImgsTxt = new TextField();
 		timeTxt = new TextField();
@@ -189,22 +182,9 @@ public class AdminFrame {
 		fadeLbl.setText("Fading speed (ms): ");
 		fadeLbl.setForeground(Color.WHITE);
 		
-		
-		sttsPubLbl.setText("Pub_open: -");
-		sttsPubLbl.setForeground(Color.WHITE);
-		sttsPubLbl.setFont(new Font("Helvetica", Font.ITALIC, 10));
-		
-		sttsEventLbl.setText("Event: -");
-		sttsEventLbl.setForeground(Color.WHITE);
-		sttsEventLbl.setFont(new Font("Helvetica", Font.ITALIC, 10));
-		
-		sttsFoodRdyLbl.setText("Food_ready: -");
-		sttsFoodRdyLbl.setForeground(Color.WHITE);
-		sttsFoodRdyLbl.setFont(new Font("Helvetica", Font.ITALIC, 10));
-		
-		sttsFoodLbl.setText("Food: -");
-		sttsFoodLbl.setForeground(Color.WHITE);
-		sttsFoodLbl.setFont(new Font("Helvetica", Font.ITALIC, 10));
+		pubnfoodStatusLbl.setText("Pub_open: -  Event: -  Food_ready: -  Food: -");
+		pubnfoodStatusLbl.setForeground(Color.WHITE);
+		pubnfoodStatusLbl.setFont(new Font("Helvetica", Font.PLAIN, 10));
 		
 		//	Text settings
 		nrOfImgsTxt.setText(confValues[0]);
@@ -414,10 +394,7 @@ public class AdminFrame {
 			)
 			.addComponent(statusLbl)
 			.addGroup(groupLayout.createSequentialGroup()
-				.addComponent(sttsPubLbl)
-				.addComponent(sttsFoodRdyLbl)
-				.addComponent(sttsEventLbl)
-				.addComponent(sttsFoodLbl)
+				.addComponent(pubnfoodStatusLbl)
 			)
 		);
 		
@@ -500,10 +477,7 @@ public class AdminFrame {
 				  .addGap(10)
 				  .addComponent(statusLbl)
 				  .addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-						.addComponent(sttsPubLbl)
-						.addComponent(sttsFoodRdyLbl)
-						.addComponent(sttsEventLbl)
-						.addComponent(sttsFoodLbl)
+						.addComponent(pubnfoodStatusLbl)
 				  )
 			);
 		
@@ -554,11 +528,8 @@ public class AdminFrame {
 						foodTxt.setText("-");
 					controller.announce(foodTxt.getText(), eventTxt.getText(), pubChb.isSelected(), foodChb.isSelected());
 					statusLbl.setText("Status: Announcement was sent!");
-					sttsPubLbl.setText("Pub_open: " + pubChb.isSelected());
-					sttsEventLbl.setText("Event: " + eventTxt.getText());
-					sttsFoodRdyLbl.setText("Food_ready: " + foodChb.isSelected());
-					sttsFoodLbl.setText("Food: " + foodTxt.getText());
-				
+					pubnfoodStatusLbl.setText("Pub_open: " + pubChb.isSelected() + "  Event: " + eventTxt.getText() + "  Food_ready: " + foodChb.isSelected() + "  Food: " + foodTxt.getText());
+					
 					foodTxt.setText("");
 					eventTxt.setText("");
 					pubChb.setSelected(false);
@@ -586,7 +557,7 @@ public class AdminFrame {
 				controller.setConf(values);
 				exitBtn.setText("Quit SlideShow");
 				startBtn.setEnabled(false);
-				statusLbl.setText("Status: Starting Slideshow...");
+				statusLbl.setText("Status: Slideshow started");
 				controller.startShow();
 				
 			}else if (e.getSource() == exitBtn){ // Exit Slideshow / Program

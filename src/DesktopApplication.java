@@ -10,6 +10,7 @@ public class DesktopApplication {
 	NiftyHTTP nifty;
 	LogInFrame loginframe;
 	AdminFrame adminframe;
+	TwoDSlideShow slideshow;
 	ConfigSettings config = new ConfigSettings();
 	SlidePath slidepath = new SlidePath();
 	
@@ -71,14 +72,14 @@ public class DesktopApplication {
 	
 	public void startShow(){
 		try {
-			new TwoDSlideShow();
+			slideshow = new TwoDSlideShow();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 	
 	public void exitShow(){
-		//exit twoDSlideShow only...
+		slideshow.close();
 	}
 
 	// Main
