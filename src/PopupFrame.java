@@ -1,5 +1,4 @@
 import java.awt.Color;
-import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.TextField;
@@ -30,6 +29,12 @@ public class PopupFrame{
 		
 		popFrame = new JFrame();
 		JPanel popPanel = new JPanel(){ // Insert annan bild! Knapp ist för Kryss
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 7059413258966488047L;
+
+
 			public void paint(Graphics g){
 				g.drawImage(bgImage, 0,0, this);
 				setOpaque(false);

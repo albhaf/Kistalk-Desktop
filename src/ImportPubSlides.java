@@ -7,7 +7,8 @@ import javax.imageio.ImageIO;
 
 public class ImportPubSlides {
 	PptToPng pptToPng;
-	int nrOfSlides, currentSlide;
+	int nrOfSlides;
+	int currentSlide;
 
 	/**
 	 * constructor which takes the directory path to the file(s) as input
@@ -22,10 +23,6 @@ public class ImportPubSlides {
 		currentSlide = -1;
 		pptToPng.extract();
 		countFiles();
-	}
-
-	public ImportPubSlides() {
-		nrOfSlides = 0;
 	}
 
 	/**
