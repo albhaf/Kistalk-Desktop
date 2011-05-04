@@ -87,9 +87,10 @@ public class ShowImageSet {
 
 			comments[i][j].resetPos();
 			comments[i][j].addX(monitorSize.width
-					- monitorSize.width / 3);
+					- monitorSize.width / 3 + 5);
 			y = y + 30;
 			comments[i][j].addY(y);
+			
 			if(commentIn.length() > breakLine){
 				String nextLine = commentIn.substring(0, breakLine);
 				commentIn = commentIn.substring(breakLine);
