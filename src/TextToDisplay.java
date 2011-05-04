@@ -11,7 +11,7 @@ import java.awt.geom.Rectangle2D;
 		/**
 		 * The string/text 
 		 */
-		private boolean hasNext;
+		private boolean hasNext = false;
 		private String text;
 
 		/**

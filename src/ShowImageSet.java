@@ -81,11 +81,11 @@ public class ShowImageSet {
 			if (imageComments.size() > 0) {
 				int lines = 1;
 				for (int i = 0; i < imageComments.size(); i++) {
-					if (lines < imageComments.get(i).getContent().length())
+					if (lines < imageComments.get(i).getContent().length()/30 + 1)
 						lines = (imageComments.get(i).getContent().length() / 30) + 1;
 				}
 
-				comments = new TextToDisplay[imageComments.size()][lines];
+				comments = new TextToDisplay[imageComments.size()][lines+1];
 				for (int i = 0; i < comments.length; i++) {
 					comments[i][0] = new TextToDisplay();
 					comments[i][0].setString(imageComments.get(i).getUser()
@@ -95,22 +95,24 @@ public class ShowImageSet {
 							/ 3);
 					comments[i][0].addY(200 + (i * 100));
 
-					for (int j = 1; j < lines; j++) {
+					int j = 0;
+					do {
+						j++;
 						comments[i][j] = new TextToDisplay();
-						if(imageComments.get(i).getContent().length() - (j-1)*30 >29){
-							comments[i][j].setString(imageComments.get(i)
-									.getContent().substring((j-1)*30, j*30));
-							comments[i][j].setHasNext(true);
-						}else{
-							comments[i][j].setString(imageComments.get(i)
-									.getContent().substring((j-1)*30));
-							comments[i][j].setHasNext(false);
-						}
+
 						comments[i][j].resetPos();
 						comments[i][j].addX(monitorSize.width
 								- monitorSize.width / 3);
 						comments[i][j].addY(200 + (i * 100 + j*30));
-					}
+						if(imageComments.get(i).getContent().length() - (j-1)*30 >29){
+							comments[i][j].setString(imageComments.get(i)
+									.getContent().substring((j-1)*30, j*30));
+						}else{
+							comments[i][j].setString(imageComments.get(i)
+									.getContent().substring((j-1)*30, imageComments.get(i).getContent().length()));
+							break;
+						}
+					}while(true);
 				}
 
 			}
