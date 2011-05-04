@@ -55,17 +55,6 @@ public class ImportPubSlides {
 	 * @throws IOException
 	 *             Throws IOException if the file couldn't be found.
 	 */
-
-	/**
-	 * Methoed which loads one picture in the selected directory and returns it
-	 * as an Image.
-	 * 
-	 * @param fileNr
-	 *            int, which file in the array of found files.
-	 * @return Image, returns the chosen file as Image.
-	 * @throws IOException
-	 *             Throws IOException if the file couldn't be found.
-	 */
 	public BufferedImage getImage() throws IOException {
 		if(currentSlide < nrOfSlides-1){
 			currentSlide++;
