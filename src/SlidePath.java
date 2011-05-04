@@ -65,7 +65,7 @@ public class SlidePath {
 		LinkedList<String> part = new LinkedList<String>();
 		Scanner scanner = new Scanner(line);
 		
-		scanner.useDelimiter("|");
+		scanner.useDelimiter("\\|");
 		
 		while(scanner.hasNext()){
 			part.add(scanner.next());

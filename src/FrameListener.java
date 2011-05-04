@@ -1,12 +1,11 @@
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
-public class FrameListener implements WindowListener {
+public class FrameListener implements WindowListener{
 
 	@Override
 	public void windowActivated(WindowEvent arg0) {
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
@@ -43,7 +42,5 @@ public class FrameListener implements WindowListener {
 	@Override
 	public void windowOpened(WindowEvent arg0) {
 		// TODO Auto-generated method stub
-
 	}
-
 }

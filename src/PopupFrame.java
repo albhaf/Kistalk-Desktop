@@ -6,7 +6,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.GroupLayout;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -20,28 +19,21 @@ public class PopupFrame{
 	public JFrame popFrame;
 	public TextField popTxt;
 	public DesktopApplication controller;
+	Image bgImage;
+	ButtonListener listener;
 	
-	public PopupFrame(String messageTmp, DesktopApplication contrTmp){
+	public PopupFrame(String messageTmp, Image tmpImg, DesktopApplication contrTmp){
+		bgImage = tmpImg;
 		controller = contrTmp;
 		setup(messageTmp);
 	}
 	
 	public void setup(String message){
 		
-		ButtonListener listener = new ButtonListener();
-		
-		//	Background Pic
-		ImageIcon icon = new ImageIcon("bgIcon.png");
-		final Image bgImage = icon.getImage();
+		listener = new ButtonListener();
 		
 		popFrame = new JFrame();
-		JPanel popPanel = new JPanel(){ // Insert annan bild! Knapp ist för Kryss
-			/**
-			 * 
-			 */
-			private static final long serialVersionUID = 7059413258966488047L;
-
-
+		JPanel popPanel = new JPanel(){
 			public void paint(Graphics g){
 				g.drawImage(bgImage, 0,0, this);
 				setOpaque(false);

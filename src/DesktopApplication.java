@@ -1,16 +1,23 @@
+import java.awt.Image;
 import java.io.IOException;
+
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
 public class DesktopApplication {
 	String path;
+	Image bgImage;
 	NiftyHTTP nifty;
 	LogInFrame loginframe;
 	AdminFrame adminframe;
+	TwoDSlideShow slideshow;
 	ConfigSettings config = new ConfigSettings();
 	SlidePath slidepath = new SlidePath();
 	
 	public DesktopApplication() {
-		loginframe = new LogInFrame(this);
+		ImageIcon icon = new ImageIcon("bgIcon.png");
+		bgImage = icon.getImage();
+		loginframe = new LogInFrame(bgImage, this);
 		loginframe.logFrame.setVisible(true);
 		
 	}
@@ -23,7 +30,7 @@ public class DesktopApplication {
 		if (nifty.validateToken()) {
 			loginframe.clooose();
 			values = config.getValues();
-			adminframe.setupFrame(values, slidepath.ninja(values[9]), slidepath.ninja(values[10]));
+			adminframe.setupFrame(values, slidepath.ninja(values[9]), slidepath.ninja(values[10]), bgImage);
 			
 		} else {
 			FailFrame fail = new FailFrame();
@@ -58,21 +65,21 @@ public class DesktopApplication {
 	
 	public void popup(String message, String pathTmp){ //Pub, Food & SaveSlideshow
 		path = pathTmp;
-		PopupFrame popupframe = new PopupFrame(message, this);
+		PopupFrame popupframe = new PopupFrame(message, bgImage, this);
 		popupframe.popFrame.setVisible(true);
 		
 	}
 	
 	public void startShow(){
 		try {
-			new TwoDSlideShow();
+			slideshow = new TwoDSlideShow();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 	
 	public void exitShow(){
-		//exit twoDSlideShow only...
+		slideshow.close();
 	}
 
 	// Main

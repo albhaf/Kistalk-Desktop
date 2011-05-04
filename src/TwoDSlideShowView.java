@@ -12,6 +12,7 @@ public class TwoDSlideShowView  {
 	}
 
 	protected void createFrame(ShowImage slideShowHandler, Rectangle monitor) {
+
 		frame = new JFrame("ShowImage.java");
 		FrameListener wl = new FrameListener();
 		
