@@ -1,9 +1,7 @@
-import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
-import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -151,12 +149,14 @@ public class PptToPng {
 
 		BufferedImage img = new BufferedImage(dimension.width,
 				dimension.height, BufferedImage.TYPE_INT_RGB);
-
 		// Creates and calculate the scaling properties
 
 		// create the graphic "painter"
 		Graphics2D graphics = img.createGraphics();
-
+		
+		graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		graphics.setRenderingHint(RenderingHints.KEY_COLOR_RENDERING,RenderingHints.VALUE_COLOR_RENDER_QUALITY);
+		graphics.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
 		graphics.setPaint(Color.white);
 
 		// fills the image with a square
