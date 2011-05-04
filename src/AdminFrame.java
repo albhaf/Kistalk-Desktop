@@ -22,7 +22,6 @@ import javax.swing.JPanel;
 public class AdminFrame {
 	Image bgImage;
 	String slideItem = null;
-	ConfigSettings config = new ConfigSettings();
 	
 	JFrame adminFrame;
 	JFrame popFrame;
@@ -36,6 +35,7 @@ public class AdminFrame {
 	JButton exitBtn;
 	JButton savePathBtn;
 	JButton remPathBtn;
+	JButton announceBtn;
 	
 	JLabel nrOfImgsLbl;
 	JLabel timeLbl;
@@ -54,6 +54,8 @@ public class AdminFrame {
 	TextField xmlPubPathTxt;
 	TextField legalFilesTxt;
 	TextField nrOfCommentsTxt;
+	TextField eventTxt;
+	TextField foodTxt;
 	
 	JCheckBox foodChb;
 	JCheckBox pubChb;
@@ -63,14 +65,20 @@ public class AdminFrame {
 	
 	GroupLayout groupLayout;
 	Graphics g;
+	
+	DesktopApplication controller;
 
 	//	Constructor
-	public AdminFrame() {
-		
+	public AdminFrame(DesktopApplication contTmp) {
+		controller = contTmp;
 	}
 
 	//	Setting up the settings frame
-	protected void setupFrame(final String[] confValues, final List<String> slideNames, final List<String> slidePaths){
+	public void setupFrame(final String[] confValues, final List<String> slideNames, final List<String> slidePaths){
+		
+		//	Background Pic
+		ImageIcon icon = new ImageIcon("bgIcon.png");
+		final Image bgImage = icon.getImage();
 		
 		//	Create all objects
 		adminFrame = new JFrame();
@@ -82,6 +90,7 @@ public class AdminFrame {
 		exitBtn = new JButton();
 		savePathBtn = new JButton();
 		remPathBtn = new JButton();
+		announceBtn = new JButton();
 		
 		nrOfImgsLbl = new JLabel();
 		timeLbl= new JLabel();
@@ -99,6 +108,8 @@ public class AdminFrame {
 		xmlPubPathTxt = new TextField();
 		legalFilesTxt = new TextField();
 		nrOfCommentsTxt = new TextField();
+		eventTxt = new TextField();
+		foodTxt = new TextField();
 		
 		foodChb = new JCheckBox();
 		pubChb = new JCheckBox();
@@ -124,12 +135,12 @@ public class AdminFrame {
 		groupLayout = new GroupLayout(thePanel);
 		
 		//	Frame settings
-		adminFrame.setSize(500,600);
+		adminFrame.setSize(510,600);
 		adminFrame.setResizable(false);
 		adminFrame.setLocation(300, 50);
-		adminFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		adminFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		adminFrame.setTitle("KisTalk Slideshow Settings");
-		adminFrame.setUndecorated(true);
+		adminFrame.setUndecorated(false);
 		
 		//	Panel settings
 		thePanel.setLayout(groupLayout);
@@ -150,11 +161,11 @@ public class AdminFrame {
 		legalFilesLbl.setText("Approved file extensions: ");
 		legalFilesLbl.setForeground(Color.WHITE);
 		
-		pubSttLbl.setText("The pub is open");
-		pubSttLbl.setForeground(Color.WHITE);
+		pubSttLbl.setText("Specify event");
+		pubSttLbl.setForeground(Color.GRAY);
 		
-		foodSttLbl.setText("Dinner is served");
-		foodSttLbl.setForeground(Color.WHITE);
+		foodSttLbl.setText("Specify food");
+		foodSttLbl.setForeground(Color.GRAY);
 		
 		statusLbl.setText("Status: Ready for some action");
 		statusLbl.setForeground(Color.WHITE);
@@ -183,6 +194,12 @@ public class AdminFrame {
 		nrOfCommentsTxt.setText(confValues[7]);
 		nrOfCommentsTxt.setFont(new Font("Algerian", Font.PLAIN, 12));
 		
+		eventTxt.setFont(new Font("Algerian", Font.PLAIN, 12));
+		eventTxt.setEnabled(false);
+		
+		foodTxt.setFont(new Font("Algerian", Font.PLAIN, 12));
+		foodTxt.setEnabled(false);
+		
 		//	Button settings
 		saveSetBtn.setText("Save settings");
 		saveSetBtn.setForeground(Color.BLACK);
@@ -208,11 +225,16 @@ public class AdminFrame {
 		remPathBtn.setForeground(Color.BLACK);
 		remPathBtn.addActionListener(listener);
 		
+		announceBtn.setText("Send announce");
+		announceBtn.setForeground(Color.BLACK);
+		announceBtn.addActionListener(listener);
+		
 		//	Checkboxes settings
-		foodChb.setText("There is food");
+		foodChb.setText("Dinner is served");
 		foodChb.setForeground(Color.WHITE);
 		foodChb.addActionListener(listener);
 		foodChb.setOpaque(false);
+		foodChb.setEnabled(false);
 		
 		pubChb.setText("Pub is open");
 		pubChb.setForeground(Color.WHITE);
@@ -313,25 +335,33 @@ public class AdminFrame {
 				.addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
 						
 						.addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-						   	.addComponent(foodSttLbl)
-						   	.addComponent(foodChb)
+							.addComponent(pubChb)
+							.addComponent(pubSttLbl)
+							.addComponent(eventTxt, 125, 125, 125)
 						)
 						.addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-							 .addComponent(pubSttLbl)
-							 .addComponent(pubChb)
+							.addComponent(foodChb)
+						   	.addComponent(foodSttLbl)
+						   	.addComponent(foodTxt, 125, 125, 125)
+						   	
 						)
+						.addComponent(announceBtn, 125, 125, 125)
 			   	)
 			)
 			.addGroup(groupLayout.createSequentialGroup()
-				   	.addComponent(saveSetBtn, 140, 140, 140)
-				   	.addComponent(savePathBtn, 140, 140,140)
-					.addComponent(remPathBtn, 140, 140, 140)
+				   	.addComponent(saveSetBtn, 130, 130, 130)
+				   	.addGap(10)
+				   	.addComponent(savePathBtn, 130, 130, 130)
+				   	.addGap(40)
+					.addComponent(startBtn, 130, 130, 130)
 				   			
 			)
 			.addGroup(groupLayout.createSequentialGroup()
-					.addComponent(resetBtn, 140, 140, 140)
-					.addComponent(exitBtn, 140, 140, 140)
-					.addComponent(startBtn, 140, 140, 140)
+					.addComponent(resetBtn, 130, 130, 130)
+					.addGap(10)
+					.addComponent(remPathBtn, 130, 130, 130)
+					.addGap(40)
+					.addComponent(exitBtn, 130, 130, 130)
 			)
 			.addComponent(statusLbl)
 		);
@@ -379,27 +409,31 @@ public class AdminFrame {
 				   		
 				   		.addGroup(groupLayout.createSequentialGroup()
 				   				
-				   				.addGroup(groupLayout.createSequentialGroup()
-						   			.addComponent(foodSttLbl)
-						   			.addComponent(foodChb)
-						   		)
-								.addGap(20)
 						   		.addGroup(groupLayout.createSequentialGroup()
-						   			.addComponent(pubSttLbl)
 						   			.addComponent(pubChb)
+						   			.addComponent(pubSttLbl)
+						   			.addComponent(eventTxt, 20, 20, 20)
 						   		)
+						   		.addGap(20)
+						   		.addGroup(groupLayout.createSequentialGroup()
+						   			.addComponent(foodChb)
+						   			.addComponent(foodSttLbl)
+								   	.addComponent(foodTxt, 20, 20, 20)
+						   		)
+						   		.addGap(20)
+								.addComponent(announceBtn, 25, 25, 25)
 				   		)
 				  )
 				  .addGap(30)
 				  .addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-					   		.addComponent(saveSetBtn, 30, 30, 30)
-					   		.addComponent(savePathBtn, 30, 30, 30)
-							  .addComponent(remPathBtn, 30, 30, 30)
+					   		.addComponent(saveSetBtn, 25, 25, 25)
+					   		.addComponent(savePathBtn, 25, 25, 25)
+							.addComponent(startBtn, 25, 25, 25)
 				  )
 				  .addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-						  .addComponent(resetBtn, 30, 30, 30)
-						  .addComponent(exitBtn, 30, 30, 30)
-					   		.addComponent(startBtn, 30, 30, 30)
+						  .addComponent(resetBtn, 25, 25, 25)
+						  .addComponent(remPathBtn, 25, 25, 25)
+						  .addComponent(exitBtn, 25, 25, 25)
 				  )
 				  .addGap(30)
 				  .addComponent(statusLbl)
@@ -410,41 +444,51 @@ public class AdminFrame {
 		adminFrame.setVisible(true);
 	}
 	
-	private class ButtonListener extends DesktopApplication implements ActionListener {
+	private class ButtonListener implements ActionListener {
 		String[] values = new String[11];
 		
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource() == saveSetBtn){ // Save settings to config
 				getTxt();
-				setConf(values);
+				controller.setConf(values);
 				statusLbl.setText("Status: Settings saved to Config");
 				
 			}else if (e.getSource() == resetBtn){ // Reset settings in config
-				values = resetConf();
+				values = controller.resetConf();
 				setTxt();
 				statusLbl.setText("Status: Config is back to normal");
 				
-			}else if (e.getSource() == foodChb){ // Announce food
-				disable();
-				popup("What food? ", null, foodChb.isSelected(), pubChb.isSelected());
-				enable();
-				statusLbl.setText("Status: Dinner is served!");
-				
 			}else if (e.getSource() == pubChb){ // Announce pub
-				disable();
-				popup("What event? ", null, foodChb.isSelected(), pubChb.isSelected());
-				enable();
-				statusLbl.setText("Status: Pub is open!");
+				if (pubChb.isSelected()){
+					foodChb.setEnabled(true);
+					foodSttLbl.setForeground(Color.WHITE);
+					foodTxt.setEnabled(true);
+					pubSttLbl.setForeground(Color.WHITE);
+					eventTxt.setEnabled(true);
+				}else{
+					foodChb.setEnabled(false);
+					foodSttLbl.setForeground(Color.GRAY);
+					foodTxt.setEnabled(false);
+					pubSttLbl.setForeground(Color.GRAY);
+					eventTxt.setEnabled(false);
+				}
+				
+			}else if (e.getSource() == foodChb){ // Announce food
+				//...
+				
+			}else if (e.getSource() == announceBtn){ // Announce
+				controller.announce(foodTxt.getText(), eventTxt.getText(), pubChb.isSelected(), foodChb.isSelected());
+				statusLbl.setText("Status: Announcement was sent!");
 				
 			}else if (e.getSource() == savePathBtn){ // Save Slideshow
 				disable();
-				popup("Name the slideshow: ", xmlPubPathTxt.getText(), false, false);
+				controller.popup("Name the slideshow: ", xmlPubPathTxt.getText(), false, false);
 				enable();
 				statusLbl.setText("Status: Slideshow saved");
 			
 			}else if (e.getSource() == remPathBtn){ // Remove saved Slideshow
 				if (slideItem != null){
-					remPath(slideItem);
+					controller.remPath(slideItem);
 					pubSlidesDDLst.removeItem(slideItem);
 					statusLbl.setText("Status: Slideshow removed");
 				}else{
@@ -453,18 +497,18 @@ public class AdminFrame {
 				
 			}else if (e.getSource() == startBtn){ // Start Slideshow
 				getTxt();
-				setConf(values);
+				controller.setConf(values);
 				exitBtn.setText("Quit SlideShow");
 				startBtn.setEnabled(false);
 				statusLbl.setText("Status: Starting Slideshow...");
-				startShow();
+				controller.startShow();
 				
 			}else if (e.getSource() == exitBtn){ // Exit Slideshow / Program
 				if (exitBtn.getText().equals("Quit SlideShow")){
 					statusLbl.setText("Status: The slideshow is dead...");
 					exitBtn.setText("Quit KisTalk");
 					startBtn.setEnabled(true);
-					exitShow();
+					controller.exitShow();
 				}else{
 					adminFrame.dispose();
 				}
