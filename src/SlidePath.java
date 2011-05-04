@@ -65,11 +65,10 @@ public class SlidePath {
 		LinkedList<String> part = new LinkedList<String>();
 		Scanner scanner = new Scanner(line);
 		
-		scanner.useDelimiter("|");
-		System.out.println(scanner.next().toString());
+		scanner.useDelimiter("\\|");
+		
 		while(scanner.hasNext()){
 			part.add(scanner.next());
-			System.out.println(scanner.next().toString());
 		}
 		
 		return part;

@@ -54,7 +54,6 @@ public class AdminFrame {
 	
 	TextField nrOfImgsTxt;
 	TextField timeTxt;
-	TextField popTxt;
 	TextField xmlPubPathTxt;
 	TextField legalFilesTxt;
 	TextField nrOfCommentsTxt;
@@ -209,28 +208,28 @@ public class AdminFrame {
 		
 		//	Text settings
 		nrOfImgsTxt.setText(confValues[0]);
-		nrOfImgsTxt.setFont(new Font("Algerian", Font.PLAIN, 12));
+		nrOfImgsTxt.setFont(new Font("Imperial", Font.PLAIN, 12));
 		
 		timeTxt.setText(confValues[2]);
-		timeTxt.setFont(new Font("Algerian", Font.PLAIN, 12));
+		timeTxt.setFont(new Font("Imperial", Font.PLAIN, 12));
 		
 		xmlPubPathTxt.setText(confValues[8]);
-		xmlPubPathTxt.setFont(new Font("Algerian", Font.PLAIN, 12));
+		xmlPubPathTxt.setFont(new Font("Imperial", Font.PLAIN, 12));
 		
 		legalFilesTxt.setText(confValues[4]);
-		legalFilesTxt.setFont(new Font("Algerian", Font.ITALIC, 12));
+		legalFilesTxt.setFont(new Font("Imperial", Font.ITALIC, 12));
 		legalFilesTxt.setEnabled(false);
 		
 		nrOfCommentsTxt.setText(confValues[7]);
-		nrOfCommentsTxt.setFont(new Font("Algerian", Font.PLAIN, 12));
+		nrOfCommentsTxt.setFont(new Font("Imperial", Font.PLAIN, 12));
 		
-		eventTxt.setFont(new Font("Algerian", Font.PLAIN, 12));
+		eventTxt.setFont(new Font("Imperial", Font.PLAIN, 12));
 		eventTxt.setEnabled(false);
 		
-		foodTxt.setFont(new Font("Algerian", Font.PLAIN, 12));
+		foodTxt.setFont(new Font("Imperial", Font.PLAIN, 12));
 		foodTxt.setEnabled(false);
 		
-		fadeTxt.setFont(new Font("Algerian", Font.PLAIN, 12));
+		fadeTxt.setFont(new Font("Imperial", Font.PLAIN, 12));
 		fadeTxt.setText(confValues[3]);
 		
 		//	Button settings
@@ -284,19 +283,28 @@ public class AdminFrame {
 				new ItemListener(){
 					public void itemStateChanged(ItemEvent e){
 						if (e.getStateChange() == ItemEvent.SELECTED){
-							if (e.getItem().toString() != "[Saved slideshows]"){ // Set pathen to the path that belongs to the selected Item
+							if (e.getItem().toString().equals("[Saved slideshows]") == false){ // Set pathen to the path that belongs to the selected Item
 								xmlPubPathTxt.setText(slidePaths.get(slideNames.indexOf(e.getItem().toString())));
 								xmlPubPathTxt.setEnabled(false);
-								xmlPubPathTxt.setFont(new Font("Algerian", Font.ITALIC, 12));
+								xmlPubPathTxt.setFont(new Font("Imperial", Font.ITALIC, 12));
 								statusLbl.setText("Status: " + e.getItem().toString() + "s Slideshow is choosed");
 								slideItem = e.getItem().toString();
+								
+								if (e.getItem().toString().equals("TMEIT")){
+									eventTxt.setText("Tisdagspub");
+								}else if (e.getItem().toString().equals("Qmisk")){
+									eventTxt.setText("Torsdagspub");
+								}else if(e.getItem().toString().equals("ITK")){
+									eventTxt.setText("Lan");
+								}
 								
 							}else{
 								xmlPubPathTxt.setText("C:\\...");
 								xmlPubPathTxt.setEnabled(true);
-								xmlPubPathTxt.setFont(new Font("Algerian", Font.PLAIN, 12));
+								xmlPubPathTxt.setFont(new Font("Imperial", Font.PLAIN, 13));
 								statusLbl.setText("Status: Choose a Slideshow or specify a path");
 								slideItem = null;
+								eventTxt.setText("");
 								
 							}
 						}
