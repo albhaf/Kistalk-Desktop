@@ -20,20 +20,19 @@ public class LogInFrame{
 	public TextField logUserTxt;
 	public TextField logPassTxt;
 	public JFrame logFrame;
-	LoginListener listener = new LoginListener();
-	DesktopApplication contr;
+	Image bgImage;
+	LoginListener listener;
+	DesktopApplication controller;
 	
-	public LogInFrame(DesktopApplication desk){
+	public LogInFrame(Image imgTmp, DesktopApplication tmpContr){
+		controller = tmpContr;
+		bgImage = imgTmp;
 		setup();
-		contr = desk;
+		
 		
 	}
 	
 	public void setup(){
-		
-		// Background pic
-		ImageIcon icon = new ImageIcon("bgIcon.png");
-		final Image bgImage = icon.getImage();
 		
 		logFrame = new JFrame();
 		JPanel logPanel = new JPanel(){
@@ -61,6 +60,7 @@ public class LogInFrame{
 		sbmBtn = new JButton();
 		clsBtn = new JButton();
 		GroupLayout logLayout = new GroupLayout(logPanel);
+		listener = new LoginListener();
 		
 		logFrame.setLocation(450, 250);
 		logFrame.setSize(250, 170);
@@ -158,7 +158,7 @@ public class LogInFrame{
 	private class LoginListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource() == sbmBtn){
-				contr.login(logUserTxt.getText(), logPassTxt.getText(), logFrame);
+				controller.login(logUserTxt.getText(), logPassTxt.getText(), logFrame);
 			}else if (e.getSource() == clsBtn){
 				logFrame.dispose();
 			}

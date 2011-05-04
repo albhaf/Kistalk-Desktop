@@ -20,7 +20,6 @@ import javax.swing.JPanel;
 
 
 public class AdminFrame {
-	Image bgImage;
 	String slideItem = null;
 	
 	JFrame adminFrame;
@@ -47,11 +46,11 @@ public class AdminFrame {
 	JLabel nrOfCommentsLbl;
 	JLabel screenLbl;
 	JLabel bgLbl;
-	JLabel sttsFoodRdyLbl;
 	JLabel sttsPubLbl;
-	JLabel sttsFoodLbl;
 	JLabel sttsEventLbl;
-	JLabel foodInstrLbl;
+	JLabel sttsFoodRdyLbl;
+	JLabel sttsFoodLbl;
+	JLabel fadeLbl;
 	
 	TextField nrOfImgsTxt;
 	TextField timeTxt;
@@ -61,6 +60,7 @@ public class AdminFrame {
 	TextField nrOfCommentsTxt;
 	TextField eventTxt;
 	TextField foodTxt;
+	TextField fadeTxt;
 	
 	JCheckBox foodChb;
 	JCheckBox pubChb;
@@ -72,6 +72,7 @@ public class AdminFrame {
 	Graphics g;
 	
 	DesktopApplication controller;
+	ButtonListener listener;
 
 	//	Constructor
 	public AdminFrame(DesktopApplication contTmp) {
@@ -79,11 +80,8 @@ public class AdminFrame {
 	}
 
 	//	Setting up the settings frame
-	public void setupFrame(final String[] confValues, final List<String> slideNames, final List<String> slidePaths){
+	public void setupFrame(final String[] confValues, final List<String> slideNames, final List<String> slidePaths, final Image bgImage){
 		
-		//	Background Pic
-		ImageIcon icon = new ImageIcon("bgIcon.png");
-		final Image bgImage = icon.getImage();
 		
 		//	Create all objects
 		adminFrame = new JFrame();
@@ -107,6 +105,12 @@ public class AdminFrame {
 		nrOfCommentsLbl = new JLabel();
 		screenLbl = new JLabel();
 		bgLbl = new JLabel();
+		fadeLbl = new JLabel();
+		
+		sttsPubLbl = new JLabel();
+		sttsEventLbl = new JLabel();
+		sttsFoodRdyLbl = new JLabel();
+		sttsFoodLbl = new JLabel();
 		
 		nrOfImgsTxt = new TextField();
 		timeTxt = new TextField();
@@ -115,6 +119,7 @@ public class AdminFrame {
 		nrOfCommentsTxt = new TextField();
 		eventTxt = new TextField();
 		foodTxt = new TextField();
+		fadeTxt = new TextField();
 		
 		foodChb = new JCheckBox();
 		pubChb = new JCheckBox();
@@ -122,7 +127,7 @@ public class AdminFrame {
 		pubSlidesDDLst = new JComboBox();
 		screenDDLst = new JComboBox();
 		
-		ButtonListener listener = new ButtonListener();
+		listener = new ButtonListener();
 		
 		// Create and Paint thePanel background
 		thePanel = new JPanel(){ //Observera att detta �r en create!
@@ -140,7 +145,7 @@ public class AdminFrame {
 		groupLayout = new GroupLayout(thePanel);
 		
 		//	Frame settings
-		adminFrame.setSize(510,600);
+		adminFrame.setSize(510,610);
 		adminFrame.setResizable(false);
 		adminFrame.setLocation(300, 50);
 		adminFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -160,7 +165,7 @@ public class AdminFrame {
 		timeLbl.setText("Time interval (ms): ");
 		timeLbl.setForeground(Color.WHITE);
 		
-		xmlPubPathLbl.setText("OpenOffice Powerpoint: ");
+		xmlPubPathLbl.setText("Choose a .ppt-file: ");
 		xmlPubPathLbl.setForeground(Color.WHITE);
 		
 		legalFilesLbl.setText("Approved file extensions: ");
@@ -181,6 +186,26 @@ public class AdminFrame {
 		
 		screenLbl.setText("Choose screen: ");
 		screenLbl.setForeground(Color.WHITE);
+		
+		fadeLbl.setText("Fading speed (ms): ");
+		fadeLbl.setForeground(Color.WHITE);
+		
+		
+		sttsPubLbl.setText("Pub_open: -");
+		sttsPubLbl.setForeground(Color.WHITE);
+		sttsPubLbl.setFont(new Font("Helvetica", Font.ITALIC, 10));
+		
+		sttsEventLbl.setText("Event: -");
+		sttsEventLbl.setForeground(Color.WHITE);
+		sttsEventLbl.setFont(new Font("Helvetica", Font.ITALIC, 10));
+		
+		sttsFoodRdyLbl.setText("Food_ready: -");
+		sttsFoodRdyLbl.setForeground(Color.WHITE);
+		sttsFoodRdyLbl.setFont(new Font("Helvetica", Font.ITALIC, 10));
+		
+		sttsFoodLbl.setText("Food: -");
+		sttsFoodLbl.setForeground(Color.WHITE);
+		sttsFoodLbl.setFont(new Font("Helvetica", Font.ITALIC, 10));
 		
 		//	Text settings
 		nrOfImgsTxt.setText(confValues[0]);
@@ -204,6 +229,9 @@ public class AdminFrame {
 		
 		foodTxt.setFont(new Font("Algerian", Font.PLAIN, 12));
 		foodTxt.setEnabled(false);
+		
+		fadeTxt.setFont(new Font("Algerian", Font.PLAIN, 12));
+		fadeTxt.setText(confValues[3]);
 		
 		//	Button settings
 		saveSetBtn.setText("Save settings");
@@ -314,14 +342,19 @@ public class AdminFrame {
 						   	.addComponent(nrOfImgsTxt, 50, 50, 50)
 						)
 						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(nrOfCommentsLbl)
+							.addGap(37)
+							.addComponent(nrOfCommentsTxt, 50, 50, 50)
+						)
+						.addGroup(groupLayout.createSequentialGroup()
 							.addComponent(timeLbl)
 							.addGap(58)
 							.addComponent(timeTxt, 50, 50, 50)
 						)
 						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(nrOfCommentsLbl)
-							.addGap(37)
-							.addComponent(nrOfCommentsTxt, 50, 50, 50)
+							.addComponent(fadeLbl)
+							.addGap(56)
+							.addComponent(fadeTxt, 50, 50, 50)
 						)
 						.addGroup(groupLayout.createSequentialGroup()
 							.addComponent(legalFilesLbl)
@@ -352,7 +385,6 @@ public class AdminFrame {
 						   	.addComponent(foodLbl)
 						   	.addComponent(foodTxt, 125, 125, 125)
 						   	.addComponent(foodChb)
-						   	
 						)
 						.addComponent(announceBtn, 125, 125, 125)
 			   	)
@@ -373,13 +405,19 @@ public class AdminFrame {
 					.addComponent(exitBtn, 130, 130, 130)
 			)
 			.addComponent(statusLbl)
+			.addGroup(groupLayout.createSequentialGroup()
+				.addComponent(sttsPubLbl)
+				.addComponent(sttsFoodRdyLbl)
+				.addComponent(sttsEventLbl)
+				.addComponent(sttsFoodLbl)
+			)
 		);
 		
 			//	Vertical
 		groupLayout.setVerticalGroup(
 				groupLayout.createSequentialGroup()
 				   	.addComponent(headerLbl)
-				   	.addGap(45)
+				   	.addGap(35)
 				   	.addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
 				   		
 				   		.addGroup(groupLayout.createSequentialGroup()
@@ -389,16 +427,21 @@ public class AdminFrame {
 						   			.addComponent(nrOfImgsTxt, 20, 20, 20)
 						   		)
 								.addGap(10)
-						   		.addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-						   			.addComponent(timeLbl)
-						   			.addComponent(timeTxt, 20, 20, 20)
-						   		)
-								.addGap(10)
 								.addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
 									.addComponent(nrOfCommentsLbl)
 									.addComponent(nrOfCommentsTxt, 20, 20, 20)
 								)
 								.addGap(10)
+								.addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+						   			.addComponent(timeLbl)
+						   			.addComponent(timeTxt, 20, 20, 20)
+						   		)
+						   		.addGap(10)
+						   		.addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+						   			.addComponent(fadeLbl)
+						   			.addComponent(fadeTxt, 20, 20, 20)
+						   		)
+						   		.addGap(10)
 								.addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
 									.addComponent(legalFilesLbl)
 									.addComponent(legalFilesTxt, 20, 20, 20)
@@ -432,9 +475,10 @@ public class AdminFrame {
 						   		)
 						   		.addGap(20)
 								.addComponent(announceBtn, 25, 25, 25)
+								.addGap(5)
 				   		)
 				  )
-				  .addGap(50)
+				  .addGap(40)
 				  .addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
 					   		.addComponent(saveSetBtn, 25, 25, 25)
 					   		.addComponent(savePathBtn, 25, 25, 25)
@@ -445,8 +489,14 @@ public class AdminFrame {
 						  .addComponent(remPathBtn, 25, 25, 25)
 						  .addComponent(exitBtn, 25, 25, 25)
 				  )
-				  .addGap(20)
+				  .addGap(10)
 				  .addComponent(statusLbl)
+				  .addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+						.addComponent(sttsPubLbl)
+						.addComponent(sttsFoodRdyLbl)
+						.addComponent(sttsEventLbl)
+						.addComponent(sttsFoodLbl)
+				  )
 			);
 		
 		//	Add panel
@@ -491,8 +541,24 @@ public class AdminFrame {
 				statusLbl.setText("Status: Omnomnomnomnomnomnom");
 				
 			}else if (e.getSource() == announceBtn){ // Announce
-				controller.announce(foodTxt.getText(), eventTxt.getText(), pubChb.isSelected(), foodChb.isSelected());
-				statusLbl.setText("Status: Announcement was sent!");
+				if (foodTxt.getText().length() < 40 && eventTxt.getText().length() < 40){
+					if (foodTxt.getText().length() == 0)
+						foodTxt.setText("-");
+					controller.announce(foodTxt.getText(), eventTxt.getText(), pubChb.isSelected(), foodChb.isSelected());
+					statusLbl.setText("Status: Announcement was sent!");
+					sttsPubLbl.setText("Pub_open: " + pubChb.isSelected());
+					sttsEventLbl.setText("Event: " + eventTxt.getText());
+					sttsFoodRdyLbl.setText("Food_ready: " + foodChb.isSelected());
+					sttsFoodLbl.setText("Food: " + foodTxt.getText());
+				
+					foodTxt.setText("");
+					eventTxt.setText("");
+					pubChb.setSelected(false);
+					foodChb.setSelected(false);
+				
+				} else {
+					statusLbl.setText("Status: Input is too long! String has to be < 40");
+				}
 				
 			}else if (e.getSource() == savePathBtn){ // Save Slideshow
 				controller.popup("Name the slideshow: ", xmlPubPathTxt.getText());
