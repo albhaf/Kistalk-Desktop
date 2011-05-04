@@ -1,8 +1,6 @@
 import java.awt.Image;
-import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
@@ -21,7 +19,6 @@ public class ImportPubSlides {
 	public ImportPubSlides(String tmpPath) {
 
 		pptToPng = new PptToPng(tmpPath);
-		countFiles();
 		currentSlide = -1;
 		pptToPng.extract();
 		countFiles();

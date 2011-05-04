@@ -77,21 +77,37 @@ public class ShowImage extends JPanel {
 		// Image user
 		showImageSet.setUserText(user, imageUserTxtDsp);
 		// Bilden
-		imageStopPosition = showImageSet.setSlide(slideImage, imgRect, imageStopPosition);
+		imageStopPosition = showImageSet.setSlide(slideImage, imgRect, monitorSize, imageStopPosition);
 	}
 
-	public void MoveObjects() {
+	private void moveImageObjects() {
 		timeStill.height = showImageMovement.moveImage(timeStill, imgRect, (int) imageStopPosition);
-		transperacy = showImageMovement.setTransperacy(transperacy, outgoing);
-
-		// changes outgoing to true if the picture is supposed to move again
-		// after standstill
+		transperacy = showImageMovement.setTransperacy(transperacy, outgoing, 0.01);
 
 		showImageMovement.moveUserText(imageUserTxtDsp, outgoing);
 		showImageMovement.moveImageText(imageCommentTxtDsp, outgoing);
+	}
+	
+	private void movePubSlide(){
+		if(transperacy >= 0.98)
+			timeStill.height = showImageMovement.moveSlide(timeStill, imgRect, monitorSize.width, slideImage.getWidth());
+		transperacy = showImageMovement.setTransperacy(transperacy, outgoing, 0.03);
+	}
+	
+	
+	public void MoveObjects() {
+		if(pubSlide){
+			movePubSlide();
+		}else{
+			moveImageObjects();
+		}
 		if (timeStill.height == 0) {
 			outgoing = true;
 		}
+		if(transperacy <= 0.001){
+			imgRect.addX((int) monitorSize.getWidth());
+		}
+
 		repaint();
 	}
 
@@ -107,16 +123,7 @@ public class ShowImage extends JPanel {
 			showImageDrawing.paintImage(imageCommentTxtDsp,imageUserTxtDsp, slideImage, imgRect);
 		}
 	}
-
-	/**
-	 * Scaling the image and text to fit the screen and position them right. /**
-	 * Change the boolean "outgoing" to indicate that the Image is moving out,
-	 * towards the end of screen.
-	 */
-	public void changeDirection() {
-		outgoing = true;
-	}
-
+	
 	/**
 	 * Gets the image x-coordinate
 	 * 

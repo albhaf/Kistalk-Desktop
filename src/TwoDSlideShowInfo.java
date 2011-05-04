@@ -21,7 +21,7 @@ public class TwoDSlideShowInfo {
 	Image[] serverImgs;
 	URL[] urlArray;
 
-	int currentPicture = -1;
+	int currentPicture = 0;
 	int currentPubPicture = 0;
 	int nrOfComments = 0;
 	int nrOfPics;
@@ -97,17 +97,17 @@ public class TwoDSlideShowInfo {
 	}
 
 	protected void updatePicture() throws IOException {		
-		currentPicture++;
-		if (currentPicture >= nrOfPics) {
+		if (currentPicture >= nrOfPics-1) {
 			setLinks();
 			if(urlArray[0] != imgXMLList.get(0).getLink())
 				setPictures();
-			currentPicture = 0;
+			currentPicture = -1;
 		}
 
 	}
 	
 	protected BufferedImage getImage(){
+		currentPicture++;
 		return (BufferedImage) serverImgs[currentPicture];
 	}
 	

@@ -43,8 +43,7 @@ public class ShowImageSet {
 				/ (float) (tmpImage.getHeight());
 		imgRect.height = imageSize.height;
 		imgRect.width = imgRect.height * factor;
-		imgRect.addY(100);
-		imgRect.addX(-200);
+		imgRect.setX(((int)monitorSize.getWidth()-tmpImage.getWidth())/4);
 		imageStopPosition = ((monitorSize.width - imgRect.width
 				- (monitorSize.width / 3) - 30));
 		imageStopPosition = imageStopPosition - (imageStopPosition % 5);
@@ -52,14 +51,20 @@ public class ShowImageSet {
 		return imageStopPosition;
 	}
 	
-	protected float setSlide(BufferedImage tmpImage, ImgRect imgRect,
+	protected float setSlide(BufferedImage tmpImage, ImgRect imgRect, Rectangle monitorHeight, 
 			float imageStopPosition) {
 		imgRect.resetPos();
-
-		float factor = (float) (tmpImage.getWidth())
+		if (tmpImage.getWidth()/monitorSize.getWidth() < tmpImage.getHeight()/monitorSize.getHeight()){
+			float factor = (float) (tmpImage.getWidth())
 				/ (float) (tmpImage.getHeight());
-		imgRect.height = imageSize.height;
-		imgRect.width = imgRect.height * factor;
+			imgRect.height = imageSize.height;
+			imgRect.width = imgRect.height * factor;
+		}else{
+			float factor = (float) (tmpImage.getHeight())
+			/ (float) (tmpImage.getWidth());
+			imgRect.width = imageSize.width;
+			imgRect.height = imgRect.width * factor;
+		}
 		imgRect.addY(100);
 		imgRect.addX(-200);
 		imageStopPosition = ((monitorSize.width - imgRect.width
@@ -97,7 +102,7 @@ public class ShowImageSet {
 	
 	public void scalePositionPicture(){
 		double ration = image.getWidth() / image.getHeight();
-		imageSize.height = (int) (image.getHeight() * monitorSize.height * 0.005);
+		imageSize.height = (int) (image.getHeight() * monitorSize.height * 0.006);
 		imageSize.width = (int) (imageSize.height * ration);
 	}
 	

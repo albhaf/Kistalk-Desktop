@@ -1,6 +1,8 @@
+import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
@@ -55,7 +57,7 @@ public class PptToPng {
 	 * 
 	 */
 	public void extract() {
-		converter(filepath, 0, 0);
+		converter(filepath);
 	}
 
 
@@ -99,7 +101,7 @@ public class PptToPng {
 	 * @param tmpimgWidth
 	 * @param tmpImgHeight
 	 */
-	private void converter(String tmpFilepath, int tmpimgWidth, int tmpImgHeight) {
+	private void converter(String tmpFilepath) {
 		Slide[] slide;
 		SlideShow ppt = null;
 
@@ -121,13 +123,7 @@ public class PptToPng {
 
 			// if tmpimgWidth is 0 the slide shouldn't be scaled and therefore
 			// is slideToImage called with the scaling values set to slide size.
-			if (tmpimgWidth == 0) {
-				bImg = slideToImage(slide[i], dimension, dimension.width,
-						dimension.height);
-			} else {
-				bImg = slideToImage(slide[i], dimension, tmpimgWidth,
-						tmpImgHeight);
-			}
+				bImg = slideToImage(slide[i], dimension);
 
 			// save the output
 			try {
@@ -153,26 +149,22 @@ public class PptToPng {
 	 *            int, height which the slide will be scaled to.
 	 * @return BufferedImage, the image scaled image copy of the slide.
 	 */
-	private BufferedImage slideToImage(Slide tmpslide, Dimension dimension,
-			int tmpimgWidth, int tmpImgHeight) {
+	private BufferedImage slideToImage(Slide tmpslide, Dimension dimension) {
 
-		BufferedImage img = new BufferedImage(tmpimgWidth, tmpImgHeight,
+		BufferedImage img = new BufferedImage(dimension.width, dimension.height,
 				BufferedImage.TYPE_INT_RGB);
 
 		// Creates and calculate the scaling properties
-		AffineTransform at = new AffineTransform();
-		at.scale((tmpimgWidth / dimension.getWidth()),
-				(tmpImgHeight / dimension.getHeight()));
 
 		// create the graphic "painter"
 		Graphics2D graphics = img.createGraphics();
 
-		// applies sclaing and backgroundcolor to the graphics
-		graphics.setTransform(at);
+
 		graphics.setPaint(Color.white);
 
+
 		// fills the image with a square
-		graphics.fill(new Rectangle2D.Float(0, 0, tmpimgWidth, tmpImgHeight));
+		graphics.fill(new Rectangle2D.Float(0, 0, dimension.width,dimension.height));
 
 		// render image in the square
 		tmpslide.draw(graphics);
