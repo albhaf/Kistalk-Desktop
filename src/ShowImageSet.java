@@ -78,6 +78,7 @@ public class ShowImageSet {
 	protected TextToDisplay[][] setComments(List<CommentXML> imageComments,
 			TextToDisplay[][] comments) {
 		if (imageComments != null) {
+			int y = 200;
 			if (imageComments.size() > 0) {
 				int lines = 1;
 				for (int i = 0; i < imageComments.size(); i++) {
@@ -93,9 +94,11 @@ public class ShowImageSet {
 					comments[i][0].resetPos();
 					comments[i][0].addX(monitorSize.width - monitorSize.width
 							/ 3);
-					comments[i][0].addY(200 + (i * 100));
+					y = y + 40;
+					comments[i][0].addY(y);
 
 					int j = 0;
+					
 					do {
 						j++;
 						comments[i][j] = new TextToDisplay();
@@ -103,7 +106,8 @@ public class ShowImageSet {
 						comments[i][j].resetPos();
 						comments[i][j].addX(monitorSize.width
 								- monitorSize.width / 3);
-						comments[i][j].addY(200 + (i * 100 + j*30));
+						y = y + 30;
+						comments[i][j].addY(y);
 						if(imageComments.get(i).getContent().length() - (j-1)*30 >29){
 							comments[i][j].setString(imageComments.get(i)
 									.getContent().substring((j-1)*30, j*30));
