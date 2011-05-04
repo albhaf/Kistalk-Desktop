@@ -12,20 +12,12 @@ public class TwoDSlideShowView  {
 	}
 
 	protected void createFrame(ShowImage slideShowHandler, Rectangle monitor) {
-<<<<<<< HEAD
-		JFrame frame = new JFrame("ShowImage.java");
-		
-		panel = slideShowHandler;
-		frame.getContentPane().add(panel);
 
-		FrameListener wl = new FrameListener();
-=======
 		frame = new JFrame("ShowImage.java");
 		FrameListener wl = new FrameListener();
 		
 		panel = slideShowHandler;
 		frame.getContentPane().add(panel);
->>>>>>> 67186b93708d82c1d697b6649703775ce5476098
 		frame.addWindowListener(wl);
 		frame.setUndecorated(true);
 		frame.setSize(monitor.width, monitor.height);
