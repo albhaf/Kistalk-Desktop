@@ -9,12 +9,13 @@ import java.awt.TexturePaint;
 import java.awt.image.BufferedImage;
 
 public class ShowImageDrawing {
-	private Font commentfont;
+	private Font commentFont, commentUser;
 	private Font font;
 	Graphics2D g2d;
 
 	public ShowImageDrawing() {
-		commentfont = new Font("Serif", Font.BOLD, 30);
+		commentUser = new Font("Serig", Font.BOLD, 30);
+		commentFont = new Font("Serif", Font.BOLD, 20);
 		font = new Font("Serif", Font.BOLD, 50);
 	}
 
@@ -31,15 +32,19 @@ public class ShowImageDrawing {
 				RenderingHints.VALUE_ANTIALIAS_ON);
 	}
 
-	protected void drawComments(TextToDisplay[] comments) {
-		g2d.setFont(commentfont);
+	protected void drawComments(TextToDisplay[][] comments) {
+		g2d.setFont(commentFont);
 		g2d.setColor(Color.WHITE);
 
 		if (comments != null) {
 
 			for (int i = 0; i < comments.length; i++) {
-				g2d.drawString(comments[i].getString(), comments[i].x,
-						comments[i].y);
+				g2d.setFont(commentUser);
+				g2d.drawString(comments[i][0].getString(), comments[i][0].x,
+						comments[i][0].y);
+				g2d.setFont(commentFont);
+				g2d.drawString(comments[i][1].getString(), comments[i][1].x,
+						comments[i][1].y);
 			}
 		}
 	}
