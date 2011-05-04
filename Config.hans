@@ -26,7 +26,7 @@ _|    _|  _|  _|_|_|       _|      _|_|_|  _|  _|    _|
 //	Date of last revision: 10:25 den 2/4
 
 
-Max_number_of_Images %7
+Max_number_of_Images %3
 
 Number_of_Hans %-
 
@@ -40,7 +40,7 @@ Screen_index %0
 
 XMLURL %http://www.kistalk.com/api/feed/desktop
 
-Number_of_comments %2
+Number_of_comments %3
 
 Path_to_Pubslides %C:\\Default mapp\\Default pubslides
 

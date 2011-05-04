@@ -5,8 +5,8 @@ import java.util.Observer;
 import javax.swing.JFrame;
 
 public class DesktopApplication {
-	String event, food_description;
-	boolean pub_open = false;
+	String event, food_description, path;
+	boolean pub_open = false, food_ready = false;
 	NiftyHTTP nifty;
 	ConfigSettings config = new ConfigSettings();
 	SlidePath slidepath = new SlidePath();
@@ -14,7 +14,6 @@ public class DesktopApplication {
 	public DesktopApplication() {
 		LogInFrame loginframe = new LogInFrame();
 		loginframe.logFrame.setVisible(true);
-		//loginframe.addObserver(this); add observable?
 		
 	}
 
@@ -29,7 +28,8 @@ public class DesktopApplication {
 			adminframe.setupFrame(values, slidepath.ninja(values[9]), slidepath.ninja(values[10]));
 			
 		} else {
-			// Fel token/user, notifiera!
+			FailFrame fail = new FailFrame();
+			fail.errFrame.setVisible(true);
 		}
 	}
 	
@@ -45,23 +45,31 @@ public class DesktopApplication {
 		return config.resetValues();
 	}
 	
-	public void announceFood(String food, boolean pub_open, boolean food_ready){
-		food_description = food;
-		nifty.postAnnouncement(food_description, event, pub_open, food_ready);
-	}
-
-	public void announcePub(String ev, boolean pub_open, boolean food_ready){
-		String event = ev;
+	public void announce(String food, String ev){ // Send announcement to server
+		if (food.equals(null) == false){
+			food_description = food;
+		}else if(ev.equals(null) == false){
+			event = ev;
+		}
+		
 		nifty.postAnnouncement(food_description, event, pub_open, food_ready);
 	}
 	
-	public void savePath(String path){
-		String name = popup("Name your path: ");
+	public void savePath(String name){
 		config.setValues(slidepath.add(name, path, getConf()));
 	}
 	
 	public void remPath(String name){
 		config.setValues(slidepath.remove(name, getConf()));
+	}
+	
+	public void popup(String message, String pathTmp, boolean foodChbTmp, boolean pubChbTmp){ //Pub, Food & SaveSlideshow
+		path = pathTmp;
+		food_ready = foodChbTmp;
+		pub_open = pubChbTmp;
+		PopupFrame popupframe = new PopupFrame(message);
+		popupframe.popFrame.setVisible(true);
+		
 	}
 	
 	public void startShow(){
@@ -75,22 +83,11 @@ public class DesktopApplication {
 	public void exitShow(){
 		//exit twoDSlideShow only...
 	}
-	
-	public String popup(String message){ //Pub, Food & SaveSlideshow
-		PopupFrame popupframe = new PopupFrame(message);
-		return popupframe.popTxt.getText(); //Returnera? eller köra genom submit()?
-		
-	}
-	
-	public String submit(String value){
-		return value;
-	}
-	
 
 	// Main
 	public static void main(String[] args) {
 		new DesktopApplication();
-
+		
 	}
 	
 }
