@@ -1,9 +1,5 @@
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-import java.io.File;
-
-
-
 
 public class FrameListener implements WindowListener{
 
@@ -21,7 +17,8 @@ public class FrameListener implements WindowListener{
 
 	@Override
 	public void windowClosing(WindowEvent arg0) {
-		deleteDirectory();
+		DirectoryExterminator de = new DirectoryExterminator("Images");
+		de.exterminate();
 		
 	}
 
@@ -48,23 +45,5 @@ public class FrameListener implements WindowListener{
 		// TODO Auto-generated method stub
 		
 	}
-	 private boolean deleteDirectory() {
-		   File path = new File("Images");
-		   return delDir(path);
-		  }
-	
-	   private boolean delDir(File path){
-	    if( path.exists() ) {
-	      File[] files = path.listFiles();
-	      for(int i=0; i<files.length; i++) {
-	         if(files[i].isDirectory()) {
-	           delDir(files[i]);
-	         }else {
-	           files[i].delete();
-	         }
-	      }
-	    }
-	    return( path.delete() );
-	   }
 	
 }
