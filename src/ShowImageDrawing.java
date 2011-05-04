@@ -48,8 +48,19 @@ public class ShowImageDrawing {
 				g2d.drawString(comments[i][0].getString(), comments[i][0].x,
 						comments[i][0].y);
 				g2d.setFont(commentFont);
-				g2d.drawString(comments[i][1].getString(), comments[i][1].x,
-						comments[i][1].y);
+				int j = 0;
+				do {
+					j++;
+					if(comments[i][j].getString().length() - 29 > 0){
+						g2d.drawString(comments[i][j].getString(), comments[i][j].x,
+								comments[i][j].y);
+					}else{
+						g2d.drawString(comments[i][j].getString(), comments[i][j].x,
+								comments[i][j].y);
+						break;
+					}
+				}while(true);
+				
 			}
 		}
 	}

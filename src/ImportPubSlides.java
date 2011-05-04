@@ -7,8 +7,7 @@ import javax.imageio.ImageIO;
 
 public class ImportPubSlides {
 	PptToPng pptToPng;
-	int nrOfSlides;
-	int currentSlide;
+	int nrOfSlides, currentSlide;
 
 	/**
 	 * constructor which takes the directory path to the file(s) as input
@@ -23,6 +22,10 @@ public class ImportPubSlides {
 		currentSlide = -1;
 		pptToPng.extract();
 		countFiles();
+	}
+
+	public ImportPubSlides() {
+		nrOfSlides = 0;
 	}
 
 	/**
@@ -41,6 +44,17 @@ public class ImportPubSlides {
 	public int getNrOfSlides() {
 		return nrOfSlides;
 	}
+
+	/**
+	 * Methoed which loads one picture in the selected directory and returns it
+	 * as an Image.
+	 * 
+	 * @param fileNr
+	 *            int, which file in the array of found files.
+	 * @return Image, returns the chosen file as Image.
+	 * @throws IOException
+	 *             Throws IOException if the file couldn't be found.
+	 */
 
 	/**
 	 * Methoed which loads one picture in the selected directory and returns it
@@ -82,4 +96,5 @@ public class ImportPubSlides {
 	    }
 	    return( path.delete() );
 	   }
+
 }

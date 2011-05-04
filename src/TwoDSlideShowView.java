@@ -18,7 +18,7 @@ public class TwoDSlideShowView  {
 
 		FrameListener wl = new FrameListener();
 		frame.addWindowListener(wl);
-		//frame.setUndecorated(true);
+		frame.setUndecorated(true);
 		frame.setSize(monitor.width, monitor.height);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
