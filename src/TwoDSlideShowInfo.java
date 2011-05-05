@@ -47,14 +47,13 @@ public class TwoDSlideShowInfo {
 
 	protected String[] readConfig() throws FileNotFoundException {
 
-		ConfigHandler reader = new ConfigHandler();
+		ConfigHandler reader = new ConfigHandler(11);
 		String[] values = new String[9];
 		String[] returner = new String[2];
 		
 		try {
 			values = reader.processLineByLine();
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -123,7 +122,6 @@ public class TwoDSlideShowInfo {
 				try {
 					setLinks(page=page+1);
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				j=0;
