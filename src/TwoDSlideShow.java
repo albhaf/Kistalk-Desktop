@@ -4,6 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+
+import javax.imageio.IIOException;
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
 
@@ -31,8 +33,7 @@ public class TwoDSlideShow extends Panel implements ActionListener {
  		imageSlide = false;
 		view = new TwoDSlideShowView();
 		info = new TwoDSlideShowInfo();
-		pubSlides = new ImportPubSlides("asd.ppt");
-		readConfig();
+		pubSlides = new ImportPubSlides(readConfig());
 		getScreenResolution();
 		firstPicture();
 		createFrame();
@@ -58,9 +59,11 @@ public class TwoDSlideShow extends Panel implements ActionListener {
 		monitor = info.getScreenSize(screenIndex);
 	}
 
-	private void readConfig() throws FileNotFoundException {
-		screenIndex = info.readConfig();
+	private String readConfig() throws FileNotFoundException {
+		String[] tmpConf =info.readConfig();
+		screenIndex = Byte.valueOf(tmpConf[0]);
 		t = new Timer(10, this);
+		return tmpConf[1];
 	}
 
 	private void firstPicture() throws IOException {

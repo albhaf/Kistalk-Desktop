@@ -45,11 +45,12 @@ public class TwoDSlideShowInfo {
 		return gc[0].getBounds();
 	}
 
-	protected byte readConfig() throws FileNotFoundException {
+	protected String[] readConfig() throws FileNotFoundException {
 
 		ConfigHandler reader = new ConfigHandler();
 		String[] values = new String[9];
-
+		String[] returner = new String[2];
+		
 		try {
 			values = reader.processLineByLine();
 		} catch (FileNotFoundException e) {
@@ -65,13 +66,17 @@ public class TwoDSlideShowInfo {
 		timeStill = Integer.valueOf(values[2]);
 		fadingSpeed = Integer.valueOf(values[3]);
 		fileFormats = values[4].split(" ");
+		returner[0] =values[5];
 		xmlPath = values[6];
 		nrOfComments = Integer.valueOf(values[7]);
-		return Byte.valueOf(values[5]);
+		returner[1]=(values[8]);
+
+
+		return returner;
 	}
 
 	private void readNext(int page){
-		xmlreader = new XMLreader(xmlPath + "?username=znorman&token=vqlcotvzuu&page=" + (page-1)*10+1 + "&per_page="+ (page*10));
+		xmlreader = new XMLreader(xmlPath + "?username=znorman&token=vqlcotvzuu&page=" + page + "&per_page="+ (nrOfPics));
 		imgXMLList = xmlreader.getImagesInfo();
 	}
 	
@@ -88,16 +93,42 @@ public class TwoDSlideShowInfo {
 			}
 		}
 	}
-
-	protected void setPictures() {
-		for (int i = 0; i < nrOfPics; i++) {
+	protected void setLinks(int page) throws IOException {
+		readNext(page);
+		for (int i = 0, j = 0; i < nrOfPics; i++, j++) {
+			if(j > page*9)
+				readNext(page++);
 			try {
-				serverImgs[i] = ImageIO.read(urlArray[i]);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				urlArray[i] = imgXMLList.get(j%10).getLink();
+			} catch (Exception e) {
+				i--;
 			}
 		}
+	}
+
+	protected void setPictures() {
+		int i =0;
+		int page=1;
+		int j =0;
+		do {
+			try {
+				serverImgs[i] = ImageIO.read(urlArray[j]);
+				
+				i=i+1;
+				j=j+1;
+			} catch (IOException e) {
+					j=j+1;
+			}
+			if(nrOfPics <= j && i < nrOfPics){
+				try {
+					setLinks(page=page+1);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				j=0;
+			}
+		}while(i<nrOfPics);
 	}
 
 	protected ShowImage createShowImage(Rectangle monitor) throws IOException {
