@@ -56,7 +56,8 @@ public class DesktopApplication {
 	
 	public void savePath(String name){
 		config.setValues(slidepath.add(name, path, getConf()));
-		adminframe.slideSaved(name);
+		adminframe.slideSaved(name, path);
+		adminframe.enable();
 	}
 	
 	public void remPath(String name){
@@ -65,9 +66,14 @@ public class DesktopApplication {
 	
 	public void popup(String message, String pathTmp){ //Pub, Food & SaveSlideshow
 		path = pathTmp;
+		adminframe.disable();
 		PopupFrame popupframe = new PopupFrame(message, bgImage, this);
 		popupframe.popFrame.setVisible(true);
 		
+	}
+	
+	public void closePop(){
+		adminframe.enable();
 	}
 	
 	public void startShow(){

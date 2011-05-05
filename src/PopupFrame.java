@@ -101,10 +101,15 @@ public class PopupFrame{
 	private class ButtonListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource() == sbmBtn){
-				controller.savePath(popTxt.getText());
-				popFrame.dispose();
+				if (popTxt.getText().equals("") == false){
+					controller.savePath(popTxt.getText());
+					popFrame.dispose();
+				}else{
+					//controller.Failframe();
+				}
 				
 			}else if(e.getSource() == clsBtn){
+				controller.closePop();
 				popFrame.dispose();
 			}
 		}
