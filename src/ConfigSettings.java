@@ -76,12 +76,12 @@ public class ConfigSettings {
 		lines[28] = "Max_number_of_Images %" + values[0];
 		lines[30] = "Number_of_Hans %-";
 		lines[32] = "Timer_interval %" + values[2];
-		lines[34] = "Number_of_Jimmys %-";
+		lines[34] = "Number_of_Jimmys %" + values[3];
 		lines[36] = "supported_image_formats %.jpg .png .gif .bnp";
 		lines[38] = "Screen_index %" + values[5];
-		lines[40] = "XMLURL %http://www.kistalk.com/desktop_images.xml";
+		lines[40] = "XMLURL %http://www.kistalk.com/api/feed/desktop.xml";
 		lines[42] = "Number_of_comments %" + values[7];
-		lines[44] = "Path_to_Pubslides %" + values[8]; //Ett \ tas bort var gång filen laddas?
+		lines[44] = "Path_to_Pubslides %" + values[8];
 		lines[46] = "Saved_Pubslides %" + values[9];
 		lines[48] = "Saved_Paths %" + values[10];
 		
