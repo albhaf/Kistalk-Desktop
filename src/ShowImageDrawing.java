@@ -13,7 +13,7 @@ public class ShowImageDrawing {
 	private Font font;
 	Graphics2D g2d;
 
-	public ShowImageDrawing() {
+	protected ShowImageDrawing() {
 		commentUser = new Font("Serig", Font.BOLD, 30);
 		commentFont = new Font("Serif", Font.BOLD, 20);
 		font = new Font("Serif", Font.BOLD, 50);
@@ -41,9 +41,7 @@ public class ShowImageDrawing {
 	protected void drawComments(TextToDisplay[][] comments) {
 		g2d.setFont(commentFont);
 		g2d.setColor(Color.WHITE);
-
 		if (comments != null) {
-
 			for (int i = 0; i < comments.length; i++) {
 				g2d.setFont(commentUser);
 				g2d.drawString(comments[i][0].getString(), comments[i][0].x,
@@ -61,15 +59,14 @@ public class ShowImageDrawing {
 								comments[i][j].y);
 						break;
 					}
-				}while(true);
-				
+				}while(true);				
 			}
 		}
 	}
+	
 	protected void paintSlide(BufferedImage slideImage,
 			ImgRect imgRect) {
 		TexturePaint tp = new TexturePaint(slideImage, imgRect);
-
 		g2d.setPaint(tp);
 		g2d.fill(imgRect);
 	}
@@ -92,5 +89,4 @@ public class ShowImageDrawing {
 		g2d.setPaint(tp);
 		g2d.fill(imgRect);
 	}
-
 }

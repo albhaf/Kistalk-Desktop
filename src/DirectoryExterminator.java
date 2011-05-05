@@ -14,6 +14,9 @@ public class DirectoryExterminator {
 		return delDir(path);
 	}*/
 	
+	/**
+	 * path should be absolute or relative to the .jar position.
+	 */
 	public boolean exterminate() {
 		File path = new File(sPath);
 		return delDir(path);

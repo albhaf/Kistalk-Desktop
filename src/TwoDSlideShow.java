@@ -5,10 +5,16 @@ import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import javax.imageio.IIOException;
+import javax.swing.JOptionPane;
 import javax.swing.Timer;
 
-@SuppressWarnings("serial")
 public class TwoDSlideShow extends Panel implements ActionListener {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6713712974194382458L;
 
 	Timer t;
 
@@ -44,7 +50,7 @@ public class TwoDSlideShow extends Panel implements ActionListener {
  	}
 
 	// Build the frame (Slideshow)
-	public void createFrame() {
+	private void createFrame() {
 		slideShowHandler =  new ShowImage(monitor, info.getTimeStill(), info.getFadingSpeed());
 		view.createFrame(slideShowHandler, monitor,this);
 	}
@@ -66,7 +72,13 @@ public class TwoDSlideShow extends Panel implements ActionListener {
 
 	private void updatePicture() throws IOException {
 		if(!imageSlide && pubSlides.getNrOfSlides() > 0){
-			slideShowHandler.setNewSlide(pubSlides.getImage());
+			try{
+				slideShowHandler.setNewSlide(pubSlides.getImage());
+			}catch(IIOException e){
+				close();
+				JOptionPane.showMessageDialog(null, "Something went wrong. Couldn't open the powerpoint images. They were deleted during runtime!");
+
+			}
 			imageSlide = true;
 		} else {
 			info.updatePicture();
@@ -74,11 +86,11 @@ public class TwoDSlideShow extends Panel implements ActionListener {
 			slideShowHandler.setNewPicture(info.getImage(), info.getUser(), info.getImageText(), info.getImageComments());		
 		}
 	}
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == t) {
-
-			slideShowHandler.MoveObjects();
+		if (e.getSource() == t) {			
+			slideShowHandler.MoveObjects();			
 			if (slideShowHandler.getSlideImageX() > monitor.width) {
 				try {
 					updatePicture();
