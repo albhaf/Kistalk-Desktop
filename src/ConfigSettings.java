@@ -76,7 +76,7 @@ public class ConfigSettings {
 		lines[28] = "Max_number_of_Images %" + values[0];
 		lines[30] = "Number_of_Hans %-";
 		lines[32] = "Timer_interval %" + values[2];
-		lines[34] = "Number_of_Jimmys %" + values[3];
+		lines[34] = "Fading_speed %" + values[3];
 		lines[36] = "supported_image_formats %.jpg .png .gif .bnp";
 		lines[38] = "Screen_index %" + values[5];
 		lines[40] = "XMLURL %http://www.kistalk.com/api/feed/desktop.xml";

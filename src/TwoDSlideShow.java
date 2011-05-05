@@ -49,7 +49,7 @@ public class TwoDSlideShow extends Panel implements ActionListener {
  	}
 
 	// Build the frame (Slideshow)
-	private void createFrame() {
+	private void createFrame() throws IOException {
 		slideShowHandler =  new ShowImage(monitor, info.getTimeStill(), info.getFadingSpeed());
 		view.createFrame(slideShowHandler, monitor,this);
 	}

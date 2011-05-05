@@ -1,4 +1,5 @@
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -18,7 +19,7 @@ public class FailFrame{
 	public JButton okBtn;
 	public JFrame errFrame;
 	
-	public FailFrame(){
+	public FailFrame(String title, String message){
 		
 		ButtonListener listener = new ButtonListener();
 		
@@ -37,45 +38,42 @@ public class FailFrame{
 	    		
 			}
 		};
-
+		
 		JLabel label = new JLabel();
 		okBtn = new JButton();
 		GroupLayout errLayout = new GroupLayout(errPanel);
 		
-		errFrame.setLocation(400, 270);
+		errFrame.setLocation(430, 290);
 		errFrame.setSize(300, 100);
-		errFrame.setTitle("Login Error");
+		errFrame.setTitle(title);
 		errFrame.setResizable(false);
-		errFrame.setUndecorated(true);
-		label.setText("Wrong username and/or token. Try again.");
+		errFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		errPanel.setLayout(errLayout);
+		label.setText(message);
 		label.setForeground(Color.WHITE);
-		okBtn.setText("Ok");
+		label.setFont(new Font("Helvetica", Font.BOLD, 12));
+		okBtn.setText("OK");
 		okBtn.addActionListener(listener);
 		
 		errLayout.setHorizontalGroup(
-				errLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+				errLayout.createParallelGroup(GroupLayout.Alignment.CENTER)
 						
 						.addGroup(errLayout.createSequentialGroup()
-								.addGap(10)
+								.addGap(20)
 								.addComponent(label)
 						)
 						.addGroup(errLayout.createSequentialGroup()
-								.addGap(70)
-								.addComponent(okBtn, 90, 90, 90)
+								.addGap(30)
+								.addComponent(okBtn, 100, 100, 100)
 						)
 		);
 		
 		errLayout.setVerticalGroup(
 				errLayout.createSequentialGroup()
 				.addGap(10)
-				.addGroup(errLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-						.addComponent(label)
-				)
+				.addComponent(label)
 				.addGap(10)
-				.addGroup(errLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-						.addComponent(okBtn, 25, 25, 25)
-				)
-				
+				.addComponent(okBtn, 25, 25, 25)
 		);
 		
 		errFrame.add(errPanel);
