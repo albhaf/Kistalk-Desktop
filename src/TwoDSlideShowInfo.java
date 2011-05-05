@@ -100,7 +100,7 @@ public class TwoDSlideShowInfo {
 		}
 	}
 
-	protected ShowImage createShowImage(Rectangle monitor) {
+	protected ShowImage createShowImage(Rectangle monitor) throws IOException {
 		return new ShowImage(monitor, timeStill, fadingSpeed);
 	}
 

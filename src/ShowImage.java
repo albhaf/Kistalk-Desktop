@@ -2,6 +2,7 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.List;
 
 import javax.swing.JPanel;
@@ -37,7 +38,7 @@ public class ShowImage extends JPanel {
 	private Dimension timeStill = new Dimension();
 	private float imageStopPosition;
 	
-	public ShowImage(Rectangle monitorIn, int timeStillIn, int speedIn) {
+	public ShowImage(Rectangle monitorIn, int timeStillIn, int speedIn) throws IOException {
 		monitorSize = monitorIn;
 		imgRect = new ImgRect();
 		outgoing = false;

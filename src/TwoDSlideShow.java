@@ -4,8 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-
-import javax.imageio.IIOException;
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
 
@@ -50,7 +48,7 @@ public class TwoDSlideShow extends Panel implements ActionListener {
  	}
 
 	// Build the frame (Slideshow)
-	private void createFrame() {
+	private void createFrame() throws IOException {
 		slideShowHandler =  new ShowImage(monitor, info.getTimeStill(), info.getFadingSpeed());
 		view.createFrame(slideShowHandler, monitor,this);
 	}
