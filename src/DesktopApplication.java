@@ -33,8 +33,7 @@ public class DesktopApplication {
 			adminframe.setupFrame(values, slidepath.ninja(values[9]), slidepath.ninja(values[10]), bgImage);
 			
 		} else {
-			FailFrame fail = new FailFrame();
-			fail.errFrame.setVisible(true);
+			fail("Error", "Wrong username and/or token. Try again.");
 		}
 	}
 	
@@ -46,25 +45,27 @@ public class DesktopApplication {
 		config.setValues(vals);
 	}
 	
-	public String[] resetConf(){
-		return config.resetValues();
+	public void resetConf(){
+		adminframe.setTxt(config.resetValues());
 	}
 	
 	public void announce(String food_description, String event, boolean pub_open, boolean food_ready){ // Send announcement to server
 		nifty.postAnnouncement(food_description, event, pub_open, food_ready);
+		fail("Announcement", "Announcement successfully sent!");
 	}
 	
 	public void savePath(String name){
 		config.setValues(slidepath.add(name, path, getConf()));
 		adminframe.slideSaved(name, path);
 		adminframe.enable();
+		
 	}
 	
 	public void remPath(String name){
 		config.setValues(slidepath.remove(name, getConf()));
 	}
 	
-	public void popup(String message, String pathTmp){ //Pub, Food & SaveSlideshow
+	public void popup(String message, String pathTmp){ //For SaveSlideshow
 		path = pathTmp;
 		adminframe.disable();
 		PopupFrame popupframe = new PopupFrame(message, bgImage, this);
@@ -74,6 +75,11 @@ public class DesktopApplication {
 	
 	public void closePop(){
 		adminframe.enable();
+	}
+	
+	public void fail(String t, String m){
+		FailFrame fail = new FailFrame(t, m);
+		fail.errFrame.setVisible(true);
 	}
 	
 	public void startShow(){

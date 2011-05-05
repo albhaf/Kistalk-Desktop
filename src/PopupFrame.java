@@ -59,6 +59,7 @@ public class PopupFrame{
 		popFrame.setTitle("KisTalk Popup");
 		popFrame.setResizable(false);
 		popFrame.setUndecorated(false);
+		popFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		popPanel.setLayout(popLayout);
 		label.setText(message);
 		label.setForeground(Color.WHITE);
@@ -106,11 +107,11 @@ public class PopupFrame{
 	private class ButtonListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource() == sbmBtn){
-				if (popTxt.getText().equals("") == false){
+				if (popTxt.getText().equals("") == false && popTxt.getText().length() <= 40){
 					controller.savePath(popTxt.getText());
 					popFrame.dispose();
 				}else{
-					//controller.Failframe();
+					controller.fail("Error", "The name must be between 1 and 40 chars!");
 				}
 				
 			}else if(e.getSource() == clsBtn){

@@ -168,7 +168,7 @@ public class AdminFrame {
 		timeLbl.setText("Time interval (ms): ");
 		timeLbl.setForeground(Color.WHITE);
 		
-		xmlPubPathLbl.setText("Choose a .ppt-file: ");
+		xmlPubPathLbl.setText("Choose a .ppt-file (path): ");
 		xmlPubPathLbl.setForeground(Color.WHITE);
 		
 		legalFilesLbl.setText("Approved file extensions: ");
@@ -502,6 +502,7 @@ public class AdminFrame {
 		statusLbl.setText("Status: Slideshow saved as " + name);
 		slideNames.add(name);
 		slidePaths.add(path);
+		pubSlidesDDLst.setSelectedItem(name);
 	}
 	
 	public void disable() { // Disable buttons
@@ -590,6 +591,25 @@ public class AdminFrame {
 		
 	}
 	
+	public void getTxt(){ // Get text from textfields
+		values[0] = nrOfImgsTxt.getText();
+		values[2] = timeTxt.getText();
+		values[3] = fadeTxt.getText();
+		values[7] = nrOfCommentsTxt.getText();
+		values[8] = xmlPubPathTxt.getText();
+		
+	}
+	
+	public void setTxt(String[] values){ // Write text to textfields
+		nrOfImgsTxt.setText(values[0]);
+		timeTxt.setText(values[2]);
+		fadeTxt.setText(values[3]);
+		nrOfCommentsTxt.setText(values[7]);
+		xmlPubPathTxt.setText(values[8]);
+		statusLbl.setText("Status: Config is back to normal");
+		
+	}
+	
 	private class ButtonListener implements ActionListener {
 		
 		public void actionPerformed(ActionEvent e) {
@@ -599,9 +619,7 @@ public class AdminFrame {
 				statusLbl.setText("Status: Settings saved to Config");
 				
 			}else if (e.getSource() == resetBtn){ // Reset settings in config
-				values = controller.resetConf();
-				setTxt();
-				statusLbl.setText("Status: Config is back to normal");
+				controller.fail("Reset settings", "Are you sure you want to reset the whole fukkin thing?! o.O");
 				
 			}else if (e.getSource() == pubChb){ // Announce pub
 				if (pubChb.isSelected()){
@@ -625,14 +643,11 @@ public class AdminFrame {
 				if (foodTxt.getText().length() < 40 && eventTxt.getText().length() < 40){
 					if (foodTxt.getText().length() == 0)
 						foodTxt.setText("-");
+					if (eventTxt.getText().length() == 0)
+						eventTxt.setText("-");
 					controller.announce(foodTxt.getText(), eventTxt.getText(), pubChb.isSelected(), foodChb.isSelected());
 					statusLbl.setText("Status: Announcement was sent!");
 					pubnfoodStatusLbl.setText("Pub_open: " + pubChb.isSelected() + "  Event: " + eventTxt.getText() + "  Food_ready: " + foodChb.isSelected() + "  Food: " + foodTxt.getText());
-					
-					foodTxt.setText("");
-					eventTxt.setText("");
-					pubChb.setSelected(false);
-					foodChb.setSelected(false);
 				
 				} else {
 					statusLbl.setText("Status: Input is too long! String has to be < 40");
@@ -672,23 +687,7 @@ public class AdminFrame {
 			}
 		}
 		
-		public void getTxt(){ // Get text from textfields
-			values[0] = nrOfImgsTxt.getText();
-			values[2] = timeTxt.getText();
-			values[3] = fadeTxt.getText();
-			values[7] = nrOfCommentsTxt.getText();
-			values[8] = xmlPubPathTxt.getText();
-			
-		}
 		
-		public void setTxt(){ // Write text to textfields
-			nrOfImgsTxt.setText(values[0]);
-			timeTxt.setText(values[2]);
-			fadeTxt.setText(values[3]);
-			nrOfCommentsTxt.setText(values[7]);
-			xmlPubPathTxt.setText(values[8]);
-			
-		}
 		
 	}
 
