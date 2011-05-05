@@ -5,6 +5,9 @@ import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import javax.imageio.IIOException;
+import javax.swing.JOptionPane;
+import javax.swing.Popup;
 import javax.swing.Timer;
 
 @SuppressWarnings("serial")
@@ -66,7 +69,12 @@ public class TwoDSlideShow extends Panel implements ActionListener {
 
 	private void updatePicture() throws IOException {
 		if(!imageSlide && pubSlides.getNrOfSlides() > 0){
+			try{
 			slideShowHandler.setNewSlide(pubSlides.getImage());
+			}catch(IOException e){
+				JOptionPane.showMessageDialog(null, "Something went wrong. Couldn't open the powerpoint images.");
+				close();
+			}
 			imageSlide = true;
 		} else {
 			info.updatePicture();
