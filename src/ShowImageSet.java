@@ -113,6 +113,7 @@ public class ShowImageSet {
 	
 	private TextToDisplay[][] writeComments(List<CommentXML> imageComments,
 			TextToDisplay[][] comments){
+		int y = 200;
 		for (int i = 0; i < comments.length; i++) {
 			comments[i][0] = new TextToDisplay();
 			comments[i][0].setString(imageComments.get(i).getUser()
@@ -133,7 +134,6 @@ public class ShowImageSet {
 	protected TextToDisplay[][] setComments(List<CommentXML> imageComments,
 			TextToDisplay[][] comments) {
 		if (imageComments != null) {
-			int y = 200;
 			if (imageComments.size() > 0) {
 				int lines = 1;
 				for (int i = 0; i < imageComments.size(); i++) {
