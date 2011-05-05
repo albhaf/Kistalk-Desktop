@@ -11,12 +11,12 @@ import java.io.OutputStream;
 import java.util.Scanner;
 
 public class ConfigHandler {
+	public int nrOfConfValues;
 	private File fFile = new File("Config.hans");
-	public int nrOfValues = 11; // Doesn't include regular textlines. If change, then change AdminFrame too
-
+	
 	//	Constructor
-	public ConfigHandler() {
-		
+	public ConfigHandler(int tmp) {
+		nrOfConfValues = tmp;
 	}
 
 	//	Gives Config new value/s
@@ -60,7 +60,7 @@ public class ConfigHandler {
 	//	Returns all wanted values in lines, or parts of lines
 	public String[] processLineByLine() throws FileNotFoundException{
 		Scanner scanner = new Scanner(new FileReader(fFile));
-		String[] lines = new String[nrOfValues];
+		String[] lines = new String[nrOfConfValues];
 		int i = 0;
 		
 		while(scanner.hasNextLine()){

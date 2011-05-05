@@ -4,15 +4,19 @@ import java.util.Date;
 
 
 public class ConfigSettings {
-	final int nrOfConfigValues = 11; // Doesn't include regular textlines. If change, then change configHandler too
+	public int nrOfConfValues;
 	
 	ConfigHandler handler;
 	
+	public ConfigSettings(int tmp){
+		nrOfConfValues = tmp;
+		handler = new ConfigHandler(nrOfConfValues);
+	}
 	
 	//	Reads Config and saves values in 'confValues'
 	public String[] getValues() {
-		String[] values = new String[nrOfConfigValues];
-		handler = new ConfigHandler();
+		String[] values = new String[nrOfConfValues];
+		
 		
 		try {
 			values = handler.processLineByLine();
@@ -26,11 +30,9 @@ public class ConfigSettings {
 	}
 
 	//	Saves current settings to Config (except Default Turtle, he only lives in config when config is defaultahrized)
-	@SuppressWarnings("deprecation")
 	public void setValues(String[] values) {
 		String[] lines = new String[49];
 		Date today = new Date();
-		handler = new ConfigHandler();
 		
 		//	Standard text
 		lines[0] = "";
@@ -91,8 +93,7 @@ public class ConfigSettings {
 	}
 
 	//	Resets Config to its standard state
-	public String[] resetValues() { //Error
-		handler = new ConfigHandler();
+	public String[] resetValues() {
 		
 		//	Reset Config-file
 		try {

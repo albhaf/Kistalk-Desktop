@@ -136,12 +136,6 @@ public class AdminFrame {
 		
 		// Create and Paint thePanel background
 		thePanel = new JPanel(){ //Observera att detta �r en create!
-
-			/**
-			 * 
-			 */
-			private static final long serialVersionUID = -7374793566417261848L;
-
 			public void paint(Graphics g){
 				g.drawImage(bgImage, 0,0, this);
 				setOpaque(false);
@@ -657,7 +651,7 @@ public class AdminFrame {
 					pubnfoodStatusLbl.setText("Pub_open: " + pubChb.isSelected() + "  Event: " + eventTxt.getText() + "  Food_ready: " + foodChb.isSelected() + "  Food: " + foodTxt.getText());
 				
 				} else {
-					statusLbl.setText("Status: Input is too long! String has to be < 40");
+					controller.fail("Error", "Both textfields require 1 to 40 chars!");
 				}
 				
 			}else if (e.getSource() == savePathBtn){ // Save Slideshow
@@ -693,9 +687,6 @@ public class AdminFrame {
 				
 			}
 		}
-		
-		
-		
 	}
 
 }

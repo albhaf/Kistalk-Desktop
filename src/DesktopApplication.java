@@ -6,6 +6,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
 public class DesktopApplication {
+	int nrOfConfValues;
 	String path;
 	Image bgImage;
 	Font stdFont;
@@ -13,13 +14,15 @@ public class DesktopApplication {
 	LogInFrame loginframe;
 	AdminFrame adminframe;
 	TwoDSlideShow slideshow;
-	ConfigSettings config = new ConfigSettings();
+	ConfigSettings config;
 	SlidePath slidepath = new SlidePath();
 	
 	public DesktopApplication() {
+		nrOfConfValues = 11;
 		ImageIcon icon = new ImageIcon("bgIcon.png");
 		bgImage = icon.getImage();
 		stdFont = new Font("Imperial", Font.PLAIN, 12);
+		config = new ConfigSettings(nrOfConfValues);
 		
 		loginframe = new LogInFrame(bgImage, this);
 		loginframe.logFrame.setVisible(true);
@@ -88,7 +91,7 @@ public class DesktopApplication {
 	
 	public void startShow(){
 		try {
-			slideshow = new TwoDSlideShow();
+			slideshow = new TwoDSlideShow(); //this
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
