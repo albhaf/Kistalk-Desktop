@@ -84,9 +84,8 @@ public class TwoDSlideShow extends Panel implements ActionListener {
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == t) {
-
-			slideShowHandler.MoveObjects();
+		if (e.getSource() == t) {			
+			slideShowHandler.MoveObjects();			
 			if (slideShowHandler.getSlideImageX() > monitor.width) {
 				try {
 					updatePicture();
