@@ -47,6 +47,7 @@
     </target>
     
     <target name="run" depends="dist">
+        <!-- Ugly way of running the application, necessary due to crappy project structure -->
         <java dir="resources" classname="DesktopApplication" fork='true'>
             <classpath>
                 <pathelement location="${dist}/${project_name}-${DSTAMP}.jar"/>
