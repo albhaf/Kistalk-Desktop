@@ -34,6 +34,11 @@ public class PopupFrame{
 		
 		popFrame = new JFrame();
 		JPanel popPanel = new JPanel(){
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = -8640480719459300882L;
+
 			public void paint(Graphics g){
 				g.drawImage(bgImage, 0,0, this);
 				setOpaque(false);
@@ -101,10 +106,15 @@ public class PopupFrame{
 	private class ButtonListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource() == sbmBtn){
-				controller.savePath(popTxt.getText());
-				popFrame.dispose();
+				if (popTxt.getText().equals("") == false){
+					controller.savePath(popTxt.getText());
+					popFrame.dispose();
+				}else{
+					//controller.Failframe();
+				}
 				
 			}else if(e.getSource() == clsBtn){
+				controller.closePop();
 				popFrame.dispose();
 			}
 		}

@@ -31,7 +31,8 @@ public class SlidePath {
 	
 	public String[] remove(String name, String[] confValues){
 		List<String> names, paths;
-		StringBuffer sb = new StringBuffer();
+		StringBuffer sb1 = new StringBuffer();
+		StringBuffer sb2 = new StringBuffer();
 		
 		names = ninja(confValues[9]);
 		paths = ninja(confValues[10]);
@@ -41,21 +42,22 @@ public class SlidePath {
 			names.remove(i);
 			paths.remove(i);
 			
-			for (int j = 0; j <= names.size(); j++){
-				sb.append(names.get(j) + "|");
+			for (int j = 0; j < names.size(); j++){
+				sb1.append(names.get(j).toString());
+				if (j < names.size()-1)
+					sb1.append("|");
 			}
-			confValues[9] = sb.toString();
+			confValues[9] = sb1.toString();
 			
-			sb.delete(0, sb.length()-1);
-			
-			for (int j = 0; j <= names.size(); j++){
-				sb.append(paths.get(j));
-				sb.append("|");
+			for (int j = 0; j < paths.size(); j++){
+				sb2.append(paths.get(j));
+				if (j < paths.size()-1)
+					sb2.append("|");
 			}
-			confValues[10] = sb.toString();
+			confValues[10] = sb2.toString();
 			
 		}else{ //No such item
-			
+			//Failframe(); ?
 		}
 		
 		return confValues;

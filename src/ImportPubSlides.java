@@ -2,8 +2,6 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-
-import javax.imageio.IIOException;
 import javax.imageio.ImageIO;
 
 public class ImportPubSlides {
@@ -67,7 +65,7 @@ public class ImportPubSlides {
 	 * @throws IOException
 	 *             Throws IOException if the file couldn't be found.
 	 */
-	public BufferedImage getImage() throws IOException, IIOException {
+	public BufferedImage getImage() throws  IOException {
 		if(currentSlide < nrOfSlides-1){
 			currentSlide++;
 		}else{

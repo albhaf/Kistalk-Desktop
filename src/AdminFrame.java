@@ -70,6 +70,9 @@ public class AdminFrame {
 	
 	DesktopApplication controller;
 	ButtonListener listener;
+	
+	List<String> slideNames;
+	List<String> slidePaths;
 
 	//	Constructor
 	public AdminFrame(DesktopApplication contTmp) {
@@ -77,8 +80,10 @@ public class AdminFrame {
 	}
 
 	//	Setting up the settings frame
-	public void setupFrame(final String[] confValues, final List<String> slideNames, final List<String> slidePaths, final Image bgImage){
+	public void setupFrame(final String[] confValues, final List<String> tmpNames, final List<String> tmpPaths, final Image bgImage){
 		values = confValues;
+		slideNames = tmpNames;
+		slidePaths = tmpPaths;
 		
 		//	Create all objects
 		adminFrame = new JFrame();
@@ -199,7 +204,7 @@ public class AdminFrame {
 		timeTxt.setText(values[2]);
 		timeTxt.setFont(new Font("Imperial", Font.PLAIN, 12));
 		
-		xmlPubPathTxt.setText(values[8]);
+		xmlPubPathTxt.setText("C:\\...");
 		xmlPubPathTxt.setFont(new Font("Imperial", Font.PLAIN, 12));
 		
 		legalFilesTxt.setText(values[4]);
@@ -298,20 +303,20 @@ public class AdminFrame {
 				}
 		);
 		
-		screenDDLst.addItem("External");
 		screenDDLst.addItem("This");
+		screenDDLst.addItem("External");
 		screenDDLst.setSelectedItem("THIS");
 		screenDDLst.setFont(new Font("Gulim", Font.PLAIN, 12));
 		screenDDLst.addItemListener(
 				new ItemListener(){
 					public void itemStateChanged(ItemEvent e){
 						if (e.getStateChange() == ItemEvent.SELECTED)
-							statusLbl.setText("Status: " + e.getItem().toString() + " screen it is!");
 							if (e.getItem().toString() == "This"){
 								values[5] = "0";
 							}else if (e.getItem().toString() == "External"){
 								values[5] = "1";
 							}
+						statusLbl.setText("Status: " + e.getItem().toString() + " screen it is!");
 					}
 				}
 		);
@@ -492,8 +497,97 @@ public class AdminFrame {
 		adminFrame.setVisible(true);
 	}
 	
-	public void slideSaved(String name){
+	public void slideSaved(String name, String path){
+		pubSlidesDDLst.addItem(name);
 		statusLbl.setText("Status: Slideshow saved as " + name);
+		slideNames.add(name);
+		slidePaths.add(path);
+	}
+	
+	public void disable() { // Disable buttons
+		saveSetBtn.setEnabled(false);
+		resetBtn.setEnabled(false);
+		startBtn.setEnabled(false);
+		exitBtn.setEnabled(false);
+		pubChb.setEnabled(false);
+		foodChb.setEnabled(false);
+		screenDDLst.setEnabled(false);
+		pubSlidesDDLst.setEnabled(false);
+		nrOfImgsTxt.setEnabled(false);
+		timeTxt.setEnabled(false);
+		nrOfCommentsTxt.setEnabled(false);
+		
+		savePathBtn.setEnabled(false);
+		remPathBtn.setEnabled(false);
+		announceBtn.setEnabled(false);
+		fadeTxt.setEnabled(false);
+		pubChb.setEnabled(false);
+		
+		eventTxt.setEnabled(false);
+		foodTxt.setEnabled(false);
+		foodChb.setEnabled(false);
+		xmlPubPathTxt.setEnabled(false);
+		
+		nrOfImgsLbl.setForeground(Color.GRAY);
+		timeLbl.setForeground(Color.GRAY);
+		foodLbl.setForeground(Color.GRAY);
+		pubLbl.setForeground(Color.GRAY);
+		statusLbl.setForeground(Color.GRAY);
+		xmlPubPathLbl.setForeground(Color.GRAY);
+		legalFilesLbl.setForeground(Color.GRAY);
+		nrOfCommentsLbl.setForeground(Color.GRAY);
+		screenLbl.setForeground(Color.GRAY);
+		bgLbl.setForeground(Color.GRAY);
+		pubnfoodStatusLbl.setForeground(Color.GRAY);
+		fadeLbl.setForeground(Color.GRAY);
+		
+	}
+
+	public void enable(){ // Enable buttons
+		saveSetBtn.setEnabled(true);
+		resetBtn.setEnabled(true);
+		startBtn.setEnabled(true);
+		exitBtn.setEnabled(true);
+		screenDDLst.setEnabled(true);
+		pubSlidesDDLst.setEnabled(true);
+		nrOfImgsTxt.setEnabled(true);
+		timeTxt.setEnabled(true);
+		nrOfCommentsTxt.setEnabled(true);
+		
+		savePathBtn.setEnabled(true);
+		remPathBtn.setEnabled(true);
+		announceBtn.setEnabled(true);
+		fadeTxt.setEnabled(true);
+		pubChb.setEnabled(true);
+		
+		
+		if (pubChb.isSelected()){
+			eventTxt.setEnabled(true);
+			foodTxt.setEnabled(true);
+			foodChb.setEnabled(true);
+		}
+		if (slideItem == null)
+			xmlPubPathTxt.setEnabled(true);
+		
+		nrOfImgsLbl.setForeground(Color.WHITE);
+		timeLbl.setForeground(Color.WHITE);
+		
+		
+		statusLbl.setForeground(Color.WHITE);
+		xmlPubPathLbl.setForeground(Color.WHITE);
+		legalFilesLbl.setForeground(Color.WHITE);
+		nrOfCommentsLbl.setForeground(Color.WHITE);
+		screenLbl.setForeground(Color.WHITE);
+		bgLbl.setForeground(Color.WHITE);
+		pubnfoodStatusLbl.setForeground(Color.WHITE);
+		fadeLbl.setForeground(Color.WHITE);
+		
+		if (pubChb.isSelected()){
+			foodLbl.setForeground(Color.WHITE);
+			pubLbl.setForeground(Color.WHITE);
+			
+		}
+		
 	}
 	
 	private class ButtonListener implements ActionListener {
@@ -595,40 +689,6 @@ public class AdminFrame {
 			xmlPubPathTxt.setText(values[8]);
 			
 		}
-
-		
-//		public void disable() { // Disable buttons
-//			saveSetBtn.setEnabled(false);
-//			resetBtn.setEnabled(false);
-//			startBtn.setEnabled(false);
-//			exitBtn.setEnabled(false);
-//			pubChb.setEnabled(false);
-//			foodChb.setEnabled(false);
-//			screenDDLst.setEnabled(false);
-//			pubSlidesDDLst.setEnabled(false);
-//			nrOfImgsTxt.setEnabled(false);
-//			timeTxt.setEnabled(false);
-//			nrOfCommentsTxt.setEnabled(false);
-//			xmlPubPathTxt.setEnabled(false);
-//			
-//		}
-//	
-//		public void enable(){ // Enable buttons
-//			saveSetBtn.setEnabled(true);
-//			resetBtn.setEnabled(true);
-//			startBtn.setEnabled(true);
-//			exitBtn.setEnabled(true);
-//			pubChb.setEnabled(true);
-//			foodChb.setEnabled(true);
-//			screenDDLst.setEnabled(true);
-//			pubSlidesDDLst.setEnabled(true);
-//			nrOfImgsTxt.setEnabled(true);
-//			timeTxt.setEnabled(true);
-//			nrOfCommentsTxt.setEnabled(true);
-//			if (slideItem == null)
-//				xmlPubPathTxt.setEnabled(true);
-//			
-//		}
 		
 	}
 

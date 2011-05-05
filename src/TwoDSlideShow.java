@@ -7,8 +7,12 @@ import java.io.IOException;
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
 
-@SuppressWarnings("serial")
 public class TwoDSlideShow extends Panel implements ActionListener {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6713712974194382458L;
 
 	Timer t;
 
@@ -67,10 +71,11 @@ public class TwoDSlideShow extends Panel implements ActionListener {
 	private void updatePicture() throws IOException {
 		if(!imageSlide && pubSlides.getNrOfSlides() > 0){
 			try{
-			slideShowHandler.setNewSlide(pubSlides.getImage());
-			}catch(IOException e){
-				JOptionPane.showMessageDialog(null, "Something went wrong. Couldn't open the powerpoint images.");
+				slideShowHandler.setNewSlide(pubSlides.getImage());
+			}catch(IIOException e){
 				close();
+				JOptionPane.showMessageDialog(null, "Something went wrong. Couldn't open the powerpoint images. They were deleted during runtime!");
+
 			}
 			imageSlide = true;
 		} else {

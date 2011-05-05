@@ -6,10 +6,12 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.JOptionPane;
 
 import org.apache.poi.hslf.model.Slide;
 import org.apache.poi.hslf.usermodel.SlideShow;
@@ -65,12 +67,21 @@ public class PptToPng {
 	 * @return SlideShow, the SlideShow from the ppt file.
 	 * @throws IOException
 	 */
-	private SlideShow fileOpener(String tmpFilepath) throws IOException {
-		SlideShow ppt;
-		FileInputStream is = new FileInputStream(tmpFilepath);
-		ppt = new SlideShow(is);
+	private SlideShow fileOpener(String tmpFilepath) {
+		SlideShow ppt = null;
+		FileInputStream is;
+		try {
+			is = new FileInputStream(tmpFilepath);
+			ppt = new SlideShow(is);
+			is.close();
+		} catch (FileNotFoundException e) {
+			JOptionPane.showMessageDialog(null, e.getMessage());
+		}catch(IOException e){
+			JOptionPane.showMessageDialog(null, e.getMessage());
+		}
 
-		is.close();
+
+
 
 		return ppt;
 	}
@@ -84,10 +95,19 @@ public class PptToPng {
 	 *            String, the filename.
 	 * @throws IOException
 	 */
-	private void pngWriter(BufferedImage tmpImg, String tmpName) throws IOException {
-		FileOutputStream out = new FileOutputStream("Images//" + (tmpName) + ".hansimage");
-		ImageIO.write(tmpImg, "png", out);
-		out.close();
+	private void pngWriter(BufferedImage tmpImg, String tmpName){
+		FileOutputStream out;
+		try {
+			out = new FileOutputStream("Images//" + (tmpName) + ".hansimage");
+			ImageIO.write(tmpImg, "png", out);
+			out.close();
+		} catch (FileNotFoundException e) {
+			JOptionPane.showMessageDialog(null, e.getMessage());
+		}catch(IOException e){
+			JOptionPane.showMessageDialog(null, e.getMessage());
+		}
+
+
 	}
 
 	/**
@@ -96,7 +116,7 @@ public class PptToPng {
 	 * @param tmpimgWidth
 	 * @param tmpImgHeight
 	 */
-	private void converter(String tmpFilepath) {
+	private void converter(String tmpFilepath){
 		Slide[] slide;
 		SlideShow ppt = null;
 
@@ -104,32 +124,22 @@ public class PptToPng {
 		dir.deleteOnExit();
 		dir.mkdir();
 
-		try {
-			ppt = fileOpener(tmpFilepath);
-		} catch (IOException e) {
-			System.err.println("Kunde inte hitta eller oppna filen");
-		}
-
+		ppt = fileOpener(tmpFilepath);
+	
 		Dimension dimension = ppt.getPageSize();
-
 		BufferedImage bImg = null;
 		slide = ppt.getSlides();
 		for (int i = 0; i < slide.length; i++) {
 
-			// if tmpimgWidth is 0 the slide shouldn't be scaled and therefore
-			// is slideToImage called with the scaling values set to slide size.
 			bImg = slideToImage(slide[i], dimension);
 
-			// save the output
-			try {
-				pngWriter(bImg, "slide-" + i);
-				nrFiles = i + 1;
+			pngWriter(bImg, "slide-" + i);
+			nrFiles = i + 1;
 
-			} catch (IOException e) {
-				System.out.println("Kunde inte skriva slide" + i + "till ny fil");
-			}
 
 		}
+
+		
 	}
 
 	/**
@@ -149,7 +159,6 @@ public class PptToPng {
 
 		BufferedImage img = new BufferedImage(dimension.width,
 				dimension.height, BufferedImage.TYPE_INT_RGB);
-		// Creates and calculate the scaling properties
 
 		// create the graphic "painter"
 		Graphics2D graphics = img.createGraphics();
@@ -161,7 +170,7 @@ public class PptToPng {
 		graphics.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
 		graphics.setPaint(Color.white);
 
-		// fills the image with a square
+		// creates a square
 		graphics.fill(new Rectangle2D.Float(0, 0, dimension.width,
 				dimension.height));
 
