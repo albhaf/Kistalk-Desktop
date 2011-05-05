@@ -70,12 +70,19 @@ public class TwoDSlideShowInfo {
 		return Byte.valueOf(values[5]);
 	}
 
-	protected void setLinks() throws IOException {
-		xmlreader = new XMLreader(xmlPath + "?username=znorman&token=vqlcotvzuu");
+	private void readNext(int page){
+		xmlreader = new XMLreader(xmlPath + "?username=znorman&token=vqlcotvzuu&page=" + (page-1)*10+1 + "&per_page="+ (page*10));
 		imgXMLList = xmlreader.getImagesInfo();
+	}
+	
+	protected void setLinks() throws IOException {
+		int page = 1;
+		readNext(page);
 		for (int i = 0, j = 0; i < nrOfPics; i++, j++) {
+			if(j > page*9)
+				readNext(page++);
 			try {
-				urlArray[i] = imgXMLList.get(j).getLink();
+				urlArray[i] = imgXMLList.get(j%10).getLink();
 			} catch (Exception e) {
 				i--;
 			}
