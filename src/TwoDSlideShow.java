@@ -44,7 +44,7 @@ public class TwoDSlideShow extends Panel implements ActionListener {
  	}
 
 	// Build the frame (Slideshow)
-	public void createFrame() {
+	private void createFrame() {
 		slideShowHandler =  new ShowImage(monitor, info.getTimeStill(), info.getFadingSpeed());
 		view.createFrame(slideShowHandler, monitor,this);
 	}
@@ -74,6 +74,7 @@ public class TwoDSlideShow extends Panel implements ActionListener {
 			slideShowHandler.setNewPicture(info.getImage(), info.getUser(), info.getImageText(), info.getImageComments());		
 		}
 	}
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == t) {			
