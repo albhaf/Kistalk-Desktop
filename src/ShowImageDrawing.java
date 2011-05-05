@@ -7,13 +7,14 @@ import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.TexturePaint;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 public class ShowImageDrawing {
 	private Font commentFont, commentUser;
 	private Font font;
-	Graphics2D g2d;
+	private Graphics2D g2d; 
 
-	protected ShowImageDrawing() {
+	protected ShowImageDrawing() throws IOException {
 		commentUser = new Font("Serig", Font.BOLD, 30);
 		commentFont = new Font("Serif", Font.BOLD, 20);
 		font = new Font("Serif", Font.BOLD, 50);
@@ -24,7 +25,6 @@ public class ShowImageDrawing {
 		g2d = (Graphics2D) g;
 		g2d.setPaint(Color.BLACK);
 		g2d.fillRect(0, 0, monitorSize.width, monitorSize.height);
-		
 		
 		g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,
 				transperacy));
