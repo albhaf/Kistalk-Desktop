@@ -1,0 +1,62 @@
+<project name="kistalk-desktop" default="" basedir=".">
+    <description>
+
+    </description>
+    <property name="project_name" value="kistalk-desktop" />
+    <property name="src" location="src" />
+    
+    <!-- Directories -->
+    <property name="build" location="build" />
+    <property name="dist" location="dist" />
+    <property name="resources" location="resources"/>
+
+    <path id="classpath.base">
+        <pathelement location="${build}"/>
+    </path>
+    <path id="classpath.lib">
+        <pathelement location="lib/commons-codec-1.4.jar"/>
+        <pathelement location="lib/commons-logging-1.1.1.jar"/>
+        <pathelement location="lib/httpclient-4.1.1.jar"/>
+        <pathelement location="lib/httpclient-cace-4.1.1.jar"/>
+        <pathelement location="lib/httpcore-4.1.jar"/>
+        <pathelement location="lib/httpmime-4.1.1.jar"/>  
+        <pathelement location="lib/poi-3.7-20101029.jar"/>
+        <pathelement location="lib/poi-scratchpad-3.7-20101029.jar"/>      
+    </path>
+
+    <target name="init">
+        <tstamp/>
+        <mkdir dir="${build}"/>
+    </target>
+
+    <target name="compile" depends="init" description="compile the source " >
+        <javac srcdir="${src}/" destdir="${build}">
+            <classpath refid="classpath.lib"/>
+        </javac>
+    </target>
+
+    <target name="dist" depends="compile" description="generate the distribution" >
+        <mkdir dir="${dist}"/>
+        
+        <jar jarfile="${dist}/${project_name}-${DSTAMP}.jar" basedir="${build}">
+            <fileset dir="${resources}" />
+            <manifest>
+                <attribute name="Main-Class" value="DesktopApplication"/>
+            </manifest>
+        </jar>
+    </target>
+    
+    <target name="run" depends="dist">
+        <java dir="resources" classname="DesktopApplication" fork='true'>
+            <classpath>
+                <pathelement location="${dist}/${project_name}-${DSTAMP}.jar"/>
+            </classpath>
+            <classpath refid="classpath.lib"/>
+        </java>
+    </target>
+
+    <target name="clean" description="clean up" >
+        <delete dir="${build}"/>
+        <delete dir="${dist}"/>
+    </target>
+</project>
