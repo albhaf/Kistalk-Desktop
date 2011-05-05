@@ -5,8 +5,8 @@ public class FrameListener implements WindowListener{
 	
 	TwoDSlideShow slideshow;
 	
-	public FrameListener(){
-
+	public FrameListener(TwoDSlideShow tmp){
+		slideshow = tmp;
 	}
 
 	@Override

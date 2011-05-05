@@ -11,10 +11,10 @@ public class TwoDSlideShowView  {
 	protected TwoDSlideShowView() {
 	}
 
-	protected void createFrame(ShowImage slideShowHandler, Rectangle monitor) {
+	protected void createFrame(ShowImage slideShowHandler, Rectangle monitor,TwoDSlideShow tmp) {
 
 		frame = new JFrame("ShowImage.java");
-		FrameListener wl = new FrameListener();
+		FrameListener wl = new FrameListener(tmp);
 		
 		panel = slideShowHandler;
 		frame.getContentPane().add(panel);
