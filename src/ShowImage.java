@@ -56,9 +56,21 @@ public class ShowImage extends JPanel {
 	
 	public void setNewSlide(BufferedImage image){
 		resetImage(image);
-		
 		pubSlide = true;
-		imageStopPosition = showImageSet.setImage(slideImage, imgRect, imageStopPosition);
+		imageStopPosition = showImageSet.setPicture(slideImage, imgRect, imageStopPosition, pubSlide);
+	}
+	
+	public void setNewPicture(BufferedImage image, String user, String imageText, List<CommentXML> commentsList) {
+		resetImage(image);
+		pubSlide = false;		
+		// Kommentarer
+		comments = showImageSet.setComments(commentsList, comments);
+		// Bildtexten
+		showImageSet.setImageText(imageText, imageCommentTxtDsp);				
+		// Image user
+		showImageSet.setUserText(user, imageUserTxtDsp);
+		// Bilden
+		imageStopPosition = showImageSet.setPicture(slideImage, imgRect, imageStopPosition, pubSlide);
 	}
 	
 	private void resetImage(BufferedImage image){
@@ -67,21 +79,6 @@ public class ShowImage extends JPanel {
 		timeStill.height = timeStill.width;
 		comments = null;
 		slideImage = image;
-	}
-	
-	public void setNewPicture(BufferedImage image, String user, String imageText, List<CommentXML> commentsList) {
-	
-		resetImage(image);
-		pubSlide = false;
-		
-		// Kommentarer
-		comments = showImageSet.setComments(commentsList, comments);
-		// Bildtexten
-		showImageSet.setImageText(imageText, imageCommentTxtDsp);				
-		// Image user
-		showImageSet.setUserText(user, imageUserTxtDsp);
-		// Bilden
-		imageStopPosition = showImageSet.setSlide(slideImage, imgRect, monitorSize, imageStopPosition);
 	}
 
 	private void moveImageObjects() {
@@ -96,8 +93,7 @@ public class ShowImage extends JPanel {
 		if(transperacy >= 0.98)
 			timeStill.height = showImageMovement.moveSlide(timeStill, imgRect, monitorSize.width, slideImage.getWidth());
 		transperacy = showImageMovement.setTransperacy(transperacy, outgoing, fadingSpeed * 0.03);
-	}
-	
+	}	
 	
 	public void MoveObjects() {
 		if(pubSlide){
