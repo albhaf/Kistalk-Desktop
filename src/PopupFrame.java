@@ -1,4 +1,5 @@
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.TextField;
@@ -19,12 +20,14 @@ public class PopupFrame{
 	public JFrame popFrame;
 	public TextField popTxt;
 	public DesktopApplication controller;
+	Font stdFont;
 	Image bgImage;
 	ButtonListener listener;
 	
-	public PopupFrame(String messageTmp, Image tmpImg, DesktopApplication contrTmp){
+	public PopupFrame(String messageTmp, Image tmpImg, DesktopApplication tmpContr, Font tmpFont){
 		bgImage = tmpImg;
-		controller = contrTmp;
+		controller = tmpContr;
+		stdFont = tmpFont;
 		setup(messageTmp);
 	}
 	
@@ -55,7 +58,7 @@ public class PopupFrame{
 		GroupLayout popLayout = new GroupLayout(popPanel);
 		
 		popFrame.setLocation(400, 270);
-		popFrame.setSize(400, 100);
+		popFrame.setSize(320, 140);
 		popFrame.setTitle("KisTalk Popup");
 		popFrame.setResizable(false);
 		popFrame.setUndecorated(false);
@@ -63,22 +66,27 @@ public class PopupFrame{
 		popPanel.setLayout(popLayout);
 		label.setText(message);
 		label.setForeground(Color.WHITE);
+		label.setFont(stdFont);
 		sbmBtn.setText("Submit");
 		sbmBtn.addActionListener(listener);
 		clsBtn.setText("Close");
 		clsBtn.addActionListener(listener);
+		if (message.equals("Are you sure you want to reset the config file?"))
+			popTxt.setVisible(false);
 		
 		popLayout.setHorizontalGroup(
 				popLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
 						
 						.addGroup(popLayout.createSequentialGroup()
-								.addGap(10)
+								.addGap(15)
 								.addComponent(label)
-								.addGap(5)
+						)
+						.addGroup(popLayout.createSequentialGroup()
+								.addGap(15)
 								.addComponent(popTxt, 200, 200, 200)
 						)
 						.addGroup(popLayout.createSequentialGroup()
-								.addGap(136)
+								.addGap(75)
 								.addComponent(clsBtn, 90, 90, 90)
 								.addGap(5)
 								.addComponent(sbmBtn, 90, 90, 90)
@@ -88,11 +96,10 @@ public class PopupFrame{
 		popLayout.setVerticalGroup(
 				popLayout.createSequentialGroup()
 				.addGap(10)
-				.addGroup(popLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-						.addComponent(label)
-						.addComponent(popTxt, 20, 20, 20)
-				)
-				.addGap(10)
+				.addComponent(label)
+				.addGap(5)
+				.addComponent(popTxt, 20, 20, 20)
+				.addGap(20)
 				.addGroup(popLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
 						.addComponent(clsBtn, 25, 25, 25)
 						.addComponent(sbmBtn, 25, 25, 25)
@@ -107,13 +114,18 @@ public class PopupFrame{
 	private class ButtonListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource() == sbmBtn){
-				if (popTxt.getText().equals("") == false && popTxt.getText().length() <= 40){
-					controller.savePath(popTxt.getText());
+				if (label.getText().equals("Name the slideshow: ")){
+					if (popTxt.getText().equals("") == false && popTxt.getText().length() <= 40){
+						controller.savePath(popTxt.getText());
+						popFrame.dispose();
+					}else{
+						controller.fail("Error", "The name must be between 1 and 40 chars!");
+					}
+				} else if (label.getText().equals("Are you sure you want to reset the config file?")){
+					controller.resetConf();
+					controller.closePop();
 					popFrame.dispose();
-				}else{
-					controller.fail("Error", "The name must be between 1 and 40 chars!");
 				}
-				
 			}else if(e.getSource() == clsBtn){
 				controller.closePop();
 				popFrame.dispose();
