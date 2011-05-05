@@ -2,6 +2,12 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
 public class FrameListener implements WindowListener{
+	
+	TwoDSlideShow slideshow;
+	
+	public FrameListener(){
+
+	}
 
 	@Override
 	public void windowActivated(WindowEvent arg0) {
@@ -16,6 +22,7 @@ public class FrameListener implements WindowListener{
 
 	@Override
 	public void windowClosing(WindowEvent arg0) {
+		slideshow.t.stop();
 		DirectoryExterminator de = new DirectoryExterminator("Images");
 		de.exterminate();
 
