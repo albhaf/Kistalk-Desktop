@@ -38,14 +38,15 @@ public class TwoDSlideShow extends Panel implements ActionListener {
 	}
  	
  	public void close(){
- 		view.terminate();
  		t.stop();
+ 		view.terminate();
+
  	}
 
 	// Build the frame (Slideshow)
 	public void createFrame() {
 		slideShowHandler =  new ShowImage(monitor, info.getTimeStill(), info.getFadingSpeed());
-		view.createFrame(slideShowHandler, monitor);
+		view.createFrame(slideShowHandler, monitor,this);
 	}
 
 	// Get the size of the monitor
