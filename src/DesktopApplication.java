@@ -79,7 +79,11 @@ public class DesktopApplication {
 	}
 	
 	public void exitShow(){
-		slideshow.close();
+		try{
+			slideshow.close();
+		}catch(NullPointerException e){
+			
+		}
 	}
 
 	// Main
