@@ -88,7 +88,7 @@ public class DesktopApplication {
 	
 	public void startShow(){
 		try {
-			slideshow = new TwoDSlideShow();
+			slideshow = new TwoDSlideShow(this);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
