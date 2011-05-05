@@ -21,6 +21,7 @@ public class TwoDSlideShowInfo {
 	Image[] serverImgs;
 	URL[] urlArray;
 
+	int nrOfConfValues;
 	int currentPicture = 0;
 	int currentPubPicture = 0;
 	int nrOfComments = 0;
@@ -28,7 +29,8 @@ public class TwoDSlideShowInfo {
 	int timeStill;
 	int fadingSpeed;
 
-	public TwoDSlideShowInfo() {
+	public TwoDSlideShowInfo(int tmpConfValues) {
+		nrOfConfValues = tmpConfValues;
 		fileFormats = new String[4];
 	}
 
@@ -47,7 +49,7 @@ public class TwoDSlideShowInfo {
 
 	protected String[] readConfig() throws FileNotFoundException {
 
-		ConfigHandler reader = new ConfigHandler(11);
+		ConfigHandler reader = new ConfigHandler(nrOfConfValues);
 		String[] values = new String[9];
 		String[] returner = new String[2];
 		
