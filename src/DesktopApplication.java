@@ -91,7 +91,7 @@ public class DesktopApplication {
 	
 	public void startShow(){
 		try {
-			slideshow = new TwoDSlideShow(nrOfConfValues); //this
+			slideshow = new TwoDSlideShow(nrOfConfValues, this); //this
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
