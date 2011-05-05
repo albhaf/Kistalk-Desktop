@@ -22,9 +22,11 @@ public class TwoDSlideShow extends Panel implements ActionListener {
 	Rectangle monitor = new Rectangle();
 	TwoDSlideShowView view;
 	TwoDSlideShowInfo info;
+	DesktopApplication desktopApp; //For popupframe and maybe something else??
 	private boolean imageSlide;
 
- 	public TwoDSlideShow(int tmpConfValues) throws IOException {
+ 	public TwoDSlideShow(int tmpConfValues, DesktopApplication tmpDesk) throws IOException {
+ 		desktopApp = tmpDesk;
  		nrOfConfValues = tmpConfValues;
  		imageSlide = false;
 		view = new TwoDSlideShowView();
