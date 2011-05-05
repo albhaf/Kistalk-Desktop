@@ -17,7 +17,7 @@ public class TwoDSlideShow extends Panel implements ActionListener {
 	private static final long serialVersionUID = 6713712974194382458L;
 
 	Timer t;
-
+	
 	byte screenIndex;
 	final int nrOfConfigLines = 10;
 
@@ -33,7 +33,7 @@ public class TwoDSlideShow extends Panel implements ActionListener {
  		imageSlide = false;
 		view = new TwoDSlideShowView();
 		info = new TwoDSlideShowInfo();
-		pubSlides = new ImportPubSlides(readConfig());
+		pubSlides = new ImportPubSlides(readConfig(), this);
 		getScreenResolution();
 		firstPicture();
 		createFrame();
