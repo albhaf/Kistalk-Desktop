@@ -5,9 +5,19 @@
 dist/*.jar
 
 # Eclipse
-.settings/
-.classpath
 .project
+.metadata
+bin/**
+tmp/**
+tmp/**/*
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.classpath
+.settings/
+.loadpath
 
 # OSX
 *.DS_Store
