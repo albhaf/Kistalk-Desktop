@@ -22,6 +22,9 @@ import javax.swing.JPanel;
 public class AdminFrame {
 	String slideItem = null;
 	String[] values;
+	Font stdFont;
+	Font smlFont;
+	Font stdItalFont;
 	
 	JFrame adminFrame;
 	JFrame popFrame;
@@ -75,8 +78,9 @@ public class AdminFrame {
 	List<String> slidePaths;
 
 	//	Constructor
-	public AdminFrame(DesktopApplication contTmp) {
-		controller = contTmp;
+	public AdminFrame(DesktopApplication tmpCont, Font tmpFont) {
+		controller = tmpCont;
+		stdFont = tmpFont;
 	}
 
 	//	Setting up the settings frame
@@ -126,6 +130,9 @@ public class AdminFrame {
 		screenDDLst = new JComboBox();
 		
 		listener = new ButtonListener();
+		
+		smlFont = new Font("Helvetica", Font.PLAIN, 10);
+		stdItalFont = new Font("Helvetica", Font.ITALIC, 12);
 		
 		// Create and Paint thePanel background
 		thePanel = new JPanel(){ //Observera att detta �r en create!
@@ -182,7 +189,7 @@ public class AdminFrame {
 		
 		statusLbl.setText("Status: Ready for some action");
 		statusLbl.setForeground(Color.WHITE);
-		statusLbl.setFont(new Font("Helvetica", Font.ITALIC, 10));
+		statusLbl.setFont(smlFont);
 		
 		nrOfCommentsLbl.setText("Number of comments: ");
 		nrOfCommentsLbl.setForeground(Color.WHITE);
@@ -195,32 +202,32 @@ public class AdminFrame {
 		
 		pubnfoodStatusLbl.setText("Pub_open: -  Event: -  Food_ready: -  Food: -");
 		pubnfoodStatusLbl.setForeground(Color.WHITE);
-		pubnfoodStatusLbl.setFont(new Font("Helvetica", Font.PLAIN, 10));
+		pubnfoodStatusLbl.setFont(smlFont);
 		
 		//	Text settings
 		nrOfImgsTxt.setText(values[0]);
-		nrOfImgsTxt.setFont(new Font("Imperial", Font.PLAIN, 12));
+		nrOfImgsTxt.setFont(stdFont);
 		
 		timeTxt.setText(values[2]);
-		timeTxt.setFont(new Font("Imperial", Font.PLAIN, 12));
+		timeTxt.setFont(stdFont);
 		
 		xmlPubPathTxt.setText("C:\\...");
-		xmlPubPathTxt.setFont(new Font("Imperial", Font.PLAIN, 12));
+		xmlPubPathTxt.setFont(stdFont);
 		
 		legalFilesTxt.setText(values[4]);
-		legalFilesTxt.setFont(new Font("Imperial", Font.ITALIC, 12));
+		legalFilesTxt.setFont(stdItalFont);
 		legalFilesTxt.setEnabled(false);
 		
 		nrOfCommentsTxt.setText(values[7]);
-		nrOfCommentsTxt.setFont(new Font("Imperial", Font.PLAIN, 12));
+		nrOfCommentsTxt.setFont(stdFont);
 		
-		eventTxt.setFont(new Font("Imperial", Font.PLAIN, 12));
+		eventTxt.setFont(stdFont);
 		eventTxt.setEnabled(false);
 		
-		foodTxt.setFont(new Font("Imperial", Font.PLAIN, 12));
+		foodTxt.setFont(stdFont);
 		foodTxt.setEnabled(false);
 		
-		fadeTxt.setFont(new Font("Imperial", Font.PLAIN, 12));
+		fadeTxt.setFont(stdFont);
 		fadeTxt.setText(values[3]);
 		
 		//	Button settings
@@ -269,7 +276,7 @@ public class AdminFrame {
 		for (int i = 0; i < slideNames.size(); i++)
 			pubSlidesDDLst.addItem(slideNames.get(i));
 		
-		pubSlidesDDLst.setFont(new Font("Gulim", Font.PLAIN, 12));
+		pubSlidesDDLst.setFont(stdFont);
 		pubSlidesDDLst.addItemListener(
 				new ItemListener(){
 					public void itemStateChanged(ItemEvent e){
@@ -277,7 +284,7 @@ public class AdminFrame {
 							if (e.getItem().toString().equals("[Saved slideshows]") == false){ // Set pathen to the path that belongs to the selected Item
 								xmlPubPathTxt.setText(slidePaths.get(slideNames.indexOf(e.getItem().toString())));
 								xmlPubPathTxt.setEnabled(false);
-								xmlPubPathTxt.setFont(new Font("Imperial", Font.ITALIC, 12));
+								xmlPubPathTxt.setFont(stdItalFont);
 								statusLbl.setText("Status: " + e.getItem().toString() + "s Slideshow is choosed");
 								slideItem = e.getItem().toString();
 								
@@ -292,7 +299,7 @@ public class AdminFrame {
 							}else{
 								xmlPubPathTxt.setText("C:\\...");
 								xmlPubPathTxt.setEnabled(true);
-								xmlPubPathTxt.setFont(new Font("Imperial", Font.PLAIN, 13));
+								xmlPubPathTxt.setFont(stdFont);
 								statusLbl.setText("Status: Choose a Slideshow or specify a path");
 								slideItem = null;
 								eventTxt.setText("");
@@ -306,7 +313,7 @@ public class AdminFrame {
 		screenDDLst.addItem("This");
 		screenDDLst.addItem("External");
 		screenDDLst.setSelectedItem("THIS");
-		screenDDLst.setFont(new Font("Gulim", Font.PLAIN, 12));
+		screenDDLst.setFont(stdFont);
 		screenDDLst.addItemListener(
 				new ItemListener(){
 					public void itemStateChanged(ItemEvent e){
@@ -619,7 +626,7 @@ public class AdminFrame {
 				statusLbl.setText("Status: Settings saved to Config");
 				
 			}else if (e.getSource() == resetBtn){ // Reset settings in config
-				controller.fail("Reset settings", "Are you sure you want to reset the whole fukkin thing?! o.O");
+				controller.popup("Are you sure you want to reset the config file?", "");
 				
 			}else if (e.getSource() == pubChb){ // Announce pub
 				if (pubChb.isSelected()){

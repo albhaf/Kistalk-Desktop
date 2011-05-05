@@ -19,7 +19,7 @@ public class FailFrame{
 	public JButton okBtn;
 	public JFrame errFrame;
 	
-	public FailFrame(String title, String message){
+	public FailFrame(String title, String message, Font stdFont){
 		
 		ButtonListener listener = new ButtonListener();
 		
@@ -51,7 +51,7 @@ public class FailFrame{
 		errPanel.setLayout(errLayout);
 		label.setText(message);
 		label.setForeground(Color.WHITE);
-		label.setFont(new Font("Helvetica", Font.BOLD, 12));
+		label.setFont(stdFont);
 		okBtn.setText("OK");
 		okBtn.addActionListener(listener);
 		

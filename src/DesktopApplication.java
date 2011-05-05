@@ -1,3 +1,4 @@
+import java.awt.Font;
 import java.awt.Image;
 import java.io.IOException;
 
@@ -7,6 +8,7 @@ import javax.swing.JFrame;
 public class DesktopApplication {
 	String path;
 	Image bgImage;
+	Font stdFont;
 	NiftyHTTP nifty;
 	LogInFrame loginframe;
 	AdminFrame adminframe;
@@ -17,6 +19,8 @@ public class DesktopApplication {
 	public DesktopApplication() {
 		ImageIcon icon = new ImageIcon("bgIcon.png");
 		bgImage = icon.getImage();
+		stdFont = new Font("Imperial", Font.PLAIN, 12);
+		
 		loginframe = new LogInFrame(bgImage, this);
 		loginframe.logFrame.setVisible(true);
 		
@@ -24,7 +28,7 @@ public class DesktopApplication {
 
 	public void login(String user, String token, JFrame logFrame) {
 		String[] values = new String[11];
-		adminframe = new AdminFrame(this);
+		adminframe = new AdminFrame(this, stdFont);
 		nifty = new NiftyHTTP(user, token);
 		
 		if (nifty.validateToken()) {
@@ -68,7 +72,7 @@ public class DesktopApplication {
 	public void popup(String message, String pathTmp){ //For SaveSlideshow
 		path = pathTmp;
 		adminframe.disable();
-		PopupFrame popupframe = new PopupFrame(message, bgImage, this);
+		PopupFrame popupframe = new PopupFrame(message, bgImage, this, stdFont);
 		popupframe.popFrame.setVisible(true);
 		
 	}
@@ -78,7 +82,7 @@ public class DesktopApplication {
 	}
 	
 	public void fail(String t, String m){
-		FailFrame fail = new FailFrame(t, m);
+		FailFrame fail = new FailFrame(t, m, stdFont);
 		fail.errFrame.setVisible(true);
 	}
 	
