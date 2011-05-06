@@ -108,8 +108,12 @@ public class DesktopApplication {
 	
 	public void showClsd(String m){
 		adminframe.setExitShow();
+		try{
 		if (m.equals(null) == false)
 			fail("Error in slideshow", m);
+		} catch(NullPointerException e){
+			
+		}
 	}
 	
 	public void deskClsd(){
