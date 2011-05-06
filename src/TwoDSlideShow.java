@@ -11,6 +11,11 @@ import javax.swing.Timer;
 
 public class TwoDSlideShow extends Panel implements ActionListener {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	Timer t;
 	
 	byte screenIndex;
@@ -28,6 +33,20 @@ public class TwoDSlideShow extends Panel implements ActionListener {
  	public TwoDSlideShow(int tmpConfValues, DesktopApplication tmpDesk) throws IOException {
  		desktopApp = tmpDesk;
  		nrOfConfValues = tmpConfValues;
+ 		imageSlide = false;
+		view = new TwoDSlideShowView();
+		info = new TwoDSlideShowInfo(nrOfConfValues);
+		pubSlides = new ImportPubSlides(readConfig(), this);
+		getScreenResolution();
+		firstPicture();
+		createFrame();
+		updatePicture();
+		updatePicture();
+		t.start();
+	}
+ 	
+ 	public TwoDSlideShow() throws IOException {
+ 		nrOfConfValues = 11;
  		imageSlide = false;
 		view = new TwoDSlideShowView();
 		info = new TwoDSlideShowInfo(nrOfConfValues);
@@ -101,7 +120,7 @@ public class TwoDSlideShow extends Panel implements ActionListener {
 
 	}
 
-//	public static void main(String args[]) throws IOException {
-//		new TwoDSlideShow();
-//	}
+	public static void main(String args[]) throws IOException {
+		new TwoDSlideShow();
+	}
 }
