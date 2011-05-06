@@ -20,13 +20,13 @@ public class TwoDSlideShowInfo {
 	private URL[] urlArray;
 	private ImageQueue imgQueue;
 
-	private byte nrOfConfValues;
-	private byte currentPicture = 0;
+	private int nrOfConfValues;
+	private int currentPicture = 0;
 	//private byte currentPubPicture = 0;
-	private byte nrOfComments = 0;
+	private int nrOfComments = 0;
 	private int nrOfPics;
-	private byte timeStill;
-	private byte fadingSpeed;
+	private int timeStill;
+	private int fadingSpeed;
 
 	public TwoDSlideShowInfo(byte tmpConfValues) {
 		nrOfConfValues = tmpConfValues;
@@ -64,8 +64,8 @@ public class TwoDSlideShowInfo {
 		urlArray = new URL[nrOfPics];
 		imgQueue = new ImageQueue(nrOfPics);
 		//serverImgs = new Image[nrOfPics];
-		timeStill = Byte.valueOf(values[2]);
-		fadingSpeed = Byte.valueOf(values[3]);
+		timeStill = Integer.valueOf(values[2]);
+		fadingSpeed = Integer.valueOf(values[3]);
 		fileFormats = values[4].split(" ");
 		returner[0] =values[5];
 		xmlPath = values[6];

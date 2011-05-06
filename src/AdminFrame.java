@@ -141,6 +141,8 @@ public class AdminFrame {
 		
 		// Create and Paint thePanel background
 		thePanel = new JPanel(){ //Observera att detta ï¿½r en create!
+			private static final long serialVersionUID = -7374793566417261848L;
+
 			public void paint(Graphics g){
 				g.drawImage(bgImage, 0,0, this);
 				setOpaque(false);
@@ -602,7 +604,7 @@ public class AdminFrame {
 		
 	}
 	
-	public boolean chkTxts(){  //Gör något åt!
+	public boolean chkTxts(){  //Gï¿½r nï¿½got ï¿½t!
 		if (nrOfImgsTxt.getText().equals("") == false && timeTxt.getText().equals("") == false && xmlPubPathTxt.getText().equals("") == false && nrOfCommentsTxt.getText().equals("") == false && fadeTxt.getText().equals("") == false) {
 			return true;
 		}else{
