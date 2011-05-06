@@ -60,10 +60,8 @@ public class TwoDSlideShowInfo {
 
 		// Hantera inkommande data
 		nrOfPics = Integer.valueOf(values[0]);
-		//iconArrayServer = new ImageIcon[nrOfPics];
 		urlArray = new URL[nrOfPics];
 		imgQueue = new ImageQueue(nrOfPics);
-		//serverImgs = new Image[nrOfPics];
 		timeStill = Integer.valueOf(values[2]);
 		fadingSpeed = Integer.valueOf(values[3]);
 		fileFormats = values[4].split(" ");
@@ -79,7 +77,6 @@ public class TwoDSlideShowInfo {
 	private void readNext(int page){
 		xmlreader = new XMLreader(xmlPath + "?username=znorman&token=vqlcotvzuu&page=" + page + "&per_page="+ (nrOfPics));
 		imgXmlQueue = xmlreader.getImagesInfo();
-		//imgXMLList = xmlreader.getImagesInfo();
 	}
 	
 	protected void setLinks() throws IOException {
@@ -89,7 +86,7 @@ public class TwoDSlideShowInfo {
 			if(j > page*9)
 				readNext(page++);
 			try {
-				urlArray[i] = /*imgXMLList.get(j%10).getLink();*/ imgXmlQueue.getFirst().getLink();
+				urlArray[i] = imgXmlQueue.getFirst().getLink();
 			} catch (Exception e) {
 				i--;
 			}
@@ -102,7 +99,6 @@ public class TwoDSlideShowInfo {
 				readNext(page++);
 			try {
 				urlArray[i] = imgXmlQueue.getFirst().getLink();
-				/*urlArray[i] = imgXMLList.get(j%10).getLink();*/
 			} catch (Exception e) {
 				i--;
 			}
@@ -115,7 +111,6 @@ public class TwoDSlideShowInfo {
 		int j =0;
 		do {
 			try {
-				//serverImgs[i] = ImageIO.read(urlArray[j]);
 				imgQueue.addLast(ImageIO.read(urlArray[j])); 
 				i=i+1;
 				j=j+1;
@@ -140,7 +135,7 @@ public class TwoDSlideShowInfo {
 	protected void updatePicture() throws IOException {		
 		if (currentPicture >= nrOfPics-1) {
 			setLinks();
-			if(urlArray[0] != /*imgXMLList.get(0).getLink())*/ imgXmlQueue.peek().getLink());
+			if(urlArray[0] != imgXmlQueue.peek().getLink());
 				setPictures();
 			currentPicture = -1;
 		}
@@ -151,18 +146,6 @@ public class TwoDSlideShowInfo {
 		currentPicture++;
 		return (BufferedImage) imgQueue.getFirst();
 	}
-	
-/*	protected List<CommentXML> getImageComments(){
-		return imgXMLList.get(currentPicture).getComments();
-	}
-	
-	protected String getImageText(){
-		return imgXMLList.get(currentPicture).getImageText();
-	}
-	
-	protected String getUser(){
-		return imgXMLList.get(currentPicture).getUser();
-	}*/
 	
 	protected ImageXML getImgInfo(){
 		return imgXmlQueue.getFirst();

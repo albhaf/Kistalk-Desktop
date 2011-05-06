@@ -59,11 +59,11 @@ public class ShowImage extends JPanel {
 		imageStopPosition = showImageSet.setPicture(slideImage, imgRect, imageStopPosition, pubSlide);
 	}
 	
-	public void setNewPicture(BufferedImage image, ImageXML tmpXML/*BufferedImage image, String user, String imageText, List<CommentXML> commentsList*/) {
+	public void setNewPicture(BufferedImage image, ImageXML tmpXML) {
 		resetImage(image);
 		pubSlide = false;		
 		// Kommentarer
-		comments = showImageSet.setComments(/*commentsList*/tmpXML.getComments(), comments);
+		comments = showImageSet.setComments(tmpXML.getComments(), comments);
 		// Bildtexten
 		showImageSet.setImageText(tmpXML.getImageText(), imageCommentTxtDsp);				
 		// Image user

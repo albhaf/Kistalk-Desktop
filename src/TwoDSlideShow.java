@@ -86,7 +86,7 @@ public class TwoDSlideShow extends Panel implements ActionListener {
 		} else {
 			info.updatePicture();
 			imageSlide = false;
-			slideShowHandler.setNewPicture(info.getImage(),info.getImgInfo()/*info.getImage(), info.getUser(), info.getImageText(), info.getImageComments()*/);		
+			slideShowHandler.setNewPicture(info.getImage(),info.getImgInfo());		
 		}
 	}
 	
