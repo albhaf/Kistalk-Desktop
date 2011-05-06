@@ -31,12 +31,14 @@ public class ShowImageSet {
 		return imageStopPosition;
 	}	
 
-	protected void setImageText(String tmpImageText,
+	protected int setImageText(String tmpImageText,
 			TextToDisplay imageCommentTxtDsp) {
 		imageCommentTxtDsp.setString(tmpImageText);
 		imageCommentTxtDsp.resetPos();
 		imageCommentTxtDsp.addX(100);
 		imageCommentTxtDsp.addY(monitorSize.height + ImageUserFontSize);
+		return (int) monitorSize.getHeight() - 150;
+		
 	}
 
 	protected void setUserText(String tmpUserString,

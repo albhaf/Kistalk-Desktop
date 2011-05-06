@@ -10,8 +10,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 public class ShowImageDrawing {
-	private Font commentFont, commentUser;
-	private Font font;
+	private Font commentFont, commentUser, font;
 	private Graphics2D g2d;
 
 	protected ShowImageDrawing() throws IOException {
@@ -81,10 +80,11 @@ public class ShowImageDrawing {
 			TextToDisplay imageUserTxtDsp, BufferedImage slideImage,
 			ImgRect imgRect) {
 		// paints the image text and image user texts
-		g2d.setFont(font);
 		try {
+			g2d.setFont(commentUser);
 			g2d.drawString(imageCommentTxtDsp.getString(),
 					imageCommentTxtDsp.x, imageCommentTxtDsp.y);
+			g2d.setFont(font);
 			g2d.drawString(imageUserTxtDsp.getString(), imageUserTxtDsp.x,
 					imageUserTxtDsp.y);
 		} catch (NullPointerException e) {

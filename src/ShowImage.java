@@ -14,13 +14,12 @@ public class ShowImage extends JPanel {
 	 * The Rectangle containing the image
 	 */
 	protected ImgRect imgRect; //
-	protected TextToDisplay imageUserTxtDsp;
-	protected TextToDisplay imageCommentTxtDsp;
+	protected TextToDisplay imageUserTxtDsp,  imageCommentTxtDsp;
 	protected TextToDisplay[][] comments;
 	protected boolean outgoing;
 	private BufferedImage slideImage;
 	private float transperacy;
-	private int fadingSpeed;
+	private int fadingSpeed, textStopPosition;
 
 	private ShowImageSet showImageSet;
 	private ShowImageMovement showImageMovement;
@@ -62,7 +61,7 @@ public class ShowImage extends JPanel {
 		// Kommentarer
 		comments = showImageSet.setComments(tmpXML.getComments(), comments);
 		// Bildtexten
-		showImageSet.setImageText(tmpXML.getImageText(), imageCommentTxtDsp);				
+		textStopPosition = showImageSet.setImageText(tmpXML.getImageText(), imageCommentTxtDsp);				
 		// Image user
 		showImageSet.setUserText(tmpXML.getUser(), imageUserTxtDsp);
 		// Bilden
@@ -82,7 +81,7 @@ public class ShowImage extends JPanel {
 		transperacy = showImageMovement.setTransperacy(transperacy, outgoing, fadingSpeed*0.01);
 
 		showImageMovement.moveUserText(imageUserTxtDsp, outgoing);
-		showImageMovement.moveImageText(imageCommentTxtDsp, outgoing);
+		showImageMovement.moveImageText(imageCommentTxtDsp, outgoing,textStopPosition);
 	}
 	
 	private void movePubSlide(){
