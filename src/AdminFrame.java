@@ -619,7 +619,6 @@ public class AdminFrame {
 				}else{
 					adminFrame.dispose();
 				}
-				
 			}
 		}
 	}

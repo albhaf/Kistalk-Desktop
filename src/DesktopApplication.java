@@ -103,14 +103,14 @@ public class DesktopApplication {
 	}
 	
 	public void showClsd(){
-		
+//		adminframe.exitBtn.doClick();
 	}
 	
 	public void exitShow(){
 		try{
 			slideshow.close();
 		}catch(NullPointerException e){
-			
+			fail("Error", "The slideshow couldn't be closed");
 		}
 	}
 
