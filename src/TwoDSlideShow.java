@@ -14,12 +14,14 @@ public class TwoDSlideShow extends Panel implements ActionListener {
 	/**
 	 * 
 	 */
+
 	private static final long serialVersionUID = 5789717155006186682L;
+
 
 	Timer t;
 	
-	byte screenIndex;
-	public byte nrOfConfValues;
+	int screenIndex;
+	public int nrOfConfValues;
 
 	private ShowImage slideShowHandler;
 	private ImportPubSlides pubSlides;
@@ -30,9 +32,23 @@ public class TwoDSlideShow extends Panel implements ActionListener {
 	private DesktopApplication desktopApp; //For popupframe and maybe something else??
 	private boolean imageSlide;
 
- 	public TwoDSlideShow(byte tmpConfValues, DesktopApplication tmpDesk) throws IOException {
+ 	public TwoDSlideShow(int tmpConfValues, DesktopApplication tmpDesk) throws IOException {
  		desktopApp = tmpDesk;
  		nrOfConfValues = tmpConfValues;
+ 		imageSlide = false;
+		view = new TwoDSlideShowView();
+		info = new TwoDSlideShowInfo(nrOfConfValues);
+		pubSlides = new ImportPubSlides(readConfig(), this);
+		getScreenResolution();
+		firstPicture();
+		createFrame();
+		updatePicture();
+		updatePicture();
+		t.start();
+	}
+ 	
+ 	public TwoDSlideShow() throws IOException {
+ 		nrOfConfValues = 11;
  		imageSlide = false;
 		view = new TwoDSlideShowView();
 		info = new TwoDSlideShowInfo(nrOfConfValues);
@@ -64,7 +80,7 @@ public class TwoDSlideShow extends Panel implements ActionListener {
 
 	private String readConfig() throws FileNotFoundException {
 		String[] tmpConf =info.readConfig();
-		screenIndex = Byte.valueOf(tmpConf[0]);
+		screenIndex = Integer.valueOf(tmpConf[0]);
 		t = new Timer(10, this);
 		return tmpConf[1];
 	}
@@ -86,7 +102,7 @@ public class TwoDSlideShow extends Panel implements ActionListener {
 		} else {
 			info.updatePicture();
 			imageSlide = false;
-			slideShowHandler.setNewPicture(info.getImage(),info.getImgInfo()/*info.getImage(), info.getUser(), info.getImageText(), info.getImageComments()*/);		
+			slideShowHandler.setNewPicture(info.getImage(),info.getImgInfo());		
 		}
 	}
 	

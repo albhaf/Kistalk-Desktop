@@ -21,6 +21,8 @@ import javax.swing.JTextField;
 
 
 public class AdminFrame {
+	CreateNewElements create;	
+	
 	String slideItem = null;
 	String[] values;
 	Font stdFont;
@@ -88,6 +90,8 @@ public class AdminFrame {
 
 	//	Setting up the settings frame
 	public void setupFrame(final String[] confValues, final List<String> tmpNames, final List<String> tmpPaths, final Image bgImage){
+		create = new CreateNewElements();
+		listener = new ButtonListener();
 		values = confValues;
 		slideNames = tmpNames;
 		slidePaths = tmpPaths;
@@ -96,44 +100,43 @@ public class AdminFrame {
 		adminFrame = new JFrame();
 		headerLbl = new JLabel();
 		
-		saveSetBtn = new JButton();
-		resetBtn = new JButton();
-		startBtn = new JButton();
-		exitBtn = new JButton();
-		savePathBtn = new JButton();
-		remPathBtn = new JButton();
-		announceBtn = new JButton();
-		pathBtn = new JButton();
+		saveSetBtn = create.setNewButton("Save settings", listener);
+		resetBtn = create.setNewButton("Reset settings", listener);
+		startBtn = create.setNewButton("Start slideshow", listener);
+		exitBtn = create.setNewButton("Exit", listener);
+		savePathBtn = create.setNewButton("Save path", listener);
+		remPathBtn = create.setNewButton("Remove Path", listener);
+		announceBtn = create.setNewButton("Send announce", listener);
 		
-		nrOfImgsLbl = new JLabel();
-		timeLbl= new JLabel();
-		foodLbl = new JLabel();
-		pubLbl = new JLabel();
-		statusLbl = new JLabel();
-		xmlPubPathLbl = new JLabel();
-		legalFilesLbl = new JLabel();
-		nrOfCommentsLbl = new JLabel();
-		screenLbl = new JLabel();
-		bgLbl = new JLabel();
-		fadeLbl = new JLabel();
-		pubnfoodStatusLbl = new JLabel();
+		nrOfImgsLbl = create.setNewLabel("Nr of pics (from KisTalk): ", stdFont);
+		timeLbl= create.setNewLabel("Time interval (ms): ", stdFont);
+		foodLbl = create.setNewLabel("Specify food:", stdFont);
+		pubLbl = create.setNewLabel("Specify event:", stdFont);
+		statusLbl = create.setNewLabel("Status: Ready for some action", smlFont);
+		xmlPubPathLbl = create.setNewLabel("Choose a .ppt-file (path): ", stdFont);
+		legalFilesLbl = create.setNewLabel("Approved file extensions: ", stdFont);
+		nrOfCommentsLbl = create.setNewLabel("Number of comments: ", stdFont);
+		screenLbl = create.setNewLabel("Choose screen: ", stdFont);
+		bgLbl = create.setNewLabel("", stdFont);
+		fadeLbl = create.setNewLabel("Fading speed (ms): ", stdFont);
+		pubnfoodStatusLbl = create.setNewLabel("Pub_open: -  Event: -  Food_ready: -  Food: -", smlFont);
 		
-		nrOfImgsTxt = new JTextField();
-		timeTxt = new JTextField();
-		xmlPubPathTxt = new JTextField();
-		legalFilesTxt = new JTextField();
-		nrOfCommentsTxt = new JTextField();
-		eventTxt = new JTextField();
-		foodTxt = new JTextField();
-		fadeTxt = new JTextField();
+		nrOfImgsTxt = create.setNewTextField(values[0], stdFont, true);
+		timeTxt = create.setNewTextField(values[2], stdFont, true);
+		xmlPubPathTxt = create.setNewTextField("C:\\...", stdFont, true);
+		legalFilesTxt = create.setNewTextField(values[4], stdItalFont, false);
+		nrOfCommentsTxt = create.setNewTextField(values[7], stdFont, true);
+		eventTxt = create.setNewTextField("", stdFont, false);
+		foodTxt = create.setNewTextField("", stdFont, false);
+		fadeTxt = create.setNewTextField(values[3], stdFont, true);
+						
 		
-		foodChb = new JCheckBox();
-		pubChb = new JCheckBox();
+		foodChb = create.setNewCheckBox("Dinner is served", listener, false);
+		pubChb = create.setNewCheckBox("Pub is open", listener, true);
 		
 		pubSlidesDDLst = new JComboBox();
 		screenDDLst = new JComboBox();
 		
-		listener = new ButtonListener();
 		fc = new JFileChooser();
 		
 		smlFont = new Font("Helvetica", Font.PLAIN, 10);
@@ -168,113 +171,7 @@ public class AdminFrame {
 		
 		//	Label settings
 		headerLbl.setIcon(new ImageIcon("kistalk_adm_logo.png"));
-		
-		nrOfImgsLbl.setText("Nr of pics (from KisTalk): ");
-		nrOfImgsLbl.setForeground(Color.WHITE);
-		
-		timeLbl.setText("Time interval (ms): ");
-		timeLbl.setForeground(Color.WHITE);
-		
-		xmlPubPathLbl.setText("Choose a .ppt-file (path): ");
-		xmlPubPathLbl.setForeground(Color.WHITE);
-		
-		legalFilesLbl.setText("Approved file extensions: ");
-		legalFilesLbl.setForeground(Color.WHITE);
-		
-		pubLbl.setText("Specify event:");
-		pubLbl.setForeground(Color.GRAY);
-		
-		foodLbl.setText("Specify food:");
-		foodLbl.setForeground(Color.GRAY);
-		
-		statusLbl.setText("Status: Ready for some action");
-		statusLbl.setForeground(Color.WHITE);
-		statusLbl.setFont(smlFont);
-		
-		nrOfCommentsLbl.setText("Number of comments: ");
-		nrOfCommentsLbl.setForeground(Color.WHITE);
-		
-		screenLbl.setText("Choose screen: ");
-		screenLbl.setForeground(Color.WHITE);
-		
-		fadeLbl.setText("Fading speed (ms): ");
-		fadeLbl.setForeground(Color.WHITE);
-		
-		pubnfoodStatusLbl.setText("Pub_open: -  Event: -  Food_ready: -  Food: -");
-		pubnfoodStatusLbl.setForeground(Color.WHITE);
-		pubnfoodStatusLbl.setFont(smlFont);
-		
-		//	Text settings
-		nrOfImgsTxt.setText(values[0]);
-		nrOfImgsTxt.setFont(stdFont);
-		
-		timeTxt.setText(values[2]);
-		timeTxt.setFont(stdFont);
-		
-		xmlPubPathTxt.setText("");
-		xmlPubPathTxt.setFont(stdFont);
-		
-		legalFilesTxt.setText(values[4]);
-		legalFilesTxt.setFont(stdItalFont);
-		legalFilesTxt.setEnabled(false);
-		
-		nrOfCommentsTxt.setText(values[7]);
-		nrOfCommentsTxt.setFont(stdFont);
-		
-		eventTxt.setFont(stdFont);
-		eventTxt.setEnabled(false);
-		
-		foodTxt.setFont(stdFont);
-		foodTxt.setEnabled(false);
-		
-		fadeTxt.setFont(stdFont);
-		fadeTxt.setText(values[3]);
-		
-		//	Button settings
-		saveSetBtn.setText("Save settings");
-		saveSetBtn.setForeground(Color.BLACK);
-		saveSetBtn.addActionListener(listener);
-		
-		resetBtn.setText("Reset settings");
-		resetBtn.setForeground(Color.BLACK);
-		resetBtn.addActionListener(listener);
-		
-		startBtn.setText("Start slideshow");
-		startBtn.setForeground(Color.BLACK);
-		startBtn.addActionListener(listener);
-		
-		exitBtn.setText("Exit");
-		exitBtn.setForeground(Color.BLACK);
-		exitBtn.addActionListener(listener);
-		
-		savePathBtn.setText("Save path");
-		savePathBtn.setForeground(Color.BLACK);
-		savePathBtn.addActionListener(listener);
-		
-		remPathBtn.setText("Remove Path");
-		remPathBtn.setForeground(Color.BLACK);
-		remPathBtn.addActionListener(listener);
-		
-		announceBtn.setText("Send announce");
-		announceBtn.setForeground(Color.BLACK);
-		announceBtn.addActionListener(listener);
-		
-		pathBtn.setText("...");
-		pathBtn.setForeground(Color.BLACK);
-		pathBtn.addActionListener(listener);
-		
-		//	Checkboxes settings
-		foodChb.setText("Dinner is served");
-		foodChb.setForeground(Color.WHITE);
-		foodChb.addActionListener(listener);
-		foodChb.setOpaque(false);
-		foodChb.setEnabled(false);
-		
-		pubChb.setText("Pub is open");
-		pubChb.setForeground(Color.WHITE);
-		pubChb.addActionListener(listener);
-		pubChb.setOpaque(false);
-		
+	
 		//	DropDownList settings, with ItemListeners
 		pubSlidesDDLst.addItem("[Saved slideshows]");
 		for (int i = 0; i < slideNames.size(); i++)
@@ -560,8 +457,7 @@ public class AdminFrame {
 		screenLbl.setForeground(Color.GRAY);
 		bgLbl.setForeground(Color.GRAY);
 		pubnfoodStatusLbl.setForeground(Color.GRAY);
-		fadeLbl.setForeground(Color.GRAY);
-		
+		fadeLbl.setForeground(Color.GRAY);		
 	}
 
 	public void enable(){ // Enable buttons
