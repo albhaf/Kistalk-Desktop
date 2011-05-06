@@ -28,9 +28,9 @@ public class TwoDSlideShowInfo {
 		fileFormats = new String[4];
 	}
 
-	protected Rectangle getScreenSize(int screenIndex, DesktopApplication deksApp) {
+	protected Rectangle getScreenSize(int screenIndex, DesktopApplication deskApp) {
 		
-		//try{
+		try{
 		GraphicsEnvironment gfxEnviro = GraphicsEnvironment.getLocalGraphicsEnvironment();
 		GraphicsDevice[] gfxScreenDev = gfxEnviro.getScreenDevices();
 
@@ -40,10 +40,10 @@ public class TwoDSlideShowInfo {
 
 		// Get size and position of the screen
 		return gc[0].getBounds();
-/*		}catch(ArrayIndexOutOfBoundsException e){
-			
+		}catch(ArrayIndexOutOfBoundsException e){
+			deskApp.showClsd("Invalid screen choice");
 		}
-		return null;*/
+		return null;
 
 	}
 
