@@ -3,14 +3,9 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.List;
-
 import javax.swing.JPanel;
 
 public class ShowImage extends JPanel {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 887346353483336091L;
 
 	// Variables
@@ -20,12 +15,12 @@ public class ShowImage extends JPanel {
 	 */
 	protected ImgRect imgRect; //
 	protected TextToDisplay imageUserTxtDsp;
-	protected TextToDisplay imageCommentTxtDsp;
+	protected TextToDisplay[] imageCommentTxtDsp;
 	protected TextToDisplay[][] comments;
 	protected boolean outgoing;
 	private BufferedImage slideImage;
 	private float transperacy;
-	private int fadingSpeed;
+	private int fadingSpeed, textStopPosition;
 
 	private ShowImageSet showImageSet;
 	private ShowImageMovement showImageMovement;
@@ -45,7 +40,6 @@ public class ShowImage extends JPanel {
 		transperacy = 0;
 		fadingSpeed = speedIn;
 
-		imageCommentTxtDsp = new TextToDisplay();
 		imageUserTxtDsp = new TextToDisplay();
 
 		timeStill.width = timeStillIn;
@@ -61,15 +55,16 @@ public class ShowImage extends JPanel {
 		imageStopPosition = showImageSet.setPicture(slideImage, imgRect, imageStopPosition, pubSlide);
 	}
 	
-	public void setNewPicture(BufferedImage image, String user, String imageText, List<CommentXML> commentsList) {
+	public void setNewPicture(BufferedImage image, ImageXML tmpXML) {
 		resetImage(image);
 		pubSlide = false;		
 		// Kommentarer
-		comments = showImageSet.setComments(commentsList, comments);
+		comments = showImageSet.setComments(tmpXML.getComments(), comments);
 		// Bildtexten
-		showImageSet.setImageText(imageText, imageCommentTxtDsp);				
+		imageCommentTxtDsp = showImageSet.setImageText(tmpXML.getImageText(), imageCommentTxtDsp);	
+		textStopPosition = showImageSet.getTextStopPosition();
 		// Image user
-		showImageSet.setUserText(user, imageUserTxtDsp);
+		showImageSet.setUserText(tmpXML.getUser(), imageUserTxtDsp);
 		// Bilden
 		imageStopPosition = showImageSet.setPicture(slideImage, imgRect, imageStopPosition, pubSlide);
 	}
@@ -87,7 +82,7 @@ public class ShowImage extends JPanel {
 		transperacy = showImageMovement.setTransperacy(transperacy, outgoing, fadingSpeed*0.01);
 
 		showImageMovement.moveUserText(imageUserTxtDsp, outgoing);
-		showImageMovement.moveImageText(imageCommentTxtDsp, outgoing);
+		showImageMovement.moveImageText(imageCommentTxtDsp, outgoing,textStopPosition);
 	}
 	
 	private void movePubSlide(){

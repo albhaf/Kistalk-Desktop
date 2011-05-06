@@ -1,50 +1,50 @@
 import java.awt.GraphicsConfiguration;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
-import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
-import java.util.List;
 import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
 
 public class TwoDSlideShowInfo {
-	XMLreader xmlreader;
-	String xmlPath;
-	List<ImageXML> imgXMLList;
-	String[] fileFormats;
-	ImageIcon[] iconArrayServer;
-	ImageIcon[] iconArrayPub;
-	Image[] serverImgs;
-	URL[] urlArray;
+	private XMLreader xmlreader;
+	private String xmlPath;
+	private ImageXMLQueue imgXmlQueue;
+	private String[] fileFormats;
+	private URL[] urlArray;
+	private ImageQueue imgQueue;
 
-	int nrOfConfValues;
-	int currentPicture = 0;
-	int currentPubPicture = 0;
-	int nrOfComments = 0;
-	int nrOfPics;
-	int timeStill;
-	int fadingSpeed;
+	private int nrOfConfValues;
+	private int currentPicture = 0;
+	private int nrOfComments = 0;
+	private int nrOfPics;
+	private int timeStill;
+	private int fadingSpeed;
 
 	public TwoDSlideShowInfo(int tmpConfValues) {
 		nrOfConfValues = tmpConfValues;
 		fileFormats = new String[4];
 	}
 
-	protected Rectangle getScreenSize(int screenIndex) {
-		GraphicsEnvironment gfxEnviro = GraphicsEnvironment
-				.getLocalGraphicsEnvironment();
+	protected Rectangle getScreenSize(int screenIndex, DesktopApplication deskApp) {
+		
+		try{
+		GraphicsEnvironment gfxEnviro = GraphicsEnvironment.getLocalGraphicsEnvironment();
 		GraphicsDevice[] gfxScreenDev = gfxEnviro.getScreenDevices();
 
-		// Get the right screen
+		// Get the right(screenIndex) screen
 		GraphicsConfiguration[] gc = gfxScreenDev[screenIndex]
 				.getConfigurations();
 
 		// Get size and position of the screen
 		return gc[0].getBounds();
+		}catch(ArrayIndexOutOfBoundsException e){
+			deskApp.showClsd("Invalid screen choice.");
+		}
+		return null;
+
 	}
 
 	protected String[] readConfig() throws FileNotFoundException {
@@ -61,9 +61,8 @@ public class TwoDSlideShowInfo {
 
 		// Hantera inkommande data
 		nrOfPics = Integer.valueOf(values[0]);
-		iconArrayServer = new ImageIcon[nrOfPics];
 		urlArray = new URL[nrOfPics];
-		serverImgs = new Image[nrOfPics];
+		imgQueue = new ImageQueue(nrOfPics);
 		timeStill = Integer.valueOf(values[2]);
 		fadingSpeed = Integer.valueOf(values[3]);
 		fileFormats = values[4].split(" ");
@@ -78,7 +77,7 @@ public class TwoDSlideShowInfo {
 
 	private void readNext(int page){
 		xmlreader = new XMLreader(xmlPath + "?username=znorman&token=vqlcotvzuu&page=" + page + "&per_page="+ (nrOfPics));
-		imgXMLList = xmlreader.getImagesInfo();
+		imgXmlQueue = xmlreader.getImagesInfo();
 	}
 	
 	protected void setLinks() throws IOException {
@@ -88,7 +87,7 @@ public class TwoDSlideShowInfo {
 			if(j > page*9)
 				readNext(page++);
 			try {
-				urlArray[i] = imgXMLList.get(j%10).getLink();
+				urlArray[i] = imgXmlQueue.getFirst().getLink();
 			} catch (Exception e) {
 				i--;
 			}
@@ -100,7 +99,7 @@ public class TwoDSlideShowInfo {
 			if(j > page*9)
 				readNext(page++);
 			try {
-				urlArray[i] = imgXMLList.get(j%10).getLink();
+				urlArray[i] = imgXmlQueue.getFirst().getLink();
 			} catch (Exception e) {
 				i--;
 			}
@@ -113,8 +112,7 @@ public class TwoDSlideShowInfo {
 		int j =0;
 		do {
 			try {
-				serverImgs[i] = ImageIO.read(urlArray[j]);
-				
+				imgQueue.addLast(ImageIO.read(urlArray[j])); 
 				i=i+1;
 				j=j+1;
 			} catch (IOException e) {
@@ -138,7 +136,7 @@ public class TwoDSlideShowInfo {
 	protected void updatePicture() throws IOException {		
 		if (currentPicture >= nrOfPics-1) {
 			setLinks();
-			if(urlArray[0] != imgXMLList.get(0).getLink())
+			if(urlArray[0] != imgXmlQueue.peek().getLink());
 				setPictures();
 			currentPicture = -1;
 		}
@@ -147,19 +145,11 @@ public class TwoDSlideShowInfo {
 	
 	protected BufferedImage getImage(){
 		currentPicture++;
-		return (BufferedImage) serverImgs[currentPicture];
+		return (BufferedImage) imgQueue.getFirst();
 	}
 	
-	protected List<CommentXML> getImageComments(){
-		return imgXMLList.get(currentPicture).getComments();
-	}
-	
-	protected String getImageText(){
-		return imgXMLList.get(currentPicture).getImageText();
-	}
-	
-	protected String getUser(){
-		return imgXMLList.get(currentPicture).getUser();
+	protected ImageXML getImgInfo(){
+		return imgXmlQueue.getFirst();
 	}
 	
 	protected int getTimeStill(){

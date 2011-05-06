@@ -11,7 +11,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-import javax.swing.JOptionPane;
 
 import org.apache.poi.hslf.model.Slide;
 import org.apache.poi.hslf.usermodel.SlideShow;
@@ -21,15 +20,17 @@ public class PptToPng {
 	/**
 	 * String with the full path to the file + filename
 	 */
-	String filepath;
-	int nrFiles;
+	private String filepath;
+	private int nrFiles;
+	private DesktopApplication deskApp;
 
 	/**
 	 * constructor which sets the filepath to the passed argument.
 	 * 
 	 * @param tmp
 	 */
-	public PptToPng(String tmp) {
+	public PptToPng(String tmp,DesktopApplication tmpDeskApp) {
+		deskApp = tmpDeskApp;
 		filepath = tmp;
 		nrFiles = 0;
 		extract();
@@ -56,6 +57,7 @@ public class PptToPng {
 	 * 
 	 */
 	public void extract() {
+
 		converter(filepath);
 	}
 
@@ -75,13 +77,12 @@ public class PptToPng {
 			ppt = new SlideShow(is);
 			is.close();
 		} catch (FileNotFoundException e) {
-			JOptionPane.showMessageDialog(null, e.getMessage());
+			deskApp.showClsd( e.getMessage());
+			return null;
 		}catch(IOException e){
-			JOptionPane.showMessageDialog(null, e.getMessage());
+			deskApp.showClsd("Invalid .ppt file.");
+			return null;
 		}
-
-
-
 
 		return ppt;
 	}
@@ -102,9 +103,9 @@ public class PptToPng {
 			ImageIO.write(tmpImg, "png", out);
 			out.close();
 		} catch (FileNotFoundException e) {
-			JOptionPane.showMessageDialog(null, e.getMessage());
+			deskApp.showClsd(e.getMessage());
 		}catch(IOException e){
-			JOptionPane.showMessageDialog(null, e.getMessage());
+			deskApp.showClsd( e.getMessage());
 		}
 
 
@@ -123,10 +124,10 @@ public class PptToPng {
 		File dir = new File("Images");
 		dir.deleteOnExit();
 		dir.mkdir();
-
+		
 		ppt = fileOpener(tmpFilepath);
-	
-		Dimension dimension = ppt.getPageSize();
+		
+		Dimension dimension = ppt.getPageSize(); //h'r blire error.... try/catch -> popup x2...
 		BufferedImage bImg = null;
 		slide = ppt.getSlides();
 		for (int i = 0; i < slide.length; i++) {
@@ -138,7 +139,6 @@ public class PptToPng {
 
 
 		}
-
 		
 	}
 

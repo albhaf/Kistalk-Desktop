@@ -5,8 +5,8 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 public class ImportPubSlides {
-	PptToPng pptToPng;
-	int nrOfSlides, currentSlide;
+	private PptToPng pptToPng;
+	private int nrOfSlides, currentSlide;
 
 	/**
 	 * constructor which takes the directory path to the file(s) as input
@@ -15,11 +15,9 @@ public class ImportPubSlides {
 	 * @param tmpPath
 	 *            String, filepath to the pubslides in image format.
 	 */
-	public ImportPubSlides(String tmpPath, TwoDSlideShow controller) {
-
-		pptToPng = new PptToPng(tmpPath);
+	public ImportPubSlides(String tmpPath, TwoDSlideShow controller,DesktopApplication tmpDesk) {
+		pptToPng = new PptToPng(tmpPath,tmpDesk);
 		currentSlide = -1;
-		pptToPng.extract();
 		countFiles();
 	}
 

@@ -31,14 +31,51 @@ public class ShowImageSet {
 		return imageStopPosition;
 	}	
 
-	protected void setImageText(String tmpImageText,
-			TextToDisplay imageCommentTxtDsp) {
-		imageCommentTxtDsp.setString(tmpImageText);
-		imageCommentTxtDsp.resetPos();
-		imageCommentTxtDsp.addX(100);
-		imageCommentTxtDsp.addY(monitorSize.height + ImageUserFontSize);
+	protected TextToDisplay[] setImageText(String tmpImageText,
+			TextToDisplay[] imageCommentTxtDsp) {
+		
+		int j = 0;
+		int breakLine = (monitorSize.height - 150)/12;
+		String[] tmp;
+		imageCommentTxtDsp = new TextToDisplay[5];
+		int y = monitorSize.height + 20;
+		
+		do {
+			imageCommentTxtDsp[j] = new TextToDisplay();
+
+			imageCommentTxtDsp[j].resetPos();
+			imageCommentTxtDsp[j].addX(100);
+			imageCommentTxtDsp[j].addY(y);
+			y = y + 40;
+
+			if (tmpImageText.length() > breakLine) {
+				String nextLine = tmpImageText.substring(0, breakLine);
+				tmpImageText = tmpImageText.substring(breakLine);
+				tmp = tmpImageText.split(" ", 2);
+				imageCommentTxtDsp[j].setString(nextLine + tmp[0]);
+				if (tmp.length > 1) {
+					tmpImageText = tmp[1];
+				} else {					
+					break;
+				}
+			} else {
+				imageCommentTxtDsp[j].setString(tmpImageText);
+				break;
+			}
+			j++;
+		} while (true && j < 5);
+		if(j < 5)
+			imageCommentTxtDsp[0].setLines(j+1);
+		else
+			imageCommentTxtDsp[0].setLines(5);
+		return imageCommentTxtDsp;
+		
 	}
 
+	protected int getTextStopPosition(){
+		return (int) monitorSize.getHeight() - 150;
+	}
+	
 	protected void setUserText(String tmpUserString,
 			TextToDisplay imageUserTxtDsp) {
 		correction = (tmpUserString.length() + 6) / 2;

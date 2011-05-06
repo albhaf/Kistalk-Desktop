@@ -2,15 +2,17 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 	//	Creates a pop-up
 public class PopupFrame{
@@ -18,28 +20,27 @@ public class PopupFrame{
 	public JButton clsBtn;
 	public JLabel label;
 	public JFrame popFrame;
-	public TextField popTxt;
+	public JTextField popTxt;
+	public Font bldFont;
 	public DesktopApplication controller;
-	Font stdFont;
+	FrameListener framelistener;
 	Image bgImage;
 	ButtonListener listener;
 	
 	public PopupFrame(String messageTmp, Image tmpImg, DesktopApplication tmpContr, Font tmpFont){
+		bldFont = tmpFont;
 		bgImage = tmpImg;
 		controller = tmpContr;
-		stdFont = tmpFont;
 		setup(messageTmp);
 	}
 	
 	public void setup(String message){
 		
 		listener = new ButtonListener();
+		framelistener = new FrameListener(controller, this);
 		
 		popFrame = new JFrame();
 		JPanel popPanel = new JPanel(){
-			/**
-			 * 
-			 */
 			private static final long serialVersionUID = -8640480719459300882L;
 
 			public void paint(Graphics g){
@@ -47,12 +48,11 @@ public class PopupFrame{
 				setOpaque(false);
 	    		super.paint(g);
 	    		setOpaque(true);
-	    		repaint();
 	    		
 			}
 		};
 		label = new JLabel();
-		popTxt = new TextField();
+		popTxt = new JTextField();
 		sbmBtn = new JButton();
 		clsBtn = new JButton();
 		GroupLayout popLayout = new GroupLayout(popPanel);
@@ -62,15 +62,16 @@ public class PopupFrame{
 		popFrame.setTitle("KisTalk Popup");
 		popFrame.setResizable(false);
 		popFrame.setUndecorated(false);
-		popFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		popFrame.addWindowListener(framelistener);
 		popPanel.setLayout(popLayout);
 		label.setText(message);
 		label.setForeground(Color.WHITE);
-		label.setFont(stdFont);
+		label.setFont(bldFont);
 		sbmBtn.setText("Submit");
 		sbmBtn.addActionListener(listener);
 		clsBtn.setText("Close");
 		clsBtn.addActionListener(listener);
+		popTxt.addKeyListener(listener);
 		if (message.equals("Are you sure you want to reset the config file?"))
 			popTxt.setVisible(false);
 		
@@ -111,7 +112,13 @@ public class PopupFrame{
 		
 	}
 	
-	private class ButtonListener implements ActionListener {
+	private class ButtonListener implements ActionListener, KeyListener {
+		public void keyPressed(KeyEvent e){
+			if (e.getKeyCode() == KeyEvent.VK_ENTER){
+				sbmBtn.doClick();
+			}
+		}
+		
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource() == sbmBtn){
 				if (label.getText().equals("Name the slideshow: ")){
@@ -130,6 +137,18 @@ public class PopupFrame{
 				controller.closePop();
 				popFrame.dispose();
 			}
+		}
+
+		@Override
+		public void keyReleased(KeyEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void keyTyped(KeyEvent e) {
+			// TODO Auto-generated method stub
+			
 		}
 	}
 }

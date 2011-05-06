@@ -6,23 +6,25 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import javax.imageio.IIOException;
-import javax.swing.JOptionPane;
 import javax.swing.Timer;
 
 public class TwoDSlideShow extends Panel implements ActionListener {
 
-	Timer t;
+	private static final long serialVersionUID = 5789717155006186682L;
+
+	public Timer t;
+
 	
-	byte screenIndex;
+	private int screenIndex;
 	public int nrOfConfValues;
 
-	ShowImage slideShowHandler;
-	ImportPubSlides pubSlides;
+	private ShowImage slideShowHandler;
+	private ImportPubSlides pubSlides;
 
-	Rectangle monitor = new Rectangle();
-	TwoDSlideShowView view;
-	TwoDSlideShowInfo info;
-	DesktopApplication desktopApp; //For popupframe and maybe something else??
+	private Rectangle monitor = new Rectangle();
+	private TwoDSlideShowView view;
+	private TwoDSlideShowInfo info;
+	private DesktopApplication desktopApp; //For popupframe and maybe something else??
 	private boolean imageSlide;
 
  	public TwoDSlideShow(int tmpConfValues, DesktopApplication tmpDesk) throws IOException {
@@ -31,35 +33,46 @@ public class TwoDSlideShow extends Panel implements ActionListener {
  		imageSlide = false;
 		view = new TwoDSlideShowView();
 		info = new TwoDSlideShowInfo(nrOfConfValues);
-		pubSlides = new ImportPubSlides(readConfig(), this);
+		try{
+			pubSlides = new ImportPubSlides(readConfig(), this, tmpDesk);
+		}catch(NullPointerException e){
+			t.stop();
+			tmpDesk.showClsd(null);
+			return;
+		}
 		getScreenResolution();
 		firstPicture();
+		try{
 		createFrame();
+		}catch(NullPointerException e){
+			
+			close();
+			return;
+		}
 		updatePicture();
 		updatePicture();
 		t.start();
 	}
- 	
+ 	 	
  	public void close(){
  		t.stop();
  		view.terminate();
-
  	}
 
 	// Build the frame (Slideshow)
 	private void createFrame() throws IOException {
 		slideShowHandler =  new ShowImage(monitor, info.getTimeStill(), info.getFadingSpeed());
-		view.createFrame(slideShowHandler, monitor,this);
+		view.createFrame(slideShowHandler, monitor,this, desktopApp);
 	}
 
 	// Get the size of the monitor
 	private void getScreenResolution() {
-		monitor = info.getScreenSize(screenIndex);
+		monitor = info.getScreenSize(screenIndex, desktopApp);
 	}
 
 	private String readConfig() throws FileNotFoundException {
 		String[] tmpConf =info.readConfig();
-		screenIndex = Byte.valueOf(tmpConf[0]);
+		screenIndex = Integer.valueOf(tmpConf[0]);
 		t = new Timer(10, this);
 		return tmpConf[1];
 	}
@@ -70,19 +83,18 @@ public class TwoDSlideShow extends Panel implements ActionListener {
 	}
 
 	private void updatePicture() throws IOException {
-		if(!imageSlide && pubSlides.getNrOfSlides() > 0){
+		if(imageSlide==false && pubSlides.getNrOfSlides() > 0){
 			try{
 				slideShowHandler.setNewSlide(pubSlides.getImage());
 			}catch(IIOException e){
 				close();
-				JOptionPane.showMessageDialog(null, "Something went wrong. Couldn't open the powerpoint images. They were deleted during runtime!");
-
+				desktopApp.showClsd( "Couldn't open the powerpoint images, they were deleted during runtime!");
 			}
 			imageSlide = true;
 		} else {
 			info.updatePicture();
 			imageSlide = false;
-			slideShowHandler.setNewPicture(info.getImage(), info.getUser(), info.getImageText(), info.getImageComments());		
+			slideShowHandler.setNewPicture(info.getImage(),info.getImgInfo());		
 		}
 	}
 	
@@ -100,8 +112,4 @@ public class TwoDSlideShow extends Panel implements ActionListener {
 		}
 
 	}
-
-//	public static void main(String args[]) throws IOException {
-//		new TwoDSlideShow();
-//	}
 }

@@ -6,15 +6,17 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
 public class DesktopApplication {
-	int nrOfConfValues;
+	byte nrOfConfValues;
 	String path;
 	Image bgImage;
 	Font stdFont;
+	Font bldFont;
 	NiftyHTTP nifty;
 	LogInFrame loginframe;
 	AdminFrame adminframe;
 	TwoDSlideShow slideshow;
 	ConfigSettings config;
+	FrameListener framelistener;
 	SlidePath slidepath = new SlidePath();
 	
 	public DesktopApplication() {
@@ -22,7 +24,9 @@ public class DesktopApplication {
 		ImageIcon icon = new ImageIcon("bgIcon.png");
 		bgImage = icon.getImage();
 		stdFont = new Font("Imperial", Font.PLAIN, 12);
+		bldFont = new Font("Arial", Font.BOLD, 12);
 		config = new ConfigSettings(nrOfConfValues);
+		framelistener = new FrameListener(this);
 		
 		loginframe = new LogInFrame(bgImage, this);
 		loginframe.logFrame.setVisible(true);
@@ -31,7 +35,7 @@ public class DesktopApplication {
 
 	public void login(String user, String token, JFrame logFrame) {
 		String[] values = new String[11];
-		adminframe = new AdminFrame(this, stdFont);
+		adminframe = new AdminFrame(this, stdFont, framelistener);
 		nifty = new NiftyHTTP(user, token);
 		
 		if (nifty.validateToken()) {
@@ -53,7 +57,9 @@ public class DesktopApplication {
 	}
 	
 	public void resetConf(){
-		adminframe.setTxt(config.resetValues());
+		String[] lclVals = config.resetValues();
+		adminframe.setTxt(lclVals);
+		adminframe.setPaths(slidepath.ninja(lclVals[9]), slidepath.ninja(lclVals[10]));
 	}
 	
 	public void announce(String food_description, String event, boolean pub_open, boolean food_ready){ // Send announcement to server
@@ -75,17 +81,18 @@ public class DesktopApplication {
 	public void popup(String message, String pathTmp){ //For SaveSlideshow
 		path = pathTmp;
 		adminframe.disable();
-		PopupFrame popupframe = new PopupFrame(message, bgImage, this, stdFont);
+		PopupFrame popupframe = new PopupFrame(message, bgImage, this, bldFont);
 		popupframe.popFrame.setVisible(true);
 		
 	}
+
 	
 	public void closePop(){
 		adminframe.enable();
 	}
 	
 	public void fail(String t, String m){
-		FailFrame fail = new FailFrame(t, m, stdFont);
+		FailFrame fail = new FailFrame(t, m, bldFont);
 		fail.errFrame.setVisible(true);
 	}
 	
@@ -97,16 +104,31 @@ public class DesktopApplication {
 		}
 	}
 	
+	public void showClsd(String m){
+		adminframe.setExitShow();
+		try{
+		if (m.equals(null) == false)
+			fail("Error in slideshow", m);
+		} catch(NullPointerException e){
+			
+		}
+	}
+	
+	public void deskClsd(){
+		adminframe.exitBtn.doClick();
+	}
+	
 	public void exitShow(){
 		try{
 			slideshow.close();
 		}catch(NullPointerException e){
-			
+			fail("Error", "The slideshow couldn't be closed");
 		}
 	}
 
 	// Main
 	public static void main(String[] args) {
+
 		new DesktopApplication();
 		
 	}

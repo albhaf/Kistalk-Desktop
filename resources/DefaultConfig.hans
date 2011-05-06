@@ -30,7 +30,7 @@ Max_number_of_Images %7
  
 Number_of_Hans %-
  
-Timer_interval %10
+Timer_interval %200
  
 Fading_speed %1
  
@@ -38,7 +38,7 @@ supported_image_formats %.jpg .png .gif .bnp
  
 Screen_index %0
  
-XMLURL %http://www.kistalk.com/api/feed/desktop
+XMLURL %http://www.kistalk.com/api/feed/desktop.xml
  
 Number_of_comments %2
  

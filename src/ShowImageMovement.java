@@ -4,12 +4,15 @@ public class ShowImageMovement {
 	public ShowImageMovement() {
 	}
 
-	protected void moveImageText(TextToDisplay imageCommentTxtDsp,
-			boolean outgoing) {
-		if (imageCommentTxtDsp.getY() > 700 && outgoing == false) {
-			imageCommentTxtDsp.addY(-2);
-		} else if (outgoing == true) {
-			imageCommentTxtDsp.addY(2);
+	protected void moveImageText(TextToDisplay[] imageCommentTxtDsp,
+			boolean outgoing, int textStopPosition) {
+		int lines = imageCommentTxtDsp[0].getLines(); 
+		for(int i = 0; i < lines; i++){
+			if (imageCommentTxtDsp[0].getY() > textStopPosition && outgoing == false) {
+				imageCommentTxtDsp[i].addY(-2);
+			} else if (outgoing == true) {
+				imageCommentTxtDsp[i].addY(2);
+			}
 		}
 	}
 
