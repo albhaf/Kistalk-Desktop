@@ -55,7 +55,9 @@ public class DesktopApplication {
 	}
 	
 	public void resetConf(){
-		adminframe.setTxt(config.resetValues());
+		String[] lclVals = config.resetValues();
+		adminframe.setTxt(lclVals);
+		adminframe.setPaths(slidepath.ninja(lclVals[9]), slidepath.ninja(lclVals[10]));
 	}
 	
 	public void announce(String food_description, String event, boolean pub_open, boolean food_ready){ // Send announcement to server

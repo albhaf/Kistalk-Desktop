@@ -287,6 +287,8 @@ public class AdminFrame {
 									eventTxt.setText("Torsdagspub");
 								}else if(e.getItem().toString().equals("ITK")){
 									eventTxt.setText("Lan");
+								}else{
+									eventTxt.setText("");
 								}
 								
 							}else{
@@ -619,12 +621,18 @@ public class AdminFrame {
 		
 	}
 	
-//	public void setPaths(names) {
-//		pubSlidesDDLst.addItem(name);
-//		slideNames.add(name);
-//		slidePaths.add(path);
-//		pubSlidesDDLst.setSelectedItem(name);
-//	}
+	public void setPaths(List<String> names, List<String> paths) {
+		pubSlidesDDLst.removeAllItems();
+		slideNames.clear();
+		slidePaths.clear();
+		
+		pubSlidesDDLst.addItem("[Saved slideshows]");
+		for (int i = 0; i < names.size(); i++) {
+			pubSlidesDDLst.addItem(names.get(i));
+			slideNames.add(names.get(i));
+			slidePaths.add(paths.get(i));
+		}
+	}
 	
 	private class ButtonListener implements ActionListener {
 		
