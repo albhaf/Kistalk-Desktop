@@ -101,6 +101,10 @@ public class DesktopApplication {
 		}
 	}
 	
+	public void showClsd(){
+		
+	}
+	
 	public void exitShow(){
 		try{
 			slideshow.close();
