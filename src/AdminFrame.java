@@ -505,6 +505,7 @@ public class AdminFrame {
 		nrOfImgsTxt.setText(values[0]);
 		timeTxt.setText(values[2]);
 		fadeTxt.setText(values[3]);
+		screenDDLst.setSelectedItem("This");
 		nrOfCommentsTxt.setText(values[7]);
 		xmlPubPathTxt.setText(values[8]);
 		
