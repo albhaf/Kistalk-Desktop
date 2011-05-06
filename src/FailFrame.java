@@ -1,9 +1,7 @@
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -29,6 +27,8 @@ public class FailFrame{
 		
 		errFrame = new JFrame();
 		JPanel errPanel = new JPanel(){ // Insert annan bild! Knapp ist för Kryss
+			private static final long serialVersionUID = -5083318046876650701L;
+
 			public void paint(Graphics g){
 				g.drawImage(bgImage, 0,0, this);
 				setOpaque(false);
