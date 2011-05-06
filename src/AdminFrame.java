@@ -18,9 +18,12 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.filechooser.FileFilter;
 
 
 public class AdminFrame {
+	CreateNewElements create;	
+	
 	String slideItem = null;
 	String[] values;
 	Font stdFont;
@@ -88,6 +91,8 @@ public class AdminFrame {
 
 	//	Setting up the settings frame
 	public void setupFrame(final String[] confValues, final List<String> tmpNames, final List<String> tmpPaths, final Image bgImage){
+		create = new CreateNewElements();
+		listener = new ButtonListener();
 		values = confValues;
 		slideNames = tmpNames;
 		slidePaths = tmpPaths;
@@ -96,44 +101,44 @@ public class AdminFrame {
 		adminFrame = new JFrame();
 		headerLbl = new JLabel();
 		
-		saveSetBtn = new JButton();
-		resetBtn = new JButton();
-		startBtn = new JButton();
-		exitBtn = new JButton();
-		savePathBtn = new JButton();
-		remPathBtn = new JButton();
-		announceBtn = new JButton();
-		pathBtn = new JButton();
+		saveSetBtn = create.setNewButton("Save settings", listener);
+		resetBtn = create.setNewButton("Reset settings", listener);
+		startBtn = create.setNewButton("Start slideshow", listener);
+		exitBtn = create.setNewButton("Exit", listener);
+		savePathBtn = create.setNewButton("Save path", listener);
+		remPathBtn = create.setNewButton("Remove Path", listener);
+		announceBtn = create.setNewButton("Send announce", listener);
+		pathBtn = create.setNewButton("...", listener);
 		
-		nrOfImgsLbl = new JLabel();
-		timeLbl= new JLabel();
-		foodLbl = new JLabel();
-		pubLbl = new JLabel();
-		statusLbl = new JLabel();
-		xmlPubPathLbl = new JLabel();
-		legalFilesLbl = new JLabel();
-		nrOfCommentsLbl = new JLabel();
-		screenLbl = new JLabel();
-		bgLbl = new JLabel();
-		fadeLbl = new JLabel();
-		pubnfoodStatusLbl = new JLabel();
+		nrOfImgsLbl = create.setNewLabel("Nr of pics (from KisTalk): ", stdFont);
+		timeLbl= create.setNewLabel("Time interval (ms): ", stdFont);
+		foodLbl = create.setNewLabel("Specify food:", stdFont);
+		pubLbl = create.setNewLabel("Specify event:", stdFont);
+		statusLbl = create.setNewLabel("Status: Ready for some action", smlFont);
+		xmlPubPathLbl = create.setNewLabel("Choose a .ppt-file (path): ", stdFont);
+		legalFilesLbl = create.setNewLabel("Approved file extensions: ", stdFont);
+		nrOfCommentsLbl = create.setNewLabel("Number of comments: ", stdFont);
+		screenLbl = create.setNewLabel("Choose screen: ", stdFont);
+		bgLbl = create.setNewLabel("", stdFont);
+		fadeLbl = create.setNewLabel("Fading speed (ms): ", stdFont);
+		pubnfoodStatusLbl = create.setNewLabel("Pub_open: -  Event: -  Food_ready: -  Food: -", smlFont);
 		
-		nrOfImgsTxt = new JTextField();
-		timeTxt = new JTextField();
-		xmlPubPathTxt = new JTextField();
-		legalFilesTxt = new JTextField();
-		nrOfCommentsTxt = new JTextField();
-		eventTxt = new JTextField();
-		foodTxt = new JTextField();
-		fadeTxt = new JTextField();
+		nrOfImgsTxt = create.setNewTextField(values[0], stdFont, true);
+		timeTxt = create.setNewTextField(values[2], stdFont, true);
+		xmlPubPathTxt = create.setNewTextField("C:\\...", stdFont, true);
+		legalFilesTxt = create.setNewTextField(values[4], stdItalFont, false);
+		nrOfCommentsTxt = create.setNewTextField(values[7], stdFont, true);
+		eventTxt = create.setNewTextField("", stdFont, false);
+		foodTxt = create.setNewTextField("", stdFont, false);
+		fadeTxt = create.setNewTextField(values[3], stdFont, true);
+						
 		
-		foodChb = new JCheckBox();
-		pubChb = new JCheckBox();
+		foodChb = create.setNewCheckBox("Dinner is served", listener, false);
+		pubChb = create.setNewCheckBox("Pub is open", listener, true);
 		
 		pubSlidesDDLst = new JComboBox();
 		screenDDLst = new JComboBox();
 		
-		listener = new ButtonListener();
 		fc = new JFileChooser();
 		
 		smlFont = new Font("Helvetica", Font.PLAIN, 10);
@@ -168,113 +173,7 @@ public class AdminFrame {
 		
 		//	Label settings
 		headerLbl.setIcon(new ImageIcon("kistalk_adm_logo.png"));
-		
-		nrOfImgsLbl.setText("Nr of pics (from KisTalk): ");
-		nrOfImgsLbl.setForeground(Color.WHITE);
-		
-		timeLbl.setText("Time interval (ms): ");
-		timeLbl.setForeground(Color.WHITE);
-		
-		xmlPubPathLbl.setText("Choose a .ppt-file (path): ");
-		xmlPubPathLbl.setForeground(Color.WHITE);
-		
-		legalFilesLbl.setText("Approved file extensions: ");
-		legalFilesLbl.setForeground(Color.WHITE);
-		
-		pubLbl.setText("Specify event:");
-		pubLbl.setForeground(Color.GRAY);
-		
-		foodLbl.setText("Specify food:");
-		foodLbl.setForeground(Color.GRAY);
-		
-		statusLbl.setText("Status: Ready for some action");
-		statusLbl.setForeground(Color.WHITE);
-		statusLbl.setFont(smlFont);
-		
-		nrOfCommentsLbl.setText("Number of comments: ");
-		nrOfCommentsLbl.setForeground(Color.WHITE);
-		
-		screenLbl.setText("Choose screen: ");
-		screenLbl.setForeground(Color.WHITE);
-		
-		fadeLbl.setText("Fading speed (ms): ");
-		fadeLbl.setForeground(Color.WHITE);
-		
-		pubnfoodStatusLbl.setText("Pub_open: -  Event: -  Food_ready: -  Food: -");
-		pubnfoodStatusLbl.setForeground(Color.WHITE);
-		pubnfoodStatusLbl.setFont(smlFont);
-		
-		//	Text settings
-		nrOfImgsTxt.setText(values[0]);
-		nrOfImgsTxt.setFont(stdFont);
-		
-		timeTxt.setText(values[2]);
-		timeTxt.setFont(stdFont);
-		
-		xmlPubPathTxt.setText("");
-		xmlPubPathTxt.setFont(stdFont);
-		
-		legalFilesTxt.setText(values[4]);
-		legalFilesTxt.setFont(stdItalFont);
-		legalFilesTxt.setEnabled(false);
-		
-		nrOfCommentsTxt.setText(values[7]);
-		nrOfCommentsTxt.setFont(stdFont);
-		
-		eventTxt.setFont(stdFont);
-		eventTxt.setEnabled(false);
-		
-		foodTxt.setFont(stdFont);
-		foodTxt.setEnabled(false);
-		
-		fadeTxt.setFont(stdFont);
-		fadeTxt.setText(values[3]);
-		
-		//	Button settings
-		saveSetBtn.setText("Save settings");
-		saveSetBtn.setForeground(Color.BLACK);
-		saveSetBtn.addActionListener(listener);
-		
-		resetBtn.setText("Reset settings");
-		resetBtn.setForeground(Color.BLACK);
-		resetBtn.addActionListener(listener);
-		
-		startBtn.setText("Start slideshow");
-		startBtn.setForeground(Color.BLACK);
-		startBtn.addActionListener(listener);
-		
-		exitBtn.setText("Exit");
-		exitBtn.setForeground(Color.BLACK);
-		exitBtn.addActionListener(listener);
-		
-		savePathBtn.setText("Save path");
-		savePathBtn.setForeground(Color.BLACK);
-		savePathBtn.addActionListener(listener);
-		
-		remPathBtn.setText("Remove Path");
-		remPathBtn.setForeground(Color.BLACK);
-		remPathBtn.addActionListener(listener);
-		
-		announceBtn.setText("Send announce");
-		announceBtn.setForeground(Color.BLACK);
-		announceBtn.addActionListener(listener);
-		
-		pathBtn.setText("...");
-		pathBtn.setForeground(Color.BLACK);
-		pathBtn.addActionListener(listener);
-		
-		//	Checkboxes settings
-		foodChb.setText("Dinner is served");
-		foodChb.setForeground(Color.WHITE);
-		foodChb.addActionListener(listener);
-		foodChb.setOpaque(false);
-		foodChb.setEnabled(false);
-		
-		pubChb.setText("Pub is open");
-		pubChb.setForeground(Color.WHITE);
-		pubChb.addActionListener(listener);
-		pubChb.setOpaque(false);
-		
+	
 		//	DropDownList settings, with ItemListeners
 		pubSlidesDDLst.addItem("[Saved slideshows]");
 		for (int i = 0; i < slideNames.size(); i++)
@@ -379,7 +278,11 @@ public class AdminFrame {
 						)
 			   			.addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
 			   					.addComponent(xmlPubPathLbl)
-			   					.addComponent(xmlPubPathTxt, 277, 277, 277)
+			   					.addGroup(groupLayout.createSequentialGroup()
+			   							.addComponent(xmlPubPathTxt, 228, 228, 228)
+			   							.addGap(2)
+			   							.addComponent(pathBtn, 40, 40, 40)
+			   					)
 			   					.addComponent(pubSlidesDDLst, 155, 155, 155)
 					   	)
 				)
@@ -463,7 +366,10 @@ public class AdminFrame {
 								.addGap(15)
 					   			.addGroup(groupLayout.createSequentialGroup()
 									.addComponent(xmlPubPathLbl)
-									.addComponent(xmlPubPathTxt, 20, 20, 20)
+									.addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+										.addComponent(xmlPubPathTxt, 20, 20, 20)
+										.addComponent(pathBtn, 20, 20, 20)
+									)
 									.addComponent(pubSlidesDDLst, 20, 20, 20)
 					   			)
 				   		)
@@ -553,8 +459,7 @@ public class AdminFrame {
 		screenLbl.setForeground(Color.GRAY);
 		bgLbl.setForeground(Color.GRAY);
 		pubnfoodStatusLbl.setForeground(Color.GRAY);
-		fadeLbl.setForeground(Color.GRAY);
-		
+		fadeLbl.setForeground(Color.GRAY);		
 	}
 
 	public void enable(){ // Enable buttons
@@ -628,7 +533,6 @@ public class AdminFrame {
 		fadeTxt.setText(values[3]);
 		nrOfCommentsTxt.setText(values[7]);
 		xmlPubPathTxt.setText(values[8]);
-		statusLbl.setText("Status: Config is back to normal");
 		
 	}
 	
@@ -643,6 +547,7 @@ public class AdminFrame {
 			slideNames.add(names.get(i));
 			slidePaths.add(paths.get(i));
 		}
+		statusLbl.setText("Status: Config is back to normal");
 	}
 	
 	private class ButtonListener implements ActionListener {
@@ -691,16 +596,44 @@ public class AdminFrame {
 				} else {
 					controller.fail("Error", "Both textfields require 1 to 40 chars!");
 				}
-//			}else if (e.getSource() == pathBtn){
-//				int returnVal = fc.showOpenDialog(FileChooserDemo.this);
+			}else if (e.getSource() == pathBtn){
+				int returnVal = fc.showOpenDialog(adminFrame);
 				
+				if (returnVal == fc.APPROVE_OPTION){
+					
+					//Kolla fileextensions!
+					
+					xmlPubPathTxt.setText(fc.getSelectedFile().getAbsoluteFile().toString());
+					
+//					else; controller.fail("Error", "Choose an image-file!");
+					
+				}else if (returnVal == fc.CANCEL_OPTION){
+					System.out.print("You have ended this filehandler =(");
+				}
 				
 			}else if (e.getSource() == savePathBtn){ // Save Slideshow
 				if (xmlPubPathTxt.getText().equals("") == false){
-				controller.popup("Name the slideshow: ", xmlPubPathTxt.getText());
-				statusLbl.setText("Status: Slideshow saved");
+					//Kolla fileextensions
+//					String extension = Utils.getExtension(f);
+//				    if (extension != null) {
+//				    	if (	extension.equals(Utils.gif) ||
+//				    			extension.equals(Utils.jpeg) ||
+//				    			extension.equals(Utils.jpg) ||
+//				    			extension.equals(Utils.png) ||
+//				    			extension.equals(Utils.bmp)) {
+//					        return true;
+//					} else {
+//					    return false;
+//					}
+//				    }
+//
+//				    return false;
+//				}
+				
+					controller.popup("Name the slideshow: ", xmlPubPathTxt.getText());
+					statusLbl.setText("Status: Slideshow saved");
 				}else{
-					controller.fail("Wrong path", "You have to specify a path to your .ppt-file!");
+					controller.fail("Wrong path", "You have to specify a correct path to your .ppt-file!");
 				}
 			
 			}else if (e.getSource() == remPathBtn){ // Remove saved Slideshow

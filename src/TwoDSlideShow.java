@@ -14,6 +14,7 @@ public class TwoDSlideShow extends Panel implements ActionListener {
 	private static final long serialVersionUID = 5789717155006186682L;
 
 	public Timer t;
+
 	
 	private int screenIndex;
 	public int nrOfConfValues;
@@ -30,6 +31,20 @@ public class TwoDSlideShow extends Panel implements ActionListener {
  	public TwoDSlideShow(int tmpConfValues, DesktopApplication tmpDesk) throws IOException {
  		desktopApp = tmpDesk;
  		nrOfConfValues = tmpConfValues;
+ 		imageSlide = false;
+		view = new TwoDSlideShowView();
+		info = new TwoDSlideShowInfo(nrOfConfValues);
+		pubSlides = new ImportPubSlides(readConfig(), this);
+		getScreenResolution();
+		firstPicture();
+		createFrame();
+		updatePicture();
+		updatePicture();
+		t.start();
+	}
+ 	
+ 	public TwoDSlideShow() throws IOException {
+ 		nrOfConfValues = 11;
  		imageSlide = false;
 		view = new TwoDSlideShowView();
 		info = new TwoDSlideShowInfo(nrOfConfValues);
