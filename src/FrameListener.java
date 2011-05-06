@@ -30,14 +30,16 @@ public class FrameListener implements WindowListener{
 		String title = frame.getTitle();
 		if(title.equalsIgnoreCase("ShowImage.java")){
 			ShowImageClosing();
-		}else if(title.equalsIgnoreCase("KisTalk Slideshow Settings")){
-			System.out.println("Nu stängs den inte!");
 		}
 	}
 
 	@Override
 	public void windowClosing(WindowEvent arg0) {
-
+		JFrame frame = (JFrame)( arg0.getSource());
+		String title = frame.getTitle();
+		if(title.equalsIgnoreCase("KisTalk Slideshow Settings")){
+			deskApp.deskClsd();
+		}
 	}
 
 	@Override

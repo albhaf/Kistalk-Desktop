@@ -18,7 +18,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.filechooser.FileFilter;
 
 
 public class AdminFrame {
@@ -34,8 +33,11 @@ public class AdminFrame {
 	private JPanel thePanel;
 	private JLabel headerLbl;
 	
-	private JButton saveSetBtn, resetBtn, startBtn, exitBtn, savePathBtn, remPathBtn, 
-		announceBtn, pathBtn;
+	private JButton saveSetBtn, resetBtn, startBtn;
+
+	JButton exitBtn;
+
+	private JButton savePathBtn, remPathBtn, announceBtn, pathBtn;
 	
 	private JLabel nrOfImgsLbl, timeLbl, foodLbl, pubLbl, statusLbl, xmlPubPathLbl, 
 		legalFilesLbl, nrOfCommentsLbl, screenLbl, bgLbl, pubnfoodStatusLbl, fadeLbl;
@@ -68,6 +70,10 @@ public class AdminFrame {
 	public void setupFrame(final String[] confValues, final List<String> tmpNames, final List<String> tmpPaths, final Image bgImage){
 		create = new CreateNewElements();
 		listener = new ButtonListener();
+		
+		smlFont = new Font("Helvetica", Font.PLAIN, 10);
+		stdItalFont = new Font("Helvetica", Font.ITALIC, 12);
+		
 		values = confValues;
 		slideNames = tmpNames;
 		slidePaths = tmpPaths;
@@ -75,6 +81,7 @@ public class AdminFrame {
 		//	Create all objects
 		adminFrame = new JFrame();
 		headerLbl = new JLabel();
+		headerLbl.setIcon(new ImageIcon("kistalk_adm_logo.png"));
 		
 		this.setButtons();
 		this.setLabels();
@@ -82,6 +89,7 @@ public class AdminFrame {
 		this.setBoxes();
 		
 		fc = new JFileChooser();
+
 		FileChooserFilter fcFilter = new FileChooserFilter();
 		fc.setAcceptAllFileFilterUsed(false);
 		fc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
@@ -95,19 +103,27 @@ public class AdminFrame {
 		
 		groupLayout = new GroupLayout(thePanel);
 		
-		//	Frame settings
-		adminFrame.setSize(510,610);
-		adminFrame.setResizable(false);
-		adminFrame.setLocation(300, 50);
-		adminFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		adminFrame.setTitle("KisTalk Slideshow Settings");
-		adminFrame.setUndecorated(false);
-		adminFrame.addWindowListener(framelistener);
+
+		this.setAdminFrame();
 		
 		thePanel.setLayout(groupLayout);
+	
+		this.setPubSlideDDLst();
+		this.setScreenDDLst();
 
-		//	Label settings
-		headerLbl.setIcon(new ImageIcon("kistalk_adm_logo.png"));
+		groupLayout.setAutoCreateGaps(true);
+		groupLayout.setAutoCreateContainerGaps(true);
+		
+		//	Layout
+		this.setHorizontal();
+		this.setVertical();
+	
+		//	Add panel
+		adminFrame.add(thePanel);
+		adminFrame.setVisible(true);
+	}
+	
+	private void setPubSlideDDLst(){
 		
 		//	DropDownList settings, with ItemListeners
 		pubSlidesDDLst.addItem("[Saved slideshows]");
@@ -151,7 +167,10 @@ public class AdminFrame {
 					}
 				}
 		);
-		
+
+	}
+	
+	private void setScreenDDLst(){
 		screenDDLst.addItem("This");
 		screenDDLst.addItem("External");
 		screenDDLst.setSelectedItem("THIS");
@@ -169,100 +188,97 @@ public class AdminFrame {
 					}
 				}
 		);
-		
-		//	Layout settings & add components
-		groupLayout.setAutoCreateGaps(true);
-		groupLayout.setAutoCreateContainerGaps(true);
-		
-		//	Layout
-			//	Horisontal
+	}
+	
+	private void setHorizontal(){
 		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(GroupLayout.Alignment.CENTER)
-			.addComponent(headerLbl)
-			.addGap(70)
-			.addGroup(groupLayout.createSequentialGroup()
-				
-			   	.addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-			   			
-			   			.addGroup(groupLayout.createSequentialGroup()
-						   	.addComponent(nrOfImgsLbl)
-						   	.addGap(23)
-						   	.addComponent(nrOfImgsTxt, 50, 50, 50)
-						)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(nrOfCommentsLbl)
-							.addGap(37)
-							.addComponent(nrOfCommentsTxt, 50, 50, 50)
-						)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(timeLbl)
-							.addGap(58)
-							.addComponent(timeTxt, 50, 50, 50)
-						)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(fadeLbl)
-							.addGap(56)
-							.addComponent(fadeTxt, 50, 50, 50)
-						)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(legalFilesLbl)
-							.addGap(20)
-							.addComponent(legalFilesTxt, 110, 110, 110)
-						)
-						.addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-								.addComponent(screenLbl)
-								.addComponent(screenDDLst, 155, 155, 155)
-						)
-			   			.addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-			   					.addComponent(xmlPubPathLbl)
-			   					.addGroup(groupLayout.createSequentialGroup()
-			   							.addComponent(xmlPubPathTxt, 228, 228, 228)
-			   							.addGap(2)
-			   							.addComponent(pathBtn, 40, 40, 40)
-			   					)
-			   					.addComponent(pubSlidesDDLst, 155, 155, 155)
-					   	)
-				)
-				
-				.addGap(50)
-				
-				.addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-						
-						.addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-							.addComponent(pubChb)
-							.addComponent(pubLbl)
-							.addComponent(eventTxt, 125, 125, 125)
-						)
-						.addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-						   	.addComponent(foodLbl)
-						   	.addComponent(foodTxt, 125, 125, 125)
-						   	.addComponent(foodChb)
-						)
-						.addComponent(announceBtn, 125, 125, 125)
-			   	)
-			)
-			.addGroup(groupLayout.createSequentialGroup()
-				   	.addComponent(saveSetBtn, 130, 130, 130)
-				   	.addGap(10)
-				   	.addComponent(savePathBtn, 130, 130, 130)
-				   	.addGap(40)
-					.addComponent(startBtn, 130, 130, 130)
+				groupLayout.createParallelGroup(GroupLayout.Alignment.CENTER)
+				.addComponent(headerLbl)
+				.addGap(70)
+				.addGroup(groupLayout.createSequentialGroup()
+					
+				   	.addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
 				   			
-			)
-			.addGroup(groupLayout.createSequentialGroup()
-					.addComponent(resetBtn, 130, 130, 130)
-					.addGap(10)
-					.addComponent(remPathBtn, 130, 130, 130)
-					.addGap(40)
-					.addComponent(exitBtn, 130, 130, 130)
-			)
-			.addComponent(statusLbl)
-			.addGroup(groupLayout.createSequentialGroup()
-				.addComponent(pubnfoodStatusLbl)
-			)
-		);
-		
-			//	Vertical
+				   			.addGroup(groupLayout.createSequentialGroup()
+							   	.addComponent(nrOfImgsLbl)
+							   	.addGap(23)
+							   	.addComponent(nrOfImgsTxt, 50, 50, 50)
+							)
+							.addGroup(groupLayout.createSequentialGroup()
+								.addComponent(nrOfCommentsLbl)
+								.addGap(37)
+								.addComponent(nrOfCommentsTxt, 50, 50, 50)
+							)
+							.addGroup(groupLayout.createSequentialGroup()
+								.addComponent(timeLbl)
+								.addGap(58)
+								.addComponent(timeTxt, 50, 50, 50)
+							)
+							.addGroup(groupLayout.createSequentialGroup()
+								.addComponent(fadeLbl)
+								.addGap(56)
+								.addComponent(fadeTxt, 50, 50, 50)
+							)
+							.addGroup(groupLayout.createSequentialGroup()
+								.addComponent(legalFilesLbl)
+								.addGap(20)
+								.addComponent(legalFilesTxt, 110, 110, 110)
+							)
+							.addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+									.addComponent(screenLbl)
+									.addComponent(screenDDLst, 155, 155, 155)
+							)
+				   			.addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+				   					.addComponent(xmlPubPathLbl)
+				   					.addGroup(groupLayout.createSequentialGroup()
+				   							.addComponent(xmlPubPathTxt, 228, 228, 228)
+				   							.addGap(2)
+				   							.addComponent(pathBtn, 40, 40, 40)
+				   					)
+				   					.addComponent(pubSlidesDDLst, 155, 155, 155)
+						   	)
+					)
+					
+					.addGap(50)
+					
+					.addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+							
+							.addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+								.addComponent(pubChb)
+								.addComponent(pubLbl)
+								.addComponent(eventTxt, 125, 125, 125)
+							)
+							.addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+							   	.addComponent(foodLbl)
+							   	.addComponent(foodTxt, 125, 125, 125)
+							   	.addComponent(foodChb)
+							)
+							.addComponent(announceBtn, 125, 125, 125)
+				   	)
+				)
+				.addGroup(groupLayout.createSequentialGroup()
+					   	.addComponent(saveSetBtn, 130, 130, 130)
+					   	.addGap(10)
+					   	.addComponent(savePathBtn, 130, 130, 130)
+					   	.addGap(40)
+						.addComponent(startBtn, 130, 130, 130)
+					   			
+				)
+				.addGroup(groupLayout.createSequentialGroup()
+						.addComponent(resetBtn, 130, 130, 130)
+						.addGap(10)
+						.addComponent(remPathBtn, 130, 130, 130)
+						.addGap(40)
+						.addComponent(exitBtn, 130, 130, 130)
+				)
+				.addComponent(statusLbl)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addComponent(pubnfoodStatusLbl)
+				)
+			);
+	}
+	
+	private void setVertical(){
 		groupLayout.setVerticalGroup(
 				groupLayout.createSequentialGroup()
 				   	.addComponent(headerLbl)
@@ -347,18 +363,26 @@ public class AdminFrame {
 						.addComponent(pubnfoodStatusLbl)
 				  )
 			);
-		
-		//	Add panel
-		adminFrame.add(thePanel);
-		adminFrame.setVisible(true);
+
 	}
 	
-	private void setBoxes(){
+ 	private void setBoxes(){
 		foodChb = create.setNewCheckBox("Dinner is served", listener, false);
 		pubChb = create.setNewCheckBox("Pub is open", listener, true);
 		
 		pubSlidesDDLst = new JComboBox();
 		screenDDLst = new JComboBox();
+	}
+	
+	private void setAdminFrame(){
+		adminFrame.setSize(510,610);
+		adminFrame.setResizable(false);
+		adminFrame.setLocation(300, 50);
+		adminFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		adminFrame.setTitle("KisTalk Slideshow Settings");
+		adminFrame.setUndecorated(false);
+		adminFrame.addWindowListener(framelistener);
+
 	}
 	
 	private void setTextFields(){
@@ -533,6 +557,12 @@ public class AdminFrame {
 		statusLbl.setText("Status: Config is back to normal");
 	}
 	
+	public void setExitShow(){
+		statusLbl.setText("Status: The slideshow is dead...");
+		exitBtn.setText("Quit KisTalk");
+		startBtn.setEnabled(true);
+	}
+	
 	private class ButtonListener implements ActionListener {
 		
 		public void actionPerformed(ActionEvent e) {
@@ -620,9 +650,7 @@ public class AdminFrame {
 				
 			}else if (e.getSource() == exitBtn){ // Exit Slideshow / Program
 				if (exitBtn.getText().equals("Quit SlideShow")){
-					statusLbl.setText("Status: The slideshow is dead...");
-					exitBtn.setText("Quit KisTalk");
-					startBtn.setEnabled(true);
+					setExitShow();
 					controller.exitShow();
 				}else{
 					adminFrame.dispose();
@@ -630,5 +658,4 @@ public class AdminFrame {
 			}
 		}
 	}
-
 }

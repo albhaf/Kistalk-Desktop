@@ -107,7 +107,11 @@ public class DesktopApplication {
 	}
 	
 	public void showClsd(){
-//		adminframe.exitBtn.doClick();
+		adminframe.setExitShow();
+	}
+	
+	public void deskClsd(){
+		adminframe.exitBtn.doClick();
 	}
 	
 	public void exitShow(){
