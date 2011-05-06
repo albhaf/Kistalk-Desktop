@@ -117,6 +117,7 @@ public class AdminFrame {
 								xmlPubPathTxt.setFont(stdItalFont);
 								statusLbl.setText("Status: " + e.getItem().toString() + "s Slideshow is choosed");
 								slideItem = e.getItem().toString();
+								pathBtn.setEnabled(false);
 								
 								if (e.getItem().toString().equals("TMEIT")){
 									eventTxt.setText("Tisdagspub");
@@ -135,6 +136,7 @@ public class AdminFrame {
 								statusLbl.setText("Status: Choose a Slideshow or specify a path");
 								slideItem = null;
 								eventTxt.setText("");
+								pathBtn.setEnabled(true);
 								
 							}
 						}
