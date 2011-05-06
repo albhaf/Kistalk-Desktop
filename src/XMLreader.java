@@ -14,7 +14,8 @@ import org.xml.sax.helpers.DefaultHandler;
 
 public class XMLreader extends DefaultHandler{
 
-	private List<ImageXML> images;
+	//private List<ImageXML> images;
+	private ImageXMLQueue imgXmlQueue;
 	private List<CommentXML> comments;
 	private String XMLURL;
 
@@ -25,13 +26,15 @@ public class XMLreader extends DefaultHandler{
 	private CommentXML tempComment;
 
 	public XMLreader(String URL) {
-		images = new ArrayList<ImageXML>();
+		//images = new ArrayList<ImageXML>();
+		imgXmlQueue = new ImageXMLQueue();
 		XMLURL = URL;
 	}
 
-	public List<ImageXML> getImagesInfo() {
+	public ImageXMLQueue getImagesInfo() {
 		this.parseDocument();
-		return images;
+		return imgXmlQueue;
+		//return images;
 	}
 
 	private void parseDocument() {
@@ -75,7 +78,8 @@ public class XMLreader extends DefaultHandler{
 			throws SAXException {
 		if (qName.equalsIgnoreCase("image")) {
 			tempImg.setComments(comments);
-			images.add(tempImg);
+			imgXmlQueue.addLast(tempImg);
+			//images.add(tempImg);
 		} else if (qName.equalsIgnoreCase("comment")) {
 			comments.add(tempComment);
 		} else if (qName.equalsIgnoreCase("comment-user-name")) {

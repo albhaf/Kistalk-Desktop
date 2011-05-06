@@ -6,7 +6,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
 public class DesktopApplication {
-	int nrOfConfValues;
+	byte nrOfConfValues;
 	String path;
 	Image bgImage;
 	Font stdFont;
