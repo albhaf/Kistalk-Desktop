@@ -18,7 +18,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.filechooser.FileFilter;
 
 
 public class AdminFrame {
@@ -550,6 +549,12 @@ public class AdminFrame {
 		statusLbl.setText("Status: Config is back to normal");
 	}
 	
+	public void setExitShow(){
+		statusLbl.setText("Status: The slideshow is dead...");
+		exitBtn.setText("Quit KisTalk");
+		startBtn.setEnabled(true);
+	}
+	
 	private class ButtonListener implements ActionListener {
 		
 		public void actionPerformed(ActionEvent e) {
@@ -637,9 +642,7 @@ public class AdminFrame {
 				
 			}else if (e.getSource() == exitBtn){ // Exit Slideshow / Program
 				if (exitBtn.getText().equals("Quit SlideShow")){
-					statusLbl.setText("Status: The slideshow is dead...");
-					exitBtn.setText("Quit KisTalk");
-					startBtn.setEnabled(true);
+					setExitShow();
 					controller.exitShow();
 				}else{
 					adminFrame.dispose();
