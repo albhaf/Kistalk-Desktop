@@ -1,6 +1,5 @@
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -681,8 +680,11 @@ public class AdminFrame {
 				exitBtn.setText("Quit SlideShow");
 				startBtn.setEnabled(false);
 				statusLbl.setText("Status: Slideshow started");
+				try{
 				controller.startShow();
-				
+				}catch(NullPointerException e1){
+					
+				}
 			}else if (e.getSource() == exitBtn){ // Exit Slideshow / Program
 				if (exitBtn.getText().equals("Quit SlideShow")){
 					setExitShow();

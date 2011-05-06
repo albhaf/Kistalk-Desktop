@@ -22,7 +22,7 @@ public class PptToPng {
 	 */
 	private String filepath;
 	private int nrFiles;
-	DesktopApplication deskApp;
+	private DesktopApplication deskApp;
 
 	/**
 	 * constructor which sets the filepath to the passed argument.
@@ -30,10 +30,10 @@ public class PptToPng {
 	 * @param tmp
 	 */
 	public PptToPng(String tmp,DesktopApplication tmpDeskApp) {
+		deskApp = tmpDeskApp;
 		filepath = tmp;
 		nrFiles = 0;
 		extract();
-		deskApp = tmpDeskApp;
 	}
 
 	public int getNrFiles() {
@@ -78,12 +78,11 @@ public class PptToPng {
 			is.close();
 		} catch (FileNotFoundException e) {
 			deskApp.showClsd( e.getMessage());
+			return null;
 		}catch(IOException e){
-			deskApp.showClsd( e.getMessage());
+			deskApp.showClsd("Invalid .ppt file.");
+			return null;
 		}
-
-
-
 
 		return ppt;
 	}
