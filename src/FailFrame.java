@@ -60,10 +60,13 @@ public class FailFrame{
 						.addGroup(errLayout.createSequentialGroup()
 								.addGap(20)
 								.addComponent(label)
+								.addGap(20)
 						)
 						.addGroup(errLayout.createSequentialGroup()
 								.addGap(30)
 								.addComponent(okBtn, 100, 100, 100)
+								.addGap(30)
+								
 						)
 		);
 		
@@ -73,9 +76,12 @@ public class FailFrame{
 				.addComponent(label)
 				.addGap(10)
 				.addComponent(okBtn, 25, 25, 25)
+				.addGap(10)
 		);
 		
 		errFrame.add(errPanel);
+		
+		errFrame.pack();
 		
 	}
 	

@@ -39,7 +39,7 @@ public class ShowImageSet {
 		String[] tmp;
 		imageCommentTxtDsp = new TextToDisplay[5];
 		int y = monitorSize.height + 20;
-
+		
 		do {
 			imageCommentTxtDsp[j] = new TextToDisplay();
 
@@ -64,7 +64,10 @@ public class ShowImageSet {
 			}
 			j++;
 		} while (true && j < 5);
-		imageCommentTxtDsp[0].setLines(j);
+		if(j < 5)
+			imageCommentTxtDsp[0].setLines(j+1);
+		else
+			imageCommentTxtDsp[0].setLines(5);
 		return imageCommentTxtDsp;
 		
 	}
