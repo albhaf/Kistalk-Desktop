@@ -54,11 +54,14 @@ public class AdminFrame {
 	private JFileChooser fc;
 	
 	private List<String> slidePaths, slideNames;
+	
+	private FrameListener framelistener;
 
 	//	Constructor
-	public AdminFrame(DesktopApplication tmpCont, Font tmpFont) {
+	public AdminFrame(DesktopApplication tmpCont, Font tmpFont, FrameListener tmplistener){
 		controller = tmpCont;
 		stdFont = tmpFont;
+		framelistener = tmplistener;
 	}
 
 	//	Setting up the settings frame
@@ -90,6 +93,7 @@ public class AdminFrame {
 		
 		groupLayout = new GroupLayout(thePanel);
 		
+
 		this.setAdminFrame();
 		
 		thePanel.setLayout(groupLayout);
@@ -97,7 +101,6 @@ public class AdminFrame {
 		this.setPubSlideDDLst();
 		this.setScreenDDLst();
 
-		//	Layout settings & add components
 		groupLayout.setAutoCreateGaps(true);
 		groupLayout.setAutoCreateContainerGaps(true);
 		
@@ -111,6 +114,7 @@ public class AdminFrame {
 	}
 	
 	private void setPubSlideDDLst(){
+		
 		//	DropDownList settings, with ItemListeners
 		pubSlidesDDLst.addItem("[Saved slideshows]");
 		for (int i = 0; i < slideNames.size(); i++)
@@ -127,6 +131,7 @@ public class AdminFrame {
 								xmlPubPathTxt.setFont(stdItalFont);
 								statusLbl.setText("Status: " + e.getItem().toString() + "s Slideshow is choosed");
 								slideItem = e.getItem().toString();
+								pathBtn.setEnabled(false);
 								
 								if (e.getItem().toString().equals("TMEIT")){
 									eventTxt.setText("Tisdagspub");
@@ -145,6 +150,7 @@ public class AdminFrame {
 								statusLbl.setText("Status: Choose a Slideshow or specify a path");
 								slideItem = null;
 								eventTxt.setText("");
+								pathBtn.setEnabled(true);
 								
 							}
 						}
@@ -365,6 +371,8 @@ public class AdminFrame {
 		adminFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		adminFrame.setTitle("KisTalk Slideshow Settings");
 		adminFrame.setUndecorated(false);
+		adminFrame.addWindowListener(framelistener);
+
 	}
 	
 	private void setTextFields(){
@@ -519,6 +527,7 @@ public class AdminFrame {
 		nrOfImgsTxt.setText(values[0]);
 		timeTxt.setText(values[2]);
 		fadeTxt.setText(values[3]);
+		screenDDLst.setSelectedItem("This");
 		nrOfCommentsTxt.setText(values[7]);
 		xmlPubPathTxt.setText(values[8]);
 		
@@ -588,36 +597,18 @@ public class AdminFrame {
 				int returnVal = fc.showOpenDialog(adminFrame);
 				
 				if (returnVal == fc.APPROVE_OPTION){
-					
-					//Kolla fileextensions!
-					
-					xmlPubPathTxt.setText(fc.getSelectedFile().getAbsoluteFile().toString());
-					
-//					else; controller.fail("Error", "Choose an image-file!");
-					
+					// Check file extension
+					if (fc.getSelectedFile().getName().endsWith(".ppt")){
+						xmlPubPathTxt.setText(fc.getSelectedFile().getAbsoluteFile().toString());
+					} else {
+						controller.fail("Error", "Choose a .ppt-file!");
+					}
 				}else if (returnVal == fc.CANCEL_OPTION){
-					System.out.print("You have ended this filehandler =(");
+					// Close
 				}
 				
 			}else if (e.getSource() == savePathBtn){ // Save Slideshow
-				if (xmlPubPathTxt.getText().equals("") == false){
-					//Kolla fileextensions
-//					String extension = Utils.getExtension(f);
-//				    if (extension != null) {
-//				    	if (	extension.equals(Utils.gif) ||
-//				    			extension.equals(Utils.jpeg) ||
-//				    			extension.equals(Utils.jpg) ||
-//				    			extension.equals(Utils.png) ||
-//				    			extension.equals(Utils.bmp)) {
-//					        return true;
-//					} else {
-//					    return false;
-//					}
-//				    }
-//
-//				    return false;
-//				}
-				
+				if (xmlPubPathTxt.getText().equals("") == false && xmlPubPathTxt.getText().endsWith(".ppt")){
 					controller.popup("Name the slideshow: ", xmlPubPathTxt.getText());
 					statusLbl.setText("Status: Slideshow saved");
 				}else{
@@ -650,7 +641,6 @@ public class AdminFrame {
 				}else{
 					adminFrame.dispose();
 				}
-				
 			}
 		}
 	}

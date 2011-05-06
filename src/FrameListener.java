@@ -5,8 +5,12 @@ import javax.swing.JFrame;
 
 public class FrameListener implements WindowListener{
 	
-	TwoDSlideShow slideshow;
-	DesktopApplication deskApp;
+	private TwoDSlideShow slideshow;
+	private DesktopApplication deskApp;
+	
+	public FrameListener(DesktopApplication tmpdesk){
+		deskApp = tmpdesk;
+	}
 	
 	public FrameListener(TwoDSlideShow tmp, DesktopApplication tmpdesk){
 		deskApp = tmpdesk;
@@ -26,6 +30,8 @@ public class FrameListener implements WindowListener{
 		String title = frame.getTitle();
 		if(title.equalsIgnoreCase("ShowImage.java")){
 			ShowImageClosing();
+		}else if(title.equalsIgnoreCase("KisTalk Slideshow Settings")){
+			System.out.println("Nu stängs den inte!");
 		}
 	}
 
