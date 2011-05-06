@@ -107,6 +107,7 @@ public class AdminFrame {
 		savePathBtn = create.setNewButton("Save path", listener);
 		remPathBtn = create.setNewButton("Remove Path", listener);
 		announceBtn = create.setNewButton("Send announce", listener);
+		pathBtn = create.setNewButton("...", listener);
 		
 		nrOfImgsLbl = create.setNewLabel("Nr of pics (from KisTalk): ", stdFont);
 		timeLbl= create.setNewLabel("Time interval (ms): ", stdFont);
