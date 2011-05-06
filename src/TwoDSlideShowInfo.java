@@ -13,7 +13,7 @@ public class TwoDSlideShowInfo {
 	private String xmlPath;
 	//List<ImageXML> imgXMLList;
 	private ImageXMLQueue imgXmlQueue;
-//	private String[] fileFormats;
+	private String[] fileFormats;
 	//private ImageIcon[] iconArrayServer;
 	//private ImageIcon[] iconArrayPub;
 	//Image[] serverImgs;
