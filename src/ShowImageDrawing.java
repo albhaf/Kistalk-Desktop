@@ -12,7 +12,7 @@ import java.io.IOException;
 public class ShowImageDrawing {
 	private Font commentFont, commentUser;
 	private Font font;
-	private Graphics2D g2d; 
+	private Graphics2D g2d;
 
 	protected ShowImageDrawing() throws IOException {
 		commentUser = new Font("Serig", Font.BOLD, 30);
@@ -25,17 +25,21 @@ public class ShowImageDrawing {
 		g2d = (Graphics2D) g;
 		g2d.setPaint(Color.BLACK);
 		g2d.fillRect(0, 0, monitorSize.width, monitorSize.height);
-		
+
 		g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,
 				transperacy));
 		g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
 				RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 				RenderingHints.VALUE_ANTIALIAS_ON);
-		g2d.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
-		g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC  );
-		g2d.setRenderingHint(RenderingHints.KEY_COLOR_RENDERING,RenderingHints.VALUE_COLOR_RENDER_QUALITY);
-		g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+		g2d.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION,
+				RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
+		g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
+				RenderingHints.VALUE_INTERPOLATION_BICUBIC);
+		g2d.setRenderingHint(RenderingHints.KEY_COLOR_RENDERING,
+				RenderingHints.VALUE_COLOR_RENDER_QUALITY);
+		g2d.setRenderingHint(RenderingHints.KEY_RENDERING,
+				RenderingHints.VALUE_RENDER_QUALITY);
 	}
 
 	protected void drawComments(TextToDisplay[][] comments) {
@@ -44,33 +48,35 @@ public class ShowImageDrawing {
 		if (comments != null) {
 			for (int i = 0; i < comments.length; i++) {
 				g2d.setFont(commentUser);
-				g2d.drawString(comments[i][0].getString(), comments[i][0].x,
-						comments[i][0].y);
-				g2d.setFont(commentFont);
-				int j = 0;
-				int lines = comments[i][0].getLines();
-				do {
-					j++;
-					if(lines > j){
-						g2d.drawString(comments[i][j].getString(), comments[i][j].x,
-								comments[i][j].y);
-					}else{
-						g2d.drawString(comments[i][j].getString(), comments[i][j].x,
-								comments[i][j].y);
-						break;
-					}
-				}while(true);				
+
+				if (comments[i][0] != null) {
+					g2d.drawString(comments[i][0].getString(),
+							comments[i][0].x, comments[i][0].y);
+					g2d.setFont(commentFont);
+					int j = 0;
+					int lines = comments[i][0].getLines();
+					do {
+						j++;
+						if (lines > j) {
+							g2d.drawString(comments[i][j].getString(),
+									comments[i][j].x, comments[i][j].y);
+						} else {
+							g2d.drawString(comments[i][j].getString(),
+									comments[i][j].x, comments[i][j].y);
+							break;
+						}
+					} while (true);
+				}
 			}
 		}
 	}
-	
-	protected void paintSlide(BufferedImage slideImage,
-			ImgRect imgRect) {
+
+	protected void paintSlide(BufferedImage slideImage, ImgRect imgRect) {
 		TexturePaint tp = new TexturePaint(slideImage, imgRect);
 		g2d.setPaint(tp);
 		g2d.fill(imgRect);
 	}
-	
+
 	protected void paintImage(TextToDisplay imageCommentTxtDsp,
 			TextToDisplay imageUserTxtDsp, BufferedImage slideImage,
 			ImgRect imgRect) {
