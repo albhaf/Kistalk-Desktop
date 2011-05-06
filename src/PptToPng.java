@@ -78,10 +78,10 @@ public class PptToPng {
 			is.close();
 		} catch (FileNotFoundException e) {
 			deskApp.fail("Hans!!",e.getMessage() );
-			deskApp.showClsd();
+			deskApp.showClsd("");
 		}catch(IOException e){
 			deskApp.fail("Hans FTW",e.getMessage() );
-			deskApp.showClsd();
+			deskApp.showClsd("");
 		}
 
 
@@ -107,10 +107,10 @@ public class PptToPng {
 			out.close();
 		} catch (FileNotFoundException e) {
 			deskApp.fail("Hans dislikes you.", e.getMessage());
-			deskApp.showClsd();
+			deskApp.showClsd("");
 		}catch(IOException e){
 			deskApp.fail("Hans will get his revenge.", e.getMessage());
-			deskApp.showClsd();
+			deskApp.showClsd("");
 		}
 
 

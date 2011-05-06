@@ -37,7 +37,7 @@ public class TwoDSlideShow extends Panel implements ActionListener {
 		pubSlides = new ImportPubSlides(readConfig(), this, tmpDesk);
 		}catch(NullPointerException e){
 			t.stop();
-			tmpDesk.showClsd();
+			tmpDesk.showClsd("");
 			return;
 		}
 		getScreenResolution();
@@ -51,7 +51,7 @@ public class TwoDSlideShow extends Panel implements ActionListener {
  	public void close(){
  		t.stop();
  		view.terminate();
-		desktopApp.showClsd();
+		desktopApp.showClsd("");
  	}
 
 	// Build the frame (Slideshow)
