@@ -13,6 +13,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -39,6 +40,7 @@ public class AdminFrame {
 	JButton savePathBtn;
 	JButton remPathBtn;
 	JButton announceBtn;
+	JButton pathBtn;
 	
 	JLabel nrOfImgsLbl;
 	JLabel timeLbl;
@@ -73,6 +75,7 @@ public class AdminFrame {
 	
 	DesktopApplication controller;
 	ButtonListener listener;
+	JFileChooser fc;
 	
 	List<String> slideNames;
 	List<String> slidePaths;
@@ -100,6 +103,7 @@ public class AdminFrame {
 		savePathBtn = new JButton();
 		remPathBtn = new JButton();
 		announceBtn = new JButton();
+		pathBtn = new JButton();
 		
 		nrOfImgsLbl = new JLabel();
 		timeLbl= new JLabel();
@@ -130,6 +134,7 @@ public class AdminFrame {
 		screenDDLst = new JComboBox();
 		
 		listener = new ButtonListener();
+		fc = new JFileChooser();
 		
 		smlFont = new Font("Helvetica", Font.PLAIN, 10);
 		stdItalFont = new Font("Helvetica", Font.ITALIC, 12);
@@ -253,6 +258,10 @@ public class AdminFrame {
 		announceBtn.setText("Send announce");
 		announceBtn.setForeground(Color.BLACK);
 		announceBtn.addActionListener(listener);
+		
+		pathBtn.setText("...");
+		pathBtn.setForeground(Color.BLACK);
+		pathBtn.addActionListener(listener);
 		
 		//	Checkboxes settings
 		foodChb.setText("Dinner is served");
@@ -682,10 +691,17 @@ public class AdminFrame {
 				} else {
 					controller.fail("Error", "Both textfields require 1 to 40 chars!");
 				}
+//			}else if (e.getSource() == pathBtn){
+//				int returnVal = fc.showOpenDialog(FileChooserDemo.this);
+				
 				
 			}else if (e.getSource() == savePathBtn){ // Save Slideshow
+				if (xmlPubPathTxt.getText().equals("") == false){
 				controller.popup("Name the slideshow: ", xmlPubPathTxt.getText());
 				statusLbl.setText("Status: Slideshow saved");
+				}else{
+					controller.fail("Wrong path", "You have to specify a path to your .ppt-file!");
+				}
 			
 			}else if (e.getSource() == remPathBtn){ // Remove saved Slideshow
 				if (slideItem != null){
