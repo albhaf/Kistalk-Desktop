@@ -84,6 +84,10 @@ public class DesktopApplication {
 		
 	}
 	
+	public void showClsd(){
+
+	}
+	
 	public void closePop(){
 		adminframe.enable();
 	}

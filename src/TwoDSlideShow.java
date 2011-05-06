@@ -11,14 +11,11 @@ import javax.swing.Timer;
 
 public class TwoDSlideShow extends Panel implements ActionListener {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 5789717155006186682L;
 
-	Timer t;
+	public Timer t;
 	
-	int screenIndex;
+	private int screenIndex;
 	public int nrOfConfValues;
 
 	private ShowImage slideShowHandler;
@@ -54,7 +51,7 @@ public class TwoDSlideShow extends Panel implements ActionListener {
 	// Build the frame (Slideshow)
 	private void createFrame() throws IOException {
 		slideShowHandler =  new ShowImage(monitor, info.getTimeStill(), info.getFadingSpeed());
-		view.createFrame(slideShowHandler, monitor,this);
+		view.createFrame(slideShowHandler, monitor,this, desktopApp);
 	}
 
 	// Get the size of the monitor
@@ -104,8 +101,4 @@ public class TwoDSlideShow extends Panel implements ActionListener {
 		}
 
 	}
-
-//	public static void main(String args[]) throws IOException {
-//		new TwoDSlideShow();
-//	}
 }

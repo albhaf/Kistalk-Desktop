@@ -11,18 +11,13 @@ import javax.imageio.ImageIO;
 public class TwoDSlideShowInfo {
 	private XMLreader xmlreader;
 	private String xmlPath;
-	//List<ImageXML> imgXMLList;
 	private ImageXMLQueue imgXmlQueue;
 	private String[] fileFormats;
-	//private ImageIcon[] iconArrayServer;
-	//private ImageIcon[] iconArrayPub;
-	//Image[] serverImgs;
 	private URL[] urlArray;
 	private ImageQueue imgQueue;
 
 	private int nrOfConfValues;
 	private int currentPicture = 0;
-	//private byte currentPubPicture = 0;
 	private int nrOfComments = 0;
 	private int nrOfPics;
 	private int timeStill;
@@ -34,11 +29,10 @@ public class TwoDSlideShowInfo {
 	}
 
 	protected Rectangle getScreenSize(int screenIndex) {
-		GraphicsEnvironment gfxEnviro = GraphicsEnvironment
-				.getLocalGraphicsEnvironment();
+		GraphicsEnvironment gfxEnviro = GraphicsEnvironment.getLocalGraphicsEnvironment();
 		GraphicsDevice[] gfxScreenDev = gfxEnviro.getScreenDevices();
 
-		// Get the right screen
+		// Get the right(screenIndex) screen
 		GraphicsConfiguration[] gc = gfxScreenDev[screenIndex]
 				.getConfigurations();
 
