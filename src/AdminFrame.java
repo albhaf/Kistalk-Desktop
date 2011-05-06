@@ -89,6 +89,14 @@ public class AdminFrame {
 		this.setBoxes();
 		
 		fc = new JFileChooser();
+
+		FileChooserFilter fcFilter = new FileChooserFilter();
+		fc.setAcceptAllFileFilterUsed(false);
+		fc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+		fc.addChoosableFileFilter( fcFilter);		
+		
+		smlFont = new Font("Helvetica", Font.PLAIN, 10);
+		stdItalFont = new Font("Helvetica", Font.ITALIC, 12);
 		
 		// Create and Paint thePanel background
 		thePanel = create.setNewPanel(bgImage);
