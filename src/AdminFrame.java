@@ -30,7 +30,7 @@ public class AdminFrame {
 	Font smlFont;
 	Font stdItalFont;
 	
-	private JFrame adminFrame, popFrame, logFrame;
+	private JFrame adminFrame;
 	private JPanel thePanel;
 	private JLabel headerLbl;
 	
@@ -43,21 +43,17 @@ public class AdminFrame {
 	private JTextField nrOfImgsTxt, timeTxt, xmlPubPathTxt, legalFilesTxt, nrOfCommentsTxt, 
 		eventTxt, foodTxt, fadeTxt;
 	
-	JCheckBox foodChb;
-	JCheckBox pubChb;
+	private JCheckBox foodChb, pubChb;
 	
-	JComboBox pubSlidesDDLst;
-	JComboBox screenDDLst;
+	private JComboBox pubSlidesDDLst,  screenDDLst;
 	
-	GroupLayout groupLayout;
-	Graphics g;
+	private GroupLayout groupLayout;
 	
-	DesktopApplication controller;
-	ButtonListener listener;
-	JFileChooser fc;
+	private DesktopApplication controller;
+	private ButtonListener listener;
+	private JFileChooser fc;
 	
-	List<String> slidePaths;
-	List<String> slideNames;
+	private List<String> slidePaths, slideNames;
 
 	//	Constructor
 	public AdminFrame(DesktopApplication tmpCont, Font tmpFont) {
@@ -77,43 +73,10 @@ public class AdminFrame {
 		adminFrame = new JFrame();
 		headerLbl = new JLabel();
 		
-		saveSetBtn = create.setNewButton("Save settings", listener);
-		resetBtn = create.setNewButton("Reset settings", listener);
-		startBtn = create.setNewButton("Start slideshow", listener);
-		exitBtn = create.setNewButton("Exit", listener);
-		savePathBtn = create.setNewButton("Save path", listener);
-		remPathBtn = create.setNewButton("Remove Path", listener);
-		announceBtn = create.setNewButton("Send announce", listener);
-		pathBtn = create.setNewButton("...", listener);
-		
-		nrOfImgsLbl = create.setNewLabel("Nr of pics (from KisTalk): ", stdFont);
-		timeLbl= create.setNewLabel("Time interval (ms): ", stdFont);
-		foodLbl = create.setNewLabel("Specify food:", stdFont);
-		pubLbl = create.setNewLabel("Specify event:", stdFont);
-		statusLbl = create.setNewLabel("Status: Ready for some action", smlFont);
-		xmlPubPathLbl = create.setNewLabel("Choose a .ppt-file (path): ", stdFont);
-		legalFilesLbl = create.setNewLabel("Approved file extensions: ", stdFont);
-		nrOfCommentsLbl = create.setNewLabel("Number of comments: ", stdFont);
-		screenLbl = create.setNewLabel("Choose screen: ", stdFont);
-		bgLbl = create.setNewLabel("", stdFont);
-		fadeLbl = create.setNewLabel("Fading speed (ms): ", stdFont);
-		pubnfoodStatusLbl = create.setNewLabel("Pub_open: -  Event: -  Food_ready: -  Food: -", smlFont);
-		
-		nrOfImgsTxt = create.setNewTextField(values[0], stdFont, true);
-		timeTxt = create.setNewTextField(values[2], stdFont, true);
-		xmlPubPathTxt = create.setNewTextField("C:\\...", stdFont, true);
-		legalFilesTxt = create.setNewTextField(values[4], stdItalFont, false);
-		nrOfCommentsTxt = create.setNewTextField(values[7], stdFont, true);
-		eventTxt = create.setNewTextField("", stdFont, false);
-		foodTxt = create.setNewTextField("", stdFont, false);
-		fadeTxt = create.setNewTextField(values[3], stdFont, true);
-						
-		
-		foodChb = create.setNewCheckBox("Dinner is served", listener, false);
-		pubChb = create.setNewCheckBox("Pub is open", listener, true);
-		
-		pubSlidesDDLst = new JComboBox();
-		screenDDLst = new JComboBox();
+		this.setButtons();
+		this.setLabels();
+		this.setTextFields();
+		this.setBoxes();
 		
 		fc = new JFileChooser();
 		
@@ -378,6 +341,51 @@ public class AdminFrame {
 		//	Add panel
 		adminFrame.add(thePanel);
 		adminFrame.setVisible(true);
+	}
+	
+	private void setBoxes(){
+		foodChb = create.setNewCheckBox("Dinner is served", listener, false);
+		pubChb = create.setNewCheckBox("Pub is open", listener, true);
+		
+		pubSlidesDDLst = new JComboBox();
+		screenDDLst = new JComboBox();
+	}
+	
+	private void setTextFields(){
+		nrOfImgsTxt = create.setNewTextField(values[0], stdFont, true);
+		timeTxt = create.setNewTextField(values[2], stdFont, true);
+		xmlPubPathTxt = create.setNewTextField("C:\\...", stdFont, true);
+		legalFilesTxt = create.setNewTextField(values[4], stdItalFont, false);
+		nrOfCommentsTxt = create.setNewTextField(values[7], stdFont, true);
+		eventTxt = create.setNewTextField("", stdFont, false);
+		foodTxt = create.setNewTextField("", stdFont, false);
+		fadeTxt = create.setNewTextField(values[3], stdFont, true);
+	}
+	
+	private void setLabels(){
+		nrOfImgsLbl = create.setNewLabel("Nr of pics (from KisTalk): ", stdFont);
+		timeLbl= create.setNewLabel("Time interval (ms): ", stdFont);
+		foodLbl = create.setNewLabel("Specify food:", stdFont);
+		pubLbl = create.setNewLabel("Specify event:", stdFont);
+		statusLbl = create.setNewLabel("Status: Ready for some action", smlFont);
+		xmlPubPathLbl = create.setNewLabel("Choose a .ppt-file (path): ", stdFont);
+		legalFilesLbl = create.setNewLabel("Approved file extensions: ", stdFont);
+		nrOfCommentsLbl = create.setNewLabel("Number of comments: ", stdFont);
+		screenLbl = create.setNewLabel("Choose screen: ", stdFont);
+		bgLbl = create.setNewLabel("", stdFont);
+		fadeLbl = create.setNewLabel("Fading speed (ms): ", stdFont);
+		pubnfoodStatusLbl = create.setNewLabel("Pub_open: -  Event: -  Food_ready: -  Food: -", smlFont);
+	}
+	
+	private void setButtons(){
+		saveSetBtn = create.setNewButton("Save settings", listener);
+		resetBtn = create.setNewButton("Reset settings", listener);
+		startBtn = create.setNewButton("Start slideshow", listener);
+		exitBtn = create.setNewButton("Exit", listener);
+		savePathBtn = create.setNewButton("Save path", listener);
+		remPathBtn = create.setNewButton("Remove Path", listener);
+		announceBtn = create.setNewButton("Send announce", listener);
+		pathBtn = create.setNewButton("...", listener);
 	}
 	
 	public void slideSaved(String name, String path){
