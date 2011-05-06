@@ -23,22 +23,16 @@ _|    _|  _|  _|_|_|       _|      _|_|_|  _|  _|    _|
 *'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*
 *'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*
 
-<<<<<<< HEAD
-//	Date of last revision: 10:47 den 6/4
-=======
-//	Date of last revision: 10:49 den 6/4
->>>>>>> 330fb0aeea0771f2c3ebcdb3e947ec3453020621
+
+//	Date of last revision: 10:50 den 6/4
 
 
 Max_number_of_Images %7
 
 Number_of_Hans %-
 
-<<<<<<< HEAD
+
 Timer_interval %10
-=======
-Timer_interval %200
->>>>>>> 330fb0aeea0771f2c3ebcdb3e947ec3453020621
 
 Fading_speed %1
 
@@ -50,8 +44,8 @@ XMLURL %http://www.kistalk.com/api/feed/desktop.xml
 
 Number_of_comments %2
 
-Path_to_Pubslides %/home/zandra/Documents/testSlide.ppt
+Path_to_Pubslides %
 
-Saved_Pubslides %TMEIT|Qmisk|ITK|Std|uiolk,m
+Saved_Pubslides %TMEIT|Qmisk|ITK|Std
 
-Saved_Paths %mC:\\TMEIT|C:\\Qmisk|C:\\ITK|asd.ppt|/home/zandra/Documents/testSlide.ppt
+Saved_Paths %mC:\\TMEIT|C:\\Qmisk|C:\\ITK|asd.ppt
