@@ -278,7 +278,7 @@ public class AdminFrame {
 			   			.addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
 			   					.addComponent(xmlPubPathLbl)
 			   					.addGroup(groupLayout.createSequentialGroup()
-			   							.addComponent(xmlPubPathTxt, 277, 277, 277)
+			   							.addComponent(xmlPubPathTxt, 228, 228, 228)
 			   							.addGap(2)
 			   							.addComponent(pathBtn, 40, 40, 40)
 			   					)
@@ -532,7 +532,6 @@ public class AdminFrame {
 		fadeTxt.setText(values[3]);
 		nrOfCommentsTxt.setText(values[7]);
 		xmlPubPathTxt.setText(values[8]);
-		statusLbl.setText("Status: Config is back to normal");
 		
 	}
 	
@@ -547,6 +546,7 @@ public class AdminFrame {
 			slideNames.add(names.get(i));
 			slidePaths.add(paths.get(i));
 		}
+		statusLbl.setText("Status: Config is back to normal");
 	}
 	
 	private class ButtonListener implements ActionListener {
@@ -599,11 +599,11 @@ public class AdminFrame {
 				int returnVal = fc.showOpenDialog(adminFrame);
 				
 				if (returnVal == fc.APPROVE_OPTION){
-					System.out.println(fc.getName(fc.getCurrentDirectory()));
-					System.out.println(fc.getName(fc.getSelectedFile()));
+					//Kolla file extensions
+					xmlPubPathTxt.setText(fc.getSelectedFile().getAbsoluteFile().toString());
 					
 				}else{
-					controller.fail("Error", "Failed to get file, try again!");
+					//Fel?!
 				}
 				
 				
