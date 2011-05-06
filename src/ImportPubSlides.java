@@ -6,7 +6,6 @@ import javax.imageio.ImageIO;
 
 public class ImportPubSlides {
 	private PptToPng pptToPng;
-	//private DesktopApplication deskApp;
 	private int nrOfSlides, currentSlide;
 
 	/**
@@ -17,10 +16,8 @@ public class ImportPubSlides {
 	 *            String, filepath to the pubslides in image format.
 	 */
 	public ImportPubSlides(String tmpPath, TwoDSlideShow controller,DesktopApplication tmpDesk) {
-		//deskApp = tmpDesk;
 		pptToPng = new PptToPng(tmpPath,tmpDesk);
 		currentSlide = -1;
-		//pptToPng.extract(tmpDesk);
 		countFiles();
 	}
 
