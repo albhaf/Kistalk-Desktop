@@ -21,8 +21,8 @@ public class PptToPng {
 	/**
 	 * String with the full path to the file + filename
 	 */
-	String filepath;
-	int nrFiles;
+	private String filepath;
+	private int nrFiles;
 
 	/**
 	 * constructor which sets the filepath to the passed argument.

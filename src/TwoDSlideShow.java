@@ -87,7 +87,7 @@ public class TwoDSlideShow extends Panel implements ActionListener {
 	}
 
 	private void updatePicture() throws IOException {
-		if(!imageSlide && pubSlides.getNrOfSlides() > 0){
+		if(imageSlide==false && pubSlides.getNrOfSlides() > 0){
 			try{
 				slideShowHandler.setNewSlide(pubSlides.getImage());
 			}catch(IIOException e){

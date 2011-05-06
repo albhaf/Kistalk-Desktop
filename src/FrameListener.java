@@ -5,8 +5,8 @@ import javax.swing.JFrame;
 
 public class FrameListener implements WindowListener{
 	
-	TwoDSlideShow slideshow;
-	DesktopApplication deskApp;
+	private TwoDSlideShow slideshow;
+	private DesktopApplication deskApp;
 	
 	public FrameListener(TwoDSlideShow tmp, DesktopApplication tmpdesk){
 		deskApp = tmpdesk;
