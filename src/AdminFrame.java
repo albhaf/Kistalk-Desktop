@@ -107,6 +107,7 @@ public class AdminFrame {
 		savePathBtn = create.setNewButton("Save path", listener);
 		remPathBtn = create.setNewButton("Remove Path", listener);
 		announceBtn = create.setNewButton("Send announce", listener);
+		pathBtn = create.setNewButton("...", listener);
 		
 		nrOfImgsLbl = create.setNewLabel("Nr of pics (from KisTalk): ", stdFont);
 		timeLbl= create.setNewLabel("Time interval (ms): ", stdFont);
@@ -264,7 +265,11 @@ public class AdminFrame {
 						)
 			   			.addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
 			   					.addComponent(xmlPubPathLbl)
-			   					.addComponent(xmlPubPathTxt, 277, 277, 277)
+			   					.addGroup(groupLayout.createSequentialGroup()
+			   							.addComponent(xmlPubPathTxt, 277, 277, 277)
+			   							.addGap(2)
+			   							.addComponent(pathBtn, 40, 40, 40)
+			   					)
 			   					.addComponent(pubSlidesDDLst, 155, 155, 155)
 					   	)
 				)
@@ -348,7 +353,10 @@ public class AdminFrame {
 								.addGap(15)
 					   			.addGroup(groupLayout.createSequentialGroup()
 									.addComponent(xmlPubPathLbl)
-									.addComponent(xmlPubPathTxt, 20, 20, 20)
+									.addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+										.addComponent(xmlPubPathTxt, 20, 20, 20)
+										.addComponent(pathBtn, 20, 20, 20)
+									)
 									.addComponent(pubSlidesDDLst, 20, 20, 20)
 					   			)
 				   		)
@@ -575,14 +583,40 @@ public class AdminFrame {
 				} else {
 					controller.fail("Error", "Both textfields require 1 to 40 chars!");
 				}
-//			}else if (e.getSource() == pathBtn){
-//				int returnVal = fc.showOpenDialog(FileChooserDemo.this);
+			}else if (e.getSource() == pathBtn){
+				int returnVal = fc.showOpenDialog(adminFrame);
+				
+				if (returnVal == fc.APPROVE_OPTION){
+					System.out.println(fc.getName(fc.getCurrentDirectory()));
+					System.out.println(fc.getName(fc.getSelectedFile()));
+					
+				}else{
+					controller.fail("Error", "Failed to get file, try again!");
+				}
 				
 				
 			}else if (e.getSource() == savePathBtn){ // Save Slideshow
 				if (xmlPubPathTxt.getText().equals("") == false){
-				controller.popup("Name the slideshow: ", xmlPubPathTxt.getText());
-				statusLbl.setText("Status: Slideshow saved");
+						//Kolla fileextensions
+//					String extension = Utils.getExtension(f);
+//				    if (extension != null) {
+//					if (extension.equals(Utils.tiff) ||
+//					    extension.equals(Utils.tif) ||
+//					    extension.equals(Utils.gif) ||
+//					    extension.equals(Utils.jpeg) ||
+//					    extension.equals(Utils.jpg) ||
+//					    extension.equals(Utils.png)) {
+//					        return true;
+//					} else {
+//					    return false;
+//					}
+//				    }
+//
+//				    return false;
+//				}
+				
+					controller.popup("Name the slideshow: ", xmlPubPathTxt.getText());
+					statusLbl.setText("Status: Slideshow saved");
 				}else{
 					controller.fail("Wrong path", "You have to specify a path to your .ppt-file!");
 				}

@@ -6,7 +6,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
 public class DesktopApplication {
-	int nrOfConfValues;
+	byte nrOfConfValues;
 	String path;
 	Image bgImage;
 	Font stdFont;
@@ -99,6 +99,10 @@ public class DesktopApplication {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void showClsd(){
+		
 	}
 	
 	public void exitShow(){

@@ -23,7 +23,11 @@ _|    _|  _|  _|_|_|       _|      _|_|_|  _|  _|    _|
 *'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*
 *'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*
 
+<<<<<<< HEAD
+//	Date of last revision: 11:27 den 6/4
+=======
 //	Date of last revision: 11:3 den 6/4
+>>>>>>> 025e20086488d7ed880eed154b4bf00826ae18c8
 
 
 Max_number_of_Images %7
@@ -36,7 +40,7 @@ Fading_speed %1
 
 supported_image_formats %.jpg .png .gif .bnp
 
-Screen_index %0
+Screen_index %1
 
 XMLURL %http://www.kistalk.com/api/feed/desktop.xml
 
