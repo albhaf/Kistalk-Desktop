@@ -23,7 +23,7 @@ _|    _|  _|  _|_|_|       _|      _|_|_|  _|  _|    _|
 *'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*
 *'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*
 
-//	Date of last revision: 15:22 den 6/4
+//	Date of last revision: 15:31 den 6/4
 
 
 Max_number_of_Images %7
@@ -36,13 +36,13 @@ Fading_speed %1
 
 supported_image_formats %.jpg .png .gif .bnp
 
-Screen_index %1
+Screen_index %0
 
 XMLURL %http://www.kistalk.com/api/feed/desktop.xml
 
 Number_of_comments %2
 
-Path_to_Pubslides %C:\...
+Path_to_Pubslides %C:\Users\Andeers\workspace\Kistalk-Desktop\asd.ppt
 
 Saved_Pubslides %TMEIT|Qmisk|ITK|Std
 
