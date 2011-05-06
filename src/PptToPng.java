@@ -77,11 +77,9 @@ public class PptToPng {
 			ppt = new SlideShow(is);
 			is.close();
 		} catch (FileNotFoundException e) {
-			deskApp.fail("Hans!!",e.getMessage() );
-			deskApp.showClsd();
+			deskApp.showClsd( e.getMessage());
 		}catch(IOException e){
-			deskApp.fail("Hans FTW",e.getMessage() );
-			deskApp.showClsd();
+			deskApp.showClsd( e.getMessage());
 		}
 
 
@@ -106,11 +104,9 @@ public class PptToPng {
 			ImageIO.write(tmpImg, "png", out);
 			out.close();
 		} catch (FileNotFoundException e) {
-			deskApp.fail("Hans dislikes you.", e.getMessage());
-			deskApp.showClsd();
+			deskApp.showClsd(e.getMessage());
 		}catch(IOException e){
-			deskApp.fail("Hans will get his revenge.", e.getMessage());
-			deskApp.showClsd();
+			deskApp.showClsd( e.getMessage());
 		}
 
 
