@@ -125,7 +125,6 @@ public class PptToPng {
 		dir.mkdir();
 
 		ppt = fileOpener(tmpFilepath);
-	try{
 		Dimension dimension = ppt.getPageSize();
 		BufferedImage bImg = null;
 		slide = ppt.getSlides();
@@ -138,9 +137,6 @@ public class PptToPng {
 
 
 		}
-	}catch(NullPointerException e){
-		return;
-	}
 		
 	}
 
