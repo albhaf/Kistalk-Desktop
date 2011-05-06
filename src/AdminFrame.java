@@ -204,7 +204,7 @@ public class AdminFrame {
 		timeTxt.setText(values[2]);
 		timeTxt.setFont(stdFont);
 		
-		xmlPubPathTxt.setText("C:\\...");
+		xmlPubPathTxt.setText("");
 		xmlPubPathTxt.setFont(stdFont);
 		
 		legalFilesTxt.setText(values[4]);
@@ -591,6 +591,15 @@ public class AdminFrame {
 		
 	}
 	
+	public boolean chkTxts(){  //Gör något åt!
+		if (nrOfImgsTxt.getText().equals("") == false && timeTxt.getText().equals("") == false && xmlPubPathTxt.getText().equals("") == false && nrOfCommentsTxt.getText().equals("") == false && fadeTxt.getText().equals("") == false) {
+			return true;
+		}else{
+			return false;
+		}
+		
+	}
+	
 	public void getTxt(){ // Get text from textfields
 		values[0] = nrOfImgsTxt.getText();
 		values[2] = timeTxt.getText();
@@ -610,13 +619,24 @@ public class AdminFrame {
 		
 	}
 	
+//	public void setPaths(names) {
+//		pubSlidesDDLst.addItem(name);
+//		slideNames.add(name);
+//		slidePaths.add(path);
+//		pubSlidesDDLst.setSelectedItem(name);
+//	}
+	
 	private class ButtonListener implements ActionListener {
 		
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource() == saveSetBtn){ // Save settings to config
-				getTxt();
-				controller.setConf(values);
-				statusLbl.setText("Status: Settings saved to Config");
+				if (chkTxts()){
+					getTxt();
+					controller.setConf(values);
+					statusLbl.setText("Status: Settings saved to Config");
+				}else{
+					controller.fail("Error", "One or more textfields contains too few / too many chars");
+				}
 				
 			}else if (e.getSource() == resetBtn){ // Reset settings in config
 				controller.popup("Are you sure you want to reset the config file?", "");

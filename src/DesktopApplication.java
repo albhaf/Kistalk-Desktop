@@ -10,6 +10,7 @@ public class DesktopApplication {
 	String path;
 	Image bgImage;
 	Font stdFont;
+	Font bldFont;
 	NiftyHTTP nifty;
 	LogInFrame loginframe;
 	AdminFrame adminframe;
@@ -22,6 +23,7 @@ public class DesktopApplication {
 		ImageIcon icon = new ImageIcon("bgIcon.png");
 		bgImage = icon.getImage();
 		stdFont = new Font("Imperial", Font.PLAIN, 12);
+		bldFont = new Font("Arial", Font.BOLD, 12);
 		config = new ConfigSettings(nrOfConfValues);
 		
 		loginframe = new LogInFrame(bgImage, this);
@@ -75,7 +77,7 @@ public class DesktopApplication {
 	public void popup(String message, String pathTmp){ //For SaveSlideshow
 		path = pathTmp;
 		adminframe.disable();
-		PopupFrame popupframe = new PopupFrame(message, bgImage, this, stdFont);
+		PopupFrame popupframe = new PopupFrame(message, bgImage, this, bldFont);
 		popupframe.popFrame.setVisible(true);
 		
 	}
@@ -85,7 +87,7 @@ public class DesktopApplication {
 	}
 	
 	public void fail(String t, String m){
-		FailFrame fail = new FailFrame(t, m, stdFont);
+		FailFrame fail = new FailFrame(t, m, bldFont);
 		fail.errFrame.setVisible(true);
 	}
 	

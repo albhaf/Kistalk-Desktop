@@ -1,11 +1,11 @@
-
+ 
 _|    _|  _|           _|_|_|_|_|          _|  _|
 _|  _|          _|_|_|     _|      _|_|_|  _|  _|  _|
 _|_|      _|  _|_|         _|    _|    _|  _|  _|_|
 _|  _|    _|      _|_|     _|    _|    _|  _|  _|  _|
 _|    _|  _|  _|_|_|       _|      _|_|_|  _|  _|    _|
-
-
+ 
+ 
     _      _      _      _      _
  __(')> __(')> __(')> __(')> __(^)<
  \___)  \___)  \___)  \___)  \___)
@@ -22,28 +22,45 @@ _|    _|  _|  _|_|_|       _|      _|_|_|  _|  _|    _|
 *'*'*                    //Hans *'*'*
 *'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*
 *'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*
-
-//	Date of last revision: 16:56 den 5/4
-
-
+ 
+//	Config is back to normal
+ 
+ 
 Max_number_of_Images %7
-
+ 
 Number_of_Hans %-
-
-Timer_interval %800
-
+ 
+Timer_interval %200
+ 
 Fading_speed %1
-
+ 
 supported_image_formats %.jpg .png .gif .bnp
-
+ 
 Screen_index %0
-
+ 
 XMLURL %http://www.kistalk.com/api/feed/desktop.xml
-
+ 
 Number_of_comments %2
-
-Path_to_Pubslides %asd.ppt
+ 
+Path_to_Pubslide %C:\\...
 
 Saved_Pubslides %TMEIT|Qmisk|ITK|Std
 
 Saved_Paths %C:\\TMEIT|C:\\Qmisk|C:\\ITK|asd.ppt
+ 
+ 
+                             ___-------___
+                         _-~~             ~~-_
+                      _-~                    /~-_
+   /^\__/^\         /~  \                   /    \
+ /|  0|| 0|        /      \_______________/        \
+| |___||__|      /       /                \          \
+|          \    /      /                    \          \
+|   (_______) /______/     Default Turtle    \_________ \
+|         / /         \                      /            \
+ \         \^\\         \                  /               \     /
+   \         ||           \______________/      _-_       //\__//
+     \       ||------_-~~-_ ------------- \ --/~   ~\    || __/
+       ~-----||====/~     |==================|       |/~~~~~
+        (_(__/  ./     /                    \_\      \.
+               (_(___/                         \_____)_)

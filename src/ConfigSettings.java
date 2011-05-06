@@ -86,7 +86,6 @@ public class ConfigSettings {
 		lines[44] = "Path_to_Pubslides %" + values[8];
 		lines[46] = "Saved_Pubslides %" + values[9];
 		lines[48] = "Saved_Paths %" + values[10];
-		System.out.println(values[10].toString());
 		
 		// Write to file (config)
 		handler.setConfig(lines);

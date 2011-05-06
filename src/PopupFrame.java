@@ -19,15 +19,15 @@ public class PopupFrame{
 	public JLabel label;
 	public JFrame popFrame;
 	public JTextField popTxt;
+	public Font bldFont;
 	public DesktopApplication controller;
-	Font stdFont;
 	Image bgImage;
 	ButtonListener listener;
 	
 	public PopupFrame(String messageTmp, Image tmpImg, DesktopApplication tmpContr, Font tmpFont){
+		bldFont = tmpFont;
 		bgImage = tmpImg;
 		controller = tmpContr;
-		stdFont = tmpFont;
 		setup(messageTmp);
 	}
 	
@@ -37,11 +37,6 @@ public class PopupFrame{
 		
 		popFrame = new JFrame();
 		JPanel popPanel = new JPanel(){
-			/**
-			 * 
-			 */
-			private static final long serialVersionUID = -8640480719459300882L;
-
 			public void paint(Graphics g){
 				g.drawImage(bgImage, 0,0, this);
 				setOpaque(false);
@@ -65,7 +60,7 @@ public class PopupFrame{
 		popPanel.setLayout(popLayout);
 		label.setText(message);
 		label.setForeground(Color.WHITE);
-		label.setFont(stdFont);
+		label.setFont(bldFont);
 		sbmBtn.setText("Submit");
 		sbmBtn.addActionListener(listener);
 		clsBtn.setText("Close");
