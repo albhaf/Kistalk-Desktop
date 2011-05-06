@@ -47,21 +47,7 @@ public class TwoDSlideShow extends Panel implements ActionListener {
 		updatePicture();
 		t.start();
 	}
- 	
-/* 	public TwoDSlideShow() throws IOException {
- 		nrOfConfValues = 11;
- 		imageSlide = false;
-		view = new TwoDSlideShowView();
-		info = new TwoDSlideShowInfo(nrOfConfValues);
-		pubSlides = new ImportPubSlides(readConfig(), this);
-		getScreenResolution();
-		firstPicture();
-		createFrame();
-		updatePicture();
-		updatePicture();
-		t.start();
-	}*/
- 	
+ 	 	
  	public void close(){
  		t.stop();
  		view.terminate();
@@ -76,7 +62,7 @@ public class TwoDSlideShow extends Panel implements ActionListener {
 
 	// Get the size of the monitor
 	private void getScreenResolution() {
-		monitor = info.getScreenSize(screenIndex);
+		monitor = info.getScreenSize(screenIndex, desktopApp);
 	}
 
 	private String readConfig() throws FileNotFoundException {
@@ -97,7 +83,7 @@ public class TwoDSlideShow extends Panel implements ActionListener {
 				slideShowHandler.setNewSlide(pubSlides.getImage());
 			}catch(IIOException e){
 				close();
-				desktopApp.fail("Hans is angry.", "Something went wrong. Couldn't open the powerpoint images, they were deleted during runtime!");
+				desktopApp.fail("Hans is angry.", "Couldn't open the powerpoint images, they were deleted during runtime!");
 			}
 			imageSlide = true;
 		} else {

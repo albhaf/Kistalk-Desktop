@@ -18,6 +18,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 
 public class AdminFrame {
@@ -88,12 +90,44 @@ public class AdminFrame {
 		this.setTextFields();
 		this.setBoxes();
 		
-		fc = new JFileChooser();
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (ClassNotFoundException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		} catch (InstantiationException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		} catch (IllegalAccessException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		} catch (UnsupportedLookAndFeelException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
 
+		fc = new JFileChooser();
+		
 		FileChooserFilter fcFilter = new FileChooserFilter();
 		fc.setAcceptAllFileFilterUsed(false);
 		fc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
-		fc.addChoosableFileFilter( fcFilter);		
+		fc.addChoosableFileFilter( fcFilter);	
+		
+		try {
+			UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
+		} catch (ClassNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (InstantiationException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IllegalAccessException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (UnsupportedLookAndFeelException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		
 		smlFont = new Font("Helvetica", Font.PLAIN, 10);
 		stdItalFont = new Font("Helvetica", Font.ITALIC, 12);
@@ -610,8 +644,9 @@ public class AdminFrame {
 					controller.fail("Error", "Both textfields require 1 to 40 chars!");
 				}
 			}else if (e.getSource() == pathBtn){
+
 				int returnVal = fc.showOpenDialog(adminFrame);
-				
+
 				if (returnVal == fc.APPROVE_OPTION){
 					// Check file extension
 					if (fc.getSelectedFile().getName().endsWith(".ppt")){

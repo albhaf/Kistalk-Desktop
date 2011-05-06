@@ -2,6 +2,8 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
@@ -48,7 +50,9 @@ public class LogInFrame{
 		
 		
 		logUserTxt = create.setNewTextField("androse", stdFont, true);
+		logUserTxt.addKeyListener(listener);
 		logPassTxt = create.setNewTextField("6dd3vr1xil", stdFont, true);
+		logPassTxt.addKeyListener(listener);
 		sbmBtn = create.setNewButton("Submit", listener);
 		clsBtn = create.setNewButton("Close", listener);
 		logLayout = new GroupLayout(logPanel);
@@ -135,7 +139,13 @@ public class LogInFrame{
 		this.logFrame.dispose();
 	}
 	
-	private class LoginListener implements ActionListener {
+	private class LoginListener implements ActionListener, KeyListener {
+		public void keyPressed(KeyEvent e){
+			if (e.getKeyCode() == KeyEvent.VK_ENTER){
+				sbmBtn.doClick();
+			}
+		}
+		
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource() == sbmBtn){
 				controller.login(logUserTxt.getText(), logPassTxt.getText(), logFrame);
@@ -143,5 +153,18 @@ public class LogInFrame{
 				logFrame.dispose();
 			}
 		}
+
+		@Override
+		public void keyReleased(KeyEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void keyTyped(KeyEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
 	}
 }
