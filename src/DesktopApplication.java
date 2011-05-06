@@ -83,6 +83,7 @@ public class DesktopApplication {
 		popupframe.popFrame.setVisible(true);
 		
 	}
+
 	
 	public void closePop(){
 		adminframe.enable();
