@@ -56,7 +56,6 @@ public class TwoDSlideShowInfo {
 		try {
 			values = reader.processLineByLine();
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -125,7 +124,6 @@ public class TwoDSlideShowInfo {
 				try {
 					setLinks(page=page+1);
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				j=0;
