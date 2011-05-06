@@ -5,8 +5,8 @@ public class ShowImageMovement {
 	}
 
 	protected void moveImageText(TextToDisplay imageCommentTxtDsp,
-			boolean outgoing) {
-		if (imageCommentTxtDsp.getY() > 700 && outgoing == false) {
+			boolean outgoing, int textStopPosition) {
+		if (imageCommentTxtDsp.getY() > textStopPosition && outgoing == false) {
 			imageCommentTxtDsp.addY(-2);
 		} else if (outgoing == true) {
 			imageCommentTxtDsp.addY(2);
