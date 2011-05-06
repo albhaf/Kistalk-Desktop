@@ -600,36 +600,18 @@ public class AdminFrame {
 				int returnVal = fc.showOpenDialog(adminFrame);
 				
 				if (returnVal == fc.APPROVE_OPTION){
-					
-					//Kolla fileextensions!
-					
-					xmlPubPathTxt.setText(fc.getSelectedFile().getAbsoluteFile().toString());
-					
-//					else; controller.fail("Error", "Choose an image-file!");
-					
+					// Check file extension
+					if (fc.getSelectedFile().getName().endsWith(".ppt")){
+						xmlPubPathTxt.setText(fc.getSelectedFile().getAbsoluteFile().toString());
+					} else {
+						controller.fail("Error", "Choose a .ppt-file!");
+					}
 				}else if (returnVal == fc.CANCEL_OPTION){
-					System.out.print("You have ended this filehandler =(");
+					// Close
 				}
 				
 			}else if (e.getSource() == savePathBtn){ // Save Slideshow
-				if (xmlPubPathTxt.getText().equals("") == false){
-					//Kolla fileextensions
-//					String extension = Utils.getExtension(f);
-//				    if (extension != null) {
-//				    	if (	extension.equals(Utils.gif) ||
-//				    			extension.equals(Utils.jpeg) ||
-//				    			extension.equals(Utils.jpg) ||
-//				    			extension.equals(Utils.png) ||
-//				    			extension.equals(Utils.bmp)) {
-//					        return true;
-//					} else {
-//					    return false;
-//					}
-//				    }
-//
-//				    return false;
-//				}
-				
+				if (xmlPubPathTxt.getText().equals("") == false && xmlPubPathTxt.getText().endsWith(".ppt")){
 					controller.popup("Name the slideshow: ", xmlPubPathTxt.getText());
 					statusLbl.setText("Status: Slideshow saved");
 				}else{
