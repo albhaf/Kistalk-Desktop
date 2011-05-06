@@ -434,7 +434,9 @@ public class AdminFrame {
 		nrOfImgsLbl = create.setNewLabel("Nr of pics (from KisTalk): ", stdFont);
 		timeLbl= create.setNewLabel("Time interval (ms): ", stdFont);
 		foodLbl = create.setNewLabel("Specify food:", stdFont);
+		foodLbl.setForeground(Color.GRAY);
 		pubLbl = create.setNewLabel("Specify event:", stdFont);
+		pubLbl.setForeground(Color.GRAY);
 		statusLbl = create.setNewLabel("Status: Ready for some action", smlFont);
 		xmlPubPathLbl = create.setNewLabel("Choose a .ppt-file (path): ", stdFont);
 		legalFilesLbl = create.setNewLabel("Approved file extensions: ", stdFont);

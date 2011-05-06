@@ -62,7 +62,7 @@ public class FrameListener implements WindowListener{
 	}
 	
 	private void ShowImageClosing(){
-		deskApp.showClsd();
+		deskApp.showClsd(null);
 		slideshow.t.stop();
 		DirectoryExterminator de = new DirectoryExterminator("Images");
 		de.exterminate();

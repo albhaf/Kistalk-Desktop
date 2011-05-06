@@ -37,12 +37,18 @@ public class TwoDSlideShow extends Panel implements ActionListener {
 		pubSlides = new ImportPubSlides(readConfig(), this, tmpDesk);
 		}catch(NullPointerException e){
 			t.stop();
-			tmpDesk.showClsd();
+			tmpDesk.showClsd("Something wrong with pubslides");
 			return;
 		}
 		getScreenResolution();
 		firstPicture();
+		try{
 		createFrame();
+		}catch(NullPointerException e){
+			
+			close();
+			return;
+		}
 		updatePicture();
 		updatePicture();
 		t.start();
@@ -51,7 +57,6 @@ public class TwoDSlideShow extends Panel implements ActionListener {
  	public void close(){
  		t.stop();
  		view.terminate();
-		desktopApp.showClsd();
  	}
 
 	// Build the frame (Slideshow)
@@ -83,7 +88,7 @@ public class TwoDSlideShow extends Panel implements ActionListener {
 				slideShowHandler.setNewSlide(pubSlides.getImage());
 			}catch(IIOException e){
 				close();
-				desktopApp.fail("Hans is angry.", "Couldn't open the powerpoint images, they were deleted during runtime!");
+				desktopApp.showClsd( "Couldn't open the powerpoint images, they were deleted during runtime!");
 			}
 			imageSlide = true;
 		} else {
