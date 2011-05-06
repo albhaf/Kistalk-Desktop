@@ -1,6 +1,5 @@
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -434,7 +433,9 @@ public class AdminFrame {
 		nrOfImgsLbl = create.setNewLabel("Nr of pics (from KisTalk): ", stdFont);
 		timeLbl= create.setNewLabel("Time interval (ms): ", stdFont);
 		foodLbl = create.setNewLabel("Specify food:", stdFont);
+		foodLbl.setForeground(Color.GRAY);
 		pubLbl = create.setNewLabel("Specify event:", stdFont);
+		pubLbl.setForeground(Color.GRAY);
 		statusLbl = create.setNewLabel("Status: Ready for some action", smlFont);
 		xmlPubPathLbl = create.setNewLabel("Choose a .ppt-file (path): ", stdFont);
 		legalFilesLbl = create.setNewLabel("Approved file extensions: ", stdFont);
@@ -681,8 +682,11 @@ public class AdminFrame {
 				exitBtn.setText("Quit SlideShow");
 				startBtn.setEnabled(false);
 				statusLbl.setText("Status: Slideshow started");
+				try{
 				controller.startShow();
-				
+				}catch(NullPointerException e1){
+					
+				}
 			}else if (e.getSource() == exitBtn){ // Exit Slideshow / Program
 				if (exitBtn.getText().equals("Quit SlideShow")){
 					setExitShow();

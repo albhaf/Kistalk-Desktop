@@ -34,10 +34,10 @@ public class TwoDSlideShow extends Panel implements ActionListener {
 		view = new TwoDSlideShowView();
 		info = new TwoDSlideShowInfo(nrOfConfValues);
 		try{
-		pubSlides = new ImportPubSlides(readConfig(), this, tmpDesk);
+			pubSlides = new ImportPubSlides(readConfig(), this, tmpDesk);
 		}catch(NullPointerException e){
 			t.stop();
-			tmpDesk.showClsd("Something wrong with pubslides");
+			tmpDesk.showClsd(null);
 			return;
 		}
 		getScreenResolution();

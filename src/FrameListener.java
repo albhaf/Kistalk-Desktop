@@ -13,7 +13,8 @@ public class FrameListener implements WindowListener{
 		deskApp = tmpdesk;
 	}
 	
-	public FrameListener(PopupFrame tmp){
+	public FrameListener(DesktopApplication tmpdesk, PopupFrame tmp){
+		deskApp = tmpdesk;
 		popupframe = tmp;
 	}
 	
@@ -45,8 +46,8 @@ public class FrameListener implements WindowListener{
 		if(title.equalsIgnoreCase("KisTalk Slideshow Settings")){
 			deskApp.deskClsd();
 		}else if(title.equalsIgnoreCase("KisTalk Popup")){
-			popupframe.popFrame.dispose();
 			deskApp.closePop();
+			popupframe.popFrame.dispose();
 		}
 	}
 

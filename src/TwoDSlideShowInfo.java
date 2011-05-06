@@ -41,7 +41,7 @@ public class TwoDSlideShowInfo {
 		// Get size and position of the screen
 		return gc[0].getBounds();
 		}catch(ArrayIndexOutOfBoundsException e){
-			deskApp.showClsd("Invalid screen choice");
+			deskApp.showClsd("Invalid screen choice.");
 		}
 		return null;
 

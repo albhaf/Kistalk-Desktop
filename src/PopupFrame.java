@@ -27,17 +27,17 @@ public class PopupFrame{
 	Image bgImage;
 	ButtonListener listener;
 	
-	public PopupFrame(String messageTmp, Image tmpImg, DesktopApplication tmpContr, Font tmpFont, FrameListener tmplistener){
+	public PopupFrame(String messageTmp, Image tmpImg, DesktopApplication tmpContr, Font tmpFont){
 		bldFont = tmpFont;
 		bgImage = tmpImg;
 		controller = tmpContr;
-		framelistener = tmplistener;
 		setup(messageTmp);
 	}
 	
 	public void setup(String message){
 		
 		listener = new ButtonListener();
+		framelistener = new FrameListener(controller, this);
 		
 		popFrame = new JFrame();
 		JPanel popPanel = new JPanel(){

@@ -4,8 +4,6 @@ import java.io.IOException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 
 public class DesktopApplication {
 	byte nrOfConfValues;
@@ -83,7 +81,7 @@ public class DesktopApplication {
 	public void popup(String message, String pathTmp){ //For SaveSlideshow
 		path = pathTmp;
 		adminframe.disable();
-		PopupFrame popupframe = new PopupFrame(message, bgImage, this, bldFont, framelistener);
+		PopupFrame popupframe = new PopupFrame(message, bgImage, this, bldFont);
 		popupframe.popFrame.setVisible(true);
 		
 	}

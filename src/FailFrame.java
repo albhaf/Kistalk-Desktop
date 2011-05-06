@@ -48,7 +48,7 @@ public class FailFrame{
 		errFrame.setSize(320, 100);
 		errFrame.setTitle(title);
 		errFrame.setResizable(false);
-		errFrame.setDefaultCloseOperation(errFrame.EXIT_ON_CLOSE);
+//		errFrame.setDefaultCloseOperation(errFrame.ABORT);
 		errPanel.setLayout(errLayout);
 		label.setText(message);
 		label.setForeground(Color.WHITE);
