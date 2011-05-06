@@ -6,7 +6,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import javax.imageio.IIOException;
-import javax.swing.JOptionPane;
 import javax.swing.Timer;
 
 public class TwoDSlideShow extends Panel implements ActionListener {
@@ -34,7 +33,13 @@ public class TwoDSlideShow extends Panel implements ActionListener {
  		imageSlide = false;
 		view = new TwoDSlideShowView();
 		info = new TwoDSlideShowInfo(nrOfConfValues);
-		pubSlides = new ImportPubSlides(readConfig(), this);
+		try{
+		pubSlides = new ImportPubSlides(readConfig(), this, tmpDesk);
+		}catch(NullPointerException e){
+			t.stop();
+			tmpDesk.showClsd();
+			return;
+		}
 		getScreenResolution();
 		firstPicture();
 		createFrame();
@@ -43,7 +48,7 @@ public class TwoDSlideShow extends Panel implements ActionListener {
 		t.start();
 	}
  	
- 	public TwoDSlideShow() throws IOException {
+/* 	public TwoDSlideShow() throws IOException {
  		nrOfConfValues = 11;
  		imageSlide = false;
 		view = new TwoDSlideShowView();
@@ -55,12 +60,12 @@ public class TwoDSlideShow extends Panel implements ActionListener {
 		updatePicture();
 		updatePicture();
 		t.start();
-	}
+	}*/
  	
  	public void close(){
  		t.stop();
  		view.terminate();
-
+		desktopApp.showClsd();
  	}
 
 	// Build the frame (Slideshow)
@@ -92,7 +97,7 @@ public class TwoDSlideShow extends Panel implements ActionListener {
 				slideShowHandler.setNewSlide(pubSlides.getImage());
 			}catch(IIOException e){
 				close();
-				JOptionPane.showMessageDialog(null, "Something went wrong. Couldn't open the powerpoint images. They were deleted during runtime!");
+				desktopApp.fail("Hans is angry.", "Something went wrong. Couldn't open the powerpoint images, they were deleted during runtime!");
 			}
 			imageSlide = true;
 		} else {
