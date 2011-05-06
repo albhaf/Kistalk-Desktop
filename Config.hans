@@ -25,12 +25,11 @@ _|    _|  _|  _|_|_|       _|      _|_|_|  _|  _|    _|
 
 //	Date of last revision: 9:47 den 6/4
 
-
 Max_number_of_Images %7
 
 Number_of_Hans %-
 
-Timer_interval %10
+Timer_interval %800
 
 Fading_speed %1
 
