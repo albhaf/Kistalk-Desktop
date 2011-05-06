@@ -1,10 +1,13 @@
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 public class CreateNewElements {
@@ -48,4 +51,24 @@ public class CreateNewElements {
 		
 		return tmp;
 	}
+
+	protected JPanel setNewPanel(final Image bgImage){
+		JPanel tmp = new JPanel(){ //Observera att detta �r en create!
+			private static final long serialVersionUID = -7374793566417261848L;
+
+			public void paint(Graphics g){
+				g.drawImage(bgImage, 0,0, this);
+				setOpaque(false);
+	    		super.paint(g);
+	    		setOpaque(true);
+	    		
+			}
+		};
+
+		tmp.setBackground(Color.decode("#ae0808"));
+		
+		
+		return tmp;
+	}
+	
 }

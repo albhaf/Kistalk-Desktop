@@ -79,8 +79,8 @@ public class AdminFrame {
 	ButtonListener listener;
 	JFileChooser fc;
 	
-	List<String> slideNames;
 	List<String> slidePaths;
+	List<String> slideNames;
 
 	//	Constructor
 	public AdminFrame(DesktopApplication tmpCont, Font tmpFont) {
@@ -143,17 +143,7 @@ public class AdminFrame {
 		stdItalFont = new Font("Helvetica", Font.ITALIC, 12);
 		
 		// Create and Paint thePanel background
-		thePanel = new JPanel(){ //Observera att detta �r en create!
-			private static final long serialVersionUID = -7374793566417261848L;
-
-			public void paint(Graphics g){
-				g.drawImage(bgImage, 0,0, this);
-				setOpaque(false);
-	    		super.paint(g);
-	    		setOpaque(true);
-	    		
-			}
-		};
+		thePanel = create.setNewPanel(bgImage);
 		
 		groupLayout = new GroupLayout(thePanel);
 		
@@ -165,10 +155,8 @@ public class AdminFrame {
 		adminFrame.setTitle("KisTalk Slideshow Settings");
 		adminFrame.setUndecorated(false);
 		
-		//	Panel settings
 		thePanel.setLayout(groupLayout);
-		thePanel.setBackground(Color.decode("#ae0808"));
-		
+
 		//	Label settings
 		headerLbl.setIcon(new ImageIcon("kistalk_adm_logo.png"));
 	
