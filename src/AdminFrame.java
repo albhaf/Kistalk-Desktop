@@ -34,8 +34,11 @@ public class AdminFrame {
 	private JPanel thePanel;
 	private JLabel headerLbl;
 	
-	private JButton saveSetBtn, resetBtn, startBtn, exitBtn, savePathBtn, remPathBtn, 
-		announceBtn, pathBtn;
+	private JButton saveSetBtn, resetBtn, startBtn;
+
+	JButton exitBtn;
+
+	private JButton savePathBtn, remPathBtn, announceBtn, pathBtn;
 	
 	private JLabel nrOfImgsLbl, timeLbl, foodLbl, pubLbl, statusLbl, xmlPubPathLbl, 
 		legalFilesLbl, nrOfCommentsLbl, screenLbl, bgLbl, pubnfoodStatusLbl, fadeLbl;

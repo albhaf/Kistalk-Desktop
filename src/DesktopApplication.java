@@ -108,6 +108,10 @@ public class DesktopApplication {
 //		adminframe.exitBtn.doClick();
 	}
 	
+	public void deskClsd(){
+		adminframe.exitBtn.doClick();
+	}
+	
 	public void exitShow(){
 		try{
 			slideshow.close();
