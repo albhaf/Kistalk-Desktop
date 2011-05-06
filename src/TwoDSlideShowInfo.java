@@ -28,7 +28,9 @@ public class TwoDSlideShowInfo {
 		fileFormats = new String[4];
 	}
 
-	protected Rectangle getScreenSize(int screenIndex) {
+	protected Rectangle getScreenSize(int screenIndex, DesktopApplication deksApp) {
+		
+		//try{
 		GraphicsEnvironment gfxEnviro = GraphicsEnvironment.getLocalGraphicsEnvironment();
 		GraphicsDevice[] gfxScreenDev = gfxEnviro.getScreenDevices();
 
@@ -38,6 +40,11 @@ public class TwoDSlideShowInfo {
 
 		// Get size and position of the screen
 		return gc[0].getBounds();
+/*		}catch(ArrayIndexOutOfBoundsException e){
+			
+		}
+		return null;*/
+
 	}
 
 	protected String[] readConfig() throws FileNotFoundException {

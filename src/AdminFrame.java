@@ -89,6 +89,7 @@ public class AdminFrame {
 		this.setLabels();
 		this.setTextFields();
 		this.setBoxes();
+		
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (ClassNotFoundException e2) {
@@ -105,13 +106,13 @@ public class AdminFrame {
 			e2.printStackTrace();
 		}
 
-		
 		fc = new JFileChooser();
 		
 		FileChooserFilter fcFilter = new FileChooserFilter();
 		fc.setAcceptAllFileFilterUsed(false);
 		fc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
-		fc.addChoosableFileFilter( fcFilter);		
+		fc.addChoosableFileFilter( fcFilter);	
+		
 		try {
 			UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
 		} catch (ClassNotFoundException e1) {
@@ -127,6 +128,7 @@ public class AdminFrame {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
+		
 		smlFont = new Font("Helvetica", Font.PLAIN, 10);
 		stdItalFont = new Font("Helvetica", Font.ITALIC, 12);
 		
