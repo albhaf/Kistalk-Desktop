@@ -54,11 +54,14 @@ public class AdminFrame {
 	private JFileChooser fc;
 	
 	private List<String> slidePaths, slideNames;
+	
+	private FrameListener framelistener;
 
 	//	Constructor
-	public AdminFrame(DesktopApplication tmpCont, Font tmpFont) {
+	public AdminFrame(DesktopApplication tmpCont, Font tmpFont, FrameListener tmplistener){
 		controller = tmpCont;
 		stdFont = tmpFont;
+		framelistener = tmplistener;
 	}
 
 	//	Setting up the settings frame
@@ -95,12 +98,13 @@ public class AdminFrame {
 		adminFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		adminFrame.setTitle("KisTalk Slideshow Settings");
 		adminFrame.setUndecorated(false);
+		adminFrame.addWindowListener(framelistener);
 		
 		thePanel.setLayout(groupLayout);
 
 		//	Label settings
 		headerLbl.setIcon(new ImageIcon("kistalk_adm_logo.png"));
-	
+		
 		//	DropDownList settings, with ItemListeners
 		pubSlidesDDLst.addItem("[Saved slideshows]");
 		for (int i = 0; i < slideNames.size(); i++)
@@ -117,6 +121,7 @@ public class AdminFrame {
 								xmlPubPathTxt.setFont(stdItalFont);
 								statusLbl.setText("Status: " + e.getItem().toString() + "s Slideshow is choosed");
 								slideItem = e.getItem().toString();
+								pathBtn.setEnabled(false);
 								
 								if (e.getItem().toString().equals("TMEIT")){
 									eventTxt.setText("Tisdagspub");
@@ -135,6 +140,7 @@ public class AdminFrame {
 								statusLbl.setText("Status: Choose a Slideshow or specify a path");
 								slideItem = null;
 								eventTxt.setText("");
+								pathBtn.setEnabled(true);
 								
 							}
 						}
@@ -503,6 +509,7 @@ public class AdminFrame {
 		nrOfImgsTxt.setText(values[0]);
 		timeTxt.setText(values[2]);
 		fadeTxt.setText(values[3]);
+		screenDDLst.setSelectedItem("This");
 		nrOfCommentsTxt.setText(values[7]);
 		xmlPubPathTxt.setText(values[8]);
 		
@@ -616,7 +623,6 @@ public class AdminFrame {
 				}else{
 					adminFrame.dispose();
 				}
-				
 			}
 		}
 	}

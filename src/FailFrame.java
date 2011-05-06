@@ -43,7 +43,7 @@ public class FailFrame{
 		GroupLayout errLayout = new GroupLayout(errPanel);
 		
 		errFrame.setLocation(430, 290);
-		errFrame.setSize(300, 100);
+		errFrame.setSize(320, 100);
 		errFrame.setTitle(title);
 		errFrame.setResizable(false);
 		errFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
