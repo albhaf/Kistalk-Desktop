@@ -18,8 +18,8 @@ public class TwoDSlideShow extends Panel implements ActionListener {
 
 	Timer t;
 	
-	byte screenIndex;
-	public byte nrOfConfValues;
+	int screenIndex;
+	public int nrOfConfValues;
 
 	private ShowImage slideShowHandler;
 	private ImportPubSlides pubSlides;
@@ -30,7 +30,7 @@ public class TwoDSlideShow extends Panel implements ActionListener {
 	private DesktopApplication desktopApp; //For popupframe and maybe something else??
 	private boolean imageSlide;
 
- 	public TwoDSlideShow(byte tmpConfValues, DesktopApplication tmpDesk) throws IOException {
+ 	public TwoDSlideShow(int tmpConfValues, DesktopApplication tmpDesk) throws IOException {
  		desktopApp = tmpDesk;
  		nrOfConfValues = tmpConfValues;
  		imageSlide = false;
@@ -64,7 +64,7 @@ public class TwoDSlideShow extends Panel implements ActionListener {
 
 	private String readConfig() throws FileNotFoundException {
 		String[] tmpConf =info.readConfig();
-		screenIndex = Byte.valueOf(tmpConf[0]);
+		screenIndex = Integer.valueOf(tmpConf[0]);
 		t = new Timer(10, this);
 		return tmpConf[1];
 	}

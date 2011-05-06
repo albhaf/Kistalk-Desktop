@@ -28,7 +28,7 @@ public class TwoDSlideShowInfo {
 	private int timeStill;
 	private int fadingSpeed;
 
-	public TwoDSlideShowInfo(byte tmpConfValues) {
+	public TwoDSlideShowInfo(int tmpConfValues) {
 		nrOfConfValues = tmpConfValues;
 		fileFormats = new String[4];
 	}
@@ -69,7 +69,7 @@ public class TwoDSlideShowInfo {
 		fileFormats = values[4].split(" ");
 		returner[0] =values[5];
 		xmlPath = values[6];
-		nrOfComments = Byte.valueOf(values[7]);
+		nrOfComments = Integer.valueOf(values[7]);
 		returner[1]=(values[8]);
 
 
