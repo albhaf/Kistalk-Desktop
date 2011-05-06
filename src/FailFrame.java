@@ -4,6 +4,8 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
@@ -46,13 +48,14 @@ public class FailFrame{
 		errFrame.setSize(320, 100);
 		errFrame.setTitle(title);
 		errFrame.setResizable(false);
-		errFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		errFrame.setDefaultCloseOperation(errFrame.EXIT_ON_CLOSE);
 		errPanel.setLayout(errLayout);
 		label.setText(message);
 		label.setForeground(Color.WHITE);
 		label.setFont(bldFont);
 		okBtn.setText("OK");
 		okBtn.addActionListener(listener);
+		okBtn.addKeyListener(listener);
 		
 		errLayout.setHorizontalGroup(
 				errLayout.createParallelGroup(GroupLayout.Alignment.CENTER)
@@ -85,11 +88,32 @@ public class FailFrame{
 		
 	}
 	
-	private class ButtonListener implements ActionListener {
+	private class ButtonListener implements ActionListener, KeyListener {
+		public void keyPressed(KeyEvent e){
+			if (e.getKeyCode() == KeyEvent.VK_ENTER){
+				okBtn.doClick();
+			}
+		}
+			
 		public void actionPerformed(ActionEvent e) {
+			
+			
 			if (e.getSource() == okBtn){
 				errFrame.dispose();
 			}
+			
+		}
+
+		@Override
+		public void keyReleased(KeyEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void keyTyped(KeyEvent e) {
+			// TODO Auto-generated method stub
+			
 		}
 	}
 }

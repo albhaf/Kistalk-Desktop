@@ -83,7 +83,7 @@ public class DesktopApplication {
 	public void popup(String message, String pathTmp){ //For SaveSlideshow
 		path = pathTmp;
 		adminframe.disable();
-		PopupFrame popupframe = new PopupFrame(message, bgImage, this, bldFont);
+		PopupFrame popupframe = new PopupFrame(message, bgImage, this, bldFont, framelistener);
 		popupframe.popFrame.setVisible(true);
 		
 	}

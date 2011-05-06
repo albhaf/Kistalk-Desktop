@@ -4,6 +4,8 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
@@ -21,13 +23,15 @@ public class PopupFrame{
 	public JTextField popTxt;
 	public Font bldFont;
 	public DesktopApplication controller;
+	FrameListener framelistener;
 	Image bgImage;
 	ButtonListener listener;
 	
-	public PopupFrame(String messageTmp, Image tmpImg, DesktopApplication tmpContr, Font tmpFont){
+	public PopupFrame(String messageTmp, Image tmpImg, DesktopApplication tmpContr, Font tmpFont, FrameListener tmplistener){
 		bldFont = tmpFont;
 		bgImage = tmpImg;
 		controller = tmpContr;
+		framelistener = tmplistener;
 		setup(messageTmp);
 	}
 	
@@ -58,7 +62,7 @@ public class PopupFrame{
 		popFrame.setTitle("KisTalk Popup");
 		popFrame.setResizable(false);
 		popFrame.setUndecorated(false);
-		popFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		popFrame.addWindowListener(framelistener);
 		popPanel.setLayout(popLayout);
 		label.setText(message);
 		label.setForeground(Color.WHITE);
@@ -67,6 +71,7 @@ public class PopupFrame{
 		sbmBtn.addActionListener(listener);
 		clsBtn.setText("Close");
 		clsBtn.addActionListener(listener);
+		popTxt.addKeyListener(listener);
 		if (message.equals("Are you sure you want to reset the config file?"))
 			popTxt.setVisible(false);
 		
@@ -107,7 +112,13 @@ public class PopupFrame{
 		
 	}
 	
-	private class ButtonListener implements ActionListener {
+	private class ButtonListener implements ActionListener, KeyListener {
+		public void keyPressed(KeyEvent e){
+			if (e.getKeyCode() == KeyEvent.VK_ENTER){
+				sbmBtn.doClick();
+			}
+		}
+		
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource() == sbmBtn){
 				if (label.getText().equals("Name the slideshow: ")){
@@ -126,6 +137,18 @@ public class PopupFrame{
 				controller.closePop();
 				popFrame.dispose();
 			}
+		}
+
+		@Override
+		public void keyReleased(KeyEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void keyTyped(KeyEvent e) {
+			// TODO Auto-generated method stub
+			
 		}
 	}
 }

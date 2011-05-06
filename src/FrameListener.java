@@ -7,9 +7,14 @@ public class FrameListener implements WindowListener{
 	
 	private TwoDSlideShow slideshow;
 	private DesktopApplication deskApp;
+	private PopupFrame popupframe;
 	
 	public FrameListener(DesktopApplication tmpdesk){
 		deskApp = tmpdesk;
+	}
+	
+	public FrameListener(PopupFrame tmp){
+		popupframe = tmp;
 	}
 	
 	public FrameListener(TwoDSlideShow tmp, DesktopApplication tmpdesk){
@@ -39,6 +44,9 @@ public class FrameListener implements WindowListener{
 		String title = frame.getTitle();
 		if(title.equalsIgnoreCase("KisTalk Slideshow Settings")){
 			deskApp.deskClsd();
+		}else if(title.equalsIgnoreCase("KisTalk Popup")){
+			popupframe.popFrame.dispose();
+			deskApp.closePop();
 		}
 	}
 
