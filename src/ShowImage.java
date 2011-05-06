@@ -6,9 +6,6 @@ import java.io.IOException;
 import javax.swing.JPanel;
 
 public class ShowImage extends JPanel {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 887346353483336091L;
 
 	// Variables

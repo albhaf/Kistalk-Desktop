@@ -5,8 +5,8 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 public class ImportPubSlides {
-	PptToPng pptToPng;
-	int nrOfSlides, currentSlide;
+	private PptToPng pptToPng;
+	private int nrOfSlides, currentSlide;
 
 	/**
 	 * constructor which takes the directory path to the file(s) as input
