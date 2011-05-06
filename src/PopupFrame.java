@@ -2,7 +2,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -11,6 +10,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 	//	Creates a pop-up
 public class PopupFrame{
@@ -18,7 +18,7 @@ public class PopupFrame{
 	public JButton clsBtn;
 	public JLabel label;
 	public JFrame popFrame;
-	public TextField popTxt;
+	public JTextField popTxt;
 	public DesktopApplication controller;
 	Font stdFont;
 	Image bgImage;
@@ -52,7 +52,7 @@ public class PopupFrame{
 			}
 		};
 		label = new JLabel();
-		popTxt = new TextField();
+		popTxt = new JTextField();
 		sbmBtn = new JButton();
 		clsBtn = new JButton();
 		GroupLayout popLayout = new GroupLayout(popPanel);

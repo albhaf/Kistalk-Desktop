@@ -120,7 +120,7 @@ public class TwoDSlideShow extends Panel implements ActionListener {
 
 	}
 
-	public static void main(String args[]) throws IOException {
-		new TwoDSlideShow();
-	}
+//	public static void main(String args[]) throws IOException {
+//		new TwoDSlideShow();
+//	}
 }

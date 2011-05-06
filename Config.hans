@@ -23,10 +23,10 @@ _|    _|  _|  _|_|_|       _|      _|_|_|  _|  _|    _|
 *'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*
 *'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*
 
-//	Date of last revision: 8:45 den 6/4
+//	Date of last revision: 10:47 den 6/4
 
 
-Max_number_of_Images %3
+Max_number_of_Images %7
 
 Number_of_Hans %-
 
@@ -40,10 +40,10 @@ Screen_index %0
 
 XMLURL %http://www.kistalk.com/api/feed/desktop.xml
 
-Number_of_comments %3
+Number_of_comments %2
 
 Path_to_Pubslides %/home/zandra/Documents/testSlide.ppt
 
-Saved_Pubslides %TMEIT|Qmisk|ITK|Std
+Saved_Pubslides %TMEIT|Qmisk|ITK|Std|uiolk,m
 
-Saved_Paths %C:\\TMEIT|C:\\Qmisk|C:\\ITK|asd.ppt
+Saved_Paths %mC:\\TMEIT|C:\\Qmisk|C:\\ITK|asd.ppt|/home/zandra/Documents/testSlide.ppt
