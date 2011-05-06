@@ -76,14 +76,17 @@ public class ShowImageDrawing {
 		g2d.fill(imgRect);
 	}
 
-	protected void paintImage(TextToDisplay imageCommentTxtDsp,
+	protected void paintImage(TextToDisplay[] imageCommentTxtDsp,
 			TextToDisplay imageUserTxtDsp, BufferedImage slideImage,
 			ImgRect imgRect) {
 		// paints the image text and image user texts
 		try {
 			g2d.setFont(commentUser);
-			g2d.drawString(imageCommentTxtDsp.getString(),
-					imageCommentTxtDsp.x, imageCommentTxtDsp.y);
+			int lines = imageCommentTxtDsp[0].getLines();
+			for (int i = 0; i < lines; i++) {
+				g2d.drawString(imageCommentTxtDsp[i].getString(),
+						imageCommentTxtDsp[i].x, imageCommentTxtDsp[i].y);
+			}
 			g2d.setFont(font);
 			g2d.drawString(imageUserTxtDsp.getString(), imageUserTxtDsp.x,
 					imageUserTxtDsp.y);

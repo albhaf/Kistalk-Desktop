@@ -14,7 +14,8 @@ public class ShowImage extends JPanel {
 	 * The Rectangle containing the image
 	 */
 	protected ImgRect imgRect; //
-	protected TextToDisplay imageUserTxtDsp,  imageCommentTxtDsp;
+	protected TextToDisplay imageUserTxtDsp;
+	protected TextToDisplay[] imageCommentTxtDsp;
 	protected TextToDisplay[][] comments;
 	protected boolean outgoing;
 	private BufferedImage slideImage;
@@ -39,7 +40,6 @@ public class ShowImage extends JPanel {
 		transperacy = 0;
 		fadingSpeed = speedIn;
 
-		imageCommentTxtDsp = new TextToDisplay();
 		imageUserTxtDsp = new TextToDisplay();
 
 		timeStill.width = timeStillIn;
@@ -61,7 +61,8 @@ public class ShowImage extends JPanel {
 		// Kommentarer
 		comments = showImageSet.setComments(tmpXML.getComments(), comments);
 		// Bildtexten
-		textStopPosition = showImageSet.setImageText(tmpXML.getImageText(), imageCommentTxtDsp);				
+		imageCommentTxtDsp = showImageSet.setImageText(tmpXML.getImageText(), imageCommentTxtDsp);	
+		textStopPosition = showImageSet.getTextStopPosition();
 		// Image user
 		showImageSet.setUserText(tmpXML.getUser(), imageUserTxtDsp);
 		// Bilden
