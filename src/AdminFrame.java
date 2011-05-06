@@ -13,6 +13,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -41,6 +42,7 @@ public class AdminFrame {
 	JButton savePathBtn;
 	JButton remPathBtn;
 	JButton announceBtn;
+	JButton pathBtn;
 	
 	JLabel nrOfImgsLbl;
 	JLabel timeLbl;
@@ -75,6 +77,7 @@ public class AdminFrame {
 	
 	DesktopApplication controller;
 	ButtonListener listener;
+	JFileChooser fc;
 	
 	List<String> slideNames;
 	List<String> slidePaths;
@@ -131,21 +134,23 @@ public class AdminFrame {
 		foodChb = create.setNewCheckBox("Dinner is served", listener, false);
 		pubChb = create.setNewCheckBox("Pub is open", listener, true);
 		
-		
 		pubSlidesDDLst = new JComboBox();
 		screenDDLst = new JComboBox();
+		
+		fc = new JFileChooser();
 		
 		smlFont = new Font("Helvetica", Font.PLAIN, 10);
 		stdItalFont = new Font("Helvetica", Font.ITALIC, 12);
 		
 		// Create and Paint thePanel background
 		thePanel = new JPanel(){ //Observera att detta �r en create!
+			private static final long serialVersionUID = -7374793566417261848L;
+
 			public void paint(Graphics g){
 				g.drawImage(bgImage, 0,0, this);
 				setOpaque(false);
 	    		super.paint(g);
 	    		setOpaque(true);
-	    		repaint();
 	    		
 			}
 		};
@@ -166,7 +171,7 @@ public class AdminFrame {
 		
 		//	Label settings
 		headerLbl.setIcon(new ImageIcon("kistalk_adm_logo.png"));
-		
+	
 		//	DropDownList settings, with ItemListeners
 		pubSlidesDDLst.addItem("[Saved slideshows]");
 		for (int i = 0; i < slideNames.size(); i++)
@@ -190,6 +195,8 @@ public class AdminFrame {
 									eventTxt.setText("Torsdagspub");
 								}else if(e.getItem().toString().equals("ITK")){
 									eventTxt.setText("Lan");
+								}else{
+									eventTxt.setText("");
 								}
 								
 							}else{
@@ -493,6 +500,15 @@ public class AdminFrame {
 		
 	}
 	
+	public boolean chkTxts(){  //G�r n�got �t!
+		if (nrOfImgsTxt.getText().equals("") == false && timeTxt.getText().equals("") == false && xmlPubPathTxt.getText().equals("") == false && nrOfCommentsTxt.getText().equals("") == false && fadeTxt.getText().equals("") == false) {
+			return true;
+		}else{
+			return false;
+		}
+		
+	}
+	
 	public void getTxt(){ // Get text from textfields
 		values[0] = nrOfImgsTxt.getText();
 		values[2] = timeTxt.getText();
@@ -502,13 +518,40 @@ public class AdminFrame {
 		
 	}
 	
+	public void setTxt(String[] values){ // Write text to textfields
+		nrOfImgsTxt.setText(values[0]);
+		timeTxt.setText(values[2]);
+		fadeTxt.setText(values[3]);
+		nrOfCommentsTxt.setText(values[7]);
+		xmlPubPathTxt.setText(values[8]);
+		statusLbl.setText("Status: Config is back to normal");
+		
+	}
+	
+	public void setPaths(List<String> names, List<String> paths) {
+		pubSlidesDDLst.removeAllItems();
+		slideNames.clear();
+		slidePaths.clear();
+		
+		pubSlidesDDLst.addItem("[Saved slideshows]");
+		for (int i = 0; i < names.size(); i++) {
+			pubSlidesDDLst.addItem(names.get(i));
+			slideNames.add(names.get(i));
+			slidePaths.add(paths.get(i));
+		}
+	}
+	
 	private class ButtonListener implements ActionListener {
 		
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource() == saveSetBtn){ // Save settings to config
-				getTxt();
-				controller.setConf(values);
-				statusLbl.setText("Status: Settings saved to Config");
+				if (chkTxts()){
+					getTxt();
+					controller.setConf(values);
+					statusLbl.setText("Status: Settings saved to Config");
+				}else{
+					controller.fail("Error", "One or more textfields contains too few / too many chars");
+				}
 				
 			}else if (e.getSource() == resetBtn){ // Reset settings in config
 				controller.popup("Are you sure you want to reset the config file?", "");
@@ -544,10 +587,17 @@ public class AdminFrame {
 				} else {
 					controller.fail("Error", "Both textfields require 1 to 40 chars!");
 				}
+//			}else if (e.getSource() == pathBtn){
+//				int returnVal = fc.showOpenDialog(FileChooserDemo.this);
+				
 				
 			}else if (e.getSource() == savePathBtn){ // Save Slideshow
+				if (xmlPubPathTxt.getText().equals("") == false){
 				controller.popup("Name the slideshow: ", xmlPubPathTxt.getText());
 				statusLbl.setText("Status: Slideshow saved");
+				}else{
+					controller.fail("Wrong path", "You have to specify a path to your .ppt-file!");
+				}
 			
 			}else if (e.getSource() == remPathBtn){ // Remove saved Slideshow
 				if (slideItem != null){

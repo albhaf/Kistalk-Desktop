@@ -15,7 +15,7 @@ public class SlidePath {
 			sb.append(name);
 			confValues[9] = sb.toString();
 			
-			sb.delete(0, sb.length()-1);
+			sb.delete(0, sb.length());
 			
 			sb.append(confValues[10] + "|");
 			sb.append(path);

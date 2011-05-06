@@ -14,20 +14,22 @@ public class TwoDSlideShow extends Panel implements ActionListener {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+
+	private static final long serialVersionUID = 5789717155006186682L;
+
 
 	Timer t;
 	
-	byte screenIndex;
+	int screenIndex;
 	public int nrOfConfValues;
 
-	ShowImage slideShowHandler;
-	ImportPubSlides pubSlides;
+	private ShowImage slideShowHandler;
+	private ImportPubSlides pubSlides;
 
-	Rectangle monitor = new Rectangle();
-	TwoDSlideShowView view;
-	TwoDSlideShowInfo info;
-	DesktopApplication desktopApp; //For popupframe and maybe something else??
+	private Rectangle monitor = new Rectangle();
+	private TwoDSlideShowView view;
+	private TwoDSlideShowInfo info;
+	private DesktopApplication desktopApp; //For popupframe and maybe something else??
 	private boolean imageSlide;
 
  	public TwoDSlideShow(int tmpConfValues, DesktopApplication tmpDesk) throws IOException {
@@ -78,7 +80,7 @@ public class TwoDSlideShow extends Panel implements ActionListener {
 
 	private String readConfig() throws FileNotFoundException {
 		String[] tmpConf =info.readConfig();
-		screenIndex = Byte.valueOf(tmpConf[0]);
+		screenIndex = Integer.valueOf(tmpConf[0]);
 		t = new Timer(10, this);
 		return tmpConf[1];
 	}
@@ -95,13 +97,12 @@ public class TwoDSlideShow extends Panel implements ActionListener {
 			}catch(IIOException e){
 				close();
 				JOptionPane.showMessageDialog(null, "Something went wrong. Couldn't open the powerpoint images. They were deleted during runtime!");
-
 			}
 			imageSlide = true;
 		} else {
 			info.updatePicture();
 			imageSlide = false;
-			slideShowHandler.setNewPicture(info.getImage(), info.getUser(), info.getImageText(), info.getImageComments());		
+			slideShowHandler.setNewPicture(info.getImage(),info.getImgInfo()/*info.getImage(), info.getUser(), info.getImageText(), info.getImageComments()*/);		
 		}
 	}
 	

@@ -1,18 +1,23 @@
-import java.awt.image.BufferedImage;
+import java.net.URL;
 import java.util.LinkedList;
 
-public class ImageQueue{
+public class ImageXMLQueue{
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 2736384620617622538L;
 
-	LinkedList<BufferedImage> images;
+	LinkedList<ImageXML> images;
 	int maxSize;
 
-	public ImageQueue(int tmpSize) {
-		images = new LinkedList<BufferedImage>();
+	public ImageXMLQueue(int tmpSize) {
+		images = new LinkedList<ImageXML>();
 		maxSize = tmpSize;
+	}
+	
+	public ImageXMLQueue() {
+		images = new LinkedList<ImageXML>();
+		maxSize = 50;
 	}
 
 	public int Size() {
@@ -43,14 +48,14 @@ public class ImageQueue{
 	 * returns first element and places it last in the queue.
 	 * @return
 	 */
-	public BufferedImage getFirst() {
-		BufferedImage image = images.peekFirst();
+	public ImageXML getFirst() {
+		ImageXML image = images.peekFirst();
 		images.add(images.pop());
 
 		return image;
 	}
 
-	public boolean addFirst(BufferedImage tmp) {
+	public boolean addFirst(ImageXML tmp) {
 		if (images.size() < maxSize) {
 			images.push(tmp);
 			return true;
@@ -59,7 +64,7 @@ public class ImageQueue{
 		}
 	}
 	
-	public boolean addLast(BufferedImage tmp){
+	public boolean addLast(ImageXML tmp){
 		if(images.size() < maxSize){
 			images.addLast(tmp);
 			return true;
@@ -68,24 +73,24 @@ public class ImageQueue{
 		}
 	}
 
-	public BufferedImage peek() {
+	public ImageXML peek() {
 		return images.peekFirst();
 	}
 
-	public boolean contains(BufferedImage tmpimg) {
+	public boolean contains(ImageXML tmpimg) {
 		return images.contains(tmpimg);
 	}
-	
-	public boolean push(BufferedImage tmp){
-		if(images.size() < maxSize){
-			images.push((tmp));
-			return true;
-		}else {
-			return false;
+
+	public boolean contains(URL tmpurl) {
+		for (int i = 0; i < images.size(); i++) {
+			if (images.get(i).getLink().equals(tmpurl) == true) {
+				return true;
+			}
 		}
+		return false;
 	}
 
-	public BufferedImage pop() {
+	public ImageXML pop() {
 		return images.pop();
 	}
 

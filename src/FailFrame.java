@@ -1,9 +1,7 @@
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -19,7 +17,7 @@ public class FailFrame{
 	public JButton okBtn;
 	public JFrame errFrame;
 	
-	public FailFrame(String title, String message, Font stdFont){
+	public FailFrame(String title, String message, Font bldFont){
 		
 		ButtonListener listener = new ButtonListener();
 		
@@ -29,12 +27,13 @@ public class FailFrame{
 		
 		errFrame = new JFrame();
 		JPanel errPanel = new JPanel(){ // Insert annan bild! Knapp ist för Kryss
+			private static final long serialVersionUID = -5083318046876650701L;
+
 			public void paint(Graphics g){
 				g.drawImage(bgImage, 0,0, this);
 				setOpaque(false);
 	    		super.paint(g);
 	    		setOpaque(true);
-	    		repaint();
 	    		
 			}
 		};
@@ -51,7 +50,7 @@ public class FailFrame{
 		errPanel.setLayout(errLayout);
 		label.setText(message);
 		label.setForeground(Color.WHITE);
-		label.setFont(stdFont);
+		label.setFont(bldFont);
 		okBtn.setText("OK");
 		okBtn.addActionListener(listener);
 		

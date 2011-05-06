@@ -10,6 +10,7 @@ public class DesktopApplication {
 	String path;
 	Image bgImage;
 	Font stdFont;
+	Font bldFont;
 	NiftyHTTP nifty;
 	LogInFrame loginframe;
 	AdminFrame adminframe;
@@ -22,6 +23,7 @@ public class DesktopApplication {
 		ImageIcon icon = new ImageIcon("bgIcon.png");
 		bgImage = icon.getImage();
 		stdFont = new Font("Imperial", Font.PLAIN, 12);
+		bldFont = new Font("Arial", Font.BOLD, 12);
 		config = new ConfigSettings(nrOfConfValues);
 		
 		loginframe = new LogInFrame(bgImage, this);
@@ -53,7 +55,9 @@ public class DesktopApplication {
 	}
 	
 	public void resetConf(){
-		adminframe.setTxt(config.resetValues());
+		String[] lclVals = config.resetValues();
+		adminframe.setTxt(lclVals);
+		adminframe.setPaths(slidepath.ninja(lclVals[9]), slidepath.ninja(lclVals[10]));
 	}
 	
 	public void announce(String food_description, String event, boolean pub_open, boolean food_ready){ // Send announcement to server
@@ -75,7 +79,7 @@ public class DesktopApplication {
 	public void popup(String message, String pathTmp){ //For SaveSlideshow
 		path = pathTmp;
 		adminframe.disable();
-		PopupFrame popupframe = new PopupFrame(message, bgImage, this, stdFont);
+		PopupFrame popupframe = new PopupFrame(message, bgImage, this, bldFont);
 		popupframe.popFrame.setVisible(true);
 		
 	}
@@ -85,7 +89,7 @@ public class DesktopApplication {
 	}
 	
 	public void fail(String t, String m){
-		FailFrame fail = new FailFrame(t, m, stdFont);
+		FailFrame fail = new FailFrame(t, m, bldFont);
 		fail.errFrame.setVisible(true);
 	}
 	

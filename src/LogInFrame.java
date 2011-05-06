@@ -45,7 +45,6 @@ public class LogInFrame{
 				setOpaque(false);
 	    		super.paint(g);
 	    		setOpaque(true);
-	    		repaint();
 	    		
 			}
 		};

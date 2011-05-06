@@ -3,8 +3,6 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.List;
-
 import javax.swing.JPanel;
 
 public class ShowImage extends JPanel {
@@ -61,15 +59,15 @@ public class ShowImage extends JPanel {
 		imageStopPosition = showImageSet.setPicture(slideImage, imgRect, imageStopPosition, pubSlide);
 	}
 	
-	public void setNewPicture(BufferedImage image, String user, String imageText, List<CommentXML> commentsList) {
+	public void setNewPicture(BufferedImage image, ImageXML tmpXML/*BufferedImage image, String user, String imageText, List<CommentXML> commentsList*/) {
 		resetImage(image);
 		pubSlide = false;		
 		// Kommentarer
-		comments = showImageSet.setComments(commentsList, comments);
+		comments = showImageSet.setComments(/*commentsList*/tmpXML.getComments(), comments);
 		// Bildtexten
-		showImageSet.setImageText(imageText, imageCommentTxtDsp);				
+		showImageSet.setImageText(tmpXML.getImageText(), imageCommentTxtDsp);				
 		// Image user
-		showImageSet.setUserText(user, imageUserTxtDsp);
+		showImageSet.setUserText(tmpXML.getUser(), imageUserTxtDsp);
 		// Bilden
 		imageStopPosition = showImageSet.setPicture(slideImage, imgRect, imageStopPosition, pubSlide);
 	}
