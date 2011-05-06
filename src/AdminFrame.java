@@ -29,42 +29,18 @@ public class AdminFrame {
 	Font smlFont;
 	Font stdItalFont;
 	
-	JFrame adminFrame;
-	JFrame popFrame;
-	JFrame logFrame;
-	JPanel thePanel;
-	JLabel headerLbl;
+	private JFrame adminFrame, popFrame, logFrame;
+	private JPanel thePanel;
+	private JLabel headerLbl;
 	
-	JButton saveSetBtn;
-	JButton resetBtn;
-	JButton startBtn;
-	JButton exitBtn;
-	JButton savePathBtn;
-	JButton remPathBtn;
-	JButton announceBtn;
-	JButton pathBtn;
+	private JButton saveSetBtn, resetBtn, startBtn, exitBtn, savePathBtn, remPathBtn, 
+		announceBtn, pathBtn;
 	
-	JLabel nrOfImgsLbl;
-	JLabel timeLbl;
-	JLabel foodLbl;
-	JLabel pubLbl;
-	JLabel statusLbl;
-	JLabel xmlPubPathLbl;
-	JLabel legalFilesLbl;
-	JLabel nrOfCommentsLbl;
-	JLabel screenLbl;
-	JLabel bgLbl;
-	JLabel pubnfoodStatusLbl;
-	JLabel fadeLbl;
+	private JLabel nrOfImgsLbl, timeLbl, foodLbl, pubLbl, statusLbl, xmlPubPathLbl, 
+		legalFilesLbl, nrOfCommentsLbl, screenLbl, bgLbl, pubnfoodStatusLbl, fadeLbl;
 	
-	JTextField nrOfImgsTxt;
-	JTextField timeTxt;
-	JTextField xmlPubPathTxt;
-	JTextField legalFilesTxt;
-	JTextField nrOfCommentsTxt;
-	JTextField eventTxt;
-	JTextField foodTxt;
-	JTextField fadeTxt;
+	private JTextField nrOfImgsTxt, timeTxt, xmlPubPathTxt, legalFilesTxt, nrOfCommentsTxt, 
+		eventTxt, foodTxt, fadeTxt;
 	
 	JCheckBox foodChb;
 	JCheckBox pubChb;
