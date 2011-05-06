@@ -18,7 +18,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.filechooser.FileFilter;
 
 
 public class AdminFrame {
@@ -34,8 +33,11 @@ public class AdminFrame {
 	private JPanel thePanel;
 	private JLabel headerLbl;
 	
-	private JButton saveSetBtn, resetBtn, startBtn, exitBtn, savePathBtn, remPathBtn, 
-		announceBtn, pathBtn;
+	private JButton saveSetBtn, resetBtn, startBtn;
+
+	JButton exitBtn;
+
+	private JButton savePathBtn, remPathBtn, announceBtn, pathBtn;
 	
 	private JLabel nrOfImgsLbl, timeLbl, foodLbl, pubLbl, statusLbl, xmlPubPathLbl, 
 		legalFilesLbl, nrOfCommentsLbl, screenLbl, bgLbl, pubnfoodStatusLbl, fadeLbl;
@@ -87,6 +89,14 @@ public class AdminFrame {
 		this.setBoxes();
 		
 		fc = new JFileChooser();
+
+		FileChooserFilter fcFilter = new FileChooserFilter();
+		fc.setAcceptAllFileFilterUsed(false);
+		fc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+		fc.addChoosableFileFilter( fcFilter);		
+		
+		smlFont = new Font("Helvetica", Font.PLAIN, 10);
+		stdItalFont = new Font("Helvetica", Font.ITALIC, 12);
 		
 		// Create and Paint thePanel background
 		thePanel = create.setNewPanel(bgImage);
@@ -547,6 +557,12 @@ public class AdminFrame {
 		statusLbl.setText("Status: Config is back to normal");
 	}
 	
+	public void setExitShow(){
+		statusLbl.setText("Status: The slideshow is dead...");
+		exitBtn.setText("Quit KisTalk");
+		startBtn.setEnabled(true);
+	}
+	
 	private class ButtonListener implements ActionListener {
 		
 		public void actionPerformed(ActionEvent e) {
@@ -634,9 +650,7 @@ public class AdminFrame {
 				
 			}else if (e.getSource() == exitBtn){ // Exit Slideshow / Program
 				if (exitBtn.getText().equals("Quit SlideShow")){
-					statusLbl.setText("Status: The slideshow is dead...");
-					exitBtn.setText("Quit KisTalk");
-					startBtn.setEnabled(true);
+					setExitShow();
 					controller.exitShow();
 				}else{
 					adminFrame.dispose();

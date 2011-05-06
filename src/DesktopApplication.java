@@ -4,6 +4,8 @@ import java.io.IOException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 public class DesktopApplication {
 	byte nrOfConfValues;
@@ -105,7 +107,11 @@ public class DesktopApplication {
 	}
 	
 	public void showClsd(){
-//		adminframe.exitBtn.doClick();
+		adminframe.setExitShow();
+	}
+	
+	public void deskClsd(){
+		adminframe.exitBtn.doClick();
 	}
 	
 	public void exitShow(){
@@ -118,6 +124,21 @@ public class DesktopApplication {
 
 	// Main
 	public static void main(String[] args) {
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (UnsupportedLookAndFeelException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		new DesktopApplication();
 		
 	}
