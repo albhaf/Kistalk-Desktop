@@ -11,21 +11,26 @@ import javax.swing.Timer;
 
 public class TwoDSlideShow extends Panel implements ActionListener {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5789717155006186682L;
+
 	Timer t;
 	
 	byte screenIndex;
-	public int nrOfConfValues;
+	public byte nrOfConfValues;
 
-	ShowImage slideShowHandler;
-	ImportPubSlides pubSlides;
+	private ShowImage slideShowHandler;
+	private ImportPubSlides pubSlides;
 
-	Rectangle monitor = new Rectangle();
-	TwoDSlideShowView view;
-	TwoDSlideShowInfo info;
-	DesktopApplication desktopApp; //For popupframe and maybe something else??
+	private Rectangle monitor = new Rectangle();
+	private TwoDSlideShowView view;
+	private TwoDSlideShowInfo info;
+	private DesktopApplication desktopApp; //For popupframe and maybe something else??
 	private boolean imageSlide;
 
- 	public TwoDSlideShow(int tmpConfValues, DesktopApplication tmpDesk) throws IOException {
+ 	public TwoDSlideShow(byte tmpConfValues, DesktopApplication tmpDesk) throws IOException {
  		desktopApp = tmpDesk;
  		nrOfConfValues = tmpConfValues;
  		imageSlide = false;
@@ -76,13 +81,12 @@ public class TwoDSlideShow extends Panel implements ActionListener {
 			}catch(IIOException e){
 				close();
 				JOptionPane.showMessageDialog(null, "Something went wrong. Couldn't open the powerpoint images. They were deleted during runtime!");
-
 			}
 			imageSlide = true;
 		} else {
 			info.updatePicture();
 			imageSlide = false;
-			slideShowHandler.setNewPicture(info.getImage(), info.getUser(), info.getImageText(), info.getImageComments());		
+			slideShowHandler.setNewPicture(info.getImage(),info.getImgInfo()/*info.getImage(), info.getUser(), info.getImageText(), info.getImageComments()*/);		
 		}
 	}
 	
