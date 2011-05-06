@@ -15,11 +15,9 @@ public class ImportPubSlides {
 	 * @param tmpPath
 	 *            String, filepath to the pubslides in image format.
 	 */
-	public ImportPubSlides(String tmpPath, TwoDSlideShow controller) {
-
-		pptToPng = new PptToPng(tmpPath);
+	public ImportPubSlides(String tmpPath, TwoDSlideShow controller,DesktopApplication tmpDesk) {
+		pptToPng = new PptToPng(tmpPath,tmpDesk);
 		currentSlide = -1;
-		pptToPng.extract();
 		countFiles();
 	}
 
