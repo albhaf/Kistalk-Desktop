@@ -22,16 +22,15 @@ public class FrameListener implements WindowListener{
 
 	@Override
 	public void windowClosed(WindowEvent arg0) {
-
+		JFrame frame = (JFrame)( arg0.getSource());
+		String title = frame.getTitle();
+		if(title.equalsIgnoreCase("ShowImage.java")){
+			ShowImageClosing();
+		}
 	}
 
 	@Override
 	public void windowClosing(WindowEvent arg0) {
-		JFrame frame = (JFrame)( arg0.getSource());
-		String title = frame.getTitle();
-		if(title.equalsIgnoreCase("ShowImage")){
-			ShowImageClosing();
-		}
 
 	}
 
