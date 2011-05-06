@@ -54,11 +54,14 @@ public class AdminFrame {
 	private JFileChooser fc;
 	
 	private List<String> slidePaths, slideNames;
+	
+	private FrameListener framelistener;
 
 	//	Constructor
-	public AdminFrame(DesktopApplication tmpCont, Font tmpFont) {
+	public AdminFrame(DesktopApplication tmpCont, Font tmpFont, FrameListener tmplistener){
 		controller = tmpCont;
 		stdFont = tmpFont;
+		framelistener = tmplistener;
 	}
 
 	//	Setting up the settings frame
@@ -95,12 +98,13 @@ public class AdminFrame {
 		adminFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		adminFrame.setTitle("KisTalk Slideshow Settings");
 		adminFrame.setUndecorated(false);
+		adminFrame.addWindowListener(framelistener);
 		
 		thePanel.setLayout(groupLayout);
 
 		//	Label settings
 		headerLbl.setIcon(new ImageIcon("kistalk_adm_logo.png"));
-	
+		
 		//	DropDownList settings, with ItemListeners
 		pubSlidesDDLst.addItem("[Saved slideshows]");
 		for (int i = 0; i < slideNames.size(); i++)

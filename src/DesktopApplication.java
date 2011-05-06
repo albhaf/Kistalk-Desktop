@@ -16,6 +16,7 @@ public class DesktopApplication {
 	AdminFrame adminframe;
 	TwoDSlideShow slideshow;
 	ConfigSettings config;
+	FrameListener framelistener;
 	SlidePath slidepath = new SlidePath();
 	
 	public DesktopApplication() {
@@ -25,6 +26,7 @@ public class DesktopApplication {
 		stdFont = new Font("Imperial", Font.PLAIN, 12);
 		bldFont = new Font("Arial", Font.BOLD, 12);
 		config = new ConfigSettings(nrOfConfValues);
+		framelistener = new FrameListener(this);
 		
 		loginframe = new LogInFrame(bgImage, this);
 		loginframe.logFrame.setVisible(true);
@@ -33,7 +35,7 @@ public class DesktopApplication {
 
 	public void login(String user, String token, JFrame logFrame) {
 		String[] values = new String[11];
-		adminframe = new AdminFrame(this, stdFont);
+		adminframe = new AdminFrame(this, stdFont, framelistener);
 		nifty = new NiftyHTTP(user, token);
 		
 		if (nifty.validateToken()) {
