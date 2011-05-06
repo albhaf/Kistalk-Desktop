@@ -18,6 +18,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.filechooser.FileFilter;
 
 
 public class AdminFrame {
@@ -242,7 +243,7 @@ public class AdminFrame {
 			   			.addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
 			   					.addComponent(xmlPubPathLbl)
 			   					.addGroup(groupLayout.createSequentialGroup()
-			   							.addComponent(xmlPubPathTxt, 277, 277, 277)
+			   							.addComponent(xmlPubPathTxt, 228, 228, 228)
 			   							.addGap(2)
 			   							.addComponent(pathBtn, 40, 40, 40)
 			   					)
@@ -496,7 +497,6 @@ public class AdminFrame {
 		fadeTxt.setText(values[3]);
 		nrOfCommentsTxt.setText(values[7]);
 		xmlPubPathTxt.setText(values[8]);
-		statusLbl.setText("Status: Config is back to normal");
 		
 	}
 	
@@ -511,6 +511,7 @@ public class AdminFrame {
 			slideNames.add(names.get(i));
 			slidePaths.add(paths.get(i));
 		}
+		statusLbl.setText("Status: Config is back to normal");
 	}
 	
 	private class ButtonListener implements ActionListener {
@@ -563,25 +564,27 @@ public class AdminFrame {
 				int returnVal = fc.showOpenDialog(adminFrame);
 				
 				if (returnVal == fc.APPROVE_OPTION){
-					System.out.println(fc.getName(fc.getCurrentDirectory()));
-					System.out.println(fc.getName(fc.getSelectedFile()));
 					
-				}else{
-					controller.fail("Error", "Failed to get file, try again!");
+					//Kolla fileextensions!
+					
+					xmlPubPathTxt.setText(fc.getSelectedFile().getAbsoluteFile().toString());
+					
+//					else; controller.fail("Error", "Choose an image-file!");
+					
+				}else if (returnVal == fc.CANCEL_OPTION){
+					System.out.print("You have ended this filehandler =(");
 				}
-				
 				
 			}else if (e.getSource() == savePathBtn){ // Save Slideshow
 				if (xmlPubPathTxt.getText().equals("") == false){
-						//Kolla fileextensions
+					//Kolla fileextensions
 //					String extension = Utils.getExtension(f);
 //				    if (extension != null) {
-//					if (extension.equals(Utils.tiff) ||
-//					    extension.equals(Utils.tif) ||
-//					    extension.equals(Utils.gif) ||
-//					    extension.equals(Utils.jpeg) ||
-//					    extension.equals(Utils.jpg) ||
-//					    extension.equals(Utils.png)) {
+//				    	if (	extension.equals(Utils.gif) ||
+//				    			extension.equals(Utils.jpeg) ||
+//				    			extension.equals(Utils.jpg) ||
+//				    			extension.equals(Utils.png) ||
+//				    			extension.equals(Utils.bmp)) {
 //					        return true;
 //					} else {
 //					    return false;
@@ -594,7 +597,7 @@ public class AdminFrame {
 					controller.popup("Name the slideshow: ", xmlPubPathTxt.getText());
 					statusLbl.setText("Status: Slideshow saved");
 				}else{
-					controller.fail("Wrong path", "You have to specify a path to your .ppt-file!");
+					controller.fail("Wrong path", "You have to specify a correct path to your .ppt-file!");
 				}
 			
 			}else if (e.getSource() == remPathBtn){ // Remove saved Slideshow
