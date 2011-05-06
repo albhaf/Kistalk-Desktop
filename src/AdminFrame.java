@@ -2,7 +2,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -17,6 +16,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 
 public class AdminFrame {
@@ -53,14 +53,14 @@ public class AdminFrame {
 	JLabel pubnfoodStatusLbl;
 	JLabel fadeLbl;
 	
-	TextField nrOfImgsTxt;
-	TextField timeTxt;
-	TextField xmlPubPathTxt;
-	TextField legalFilesTxt;
-	TextField nrOfCommentsTxt;
-	TextField eventTxt;
-	TextField foodTxt;
-	TextField fadeTxt;
+	JTextField nrOfImgsTxt;
+	JTextField timeTxt;
+	JTextField xmlPubPathTxt;
+	JTextField legalFilesTxt;
+	JTextField nrOfCommentsTxt;
+	JTextField eventTxt;
+	JTextField foodTxt;
+	JTextField fadeTxt;
 	
 	JCheckBox foodChb;
 	JCheckBox pubChb;
@@ -114,14 +114,14 @@ public class AdminFrame {
 		fadeLbl = new JLabel();
 		pubnfoodStatusLbl = new JLabel();
 		
-		nrOfImgsTxt = new TextField();
-		timeTxt = new TextField();
-		xmlPubPathTxt = new TextField();
-		legalFilesTxt = new TextField();
-		nrOfCommentsTxt = new TextField();
-		eventTxt = new TextField();
-		foodTxt = new TextField();
-		fadeTxt = new TextField();
+		nrOfImgsTxt = new JTextField();
+		timeTxt = new JTextField();
+		xmlPubPathTxt = new JTextField();
+		legalFilesTxt = new JTextField();
+		nrOfCommentsTxt = new JTextField();
+		eventTxt = new JTextField();
+		foodTxt = new JTextField();
+		fadeTxt = new JTextField();
 		
 		foodChb = new JCheckBox();
 		pubChb = new JCheckBox();

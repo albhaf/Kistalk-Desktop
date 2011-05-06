@@ -2,7 +2,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -11,13 +10,14 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 public class LogInFrame{
 	public JLabel logInstrLbl;
 	public JButton sbmBtn;
 	public JButton clsBtn;
-	public TextField logUserTxt;
-	public TextField logPassTxt;
+	public JTextField logUserTxt;
+	public JTextField logPassTxt;
 	public JFrame logFrame;
 	Image bgImage;
 	LoginListener listener;
@@ -54,8 +54,8 @@ public class LogInFrame{
 		JLabel logMailLbl = new JLabel();
 		JLabel logPassLbl = new JLabel();
 		logInstrLbl = new JLabel();
-		logUserTxt = new TextField();
-		logPassTxt = new TextField();
+		logUserTxt = new JTextField();
+		logPassTxt = new JTextField();
 		sbmBtn = new JButton();
 		clsBtn = new JButton();
 		GroupLayout logLayout = new GroupLayout(logPanel);

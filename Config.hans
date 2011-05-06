@@ -23,14 +23,14 @@ _|    _|  _|  _|_|_|       _|      _|_|_|  _|  _|    _|
 *'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*
 *'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*
 
-//	Date of last revision: 15:50 den 5/4
+//	Date of last revision: 16:56 den 5/4
 
 
 Max_number_of_Images %7
 
 Number_of_Hans %-
 
-Timer_interval %10
+Timer_interval %800
 
 Fading_speed %1
 
