@@ -47,7 +47,6 @@ public class PopupFrame{
 				setOpaque(false);
 	    		super.paint(g);
 	    		setOpaque(true);
-	    		repaint();
 	    		
 			}
 		};

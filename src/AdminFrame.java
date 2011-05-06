@@ -141,7 +141,6 @@ public class AdminFrame {
 				setOpaque(false);
 	    		super.paint(g);
 	    		setOpaque(true);
-	    		repaint();
 	    		
 			}
 		};
