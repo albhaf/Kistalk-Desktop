@@ -604,12 +604,8 @@ public class AdminFrame {
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource() == saveSetBtn){ // Save settings to config
 				getTxt();
-				if (validateTxt()){
 					controller.setConf(values);
 					statusLbl.setText("Status: Settings saved to Config");
-				}else{
-					controller.fail("Error", "One or more textfields contains too few / too many chars");
-				}
 				
 			}else if (e.getSource() == resetBtn){ // Reset settings in config
 				controller.popup("Are you sure you want to reset the config file?", "");
@@ -681,17 +677,7 @@ public class AdminFrame {
 //				if (values[0].equals("") || values[2].equals("") || values[3].equals("") || values[7].equals("") || values[8].equals("")){
 //					controller.fail("Error", "No empty textboxes are allowed!");}
 				getTxt();
-				if (validateTxt()){
-						controller.setConf(values);
-						exitBtn.setText("Quit SlideShow");
-						startBtn.setEnabled(false);
-						statusLbl.setText("Status: Slideshow started");
-						try{
-							controller.startShow();
-						}catch(NullPointerException e1){}
-					}else{
-						controller.fail("Error", "Invalid input");
-					}
+				
 			}else if (e.getSource() == exitBtn){ // Exit Slideshow / Program
 				if (exitBtn.getText().equals("Quit SlideShow")){
 					setExitShow();
