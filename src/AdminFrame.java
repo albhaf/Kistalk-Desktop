@@ -25,7 +25,7 @@ public class AdminFrame {
 	CreateNewElements create;	
 	
 	String slideItem = null;
-	String[] values;
+	ConfigQueue values;
 	Font stdFont;
 	Font smlFont;
 	Font stdItalFont;
@@ -68,7 +68,7 @@ public class AdminFrame {
 	}
 
 	//	Setting up the settings frame
-	public void setupFrame(final String[] confValues, final List<String> tmpNames, final List<String> tmpPaths, final Image bgImage){
+	public void setupFrame(final ConfigQueue confValues, final List<String> tmpNames, final List<String> tmpPaths, final Image bgImage){
 		create = new CreateNewElements();
 		listener = new ButtonListener();
 		
@@ -213,9 +213,11 @@ public class AdminFrame {
 					public void itemStateChanged(ItemEvent e){
 						if (e.getStateChange() == ItemEvent.SELECTED)
 							if (e.getItem().toString() == "This"){
-								values[5] = "0";
+								values.remove("Screen_index %");
+								values.add("Screen_index %" + "0");
 							}else if (e.getItem().toString() == "External"){
-								values[5] = "1";
+								values.remove("Screen_index %");
+								values.add("Screen_index %" + "1");
 							}
 						statusLbl.setText("Status: " + e.getItem().toString() + " screen it is!");
 					}
@@ -419,14 +421,14 @@ public class AdminFrame {
 	}
 	
 	private void setTextFields(){
-		nrOfImgsTxt = create.setNewTextField(values[0], stdFont, true);
-		timeTxt = create.setNewTextField(values[2], stdFont, true);
+		nrOfImgsTxt = create.setNewTextField(values.getValue("Max_number_of_Images"), stdFont, true);
+		timeTxt = create.setNewTextField(values.getValue("Timer_interval"), stdFont, true);
 		xmlPubPathTxt = create.setNewTextField("C:\\...", stdFont, true);
-		legalFilesTxt = create.setNewTextField(values[4], stdItalFont, false);
-		nrOfCommentsTxt = create.setNewTextField(values[7], stdFont, true);
+		legalFilesTxt = create.setNewTextField(values.getValue("supported_image_formats"), stdItalFont, false);
+		nrOfCommentsTxt = create.setNewTextField(values.getValue("Number_of_comments"), stdFont, true);
 		eventTxt = create.setNewTextField("", stdFont, false);
 		foodTxt = create.setNewTextField("", stdFont, false);
-		fadeTxt = create.setNewTextField(values[3], stdFont, true);
+		fadeTxt = create.setNewTextField(values.getValue("Fading_speed"), stdFont, true);
 	}
 	
 	private void setLabels(){
@@ -477,6 +479,7 @@ public class AdminFrame {
 		nrOfImgsTxt.setEnabled(false);
 		timeTxt.setEnabled(false);
 		nrOfCommentsTxt.setEnabled(false);
+		pathBtn.setEnabled(false);
 		
 		savePathBtn.setEnabled(false);
 		remPathBtn.setEnabled(false);
@@ -513,6 +516,7 @@ public class AdminFrame {
 		nrOfImgsTxt.setEnabled(true);
 		timeTxt.setEnabled(true);
 		nrOfCommentsTxt.setEnabled(true);
+		pathBtn.setEnabled(true);
 		
 		savePathBtn.setEnabled(true);
 		remPathBtn.setEnabled(true);
@@ -550,31 +554,27 @@ public class AdminFrame {
 		
 	}
 	
-	public boolean chkTxts(){  //G�r n�got �t!
-		if (nrOfImgsTxt.getText().equals("") == false && timeTxt.getText().equals("") == false && xmlPubPathTxt.getText().equals("") == false && nrOfCommentsTxt.getText().equals("") == false && fadeTxt.getText().equals("") == false) {
-			return true;
-		}else{
-			return false;
-		}
-		
-	}
-	
 	public void getTxt(){ // Get text from textfields
-		values[0] = nrOfImgsTxt.getText();
-		values[2] = timeTxt.getText();
-		values[3] = fadeTxt.getText();
-		values[7] = nrOfCommentsTxt.getText();
-		values[8] = xmlPubPathTxt.getText();
+		values.replaceValue("Max_number_of_Images", nrOfImgsTxt.getText());
+		//values[0] = nrOfImgsTxt.getText();
+		values.replaceValue("Timer_interval", timeTxt.getText());
+		//values[2] = timeTxt.getText();
+		values.replaceValue("Fading_speed", fadeTxt.getText());
+		//values[3] = fadeTxt.getText();
+		values.replaceValue("Number_of_comments",  nrOfCommentsTxt.getText());
+		//values[7] = nrOfCommentsTxt.getText();
+		values.replaceValue("Path_to_Pubslides", xmlPubPathTxt.getText());
+		//values[8] = xmlPubPathTxt.getText();
 		
 	}
 	
-	public void setTxt(String[] values){ // Write text to textfields
-		nrOfImgsTxt.setText(values[0]);
-		timeTxt.setText(values[2]);
-		fadeTxt.setText(values[3]);
+	public void setTxt(ConfigQueue values){ // Write text to textfields
+		nrOfImgsTxt.setText(values.getValue("Max_number_of_Images"));
+		timeTxt.setText(values.getValue("Timer_interval"));
+		fadeTxt.setText(values.getValue("Fading_speed"));
 		screenDDLst.setSelectedItem("This");
-		nrOfCommentsTxt.setText(values[7]);
-		xmlPubPathTxt.setText(values[8]);
+		nrOfCommentsTxt.setText(values.getValue("Number_of_comments"));
+		xmlPubPathTxt.setText(values.getValue("Path_to_Pubslide"));
 		
 	}
 	
@@ -592,6 +592,19 @@ public class AdminFrame {
 		statusLbl.setText("Status: Config is back to normal");
 	}
 	
+	public boolean validateTxt(){
+		try {
+			Integer.parseInt(values.getIndex(0));
+			Integer.parseInt(values.getIndex(1));
+			Integer.parseInt(values.getIndex(2));
+			Integer.parseInt(values.getIndex(6));
+		}catch(NumberFormatException ex){
+			return false;
+		}
+		
+		return true;
+	}
+	
 	public void setExitShow(){
 		statusLbl.setText("Status: The slideshow is dead...");
 		exitBtn.setText("Quit KisTalk");
@@ -602,13 +615,9 @@ public class AdminFrame {
 		
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource() == saveSetBtn){ // Save settings to config
-				if (chkTxts()){
-					getTxt();
+				getTxt();
 					controller.setConf(values);
 					statusLbl.setText("Status: Settings saved to Config");
-				}else{
-					controller.fail("Error", "One or more textfields contains too few / too many chars");
-				}
 				
 			}else if (e.getSource() == resetBtn){ // Reset settings in config
 				controller.popup("Are you sure you want to reset the config file?", "");
@@ -662,7 +671,6 @@ public class AdminFrame {
 			}else if (e.getSource() == savePathBtn){ // Save Slideshow
 				if (xmlPubPathTxt.getText().equals("") == false && xmlPubPathTxt.getText().endsWith(".ppt")){
 					controller.popup("Name the slideshow: ", xmlPubPathTxt.getText());
-					statusLbl.setText("Status: Slideshow saved");
 				}else{
 					controller.fail("Wrong path", "You have to specify a correct path to your .ppt-file!");
 				}
@@ -678,17 +686,18 @@ public class AdminFrame {
 				
 			}else if (e.getSource() == startBtn){ // Start Slideshow
 				getTxt();
-				controller.setConf(values);
-				exitBtn.setText("Quit SlideShow");
-				startBtn.setEnabled(false);
-				statusLbl.setText("Status: Slideshow started");
-				try{
-				controller.startShow();
-				}catch(NullPointerException e1){
-					
+				if (validateTxt()){
+					controller.setConf(values);
+					exitBtn.setText("Quit Slideshow");
+					startBtn.setEnabled(false);
+					controller.startShow();
+					statusLbl.setText("Slideshow started");
+				}else{
+					controller.fail("Error", "Input Invalid");
 				}
+				
 			}else if (e.getSource() == exitBtn){ // Exit Slideshow / Program
-				if (exitBtn.getText().equals("Quit SlideShow")){
+				if (exitBtn.getText().equals("Quit Slideshow")){
 					setExitShow();
 					controller.exitShow();
 				}else{

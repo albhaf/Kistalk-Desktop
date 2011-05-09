@@ -58,34 +58,30 @@ public class ConfigHandler {
 	}
 
 	//	Returns all wanted values in lines, or parts of lines
-	public String[] processLineByLine() throws FileNotFoundException{
+	public ConfigQueue processLineByLine() throws FileNotFoundException{
 		Scanner scanner = new Scanner(new FileReader(fFile));
-		String[] lines = new String[nrOfConfValues];
-		int i = 0;
-		
+		ConfigQueue lines = new ConfigQueue();
+		String tmp;
 		while(scanner.hasNextLine()){
-			String tmp = processLine(scanner.nextLine());
-			if (tmp != null){
-				lines[i] = tmp;
-				i++;
+			tmp=scanner.nextLine();
+			if (tmp.contains("%")){
+				tmp=tmp.replace(" ", "");
+				lines.add(tmp);
 			}
 		}
+		
 		
 		return lines;
 	}
 	
 	//	Returns a divided String
-	public String processLine(String aLine){
+	private String processLine(String aLine){
 		Scanner scanner = new Scanner(aLine);
 		String part = null;
 		
-		scanner.useDelimiter("%");
-		
-		if (scanner.hasNext()){
-		scanner.next();
-			if(scanner.hasNext()){
-				part = scanner.next();
-			}
+		//part = scanner;
+		if(scanner.hasNext()){
+			part = scanner.next();
 		}
 		
 		return part;

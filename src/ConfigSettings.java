@@ -14,8 +14,8 @@ public class ConfigSettings {
 	}
 	
 	//	Reads Config and saves values in 'confValues'
-	public String[] getValues() {
-		String[] values = new String[nrOfConfValues];
+	public ConfigQueue getValues() {
+		ConfigQueue values = new ConfigQueue();
 		
 		
 		try {
@@ -30,7 +30,7 @@ public class ConfigSettings {
 	}
 
 	//	Saves current settings to Config (except Default Turtle, he only lives in config when config is defaultahrized)
-	public void setValues(String[] values) {
+	public void setValues(ConfigQueue values) {
 		String[] lines = new String[49];
 		Date today = new Date();
 		
@@ -75,17 +75,17 @@ public class ConfigSettings {
 		lines[47] = "";
 		
 		//	Defined values
-		lines[28] = "Max_number_of_Images %" + values[0];
+		lines[28] = "Max_number_of_Images %" + values.getValue("Max_number_of_Images");
 		lines[30] = "Number_of_Hans %-";
-		lines[32] = "Timer_interval %" + values[2];
-		lines[34] = "Fading_speed %" + values[3];
+		lines[32] = "Timer_interval %" + values.getValue("Timer_interval");
+		lines[34] = "Fading_speed %" + values.getValue("Fading_speed");
 		lines[36] = "supported_image_formats %.jpg .png .gif .bnp";
-		lines[38] = "Screen_index %" + values[5];
+		lines[38] = "Screen_index %" + values.getValue("Screen_index");
 		lines[40] = "XMLURL %http://www.kistalk.com/api/feed/desktop.xml";
-		lines[42] = "Number_of_comments %" + values[7];
-		lines[44] = "Path_to_Pubslides %" + values[8];
-		lines[46] = "Saved_Pubslides %" + values[9];
-		lines[48] = "Saved_Paths %" + values[10];
+		lines[42] = "Number_of_comments %" + values.getValue("Number_of_comments");
+		lines[44] = "Path_to_Pubslides %" + values.getValue("Path_to_Pubslides");
+		lines[46] = "Saved_Pubslides %" + values.getValue("Saved_Pubslides");
+		lines[48] = "Saved_Paths %" + values.getValue("Saved_Paths");
 		
 		// Write to file (config)
 		handler.setConfig(lines);
@@ -93,7 +93,7 @@ public class ConfigSettings {
 	}
 
 	//	Resets Config to its standard state
-	public String[] resetValues() {
+	public ConfigQueue resetValues() {
 		
 		//	Reset Config-file
 		try {
