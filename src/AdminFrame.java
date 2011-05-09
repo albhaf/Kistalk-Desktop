@@ -562,12 +562,11 @@ public class AdminFrame {
 	}
 	
 	public void getTxt(){ // Get text from textfields
-		values[0] = nrOfImgsTxt.getText();
-		values[2] = timeTxt.getText();
-		values[3] = fadeTxt.getText();
-		values[7] = nrOfCommentsTxt.getText();
-		values[8] = xmlPubPathTxt.getText();
-		
+			values[0] = nrOfImgsTxt.getText();
+			values[2] = timeTxt.getText();
+			values[3] = fadeTxt.getText();
+			values[7] = nrOfCommentsTxt.getText();
+			values[8] = xmlPubPathTxt.getText();
 	}
 	
 	public void setTxt(String[] values){ // Write text to textfields
@@ -592,6 +591,20 @@ public class AdminFrame {
 			slidePaths.add(paths.get(i));
 		}
 		statusLbl.setText("Status: Config is back to normal");
+	}
+	
+	public boolean validateTxt(){
+		try{
+			Integer.parseInt(values[0]);
+			Integer.parseInt(values[2]);
+			Integer.parseInt(values[3]);
+			Integer.parseInt(values[7]);
+		}catch(NumberFormatException ex){
+			return false;
+		}
+		
+		return true;
+		
 	}
 	
 	public void setExitShow(){
@@ -679,16 +692,20 @@ public class AdminFrame {
 				}
 				
 			}else if (e.getSource() == startBtn){ // Start Slideshow
-				getTxt();
-				controller.setConf(values);
-				exitBtn.setText("Quit SlideShow");
-				startBtn.setEnabled(false);
-				statusLbl.setText("Status: Slideshow started");
-				try{
-				controller.startShow();
-				}catch(NullPointerException e1){
-					
-				}
+//				if (values[0].equals("") || values[2].equals("") || values[3].equals("") || values[7].equals("") || values[8].equals("")){
+//					controller.fail("Error", "No empty textboxes are allowed!");}
+					if (validateTxt()){
+						getTxt();
+						controller.setConf(values);
+						exitBtn.setText("Quit SlideShow");
+						startBtn.setEnabled(false);
+						statusLbl.setText("Status: Slideshow started");
+						try{
+							controller.startShow();
+						}catch(NullPointerException e1){}
+					}else{
+						controller.fail("Error", "Invalid input");
+					}
 			}else if (e.getSource() == exitBtn){ // Exit Slideshow / Program
 				if (exitBtn.getText().equals("Quit SlideShow")){
 					setExitShow();
