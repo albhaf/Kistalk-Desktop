@@ -83,7 +83,6 @@ public class FailFrame{
 		);
 		
 		errFrame.add(errPanel);
-		
 		errFrame.pack();
 		
 	}
