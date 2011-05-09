@@ -552,15 +552,6 @@ public class AdminFrame {
 		
 	}
 	
-	public boolean chkTxts(){  //G�r n�got �t!
-		if (nrOfImgsTxt.getText().equals("") == false && timeTxt.getText().equals("") == false && xmlPubPathTxt.getText().equals("") == false && nrOfCommentsTxt.getText().equals("") == false && fadeTxt.getText().equals("") == false) {
-			return true;
-		}else{
-			return false;
-		}
-		
-	}
-	
 	public void getTxt(){ // Get text from textfields
 			values[0] = nrOfImgsTxt.getText();
 			values[2] = timeTxt.getText();
@@ -617,8 +608,8 @@ public class AdminFrame {
 		
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource() == saveSetBtn){ // Save settings to config
-				if (chkTxts()){
-					getTxt();
+				getTxt();
+				if (validateTxt()){
 					controller.setConf(values);
 					statusLbl.setText("Status: Settings saved to Config");
 				}else{
@@ -694,8 +685,8 @@ public class AdminFrame {
 			}else if (e.getSource() == startBtn){ // Start Slideshow
 //				if (values[0].equals("") || values[2].equals("") || values[3].equals("") || values[7].equals("") || values[8].equals("")){
 //					controller.fail("Error", "No empty textboxes are allowed!");}
-					if (validateTxt()){
-						getTxt();
+				getTxt();
+				if (validateTxt()){
 						controller.setConf(values);
 						exitBtn.setText("Quit SlideShow");
 						startBtn.setEnabled(false);

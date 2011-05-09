@@ -23,7 +23,7 @@ _|    _|  _|  _|_|_|       _|      _|_|_|  _|  _|    _|
 *'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*
 *'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*
 
-//	Date of last revision: 9:55 den 9/4
+//	Date of last revision: 14:20 den 9/4
 
 
 Max_number_of_Images %7
@@ -32,7 +32,7 @@ Number_of_Hans %-
 
 Timer_interval %200
 
-Fading_speed %
+Fading_speed %1
 
 supported_image_formats %.jpg .png .gif .bnp
 
@@ -40,7 +40,7 @@ Screen_index %0
 
 XMLURL %http://www.kistalk.com/api/feed/desktop.xml
 
-Number_of_comments %2
+Number_of_comments %4
 
 Path_to_Pubslides %asd.ppt
 
