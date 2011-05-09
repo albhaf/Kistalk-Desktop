@@ -34,32 +34,32 @@ public class DesktopApplication {
 	}
 
 	public void login(String user, String token, JFrame logFrame) {
-		String[] values = new String[11];
+		ConfigQueue values = new ConfigQueue();
 		adminframe = new AdminFrame(this, stdFont, framelistener);
 		nifty = new NiftyHTTP(user, token);
 		
 		if (nifty.validateToken()) {
 			loginframe.clooose();
 			values = config.getValues();
-			adminframe.setupFrame(values, slidepath.ninja(values[9]), slidepath.ninja(values[10]), bgImage);
+			adminframe.setupFrame(values, slidepath.ninja(values.getValue("Saved_Pubslides")), slidepath.ninja(values.getValue("Saved_Paths")), bgImage);
 			
 		} else {
 			fail("Error", "Wrong username and/or token. Try again.");
 		}
 	}
 	
-	public String[] getConf(){
+	public ConfigQueue getConf(){
 		return config.getValues();
 	}
 	
-	public void setConf(String[] vals){
+	public void setConf(ConfigQueue vals){
 		config.setValues(vals);
 	}
 	
 	public void resetConf(){
-		String[] lclVals = config.resetValues();
+		ConfigQueue lclVals = config.resetValues();
 		adminframe.setTxt(lclVals);
-		adminframe.setPaths(slidepath.ninja(lclVals[9]), slidepath.ninja(lclVals[10]));
+		adminframe.setPaths(slidepath.ninja(lclVals.getValue("Saved_Pubslides")), slidepath.ninja(lclVals.getValue("Saved_Paths")));
 	}
 	
 	public void announce(String food_description, String event, boolean pub_open, boolean food_ready){ // Send announcement to server

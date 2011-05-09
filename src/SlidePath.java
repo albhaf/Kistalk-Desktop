@@ -5,21 +5,21 @@ import java.util.Scanner;
 
 public class SlidePath {
 	
-	public String[] add(String name, String path, String[] confValues){
+	public ConfigQueue add(String name, String path, ConfigQueue confValues){
 		List<String> names;
 		StringBuffer sb = new StringBuffer();
 		
-		names = ninja(confValues[9]);
+		names = ninja(confValues.getValue("Saved_Pubslides"));
 		if (names.indexOf(name) == -1){
-			sb.append(confValues[9] + "|");
+			sb.append(confValues.getValue("Saved_Pubslides") + "|");
 			sb.append(name);
-			confValues[9] = sb.toString();
+			confValues.replaceValue("Saved_Pubslides", sb.toString());
 			
 			sb.delete(0, sb.length());
 			
-			sb.append(confValues[10] + "|");
+			sb.append(confValues.getValue("Saved_Paths") + "|");
 			sb.append(path);
-			confValues[10] = sb.toString();
+			confValues.replaceValue("Saved_Path", sb.toString());
 			
 		}else{
 			//The name already exist, pick another
@@ -29,13 +29,13 @@ public class SlidePath {
 		
 	}
 	
-	public String[] remove(String name, String[] confValues){
+	public ConfigQueue remove(String name, ConfigQueue confValues){
 		List<String> names, paths;
 		StringBuffer sb1 = new StringBuffer();
 		StringBuffer sb2 = new StringBuffer();
 		
-		names = ninja(confValues[9]);
-		paths = ninja(confValues[10]);
+		names = ninja(confValues.getValue("Saved_Pubslides"));
+		paths = ninja(confValues.getValue("Saved_Paths"));
 		
 		int i = names.indexOf(name);
 		if (i != -1){
@@ -47,14 +47,14 @@ public class SlidePath {
 				if (j < names.size()-1)
 					sb1.append("|");
 			}
-			confValues[9] = sb1.toString();
+			confValues.replaceValue("Saved_Pubslides", sb1.toString());
 			
 			for (int j = 0; j < paths.size(); j++){
 				sb2.append(paths.get(j));
 				if (j < paths.size()-1)
 					sb2.append("|");
 			}
-			confValues[10] = sb2.toString();
+			confValues.replaceValue("Saved_Path", sb2.toString());
 			
 		}else{ //No such item
 			//Failframe(); ?

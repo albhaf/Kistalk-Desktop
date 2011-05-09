@@ -50,8 +50,9 @@ public class TwoDSlideShowInfo {
 	protected String[] readConfig() throws FileNotFoundException {
 
 		ConfigHandler reader = new ConfigHandler(nrOfConfValues);
-		String[] values = new String[9];
+		ConfigQueue values = new ConfigQueue();
 		String[] returner = new String[2];
+		String compare;
 		
 		try {
 			values = reader.processLineByLine();
@@ -59,8 +60,34 @@ public class TwoDSlideShowInfo {
 			e.printStackTrace();
 		}
 
+		do{
+			compare = values.peek();
+			if(compare.equalsIgnoreCase("Max_number_of_Images")){
+				nrOfPics=Integer.valueOf(values.get());
+				urlArray = new URL[nrOfPics];
+				imgQueue = new ImageQueue(nrOfPics);
+			}else if(compare.equalsIgnoreCase("Timer_interval")){
+				timeStill = Integer.valueOf(values.get());
+			}else if(compare.equalsIgnoreCase("Fading_speed")){
+				fadingSpeed = Integer.valueOf(values.get());
+			}else if(compare.equalsIgnoreCase("supported_image_formats")){
+				fileFormats = values.get().split((" "));
+			}else if(compare.equals("Screen_index")){
+				returner[0] = values.get();
+			}else if(compare.equalsIgnoreCase("XMLURL")){
+				xmlPath = values.get();
+			}else if(compare.equalsIgnoreCase("Number_of_comments")){
+				nrOfComments = Integer.valueOf(values.get());
+			}else if(compare.equalsIgnoreCase("Path_to_Pubslides")){
+				returner[1]=values.get();
+			}else if(compare.equalsIgnoreCase("Saved_Pubslides")){
+				values.remove("Saved_Pubslides");
+			}else if(compare.equalsIgnoreCase("Saved_Paths")){
+				values.remove("Saved_Paths");
+			}
+			
 		// Hantera inkommande data
-		nrOfPics = Integer.valueOf(values[0]);
+/*		nrOfPics = Integer.valueOf(values[0]);
 		urlArray = new URL[nrOfPics];
 		imgQueue = new ImageQueue(nrOfPics);
 		timeStill = Integer.valueOf(values[2]);
@@ -69,9 +96,9 @@ public class TwoDSlideShowInfo {
 		returner[0] =values[5];
 		xmlPath = values[6];
 		nrOfComments = Integer.valueOf(values[7]);
-		returner[1]=(values[8]);
+		returner[1]=(values[8]);*/
 
-
+		}while(values.size()>0);
 		return returner;
 	}
 
