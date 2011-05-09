@@ -479,6 +479,7 @@ public class AdminFrame {
 		nrOfImgsTxt.setEnabled(false);
 		timeTxt.setEnabled(false);
 		nrOfCommentsTxt.setEnabled(false);
+		pathBtn.setEnabled(false);
 		
 		savePathBtn.setEnabled(false);
 		remPathBtn.setEnabled(false);
@@ -515,6 +516,7 @@ public class AdminFrame {
 		nrOfImgsTxt.setEnabled(true);
 		timeTxt.setEnabled(true);
 		nrOfCommentsTxt.setEnabled(true);
+		pathBtn.setEnabled(true);
 		
 		savePathBtn.setEnabled(true);
 		remPathBtn.setEnabled(true);
@@ -548,15 +550,6 @@ public class AdminFrame {
 			foodLbl.setForeground(Color.WHITE);
 			pubLbl.setForeground(Color.WHITE);
 			
-		}
-		
-	}
-	
-	public boolean chkTxts(){  //G�r n�got �t!
-		if (nrOfImgsTxt.getText().equals("") == false && timeTxt.getText().equals("") == false && xmlPubPathTxt.getText().equals("") == false && nrOfCommentsTxt.getText().equals("") == false && fadeTxt.getText().equals("") == false) {
-			return true;
-		}else{
-			return false;
 		}
 		
 	}
@@ -599,6 +592,7 @@ public class AdminFrame {
 		statusLbl.setText("Status: Config is back to normal");
 	}
 	
+	
 	public void setExitShow(){
 		statusLbl.setText("Status: The slideshow is dead...");
 		exitBtn.setText("Quit KisTalk");
@@ -609,8 +603,8 @@ public class AdminFrame {
 		
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource() == saveSetBtn){ // Save settings to config
-				if (chkTxts()){
-					getTxt();
+				getTxt();
+				if (validateTxt()){
 					controller.setConf(values);
 					statusLbl.setText("Status: Settings saved to Config");
 				}else{
@@ -684,16 +678,20 @@ public class AdminFrame {
 				}
 				
 			}else if (e.getSource() == startBtn){ // Start Slideshow
+//				if (values[0].equals("") || values[2].equals("") || values[3].equals("") || values[7].equals("") || values[8].equals("")){
+//					controller.fail("Error", "No empty textboxes are allowed!");}
 				getTxt();
-				controller.setConf(values);
-				exitBtn.setText("Quit SlideShow");
-				startBtn.setEnabled(false);
-				statusLbl.setText("Status: Slideshow started");
-				try{
-				controller.startShow();
-				}catch(NullPointerException e1){
-					
-				}
+				if (validateTxt()){
+						controller.setConf(values);
+						exitBtn.setText("Quit SlideShow");
+						startBtn.setEnabled(false);
+						statusLbl.setText("Status: Slideshow started");
+						try{
+							controller.startShow();
+						}catch(NullPointerException e1){}
+					}else{
+						controller.fail("Error", "Invalid input");
+					}
 			}else if (e.getSource() == exitBtn){ // Exit Slideshow / Program
 				if (exitBtn.getText().equals("Quit SlideShow")){
 					setExitShow();
