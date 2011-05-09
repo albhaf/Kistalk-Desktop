@@ -38,7 +38,7 @@ public class ShowImage extends JPanel {
 		imgRect = new ImgRect();
 		outgoing = false;
 		transperacy = 0;
-		fadingSpeed = (float) (speedIn*0.001);
+		fadingSpeed = (float) (speedIn*0.005);
 
 		imageUserTxtDsp = new TextToDisplay();
 
