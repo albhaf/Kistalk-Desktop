@@ -19,7 +19,7 @@ public class SlidePath {
 			
 			sb.append(confValues.getValue("Saved_Paths") + "|");
 			sb.append(path);
-			confValues.replaceValue("Saved_Path", sb.toString());
+			confValues.replaceValue("Saved_Paths", sb.toString());
 			
 		}else{
 			//The name already exist, pick another
