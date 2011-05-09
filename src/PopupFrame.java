@@ -81,16 +81,19 @@ public class PopupFrame{
 						.addGroup(popLayout.createSequentialGroup()
 								.addGap(15)
 								.addComponent(label)
+								.addGap(10)
 						)
 						.addGroup(popLayout.createSequentialGroup()
 								.addGap(15)
 								.addComponent(popTxt, 200, 200, 200)
+								.addGap(10)
 						)
 						.addGroup(popLayout.createSequentialGroup()
 								.addGap(75)
 								.addComponent(clsBtn, 90, 90, 90)
 								.addGap(5)
 								.addComponent(sbmBtn, 90, 90, 90)
+								.addGap(10)
 						)
 		);
 		
@@ -105,10 +108,12 @@ public class PopupFrame{
 						.addComponent(clsBtn, 25, 25, 25)
 						.addComponent(sbmBtn, 25, 25, 25)
 				)
+				.addGap(10)
 				
 		);
 		
 		popFrame.add(popPanel);
+		popFrame.pack();
 		
 	}
 	
