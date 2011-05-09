@@ -19,8 +19,8 @@ public class ShowImage extends JPanel {
 	protected TextToDisplay[][] comments;
 	protected boolean outgoing;
 	private BufferedImage slideImage;
-	private float transperacy;
-	private int fadingSpeed, textStopPosition;
+	private float transperacy, fadingSpeed;
+	private int textStopPosition;
 
 	private ShowImageSet showImageSet;
 	private ShowImageMovement showImageMovement;
@@ -38,7 +38,7 @@ public class ShowImage extends JPanel {
 		imgRect = new ImgRect();
 		outgoing = false;
 		transperacy = 0;
-		fadingSpeed = speedIn;
+		fadingSpeed = (float) (speedIn*0.001);
 
 		imageUserTxtDsp = new TextToDisplay();
 
@@ -79,7 +79,7 @@ public class ShowImage extends JPanel {
 
 	private void moveImageObjects() {
 		timeStill.height = showImageMovement.moveImage(timeStill, imgRect, (int) imageStopPosition);
-		transperacy = showImageMovement.setTransperacy(transperacy, outgoing, fadingSpeed*0.01);
+		transperacy = showImageMovement.setTransperacy(transperacy, outgoing, fadingSpeed);
 
 		showImageMovement.moveUserText(imageUserTxtDsp, outgoing);
 		showImageMovement.moveImageText(imageCommentTxtDsp, outgoing,textStopPosition);
@@ -88,7 +88,7 @@ public class ShowImage extends JPanel {
 	private void movePubSlide(){
 		if(transperacy >= 0.98)
 			timeStill.height = showImageMovement.moveSlide(timeStill, imgRect, monitorSize.width, slideImage.getWidth());
-		transperacy = showImageMovement.setTransperacy(transperacy, outgoing, fadingSpeed * 0.03);
+		transperacy = showImageMovement.setTransperacy(transperacy, outgoing, fadingSpeed*3);
 	}	
 	
 	public void MoveObjects() {
