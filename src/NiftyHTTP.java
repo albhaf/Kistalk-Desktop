@@ -77,15 +77,25 @@ public class NiftyHTTP {
 
 		return this.simplePost(AUTH_URL, params).trim().equals("true");
 	}
-
+	
 	public String getXMLFeed() {
-		List<NameValuePair> params = new ArrayList<NameValuePair>();
+		return this.getXMLFeed(0, 0);
+	}
+	
+	public String getXMLFeed(int pictures, int page) {
 
+		List<NameValuePair> params = new ArrayList<NameValuePair>();
+		
 		try {
 			params.add(new BasicNameValuePair("username", URLEncoder.encode(
 					this.username, ENCODING)));
 			params.add(new BasicNameValuePair("token", URLEncoder.encode(
 					this.authToken, ENCODING)));
+			if(pictures != 0 && page != 0) {
+				params.add(new BasicNameValuePair("per_page", String.valueOf(pictures)));
+				params.add(new BasicNameValuePair("page", String.valueOf(page)));
+			}
+			
 		} catch (UnsupportedEncodingException e) {
 			System.err.print("Failed to encode url for POST request: ");
 			e.printStackTrace();

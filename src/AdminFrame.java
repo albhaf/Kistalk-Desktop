@@ -477,6 +477,7 @@ public class AdminFrame {
 		nrOfImgsTxt.setEnabled(false);
 		timeTxt.setEnabled(false);
 		nrOfCommentsTxt.setEnabled(false);
+		pathBtn.setEnabled(false);
 		
 		savePathBtn.setEnabled(false);
 		remPathBtn.setEnabled(false);
@@ -513,6 +514,7 @@ public class AdminFrame {
 		nrOfImgsTxt.setEnabled(true);
 		timeTxt.setEnabled(true);
 		nrOfCommentsTxt.setEnabled(true);
+		pathBtn.setEnabled(true);
 		
 		savePathBtn.setEnabled(true);
 		remPathBtn.setEnabled(true);
