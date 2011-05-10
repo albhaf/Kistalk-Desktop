@@ -2,10 +2,10 @@ import java.awt.Rectangle;
 import java.util.List;
 
 public class ShowImageCommentsSet {
-	int y;
+	int y, nrOfComments;
 
-	public ShowImageCommentsSet() {
-
+	public ShowImageCommentsSet(int tmp) {
+		nrOfComments = tmp;
 	}
 
 	public TextToDisplay[][] setComments(List<CommentXML> imageComments,
@@ -63,21 +63,28 @@ public class ShowImageCommentsSet {
 	private TextToDisplay[][] setCommentsText(List<CommentXML> imageComments,
 			TextToDisplay[][] comments, Rectangle monitorSize) {
 		y = 100;
+		int c;
+		if (imageComments.size() <= nrOfComments){
+			c = 0;
+		}else{
+			c = imageComments.size()-nrOfComments;
+		}
 		int i = 0;
 		do{
 			comments[i][0] = new TextToDisplay();
 			comments[i][0]
-					.setString(imageComments.get(i).getUser() + " wrote:");
+					.setString(imageComments.get(c).getUser() + " wrote:");
 			comments[i][0].resetPos();
 			comments[i][0].addX(monitorSize.width - monitorSize.width / 3);
 			y = y + 40;
 			comments[i][0].addY(y);
 
-			String tmpComment = imageComments.get(i).getContent();
+			String tmpComment = imageComments.get(c).getContent();
 
 			comments = setComment(i, tmpComment, comments, monitorSize);
 			i++;
-		}while(i < comments.length && 
+			c++;
+		}while(c < imageComments.size() && 
 				y < monitorSize.getHeight()/2);
 		return comments;
 	}
