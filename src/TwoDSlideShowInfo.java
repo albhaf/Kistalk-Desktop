@@ -157,7 +157,7 @@ public class TwoDSlideShowInfo {
 	}
 
 	protected ShowImage createShowImage(Rectangle monitor) throws IOException {
-		return new ShowImage(monitor, timeStill, fadingSpeed);
+		return new ShowImage(monitor, timeStill, fadingSpeed, nrOfComments);
 	}
 
 	protected void updatePicture() throws IOException {		
@@ -185,6 +185,10 @@ public class TwoDSlideShowInfo {
 	
 	public int getFadingSpeed(){
 		return fadingSpeed;
+	}
+	
+	public int getNrOfComments(){
+		return nrOfComments;
 	}
 	
 }

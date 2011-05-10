@@ -37,7 +37,7 @@ public class ShowImage extends JPanel {
 	private Dimension timeStill = new Dimension();
 	private float imageStopPosition;
 	
-	public ShowImage(Rectangle monitorIn, int timeStillIn, int speedIn) throws IOException {
+	public ShowImage(Rectangle monitorIn, int timeStillIn, int speedIn, int nrOfComments) throws IOException {
 		logoRect = new ImgRect();
 		File tmpFile = new File("logo48pix.png");
 		try {
@@ -59,7 +59,7 @@ public class ShowImage extends JPanel {
 
 		timeStill.width = timeStillIn;
 		timeStill.height = timeStill.width;
-		showImageSet = new ShowImageSet(monitorSize);
+		showImageSet = new ShowImageSet(monitorSize, nrOfComments);
 		showImageMovement = new ShowImageMovement();
 		showImageDrawing = new ShowImageDrawing();
 	}
