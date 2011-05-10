@@ -69,6 +69,10 @@ public class ConfigQueue {
 		return Queue.peekFirst().split("%")[0];
 	}
 	
+	public String getIndex(int i){
+		return Queue.get(i).split("%")[1];
+	}
+	
 	public String get(){		
 		return Queue.pop().split("%")[1];
 	}

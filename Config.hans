@@ -23,16 +23,16 @@ _|    _|  _|  _|_|_|       _|      _|_|_|  _|  _|    _|
 *'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*
 *'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*
 
-//	Date of last revision: 16:48 den 9/4
+//	Date of last revision: 17:3 den 9/4
 
 
-Max_number_of_Images %5
+Max_number_of_Images %7
 
 Number_of_Hans %-
 
-Timer_interval %2300
+Timer_interval %200
 
-Fading_speed %2
+Fading_speed %1
 
 supported_image_formats %.jpg .png .gif .bnp
 

@@ -592,6 +592,18 @@ public class AdminFrame {
 		statusLbl.setText("Status: Config is back to normal");
 	}
 	
+	public boolean validateTxt(){
+		try {
+			Integer.parseInt(values.getIndex(0));
+			Integer.parseInt(values.getIndex(1));
+			Integer.parseInt(values.getIndex(2));
+			Integer.parseInt(values.getIndex(6));
+		}catch(NumberFormatException ex){
+			return false;
+		}
+		
+		return true;
+	}
 	
 	public void setExitShow(){
 		statusLbl.setText("Status: The slideshow is dead...");
@@ -659,7 +671,6 @@ public class AdminFrame {
 			}else if (e.getSource() == savePathBtn){ // Save Slideshow
 				if (xmlPubPathTxt.getText().equals("") == false && xmlPubPathTxt.getText().endsWith(".ppt")){
 					controller.popup("Name the slideshow: ", xmlPubPathTxt.getText());
-					statusLbl.setText("Status: Slideshow saved");
 				}else{
 					controller.fail("Wrong path", "You have to specify a correct path to your .ppt-file!");
 				}
@@ -674,12 +685,19 @@ public class AdminFrame {
 				}
 				
 			}else if (e.getSource() == startBtn){ // Start Slideshow
-//				if (values[0].equals("") || values[2].equals("") || values[3].equals("") || values[7].equals("") || values[8].equals("")){
-//					controller.fail("Error", "No empty textboxes are allowed!");}
 				getTxt();
+				if (validateTxt()){
+					controller.setConf(values);
+					exitBtn.setText("Quit Slideshow");
+					startBtn.setEnabled(false);
+					controller.startShow();
+					statusLbl.setText("Slideshow started");
+				}else{
+					controller.fail("Error", "Input Invalid");
+				}
 				
 			}else if (e.getSource() == exitBtn){ // Exit Slideshow / Program
-				if (exitBtn.getText().equals("Quit SlideShow")){
+				if (exitBtn.getText().equals("Quit Slideshow")){
 					setExitShow();
 					controller.exitShow();
 				}else{
