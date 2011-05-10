@@ -23,7 +23,7 @@ _|    _|  _|  _|_|_|       _|      _|_|_|  _|  _|    _|
 *'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*
 *'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*
 
-//	Date of last revision: 17:3 den 9/4
+//	Date of last revision: 8:57 den 10/4
 
 
 Max_number_of_Images %7
@@ -42,7 +42,7 @@ XMLURL %http://www.kistalk.com/api/feed/desktop.xml
 
 Number_of_comments %1
 
-Path_to_Pubslides %C:\\Qmisk
+Path_to_Pubslides %asd.ppt
 
 Saved_Pubslides %TMEIT|Qmisk|ITK|Std
 

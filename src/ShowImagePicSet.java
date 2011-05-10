@@ -1,6 +1,10 @@
 import java.awt.Dimension;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 
 public class ShowImagePicSet {
@@ -12,6 +16,7 @@ public class ShowImagePicSet {
 	protected ShowImagePicSet(Rectangle monitorSize){
 		this.image = new BufferedImage(100, 100, BufferedImage.TYPE_INT_RGB);
 		this.monitorSize = monitorSize;
+
 	}
 	
 	protected float setImage(BufferedImage tmpImage, ImgRect imgRect,
