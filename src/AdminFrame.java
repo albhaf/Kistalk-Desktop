@@ -168,7 +168,7 @@ public class AdminFrame {
 				new ItemListener(){
 					public void itemStateChanged(ItemEvent e){
 						if (e.getStateChange() == ItemEvent.SELECTED){
-							if (e.getItem().toString().equals("[Saved slideshows]") == false){ // Set pathen to the path that belongs to the selected Item
+							if (e.getItem().toString().equalsIgnoreCase("[Saved slideshows]") == false){ // Set pathen to the path that belongs to the selected Item
 								xmlPubPathTxt.setText(slidePaths.get(slideNames.indexOf(e.getItem().toString())));
 								xmlPubPathTxt.setEnabled(false);
 								xmlPubPathTxt.setFont(stdItalFont);

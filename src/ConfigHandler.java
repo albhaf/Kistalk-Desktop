@@ -73,18 +73,5 @@ public class ConfigHandler {
 		
 		return lines;
 	}
-	
-	//	Returns a divided String
-	private String processLine(String aLine){
-		Scanner scanner = new Scanner(aLine);
-		String part = null;
-		
-		//part = scanner;
-		if(scanner.hasNext()){
-			part = scanner.next();
-		}
-		
-		return part;
-	}
 
 }

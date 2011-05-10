@@ -72,11 +72,11 @@ public class ShowImageDrawing {
 	}
 
 	protected void paintSlide(BufferedImage slideImage, ImgRect imgRect,BufferedImage logo, ImgRect logoRect) {
-		g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,
+/*		g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,
 				1));
 		TexturePaint tpl = new TexturePaint(logo, logoRect);
 		g2d.setPaint(tpl);
-		g2d.fill(logoRect);
+		g2d.fill(logoRect);*/
 		g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,
 				transperancy));
 		TexturePaint tp = new TexturePaint(slideImage, imgRect);
