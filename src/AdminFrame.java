@@ -593,16 +593,20 @@ public class AdminFrame {
 	}
 	
 	public boolean validateTxt(){
-		try {
-			Integer.parseInt(values.getIndex(0));
-			Integer.parseInt(values.getIndex(1));
-			Integer.parseInt(values.getIndex(2));
-			Integer.parseInt(values.getIndex(6));
-		}catch(NumberFormatException ex){
+		if (nrOfImgsTxt.getText().equals("") || timeTxt.getText().equals("") || fadeTxt.getText().equals("") || nrOfCommentsTxt.getText().equals("")){
 			return false;
-		}
+		}else{
+			try {
+				Integer.parseInt(values.getIndex(0));
+				Integer.parseInt(values.getIndex(1));
+				Integer.parseInt(values.getIndex(2));
+				Integer.parseInt(values.getIndex(6));
+			}catch(NumberFormatException ex){
+				return false;
+			}
 		
-		return true;
+			return true;
+		}
 	}
 	
 	public void setExitShow(){

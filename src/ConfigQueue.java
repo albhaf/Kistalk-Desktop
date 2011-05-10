@@ -70,7 +70,14 @@ public class ConfigQueue {
 	}
 	
 	public String getIndex(int i){
-		return Queue.get(i).split("%")[1];
+		String tmp = "";
+		
+		try{
+		tmp = Queue.get(i).split("%")[1];
+		}catch(ArrayIndexOutOfBoundsException e){
+			return "";
+		}
+		return tmp;
 	}
 	
 	public String get(){		
