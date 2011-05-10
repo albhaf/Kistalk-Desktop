@@ -1,9 +1,11 @@
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
@@ -22,14 +24,6 @@ public class NiftyHTTP {
 
 	private String username;
 	private String authToken;
-	
-	public static void main(String[] args) {
-		NiftyHTTP nh = new NiftyHTTP("panderse", "z0vu7iegcn");
-		
-		System.out.println(nh.validateToken());
-		
-		nh.postAnnouncement("de ä ölkörv", "de ä pub", true, false);
-	}
 
 	public NiftyHTTP(String username, String authToken) throws RuntimeException {
 		this.username = username;
@@ -73,6 +67,7 @@ public class NiftyHTTP {
 		} catch (UnsupportedEncodingException e) {
 			System.err.print("Failed to encode url for POST request: ");
 			e.printStackTrace();
+			
 		}
 
 		return this.simplePost(AUTH_URL, params).trim().equals("true");
@@ -170,8 +165,7 @@ public class NiftyHTTP {
 			UrlEncodedFormEntity formEntity = new UrlEncodedFormEntity(params, "UTF-8");
 			request.setEntity(formEntity);
 		} catch (UnsupportedEncodingException e) {
-			System.err
-					.print("Failed to encode parameters while attempting to craft post request: ");
+			System.err.print("Failed to encode parameters while attempting to craft post request: ");
 			e.printStackTrace();
 		}
 
@@ -180,9 +174,12 @@ public class NiftyHTTP {
 
 		try {
 			response = client.execute(request, brs);
-		} catch (Exception e) {
-			System.err.print("Unable execute POST request: ");
+		} catch (ClientProtocolException e) {
+			return "false";
+		} catch (IOException e) {
+			System.err.println("Failed to contact server while attempting to authenticate.");
 			e.printStackTrace();
+			return "false";
 		} finally {
 			client.getConnectionManager().shutdown();
 		}
