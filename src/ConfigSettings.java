@@ -30,6 +30,7 @@ public class ConfigSettings {
 	}
 
 	//	Saves current settings to Config (except Default Turtle, he only lives in config when config is defaultahrized)
+	@SuppressWarnings("deprecation")
 	public void setValues(ConfigQueue values) {
 		String[] lines = new String[49];
 		Date today = new Date();
@@ -59,7 +60,7 @@ public class ConfigSettings {
 		lines[21] = "*'*'*                    //Hans *'*'*";
 		lines[22] = "*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*";
 		lines[23] = "*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*";
-		lines[24] = "";
+		lines[24] = "";	
 		lines[25] = "//	Date of last revision: " + today.getHours() + ":" + today.getMinutes() + " den " + today.getDate() + "/" + today.getMonth();
 		lines[26] = "";
 		lines[27] = "";
