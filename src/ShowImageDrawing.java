@@ -12,6 +12,7 @@ import java.io.IOException;
 public class ShowImageDrawing {
 	private Font commentFont, commentUser, font;
 	private Graphics2D g2d;
+	private float  transperancy;
 
 	protected ShowImageDrawing() throws IOException {
 		commentUser = new Font("Serig", Font.BOLD, 30);
@@ -21,12 +22,12 @@ public class ShowImageDrawing {
 
 	protected void drawBackground(Graphics g, Rectangle monitorSize,
 			float transperacy) {
+		this.transperancy = transperacy;
 		g2d = (Graphics2D) g;
 		g2d.setPaint(Color.BLACK);
 		g2d.fillRect(0, 0, monitorSize.width, monitorSize.height);
-
 		g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,
-				transperacy));
+				transperancy));
 		g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
 				RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
@@ -70,17 +71,31 @@ public class ShowImageDrawing {
 		}
 	}
 
-	protected void paintSlide(BufferedImage slideImage, ImgRect imgRect) {
+	protected void paintSlide(BufferedImage slideImage, ImgRect imgRect,BufferedImage logo, ImgRect logoRect) {
+		g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,
+				1));
+		TexturePaint tpl = new TexturePaint(logo, logoRect);
+		g2d.setPaint(tpl);
+		g2d.fill(logoRect);
+		g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,
+				transperancy));
 		TexturePaint tp = new TexturePaint(slideImage, imgRect);
 		g2d.setPaint(tp);
 		g2d.fill(imgRect);
+
 	}
 
 	protected void paintImage(TextToDisplay[] imageCommentTxtDsp,
 			TextToDisplay imageUserTxtDsp, BufferedImage slideImage,
-			ImgRect imgRect) {
+			ImgRect imgRect, BufferedImage logo, ImgRect logoRect) {
+
 		// paints the image text and image user texts
+
 		try {
+
+
+			g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,
+					transperancy));
 			g2d.setFont(commentUser);
 			int lines = imageCommentTxtDsp[0].getLines();
 			for (int i = 0; i < lines; i++) {
@@ -92,10 +107,18 @@ public class ShowImageDrawing {
 					imageUserTxtDsp.y);
 		} catch (NullPointerException e) {
 		}
-
+		g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,
+		1));
+		TexturePaint tpl = new TexturePaint(logo, logoRect);
+		g2d.setPaint(tpl);
+		g2d.fill(logoRect);
 		// Paints the iamge rectangle
+		g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,
+				transperancy));
 		TexturePaint tp = new TexturePaint(slideImage, imgRect);
 		g2d.setPaint(tp);
 		g2d.fill(imgRect);
+		
+
 	}
 }

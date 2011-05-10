@@ -43,7 +43,7 @@ public class TwoDSlideShow extends Panel implements ActionListener {
 		getScreenResolution();
 		firstPicture();
 		try{
-		createFrame();
+			createFrame();
 		}catch(NullPointerException e){
 			
 			close();
