@@ -39,7 +39,7 @@ public class ShowImage extends JPanel {
 	
 	public ShowImage(Rectangle monitorIn, int timeStillIn, int speedIn) throws IOException {
 		logoRect = new ImgRect();
-		File tmpFile = new File("C:\\Users\\Ludvig\\workspace\\Kistalk-Desktop\\logo48pix.png");
+		File tmpFile = new File("logo48pix.png");
 		try {
 			logoImage = ImageIO.read(tmpFile);
 		} catch (IOException e) {
