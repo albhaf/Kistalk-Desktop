@@ -17,6 +17,7 @@ public class DesktopApplication {
 	TwoDSlideShow slideshow;
 	ConfigSettings config;
 	FrameListener framelistener;
+	String link;
 	SlidePath slidepath = new SlidePath();
 	
 	public DesktopApplication() {

@@ -49,9 +49,9 @@ public class LogInFrame{
 		logInstrLbl = create.setNewLabel("To get your token, log in to kistalk.com", new Font("Imperial", Font.ITALIC, 10));
 		
 		
-		logUserTxt = create.setNewTextField("androse", stdFont, true);
+		logUserTxt = create.setNewTextField("", stdFont, true);
 		logUserTxt.addKeyListener(listener);
-		logPassTxt = create.setNewTextField("6dd3vr1xil", stdFont, true);
+		logPassTxt = create.setNewTextField("", stdFont, true);
 		logPassTxt.addKeyListener(listener);
 		sbmBtn = create.setNewButton("Submit", listener);
 		clsBtn = create.setNewButton("Close", listener);
@@ -148,6 +148,7 @@ public class LogInFrame{
 		
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource() == sbmBtn){
+				controller.link = "?username=" + logUserTxt.getText() + "&token="+logPassTxt.getText();
 				controller.login(logUserTxt.getText(), logPassTxt.getText(), logFrame);
 			}else if (e.getSource() == clsBtn){
 				logFrame.dispose();
