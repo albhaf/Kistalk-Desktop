@@ -32,7 +32,7 @@ public class TwoDSlideShow extends Panel implements ActionListener {
  		nrOfConfValues = tmpConfValues;
  		imageSlide = false;
 		view = new TwoDSlideShowView();
-		info = new TwoDSlideShowInfo(nrOfConfValues);
+		info = new TwoDSlideShowInfo(nrOfConfValues,desktopApp.link);
 		try{
 			pubSlides = new ImportPubSlides(readConfig(), this, tmpDesk);
 		}catch(NullPointerException e){
