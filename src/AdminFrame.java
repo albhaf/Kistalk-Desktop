@@ -213,11 +213,11 @@ public class AdminFrame {
 					public void itemStateChanged(ItemEvent e){
 						if (e.getStateChange() == ItemEvent.SELECTED)
 							if (e.getItem().toString() == "This"){
-								values.remove("Screen_index %");
-								values.add("Screen_index %" + "0");
+								values.remove("Screen_index");
+								values.add("Screen_index%" + "0");
 							}else if (e.getItem().toString() == "External"){
-								values.remove("Screen_index %");
-								values.add("Screen_index %" + "1");
+								values.remove("Screen_index");
+								values.add("Screen_index%" + "1");
 							}
 						statusLbl.setText("Status: " + e.getItem().toString() + " screen it is!");
 					}
