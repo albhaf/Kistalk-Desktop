@@ -22,17 +22,10 @@ _|    _|  _|  _|_|_|       _|      _|_|_|  _|  _|    _|
 *'*'*                    //Hans *'*'*
 *'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*
 *'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*'*
-<<<<<<< HEAD
 
-//	Date of last revision: 10:29 den 10/4
+//	Date of last revision: 9:54 den 11/4
 
 
-=======
- 
-//	Config is back to normal
- 
- 
->>>>>>> 09fa569e3fd317d0874f543588a2348ab10ab4b7
 Max_number_of_Images %7
 
 Number_of_Hans %-
@@ -46,38 +39,11 @@ supported_image_formats %.jpg .png .gif .bnp
 Screen_index %0
 
 XMLURL %http://www.kistalk.com/api/feed/desktop.xml
-<<<<<<< HEAD
 
 Number_of_comments %2
 
 Path_to_Pubslides %asd.ppt
-=======
- 
-Number_of_comments %4
- 
-Path_to_Pubslide %C:\\...
->>>>>>> 09fa569e3fd317d0874f543588a2348ab10ab4b7
 
 Saved_Pubslides %TMEIT|Qmisk|ITK|Std
 
 Saved_Paths %C:\\TMEIT|C:\\Qmisk|C:\\ITK|asd.ppt
-<<<<<<< HEAD
-=======
- 
- 
-                             ___-------___
-                         _-~~             ~~-_
-                      _-~                    /~-_
-   /^\__/^\         /~  \                   /    \
- /|  0|| 0|        /      \_______________/        \
-| |___||__|      /       /                \          \
-|          \    /      /                    \          \
-|   (_______) /______/     Default Turtle    \_________ \
-|         / /         \                      /            \
- \         \^\\         \                  /               \     /
-   \         ||           \______________/      _-_       //\__//
-     \       ||------_-~~-_ ------------- \ --/~   ~\    || __/
-       ~-----||====/~     |==================|       |/~~~~~
-        (_(__/  ./     /                    \_\      \.
-               (_(___/                         \_____)_)
->>>>>>> 09fa569e3fd317d0874f543588a2348ab10ab4b7

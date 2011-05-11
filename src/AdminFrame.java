@@ -662,12 +662,14 @@ public class AdminFrame {
 			}else if (e.getSource() == announceBtn){ // Announce
 				if (foodTxt.getText().length() < 40 && eventTxt.getText().length() < 40 && priceTxt.getText().length() < 4){
 					try {
-						Integer.parseInt(priceTxt.getText());
-					
+						if (priceTxt.getText().length() == 0){
+							priceTxt.setText("-");
+						}else{
+							Integer.parseInt(priceTxt.getText());
+						}
+						
 						if (foodTxt.getText().length() == 0)
 							foodTxt.setText("-");
-						if (priceTxt.getText().length() == 0)
-							priceTxt.setText("-");
 						if (eventTxt.getText().length() == 0)
 							eventTxt.setText("-");
 						
