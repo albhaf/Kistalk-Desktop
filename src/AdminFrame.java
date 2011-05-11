@@ -608,10 +608,10 @@ public class AdminFrame {
 			return false;
 		}else{
 			try {
-				Integer.parseInt(values.getIndex(0));
-				Integer.parseInt(values.getIndex(1));
-				Integer.parseInt(values.getIndex(2));
-				Integer.parseInt(values.getIndex(6));
+				Integer.parseInt(values.getValue("Max_number_of_Images"));
+				Integer.parseInt(values.getValue("Timer_interval"));
+				Integer.parseInt(values.getValue("Number_of_comments"));
+				Integer.parseInt(values.getValue("Fading_speed"));
 			}catch(NumberFormatException ex){
 				return false;
 			}
