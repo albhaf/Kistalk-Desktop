@@ -63,8 +63,8 @@ public class DesktopApplication {
 		adminframe.setPaths(slidepath.ninja(lclVals.getValue("Saved_Pubslides")), slidepath.ninja(lclVals.getValue("Saved_Paths")));
 	}
 	
-	public void announce(String food_description, String event, boolean pub_open, boolean food_ready){ // Send announcement to server
-		nifty.postAnnouncement(food_description, event, pub_open, food_ready);
+	public void announce(String food_description, String price, String event, boolean pub_open, boolean food_ready){ // Send announcement to server
+		nifty.postAnnouncement(food_description, price, event, pub_open, food_ready);
 		fail("Announcement", "Announcement successfully sent!");
 	}
 	

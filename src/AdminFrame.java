@@ -41,10 +41,10 @@ public class AdminFrame {
 	private JButton savePathBtn, remPathBtn, announceBtn, pathBtn;
 	
 	private JLabel nrOfImgsLbl, timeLbl, foodLbl, pubLbl, statusLbl, xmlPubPathLbl, 
-		legalFilesLbl, nrOfCommentsLbl, screenLbl, bgLbl, pubnfoodStatusLbl, fadeLbl;
+		legalFilesLbl, nrOfCommentsLbl, screenLbl, bgLbl, pubnfoodStatusLbl, fadeLbl, priceLbl;
 	
 	private JTextField nrOfImgsTxt, timeTxt, xmlPubPathTxt, legalFilesTxt, nrOfCommentsTxt, 
-		eventTxt, foodTxt, fadeTxt;
+		eventTxt, foodTxt, fadeTxt, priceTxt;
 	
 	private JCheckBox foodChb, pubChb;
 	
@@ -286,6 +286,8 @@ public class AdminFrame {
 							.addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
 							   	.addComponent(foodLbl)
 							   	.addComponent(foodTxt, 125, 125, 125)
+							   	.addComponent(priceLbl)
+							   	.addComponent(priceTxt, 60, 60, 60)
 							   	.addComponent(foodChb)
 							)
 							.addComponent(announceBtn, 125, 125, 125)
@@ -374,6 +376,8 @@ public class AdminFrame {
 						   		.addGroup(groupLayout.createSequentialGroup()
 						   			.addComponent(foodLbl)
 								   	.addComponent(foodTxt, 20, 20, 20)
+								   	.addComponent(priceLbl)
+								   	.addComponent(priceTxt, 20, 20, 20)
 								   	.addComponent(foodChb)
 						   		)
 						   		.addGap(20)
@@ -429,6 +433,7 @@ public class AdminFrame {
 		eventTxt = create.setNewTextField("", stdFont, false);
 		foodTxt = create.setNewTextField("", stdFont, false);
 		fadeTxt = create.setNewTextField(values.getValue("Fading_speed"), stdFont, true);
+		priceTxt = create.setNewTextField("", stdFont, false);
 	}
 	
 	private void setLabels(){
@@ -445,7 +450,9 @@ public class AdminFrame {
 		screenLbl = create.setNewLabel("Choose screen: ", stdFont);
 		bgLbl = create.setNewLabel("", stdFont);
 		fadeLbl = create.setNewLabel("Fading speed (ms): ", stdFont);
-		pubnfoodStatusLbl = create.setNewLabel("Pub_open: -  Event: -  Food_ready: -  Food: -", smlFont);
+		pubnfoodStatusLbl = create.setNewLabel("Pub_open: -  Event: -  Food_ready: -  Food: - Price: -", smlFont);
+		priceLbl = create.setNewLabel("Price: ", stdFont);
+		priceLbl.setForeground(Color.GRAY);
 	}
 	
 	private void setButtons(){
@@ -489,6 +496,7 @@ public class AdminFrame {
 		
 		eventTxt.setEnabled(false);
 		foodTxt.setEnabled(false);
+		priceTxt.setEnabled(false);
 		foodChb.setEnabled(false);
 		xmlPubPathTxt.setEnabled(false);
 		
@@ -503,7 +511,8 @@ public class AdminFrame {
 		screenLbl.setForeground(Color.GRAY);
 		bgLbl.setForeground(Color.GRAY);
 		pubnfoodStatusLbl.setForeground(Color.GRAY);
-		fadeLbl.setForeground(Color.GRAY);		
+		fadeLbl.setForeground(Color.GRAY);
+		priceLbl.setForeground(Color.GRAY);
 	}
 
 	public void enable(){ // Enable buttons
@@ -528,6 +537,7 @@ public class AdminFrame {
 		if (pubChb.isSelected()){
 			eventTxt.setEnabled(true);
 			foodTxt.setEnabled(true);
+			priceTxt.setEnabled(true);
 			foodChb.setEnabled(true);
 		}
 		if (slideItem == null)
@@ -548,6 +558,7 @@ public class AdminFrame {
 		
 		if (pubChb.isSelected()){
 			foodLbl.setForeground(Color.WHITE);
+			priceLbl.setForeground(Color.WHITE);
 			pubLbl.setForeground(Color.WHITE);
 			
 		}
@@ -631,12 +642,16 @@ public class AdminFrame {
 					foodChb.setEnabled(true);
 					foodLbl.setForeground(Color.WHITE);
 					foodTxt.setEnabled(true);
+					priceLbl.setForeground(Color.WHITE);
+					priceTxt.setEnabled(true);
 					pubLbl.setForeground(Color.WHITE);
 					eventTxt.setEnabled(true);
 				}else{
 					foodChb.setEnabled(false);
 					foodLbl.setForeground(Color.GRAY);
 					foodTxt.setEnabled(false);
+					priceLbl.setForeground(Color.GRAY);
+					priceTxt.setEnabled(false);
 					pubLbl.setForeground(Color.GRAY);
 					eventTxt.setEnabled(false);
 				}
@@ -645,15 +660,26 @@ public class AdminFrame {
 				statusLbl.setText("Status: Omnomnomnomnomnomnom");
 				
 			}else if (e.getSource() == announceBtn){ // Announce
-				if (foodTxt.getText().length() < 40 && eventTxt.getText().length() < 40){
-					if (foodTxt.getText().length() == 0)
-						foodTxt.setText("-");
-					if (eventTxt.getText().length() == 0)
-						eventTxt.setText("-");
-					controller.announce(foodTxt.getText(), eventTxt.getText(), pubChb.isSelected(), foodChb.isSelected());
-					statusLbl.setText("Status: Announcement was sent!");
-					pubnfoodStatusLbl.setText("Pub_open: " + pubChb.isSelected() + "  Event: " + eventTxt.getText() + "  Food_ready: " + foodChb.isSelected() + "  Food: " + foodTxt.getText());
-				
+				if (foodTxt.getText().length() < 40 && eventTxt.getText().length() < 40 && priceTxt.getText().length() < 4){
+					try {
+						if (priceTxt.getText().length() == 0){
+							priceTxt.setText("-");
+						}else{
+							Integer.parseInt(priceTxt.getText());
+						}
+						
+						if (foodTxt.getText().length() == 0)
+							foodTxt.setText("-");
+						if (eventTxt.getText().length() == 0)
+							eventTxt.setText("-");
+						
+						controller.announce(foodTxt.getText(), priceTxt.getText(), eventTxt.getText(), pubChb.isSelected(), foodChb.isSelected());
+						statusLbl.setText("Status: Announcement was sent!");
+						pubnfoodStatusLbl.setText("Pub_open: " + pubChb.isSelected() + "  Event: " + eventTxt.getText() + "  Food_ready: " + foodChb.isSelected() + "  Food: " + foodTxt.getText() + " Price: " + priceTxt.getText());
+						
+					}catch(NumberFormatException ex){
+						controller.fail("Error", "Price have to be int!");
+					}
 				} else {
 					controller.fail("Error", "Both textfields require 1 to 40 chars!");
 				}
