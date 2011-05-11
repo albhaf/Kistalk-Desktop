@@ -32,7 +32,7 @@ public class NiftyHTTP {
 	}
 	
 
-	public String postAnnouncement(String food_description, String event, boolean pub_open, boolean food_ready) {
+	public String postAnnouncement(String food_description, String price, String event, boolean pub_open, boolean food_ready) {
 
 		/*
 		 * Typically, these announcements can be posted: pub_open ( = 0 or 1),
@@ -48,6 +48,7 @@ public class NiftyHTTP {
 		
 		
 		params.add(new BasicNameValuePair("food_description", food_description));
+		params.add(new BasicNameValuePair("price", price));
 		params.add(new BasicNameValuePair("event", event));
 		params.add(new BasicNameValuePair("pub_open", String.valueOf(po)));
 		params.add(new BasicNameValuePair("food_ready", String.valueOf(fr)));
