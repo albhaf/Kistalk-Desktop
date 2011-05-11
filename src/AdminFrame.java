@@ -665,6 +665,7 @@ public class AdminFrame {
 					// Check file extension
 					if (fc.getSelectedFile().getName().endsWith(".ppt")){
 						xmlPubPathTxt.setText(fc.getSelectedFile().getAbsoluteFile().toString());
+						
 					} else {
 						controller.fail("Error", "Choose a .ppt-file!");
 					}

@@ -1,3 +1,4 @@
+import java.io.File;
 import java.util.LinkedList;
 
 
@@ -46,6 +47,10 @@ public class ConfigQueue {
 		for(int i =0;i<Queue.size();i++){
 			compare = Queue.get(i).split("%");
 			if(compare[0].equalsIgnoreCase(tmpString)){
+				if(tmpString.equalsIgnoreCase("Path_to_Pubslides")){	
+				//tmpValue =tmpValue.replace(" ","  ");
+				//tmpValue = (+ tmpValue);
+				}
 				Queue.set(i, compare[0] +"%" + tmpValue);
 				return true;
 			}
