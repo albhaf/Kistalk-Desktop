@@ -32,7 +32,7 @@ public class TwoDSlideShow extends Panel implements ActionListener {
  		nrOfConfValues = tmpConfValues;
  		imageSlide = false;
 		view = new TwoDSlideShowView();
-		info = new TwoDSlideShowInfo(nrOfConfValues);
+		info = new TwoDSlideShowInfo(nrOfConfValues,desktopApp.link);
 		try{
 			pubSlides = new ImportPubSlides(readConfig(), this, tmpDesk);
 		}catch(NullPointerException e){
@@ -43,7 +43,7 @@ public class TwoDSlideShow extends Panel implements ActionListener {
 		getScreenResolution();
 		firstPicture();
 		try{
-		createFrame();
+			createFrame();
 		}catch(NullPointerException e){
 			
 			close();
@@ -61,7 +61,7 @@ public class TwoDSlideShow extends Panel implements ActionListener {
 
 	// Build the frame (Slideshow)
 	private void createFrame() throws IOException {
-		slideShowHandler =  new ShowImage(monitor, info.getTimeStill(), info.getFadingSpeed());
+		slideShowHandler =  new ShowImage(monitor, info.getTimeStill(), info.getFadingSpeed(), info.getNrOfComments());
 		view.createFrame(slideShowHandler, monitor,this, desktopApp);
 	}
 

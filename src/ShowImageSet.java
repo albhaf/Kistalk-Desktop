@@ -15,9 +15,9 @@ public class ShowImageSet {
 	private ShowImagePicSet picSet;
 
 
-	protected ShowImageSet(Rectangle size) {
+	protected ShowImageSet(Rectangle size, int nrOfComments) {
 		monitorSize = size;
-		commentsSet = new ShowImageCommentsSet();
+		commentsSet = new ShowImageCommentsSet(nrOfComments);
 		picSet = new ShowImagePicSet(monitorSize);
 	}
 

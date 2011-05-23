@@ -10,7 +10,7 @@ import javax.imageio.ImageIO;
 
 public class TwoDSlideShowInfo {
 	private XMLreader xmlreader;
-	private String xmlPath;
+	private String xmlPath, link;
 	private ImageXMLQueue imgXmlQueue;
 	private String[] fileFormats;
 	private URL[] urlArray;
@@ -23,7 +23,8 @@ public class TwoDSlideShowInfo {
 	private int timeStill;
 	private int fadingSpeed;
 
-	public TwoDSlideShowInfo(int tmpConfValues) {
+	public TwoDSlideShowInfo(int tmpConfValues, String link) {
+		this.link = link;
 		nrOfConfValues = tmpConfValues;
 		fileFormats = new String[4];
 	}
@@ -103,7 +104,7 @@ public class TwoDSlideShowInfo {
 	}
 
 	private void readNext(int page){
-		xmlreader = new XMLreader(xmlPath + "?username=znorman&token=vqlcotvzuu&page=" + page + "&per_page="+ (nrOfPics));
+		xmlreader = new XMLreader(xmlPath + link + "&page=" + page + "&per_page="+ (nrOfPics));
 		imgXmlQueue = xmlreader.getImagesInfo();
 	}
 	
@@ -157,7 +158,7 @@ public class TwoDSlideShowInfo {
 	}
 
 	protected ShowImage createShowImage(Rectangle monitor) throws IOException {
-		return new ShowImage(monitor, timeStill, fadingSpeed);
+		return new ShowImage(monitor, timeStill, fadingSpeed, nrOfComments);
 	}
 
 	protected void updatePicture() throws IOException {		
@@ -185,6 +186,10 @@ public class TwoDSlideShowInfo {
 	
 	public int getFadingSpeed(){
 		return fadingSpeed;
+	}
+	
+	public int getNrOfComments(){
+		return nrOfComments;
 	}
 	
 }

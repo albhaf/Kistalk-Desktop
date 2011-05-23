@@ -2,7 +2,10 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
+
+import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 public class ShowImage extends JPanel {
@@ -14,11 +17,13 @@ public class ShowImage extends JPanel {
 	 * The Rectangle containing the image
 	 */
 	protected ImgRect imgRect; //
+	protected ImgRect logoRect;
 	protected TextToDisplay imageUserTxtDsp;
 	protected TextToDisplay[] imageCommentTxtDsp;
 	protected TextToDisplay[][] comments;
 	protected boolean outgoing;
 	private BufferedImage slideImage;
+	private BufferedImage logoImage;
 	private float transperacy, fadingSpeed;
 	private int textStopPosition;
 
@@ -26,16 +31,26 @@ public class ShowImage extends JPanel {
 	private ShowImageMovement showImageMovement;
 	private ShowImageDrawing showImageDrawing;
 	
-
 	// Variables which are set in constructor
 	private Rectangle monitorSize;
 
 	private Dimension timeStill = new Dimension();
 	private float imageStopPosition;
 	
-	public ShowImage(Rectangle monitorIn, int timeStillIn, int speedIn) throws IOException {
+	public ShowImage(Rectangle monitorIn, int timeStillIn, int speedIn, int nrOfComments) throws IOException {
+		logoRect = new ImgRect();
+		File tmpFile = new File("logo48pix.png");
+		try {
+			logoImage = ImageIO.read(tmpFile);
+		} catch (IOException e) {
+		}
+		logoRect.width=156;
+		logoRect.height=50;
+		logoRect.setX(10);
+		logoRect.setY(10);
 		monitorSize = monitorIn;
 		imgRect = new ImgRect();
+
 		outgoing = false;
 		transperacy = 0;
 		fadingSpeed = (float) (speedIn*0.005);
@@ -44,7 +59,7 @@ public class ShowImage extends JPanel {
 
 		timeStill.width = timeStillIn;
 		timeStill.height = timeStill.width;
-		showImageSet = new ShowImageSet(monitorSize);
+		showImageSet = new ShowImageSet(monitorSize, nrOfComments);
 		showImageMovement = new ShowImageMovement();
 		showImageDrawing = new ShowImageDrawing();
 	}
@@ -113,10 +128,10 @@ public class ShowImage extends JPanel {
 	public void paint(Graphics g) {
 		showImageDrawing.drawBackground(g, monitorSize, transperacy);
 		if(pubSlide){
-			showImageDrawing.paintSlide(slideImage, imgRect);
+			showImageDrawing.paintSlide(slideImage, imgRect,logoImage,logoRect);
 		}else{
 			showImageDrawing.drawComments(comments);
-			showImageDrawing.paintImage(imageCommentTxtDsp,imageUserTxtDsp, slideImage, imgRect);
+			showImageDrawing.paintImage(imageCommentTxtDsp,imageUserTxtDsp, slideImage, imgRect,logoImage, logoRect);
 		}
 	}
 	

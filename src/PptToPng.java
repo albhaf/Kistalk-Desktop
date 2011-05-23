@@ -73,6 +73,7 @@ public class PptToPng {
 		SlideShow ppt = null;
 		FileInputStream is;
 		try {
+			tmpFilepath =tmpFilepath.replace(" ","\u0020");
 			is = new FileInputStream(tmpFilepath);
 			ppt = new SlideShow(is);
 			is.close();

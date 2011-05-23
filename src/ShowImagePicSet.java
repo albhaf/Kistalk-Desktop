@@ -12,6 +12,7 @@ public class ShowImagePicSet {
 	protected ShowImagePicSet(Rectangle monitorSize){
 		this.image = new BufferedImage(100, 100, BufferedImage.TYPE_INT_RGB);
 		this.monitorSize = monitorSize;
+
 	}
 	
 	protected float setImage(BufferedImage tmpImage, ImgRect imgRect,
